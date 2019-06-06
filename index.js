@@ -1,16 +1,26 @@
 console.log("hello there");
 
-d3.csv("data/teams.csv").then(data => {
-  data = data.reduce((acc, curr) => {
-    acc.push({ date: curr.start_date, join: true, ...curr });
-    if (curr.end_date) {
-      acc.push({ date: curr.end_date, join: false, ...curr });
-    }
-    return acc;
-  }, []);
+let teams;
+let tournaments;
 
-  const min = d3.min(data, el => el.date);
-  const max = d3.max(data, el => el.date);
+d3.csv("data/teams.csv")
+  .then(data => {
+    teams = data.reduce((acc, curr) => {
+      acc.push({ date: curr.start_date, join: true, ...curr });
+      if (curr.end_date) {
+        acc.push({ date: curr.end_date, join: false, ...curr });
+      }
+      return acc;
+    }, []);
 
-  console.log(`min: ${min}, max: ${max}`);
-});
+    return d3.csv("data/tournaments.csv");
+  })
+  .then(data => {
+    tournaments = data;
+  })
+  .then(() => {
+    const min = d3.min(teams, el => el.date);
+    const max = d3.max(teams, el => el.date);
+
+    console.log(`min: ${min}, max: ${max}`);
+  });
