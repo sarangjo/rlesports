@@ -1,12 +1,28 @@
 {
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@types/d3": "^5.7.2",
+    "@types/lodash": "^4.14.134",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^12.0.7",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^10.0.0",
+    "browserify": "^16.2.3",
+    "concurrently": "^4.1.0",
     "live-server": "^1.2.1",
-    "typescript": "^3.5.1"
+    "tsify": "^4.0.1",
+    "typescript": "^3.5.1",
+    "watchify": "^3.11.1"
   },
   "scripts": {
-    "start": "live-server --ignore=react"
+    "start": "concurrently \"yarn:watch-bundle\" \"yarn:watch-ts\"",
+    "watch-bundle": "live-server --watch=bundle.js,index.html",
+    "watch-ts": "watchify -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/index.ts -o bundle.js"
   },
   "dependencies": {
-    "d3": "^5.9.2"
-  }
+    "d3": "^5.9.2",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0"
+  },
+  "license": "MIT"
 }

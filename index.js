@@ -1,3 +1,8 @@
+// TODO use Typescript and Browserify: https://www.typescriptlang.org/docs/handbook/integrating-with-build-tools.html#browserify
+import d3 from "d3";
+import moment from "moment";
+import _ from "lodash";
+
 // Constants
 const WIDTH = 1600;
 const HEIGHT = 1000;
@@ -17,6 +22,7 @@ let max;
 // Functions that will be assigned
 let x;
 
+/*
 d3.csv("data/teams.csv")
   .then(data => {
     teams = data;
@@ -36,6 +42,7 @@ d3.csv("data/teams.csv")
   .then(() => {
     onDataLoaded();
   });
+*/
 
 // Returns roster moves and player edges
 function processTeams(data) {
@@ -88,3 +95,48 @@ function onDataLoaded() {
     .attr("cy", () => CIRCLE_RADIUS + Math.random() * (HEIGHT - 2 * CIRCLE_RADIUS))
     .attr("r", CIRCLE_RADIUS);
 }
+
+function processTournaments(data) {
+  min = _.minBy(data, "start");
+  max = _.maxBy(data, "end");
+
+  const baseX = d3
+    .scaleLinear()
+    .domain([0, moment(max).diff(min, "d")])
+    .range([CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
+  x = date => baseX(moment(date).diff(min, "d"));
+
+  const chart = d3
+    .select(".chart")
+    .attr("width", WIDTH)
+    .attr("height", HEIGHT);
+
+  // Zip up all tournament players
+  const allNodes = _.reduce(
+    data,
+    (acc1, tournament) => {
+      const tournamentNodes = _.reduce(
+        tournament.teams,
+        (acc2,
+        team => {
+          // TODO eventually add subs
+          return _.concat(acc2, _.map(team.players, player => ({ name: player })));
+        },
+        []),
+      );
+      return _.concat(acc1, tournamentNodes);
+    },
+    [],
+  );
+
+  const circles = chart
+    .selectAll("circle")
+    .data(rosterMoves)
+    .enter()
+    .append("circle")
+    .attr("cx", d => x(d.date))
+    .attr("cy", () => CIRCLE_RADIUS + Math.random() * (HEIGHT - 2 * CIRCLE_RADIUS))
+    .attr("r", CIRCLE_RADIUS);
+}
+
+d3.json("data/tournaments.json").then(processTournaments);

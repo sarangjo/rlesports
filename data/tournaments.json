@@ -1,0 +1,82 @@
+[
+  {
+    "name": "RLCS NA Q1",
+    "start": "2016-04-30",
+    "end": "2016-05-21",
+    "teams": [
+      {
+        "name": "iBUYPOWER",
+        "players": ["Kronovi", "Lachinio", "Gambit"],
+        "won": true
+      },
+      {
+        "name": "Kings of Urban",
+        "players": ["Fireburner", "Jacob", "Sadjunior"]
+      },
+      {
+        "name": "VexX Gaming",
+        "players": ["Turtle", "GarrettG", "Jayyyrah"]
+      },
+      {
+        "name": "Genesis",
+        "players": ["Pluto", "Moses", "Quinn Lobdell"]
+      },
+      {
+        "name": "Retrospect",
+        "players": ["Klassux", "Kyle Masc", "Huskih", "Espeon", "Flow"]
+      },
+      {
+        "name": "Mock-It eSports NA",
+        "players": ["Low5ive", "Rizzo", "Insolences"]
+      },
+      {
+        "name": "Selfless Gaming",
+        "players": ["Amoney_tv", "Sizz", "Matt"]
+      },
+      {
+        "name": "Team Orbit",
+        "players": ["Zanejackey", "HotWheelsSid", "Stev"]
+      }
+    ]
+  },
+  {
+    "name": "RLCS NA Q2",
+    "start": "2016-06-25",
+    "end": "2016-07-09",
+    "teams": [
+      {
+        "name": "iBUYPOWER",
+        "players": ["Kronovi", "Lachinio", "Gambit"],
+        "subs": ["0ver Zer0"]
+      },
+      {
+        "name": "Kings of Urban",
+        "players": ["Fireburner", "Jacob", "Sadjunior"]
+      },
+      {
+        "name": "Exodus",
+        "players": ["Turtle", "GarrettG", "Moses"]
+      },
+      {
+        "name": "Genesis",
+        "players": ["Pluto", "Espeon", "Quinn Lobdell"]
+      },
+      {
+        "name": "Retrospect",
+        "players": ["Klassux", "Genocop", "Chrome"]
+      },
+      {
+        "name": "Mock-It eSports NA",
+        "players": ["Zanejackey", "Rizzo", "Insolences"]
+      },
+      {
+        "name": "Selfless Gaming",
+        "players": ["Amoney_tv", "Sizz", "Matt"]
+      },
+      {
+        "name": "Lucky Bounce",
+        "players": ["Torment", "DarkFire", "Timbathy"]
+      }
+    ]
+  }
+]
