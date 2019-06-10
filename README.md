@@ -2,6 +2,13 @@
 
 Visualization of Rocket League's eSports scene.
 
+## Development
+
+```
+$ yarn
+$ yarn start
+```
+
 ## Visual Design
 
 | Visualization                           | Data point                       |
