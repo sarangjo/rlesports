@@ -1,6 +1,6 @@
 [
   {
-    "name": "RLCS NA Q1",
+    "name": "RLCS S1 NA Q1",
     "start": "2016-04-30",
     "end": "2016-05-21",
     "teams": [
@@ -40,7 +40,7 @@
     ]
   },
   {
-    "name": "RLCS NA Q2",
+    "name": "RLCS S1 NA Q2",
     "start": "2016-06-25",
     "end": "2016-07-09",
     "teams": [
@@ -76,6 +76,65 @@
       {
         "name": "Lucky Bounce",
         "players": ["Torment", "DarkFire", "Timbathy"]
+      }
+    ]
+  },
+  {
+    "name": "RLCS S1",
+    "start": "2016-08-06",
+    "end": "2016-08-07",
+    "teams": [
+      {
+        "name": "iBUYPOWER",
+        "players": ["Kronovi", "Lachinio", "0ver Zer0"]
+      },
+      {
+        "name": "Kings of Urban",
+        "players": ["Fireburner", "Jacob", "Sadjunior"]
+      },
+      {
+        "name": "Exodus",
+        "players": ["Turtle", "GarrettG", "Moses"]
+      },
+      {
+        "name": "Genesis",
+        "players": ["Pluto", "Espeon", "Quinn Lobdell"]
+      }
+    ]
+  },
+  {
+    "name": "RLCS S2 NA",
+    "start": "2016-09-24",
+    "end": "2016-11-12",
+    "teams": [
+      {
+        "name": "G2 Esports",
+        "players": ["Kronovi", "Lachinio", "0ver Zer0"]
+      },
+      {
+        "name": "NRG eSports",
+        "players": ["Fireburner", "Jacob", "Sadjunior"]
+      },
+      {
+        "name": "Team Orbit",
+        "players": ["Turtle", "GarrettG", "Moses"]
+      },
+      {
+        "name": "Genesis",
+        "players": ["Pluto", "Espeon", "Klassux"]
+      },
+      {
+        "name": "Deception",
+        "players": ["Vince", "Fireworks", "CorruptedG", "Bell"]
+      },
+      {
+        "name": "Revival",
+        "players": ["HotWheelsSid", "Genocop", "Chrome", "PreM"]
+      },
+      { "name": "Take 3", "players": ["Zanejackey", "Rizzo", "Insolences"] },
+      {
+        "name": "Vendetta",
+        "players": ["Torment", "DarkFire", "Matt", "Karma", "Lethamyr"]
       }
     ]
   }
