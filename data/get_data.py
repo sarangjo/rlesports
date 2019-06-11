@@ -1,111 +1,154 @@
-import pprint
+import copy
 import json
+import pprint
+import re
+import sys
 from typing import List, Any, Dict
+
 import requests
 
-API_BASE = "https://liquipedia.net/rocketleague/api.php"
-
-DEFAULT_PARAMS = {"origin": "*", "format": "json"}
+# Data
 
 PREFIX = "Rocket League Championship Series/Season "
 REGION = "North America"
-
-pp = pprint.PrettyPrinter(indent=2)
 
 tournamentNames: List[str] = [
     f"{PREFIX}1/{REGION}/Qualifier 1",
     f"{PREFIX}1/{REGION}/Qualifier 2",
     f"{PREFIX}1",
-    f"{PREFIX}2/{REGION},"
+    f"{PREFIX}2/{REGION}",
     f"{PREFIX}2",
-    f"{PREFIX}3/{REGION},"
+    f"{PREFIX}3/{REGION}",
     f"{PREFIX}3",
-    f"{PREFIX}4/{REGION},"
-    f"{PREFIX}4",
-    f"{PREFIX}5/{REGION},"
-    f"{PREFIX}5",
-    f"{PREFIX}6/{REGION},"
-    f"{PREFIX}6",
+    # f"{PREFIX}4/{REGION}",
+    # f"{PREFIX}4",
+    # f"{PREFIX}5/{REGION}",
+    # f"{PREFIX}5",
+    # f"{PREFIX}6/{REGION}",
+    # f"{PREFIX}6",
 ]
 
-participantsSections: List[int] = []
+MIN_TEAM_SIZE = 1  # Turbo as the sub for S3 LAN
+EMPTY_TEAM = {'players': [], 'subs': []}
+
+# Liquipedia
+
+API_BASE = "https://liquipedia.net/rocketleague/api.php"
+DEFAULT_PARAMS = {"origin": "*", "format": "json"}
+
+# Files
+
+CACHE_FILE = "cache.json"
+TOURNAMENTS_FILE = "tournaments.json"
+
+# Util
+
+pp = pprint.PrettyPrinter(indent=2)
 
 """
-const wiki = (params: Record<string, any>) =>
-  fetch(`${API_BASE}?${qs.stringify(_.assign(params, DEFAULT_PARAMS))}`, {
-    credentials: "same-origin",
-    mode: "cors",
-  }).then(res => res.json());
-
-// ?action=parse&prop=wikitext&page=Rocket League Championship Series/Season 1/North America/Qualifier 1&format=json&section=3";
-tournamentNames = [
-  [
-    "Rocket League Championship Series/Season 1/North America/Qualifier 1",
-    "Rocket League Championship Series/Season 1/North America/Qualifier 2",
-    "Rocket League Championship Series/Season 1",
-  ],
-  _.range(2, 7).map(seasonNumber => [
-    `Rocket League Championship Series/Season ${seasonNumber}/North America`,
-    `Rocket League Championship Series/Season ${seasonNumber}`,
-  ]),
-]
-
-console.log(tournamentNames);
-
-export const getTournamentData = async (t: string) => {
-  const data = await wiki({
-    action: "parse",
-    prop: "wikitext",
-    page: t,
-    section: 3,
-  });
-
-  if (_.has(data, "parse.wikitext.*")) {
-    console.log("response for", t, data);
-
-    const text = data.parse.wikitext["*"];
-
     console.log(
       "wtf'd data for",
       t,
       _.filter(wtf(text).data.sections[0].data.templates, template => template.team),
     );
-  } else {
-    console.log("no wikitext for", t, data);
-  }
-};
 """
 
 
 def call_api(opts: Dict[str, Any]):
     opts.update(DEFAULT_PARAMS)
-    return json.loads(requests.get(API_BASE, opts).text)
+    req = requests.get(API_BASE, opts)
+    try:
+        return json.loads(req.text)
+    except json.decoder.JSONDecodeError:
+        print(req.text)
+        sys.exit(1)
 
 
-def get_data():
+def get_data() -> Dict[str, Dict]:
+    with open(CACHE_FILE, 'r') as f:
+        output = json.load(f)
+
     for (i, t) in enumerate(tournamentNames):
-        # Get sections and find "Participants"
-        sections = call_api({
-            "action": "parse",
-            "prop": "sections",
-            "page": t,
-        })
-        pSection = next(s for s in sections['parse']['sections'] if s['line'] == 'Participants')
+        if t not in output:
+            """
+            try:
+                # Get sections and find "Participants"
+                sections = call_api({
+                    "action": "parse",
+                    "prop": "sections",
+                    "page": t,
+                })
 
-        requests.get(API_BASE, {
-            **DEFAULT_PARAMS,
+                p_section = next(s for s in sections['parse']['sections'] if s['line'] == 'Participants')
+            except StopIteration:
+                output[t] = "could not get sections"
+            finally:
+                p_section = 3
+            """
+            p_section = {'index': 3}
 
-            "action": "parse",
-            "prop": "wikitext",
-            "page": t,
-            "section": int(pSection['index']),
-        })
+            wiki_text = call_api({
+                "action": "parse",
+                "prop": "wikitext",
+                "page": t,
+                "section": int(p_section['index']),
+            })
+            output[t] = wiki_text['parse']
 
-    pp.pprint(participantsSections)
+    with open(CACHE_FILE, 'w') as f:
+        json.dump(output, f, indent=4)
+
+    return output
+
+
+def process_data(output: Dict[str, Dict]):
+    tournaments: List[Dict] = []
+    for t in output:
+        # We are processing all of the lines per tournament
+        lines: List[str] = output[t]['wikitext']['*'].split('\n')
+        # Each tournament has a set of teams
+        teams = []
+        # These are used as we parse one team at a time
+        team = copy.deepcopy(EMPTY_TEAM)
+        in_team = False
+        """
+        Line format is:
+        |team=iBUYPOWER
+        |p1=Kronovi |p1flag=us
+        |p2=Lachinio |p2flag=ca
+        |p3=Gambit |p3flag=us
+        |p4=0ver Zer0|p4flag=us
+        |qualifier=[[Rocket_League_Championship_Series/Season_1/North_America/Qualifier_1|Qualifier #1]]
+        """
+        for line in lines:
+            # This divides teams
+            if line.startswith('|team'):
+                if len(team['players']) >= MIN_TEAM_SIZE:
+                    teams.append(team)
+                    team = copy.deepcopy(EMPTY_TEAM)
+                team['name'] = line.replace('|team=', '')
+                in_team = True
+            # Once we've found a team, parse at least 3 players
+            elif in_team:
+                # Player line has to start as so:
+                if re.match("[|]p[0-9]=", line):
+                    player = line.split('|')[1].split('=')[1].strip()
+                    if len(player) > 0:
+                        team['players'].append(player)
+
+        # Fencepost for the last team
+        if len(team['players']) >= MIN_TEAM_SIZE:
+            teams.append(team)
+
+        tournaments.append({"name": t, "teams": teams})
+
+    with open(TOURNAMENTS_FILE, 'w') as f:
+        json.dump(tournaments, f, indent=4)
 
 
 def main():
-    get_data()
+    output = get_data()
+    process_data(output)
 
 
 if __name__ == '__main__':

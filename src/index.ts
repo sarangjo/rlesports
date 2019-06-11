@@ -1,6 +1,5 @@
-// TODO use Typescript and Browserify: https://www.typescriptlang.org/docs/handbook/integrating-with-build-tools.html#browserify
 import * as d3 from "d3";
-import moment from "moment";
+// import moment from "moment";
 import _ from "lodash";
 
 /*
@@ -10,7 +9,7 @@ const _ = require("lodash");
 */
 
 // Constants
-const WIDTH = 1200;
+const WIDTH = 2400;
 const HEIGHT = 1000;
 const CIRCLE_RADIUS = 10;
 
@@ -43,11 +42,12 @@ interface TournamentLink {
 //// GLOBAL STATE ////
 
 // Computed data points
-let min: moment.MomentInput;
-let max: moment.MomentInput;
+// let min: moment.MomentInput;
+// let max: moment.MomentInput;
 
 // Functions that will be assigned
-let x: (date: moment.MomentInput) => number;
+// let x: (date: moment.MomentInput) => number;
+let x: (idx: number) => number;
 
 function getNodes(tournaments: Tournament[]) {
   return _.reduce(
@@ -109,14 +109,19 @@ function getLinks(tournaments: Tournament[]) {
 }
 
 function draw(tournaments: Tournament[]) {
-  min = _.get(_.minBy(tournaments, "start"), "start");
-  max = _.get(_.maxBy(tournaments, "end"), "end");
+  // min = _.get(_.minBy(tournaments, "start"), "start");
+  // max = _.get(_.maxBy(tournaments, "end"), "end");
 
-  const baseX = d3
+  // const baseX = d3
+  //   .scaleLinear()
+  //   .domain([0, moment(max).diff(min, "d")])
+  //   .range([150 + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
+  // x = date => baseX(moment(date).diff(min, "d"));
+
+  x = d3
     .scaleLinear()
-    .domain([0, moment(max).diff(min, "d")])
+    .domain([0, tournaments.length])
     .range([150 + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
-  x = date => baseX(moment(date).diff(min, "d"));
 
   const chart = d3
     .select(".chart")
@@ -139,14 +144,14 @@ function draw(tournaments: Tournament[]) {
 
   nodeSelection
     .append("circle")
-    .attr("cx", d => x(tournaments[d.tournamentIndex].start))
+    .attr("cx", d => x(d.tournamentIndex))
     .attr("cy", y)
     .attr("r", CIRCLE_RADIUS);
 
   nodeSelection
     .append("text")
     .attr("text-anchor", "end")
-    .attr("x", d => x(tournaments[d.tournamentIndex].start) - CIRCLE_RADIUS - 5)
+    .attr("x", d => x(d.tournamentIndex) - CIRCLE_RADIUS - 5)
     .attr("y", y)
     .html(d => tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex]);
 
@@ -159,9 +164,9 @@ function draw(tournaments: Tournament[]) {
     .data(allLinks)
     .enter()
     .append("line")
-    .attr("x1", d => x(tournaments[d.source.tournamentIndex].start))
+    .attr("x1", d => x(d.source.tournamentIndex))
     .attr("y1", (d: TournamentLink) => y(d.source))
-    .attr("x2", d => x(tournaments[d.target.tournamentIndex].start))
+    .attr("x2", d => x(d.target.tournamentIndex))
     .attr("y2", (d: TournamentLink) => y(d.target))
     .attr("stroke", "black");
 
@@ -173,10 +178,15 @@ function draw(tournaments: Tournament[]) {
     .data(tournaments)
     .enter()
     .append("text")
-    .attr("x", d => x(d.start))
+    .attr("x", (_d, i) => x(i))
     .attr("y", "1em")
     .attr("text-anchor", "middle")
-    .html(d => d.name);
+    .html(d =>
+      d.name
+        .split(/[^A-Za-z0-9]/)
+        .map(word => word[0])
+        .join(""),
+    );
 }
 
 d3.json("data/tournaments.json").then(draw);
