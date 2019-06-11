@@ -89,8 +89,6 @@ function getLinks(tournaments: Tournament[]) {
     });
   });
 
-  console.log(inverseMap);
-
   // Compress inverseMap into all links
   return _.reduce(
     inverseMap,

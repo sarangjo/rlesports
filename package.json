@@ -4,7 +4,6 @@
     "@types/d3": "^5.7.2",
     "@types/lodash": "^4.14.134",
     "@types/moment": "^2.13.0",
-    "@types/node": "^12.0.7",
     "babel-preset-env": "^1.7.0",
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
@@ -17,8 +16,8 @@
   "scripts": {
     "start": "concurrently \"yarn:watch-bundle\" \"yarn:watch-ts\"",
     "watch-bundle": "live-server --watch=bundle.js,index.html,data",
-    "watch-ts": "watchify -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/index.ts -o bundle.js",
-    "build": "browserify -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/index.ts > bundle.js" 
+    "watch-ts": "watchify -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/ -o bundle.js",
+    "build": "browserify -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/ > bundle.js"
   },
   "dependencies": {
     "d3": "^5.9.2",
