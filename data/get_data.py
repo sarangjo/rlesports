@@ -29,7 +29,7 @@ tournamentNames: List[str] = [
 ]
 
 MIN_TEAM_SIZE = 1  # Turbo as the sub for S3 LAN
-EMPTY_TEAM = {'players': [], 'subs': []}
+EMPTY_TEAM: Dict[str, Any] = {'players': [], 'subs': []}
 
 # Liquipedia
 
@@ -110,7 +110,7 @@ def process_data(output: Dict[str, Dict]):
         teams = []
         # These are used as we parse one team at a time
         team = copy.deepcopy(EMPTY_TEAM)
-        in_team = False
+        found_team = False
         """
         Line format is:
         |team=iBUYPOWER
@@ -123,13 +123,14 @@ def process_data(output: Dict[str, Dict]):
         for line in lines:
             # This divides teams
             if line.startswith('|team'):
-                if len(team['players']) >= MIN_TEAM_SIZE:
+                # Handle special case for the first team
+                if found_team and len(team['players']) >= MIN_TEAM_SIZE:
                     teams.append(team)
                     team = copy.deepcopy(EMPTY_TEAM)
                 team['name'] = line.replace('|team=', '')
-                in_team = True
+                found_team = True
             # Once we've found a team, parse at least 3 players
-            elif in_team:
+            elif found_team:
                 # Player line has to start as so:
                 if re.match("[|]p[0-9]=", line):
                     player = line.split('|')[1].split('=')[1].strip()
