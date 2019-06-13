@@ -27,15 +27,14 @@ interface Tournament {
   teams: Team[];
 }
 
-interface TournamentNode {
+interface TournamentNode extends d3.SimulationNodeDatum {
   playerIndex: number;
   teamIndex: number;
   tournamentIndex: number;
+  id: string; // combination of indices
 }
 
-interface TournamentLink {
-  source: TournamentNode;
-  target: TournamentNode;
+interface SamePlayerLink extends d3.SimulationLinkDatum<TournamentNode> {
   player?: string;
 }
 
@@ -49,7 +48,13 @@ interface TournamentLink {
 // let x: (date: moment.MomentInput) => number;
 let x: (idx: number) => number;
 
-function getNodes(tournaments: Tournament[]) {
+// tournamentIndex-teamIndex-playerIndex
+const getNodeId = (...indices: number[]): string => indices.join("-");
+
+let tournaments: Tournament[];
+let allNodes: TournamentNode[];
+
+function getNodes() {
   return _.reduce(
     tournaments,
     (acc1, tournament, tournamentIndex) =>
@@ -64,7 +69,12 @@ function getNodes(tournaments: Tournament[]) {
               _.reduce(
                 team.players,
                 (acc3, _player: string, playerIndex) =>
-                  _.concat(acc3, { teamIndex, playerIndex, tournamentIndex }),
+                  _.concat(acc3, {
+                    tournamentIndex,
+                    teamIndex,
+                    playerIndex,
+                    id: getNodeId(tournamentIndex, teamIndex, playerIndex),
+                  }),
                 [] as TournamentNode[],
               ),
             ),
@@ -75,7 +85,17 @@ function getNodes(tournaments: Tournament[]) {
   );
 }
 
-function getLinks(tournaments: Tournament[]) {
+// FORCES
+// 1. Nodes in the same team + tournament = attraction force? link force with repulsion?
+
+// 2. Nodes with the same player = link force
+// 3. Bounding box by tournament
+// 4. Nodes in the same tournament + different teams = repulsion force among
+
+// let sameTeamSameTournamentLinks;
+let samePlayerLinks: SamePlayerLink[];
+
+function getLinks() {
   // Basically we want a full list of links with source and target both being an index 3-tuple
   const inverseMap: Record<string, TournamentNode[]> = {};
   _.forEach(tournaments, (tournament, tournamentIndex) => {
@@ -84,7 +104,12 @@ function getLinks(tournaments: Tournament[]) {
         if (!(player in inverseMap)) {
           inverseMap[player] = [];
         }
-        inverseMap[player].push({ playerIndex, teamIndex, tournamentIndex });
+        inverseMap[player].push({
+          playerIndex,
+          teamIndex,
+          tournamentIndex,
+          id: getNodeId(tournamentIndex, teamIndex, playerIndex),
+        });
       });
     });
   });
@@ -97,40 +122,66 @@ function getLinks(tournaments: Tournament[]) {
       const links = [];
       for (let i = 0; i < nodes.length - 1; i++) {
         links.push({
-          source: nodes[i],
-          target: nodes[i + 1],
+          source: getNodeId(nodes[i].tournamentIndex, nodes[i].teamIndex, nodes[i].playerIndex),
+          target: getNodeId(
+            nodes[i + 1].tournamentIndex,
+            nodes[i + 1].teamIndex,
+            nodes[i + 1].playerIndex,
+          ),
           player,
         });
       }
       return _.concat(acc, links);
     },
-    [] as TournamentLink[],
+    [] as SamePlayerLink[],
   );
 }
 
-function draw(tournaments: Tournament[]) {
-  // min = _.get(_.minBy(tournaments, "start"), "start");
-  // max = _.get(_.maxBy(tournaments, "end"), "end");
+function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
+  const simulation = d3
+    .forceSimulation(allNodes)
+    .force("link", d3.forceLink(samePlayerLinks).id((d: TournamentNode) => d.id))
+    .force("charge", d3.forceManyBody());
 
-  // const baseX = d3
-  //   .scaleLinear()
-  //   .domain([0, moment(max).diff(min, "d")])
-  //   .range([150 + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
-  // x = date => baseX(moment(date).diff(min, "d"));
+  const link = chart
+    .append("g")
+    .attr("stroke", "#999")
+    .attr("stroke-opacity", 0.6)
+    .selectAll("line")
+    .data(links)
+    .join("line")
+    .attr("stroke-width", d => Math.sqrt(d.value));
 
-  x = d3
-    .scaleLinear()
-    .domain([0, tournaments.length])
-    .range([150 + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
+  const node = svg
+    .append("g")
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1.5)
+    .selectAll("circle")
+    .data(nodes)
+    .join("circle")
+    .attr("r", 5)
+    .attr("fill", color)
+    .call(drag(simulation));
 
-  const chart = d3
-    .select(".chart")
-    .attr("width", WIDTH)
-    .attr("height", HEIGHT);
+  node.append("title").text(d => d.id);
 
+  simulation.on("tick", () => {
+    link
+      .attr("x1", d => d.source.x)
+      .attr("y1", d => d.source.y)
+      .attr("x2", d => d.target.x)
+      .attr("y2", d => d.target.y);
+
+    node.attr("cx", d => d.x).attr("cy", d => d.y);
+  });
+
+  invalidation.then(() => simulation.stop());
+
+  return svg.node();
+}
+
+function _simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
   // Nodes
-  const allNodes = getNodes(tournaments);
-
   const y = (d: TournamentNode) =>
     4 * CIRCLE_RADIUS + d.teamIndex * 5 * (2 * CIRCLE_RADIUS) + d.playerIndex * (2 * CIRCLE_RADIUS);
 
@@ -156,18 +207,17 @@ function draw(tournaments: Tournament[]) {
     .html(d => tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex]);
 
   // Links
-  const allLinks = getLinks(tournaments);
   chart
     .append("g")
     .attr("id", "links")
     .selectAll("line")
-    .data(allLinks)
+    .data(samePlayerLinks)
     .enter()
     .append("line")
     .attr("x1", d => x(d.source.tournamentIndex))
-    .attr("y1", (d: TournamentLink) => y(d.source))
+    .attr("y1", (d: SamePlayerLink) => y(d.source))
     .attr("x2", d => x(d.target.tournamentIndex))
-    .attr("y2", (d: TournamentLink) => y(d.target))
+    .attr("y2", (d: SamePlayerLink) => y(d.target))
     .attr("stroke", "black");
 
   // Tournament titles
@@ -187,6 +237,38 @@ function draw(tournaments: Tournament[]) {
         .map(word => word[0])
         .join(""),
     );
+}
+
+function processData() {
+  allNodes = getNodes();
+  samePlayerLinks = getLinks();
+}
+
+function draw(data: Tournament[]) {
+  tournaments = data;
+  processData();
+
+  // min = _.get(_.minBy(tournaments, "start"), "start");
+  // max = _.get(_.maxBy(tournaments, "end"), "end");
+
+  // const baseX = d3
+  //   .scaleLinear()
+  //   .domain([0, moment(max).diff(min, "d")])
+  //   .range([150 + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
+  // x = date => baseX(moment(date).diff(min, "d"));
+
+  x = d3
+    .scaleLinear()
+    .domain([0, tournaments.length])
+    .range([150 + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
+
+  const chart = d3
+    .select(".chart")
+    .attr("width", WIDTH)
+    .attr("height", HEIGHT);
+
+  _simpleTimeline(chart);
+  forceSimulation(chart);
 }
 
 d3.json("data/tournaments.json").then(draw);
