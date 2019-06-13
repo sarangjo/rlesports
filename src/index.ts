@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import comb from "js-combinatorics";
 // import moment from "moment";
 import _ from "lodash";
 
@@ -34,9 +35,7 @@ interface TournamentNode extends d3.SimulationNodeDatum {
   id: string; // combination of indices
 }
 
-interface SamePlayerLink extends d3.SimulationLinkDatum<TournamentNode> {
-  player?: string;
-}
+type Link = d3.SimulationLinkDatum<TournamentNode>;
 
 //// GLOBAL STATE ////
 
@@ -45,14 +44,12 @@ interface SamePlayerLink extends d3.SimulationLinkDatum<TournamentNode> {
 // let max: moment.MomentInput;
 
 // Functions that will be assigned
-// let x: (date: moment.MomentInput) => number;
 let x: (idx: number) => number;
-
-// tournamentIndex-teamIndex-playerIndex
-const getNodeId = (...indices: number[]): string => indices.join("-");
 
 let tournaments: Tournament[];
 let allNodes: TournamentNode[];
+let sameTeamSameTournamentLinks: Link[] = [];
+let samePlayerLinks: Link[];
 
 function getNodes() {
   return _.reduce(
@@ -85,21 +82,35 @@ function getNodes() {
   );
 }
 
+//// UTILITY
+
+const getNodeId = (...indices: number[]): string => indices.join("-");
+// @ts-ignore
+const getNode = (id: string): Record<string, number> =>
+  id.split("-").reduce((acc, n, i) => {
+    acc[i === 0 ? "tournamentIndex" : i === 1 ? "teamIndex" : "playerIndex"] = Number.parseInt(n);
+    return acc;
+  }, {});
+
 // FORCES
 // 1. Nodes in the same team + tournament = attraction force? link force with repulsion?
-
 // 2. Nodes with the same player = link force
 // 3. Bounding box by tournament
 // 4. Nodes in the same tournament + different teams = repulsion force among
-
-// let sameTeamSameTournamentLinks;
-let samePlayerLinks: SamePlayerLink[];
 
 function getLinks() {
   // Basically we want a full list of links with source and target both being an index 3-tuple
   const inverseMap: Record<string, TournamentNode[]> = {};
   _.forEach(tournaments, (tournament, tournamentIndex) => {
     _.forEach(tournament.teams, (team, teamIndex) => {
+      // Same team + same tournament
+      sameTeamSameTournamentLinks = _.concat(
+        sameTeamSameTournamentLinks,
+        comb.combination(_.range(team.players.length), 2).map(pair => ({
+          source: getNodeId(tournamentIndex, teamIndex, pair[0]),
+          target: getNodeId(tournamentIndex, teamIndex, pair[1]),
+        })),
+      );
       _.forEach(team.players, (player, playerIndex) => {
         if (!(player in inverseMap)) {
           inverseMap[player] = [];
@@ -114,10 +125,12 @@ function getLinks() {
     });
   });
 
+  console.log(sameTeamSameTournamentLinks);
+
   // Compress inverseMap into all links
   return _.reduce(
     inverseMap,
-    (acc, nodes, player) => {
+    (acc, nodes) => {
       // Combine nodes into an array of links
       const links = [];
       for (let i = 0; i < nodes.length - 1; i++) {
@@ -128,58 +141,92 @@ function getLinks() {
             nodes[i + 1].teamIndex,
             nodes[i + 1].playerIndex,
           ),
-          player,
         });
       }
       return _.concat(acc, links);
     },
-    [] as SamePlayerLink[],
+    [] as Link[],
   );
 }
 
 function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
   const simulation = d3
     .forceSimulation(allNodes)
-    .force("link", d3.forceLink(samePlayerLinks).id((d: TournamentNode) => d.id))
-    .force("charge", d3.forceManyBody());
+    .force(
+      "link",
+      d3
+        .forceLink(samePlayerLinks)
+        .id((d: TournamentNode) => d.id)
+        .strength(0.1),
+    )
+    .force("charge", d3.forceManyBody().strength(0.2))
+    .force(
+      "x",
+      d3
+        .forceX<TournamentNode>()
+        .x(d => x(d.tournamentIndex))
+        .strength(1),
+    )
+    .force(
+      "y",
+      d3
+        .forceY()
+        .y(HEIGHT / 2)
+        .strength(0.1),
+    )
+    // Force among teams
+    .force(
+      "sameTeamSameTournament",
+      d3
+        .forceLink(sameTeamSameTournamentLinks)
+        .id((d: TournamentNode) => d.id)
+        .strength(1),
+    );
 
   const link = chart
     .append("g")
     .attr("stroke", "#999")
     .attr("stroke-opacity", 0.6)
     .selectAll("line")
-    .data(links)
-    .join("line")
-    .attr("stroke-width", d => Math.sqrt(d.value));
+    .data(samePlayerLinks)
+    .join("line");
+  // .attr("stroke-width", d => Math.sqrt(d.value));
 
-  const node = svg
+  const node = chart
     .append("g")
     .attr("stroke", "#fff")
     .attr("stroke-width", 1.5)
     .selectAll("circle")
-    .data(nodes)
+    .data(allNodes)
     .join("circle")
-    .attr("r", 5)
-    .attr("fill", color)
-    .call(drag(simulation));
+    .attr("r", 5);
+  // .attr("fill", color)
+  // .call(drag(simulation));
 
-  node.append("title").text(d => d.id);
+  node
+    .append("title")
+    .text(
+      d =>
+        `${d.tournamentIndex}-${d.teamIndex}-${d.playerIndex} ${
+          tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex]
+        }`,
+    );
 
-  simulation.on("tick", () => {
+  const setPositions = () => {
     link
-      .attr("x1", d => d.source.x)
-      .attr("y1", d => d.source.y)
-      .attr("x2", d => d.target.x)
-      .attr("y2", d => d.target.y);
+      .attr("x1", d => (d.source as any).x)
+      .attr("y1", d => (d.source as any).y)
+      .attr("x2", d => (d.target as any).x)
+      .attr("y2", d => (d.target as any).y);
 
-    node.attr("cx", d => d.x).attr("cy", d => d.y);
-  });
+    node.attr("cx", d => d.x || null).attr("cy", d => d.y || null);
+  };
 
-  invalidation.then(() => simulation.stop());
-
-  return svg.node();
+  // Ticks
+  simulation.on("tick", setPositions);
 }
 
+// @ts-ignore
 function _simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
   // Nodes
   const y = (d: TournamentNode) =>
@@ -214,10 +261,12 @@ function _simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
     .data(samePlayerLinks)
     .enter()
     .append("line")
-    .attr("x1", d => x(d.source.tournamentIndex))
-    .attr("y1", (d: SamePlayerLink) => y(d.source))
+    /*
+    .attr("x1", d => (typeof d.source === "string" ? x(getNode(d.source).tournamentIndex) : 0))
+    .attr("y1", (d: Link) => y(d.source))
     .attr("x2", d => x(d.target.tournamentIndex))
-    .attr("y2", (d: SamePlayerLink) => y(d.target))
+    .attr("y2", (d: Link) => y(d.target))
+    */
     .attr("stroke", "black");
 
   // Tournament titles
@@ -267,7 +316,7 @@ function draw(data: Tournament[]) {
     .attr("width", WIDTH)
     .attr("height", HEIGHT);
 
-  _simpleTimeline(chart);
+  // _simpleTimeline(chart);
   forceSimulation(chart);
 }
 
