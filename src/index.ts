@@ -125,8 +125,6 @@ function getLinks() {
     });
   });
 
-  console.log(sameTeamSameTournamentLinks);
-
   // Compress inverseMap into all links
   return _.reduce(
     inverseMap,
@@ -150,6 +148,15 @@ function getLinks() {
 }
 
 function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
+  // Same tournament, different teams.
+  const sameTournamentDiffTeamForce = () => {
+    // Repel.
+  };
+
+  const playerLinks = () => {
+    // Attract. TODO replace the shit tier link force down below.
+  };
+
   const simulation = d3
     .forceSimulation(allNodes)
     .force(
@@ -212,7 +219,8 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
         }`,
     );
 
-  const setPositions = () => {
+  // On tick, set actual HTML attributes on SVG elements
+  simulation.on("tick", () => {
     link
       .attr("x1", d => (d.source as any).x)
       .attr("y1", d => (d.source as any).y)
@@ -220,14 +228,11 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
       .attr("y2", d => (d.target as any).y);
 
     node.attr("cx", d => d.x || null).attr("cy", d => d.y || null);
-  };
-
-  // Ticks
-  simulation.on("tick", setPositions);
+  });
 }
 
 // @ts-ignore
-function _simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
+function simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
   // Nodes
   const y = (d: TournamentNode) =>
     4 * CIRCLE_RADIUS + d.teamIndex * 5 * (2 * CIRCLE_RADIUS) + d.playerIndex * (2 * CIRCLE_RADIUS);
