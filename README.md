@@ -9,7 +9,7 @@ $ yarn
 $ yarn start
 ```
 
-## Visual Design [eventual]
+## Visual Design (eventual)
 
 | Visualization                           | Data point                       |
 | --------------------------------------- | -------------------------------- |
@@ -23,6 +23,18 @@ $ yarn start
 | rectangle encompassing multiple teams   | tournament                       |
 | x axis                                  | time                             |
 | y axis                                  | free for convenience             |
+
+### y axis considerations
+
+- Across tournaments, groups that share the most players need similar y values
+- Okay actually to start off I need to actually assign indices to teams. Here's the process
+  - Assume the indices for the first tournament are fixed.
+  - For every tournament after that, find the index that's "closest"
+    - How is "closest" defined?
+      - Find the team from the previous tournament that has the max overlap (by percentage, not raw number). (`prev_index`)
+      - Compare with the team from the current tournament that has the same index.
+        - If our overlap is greater, kick it out by moving it to one spot up or down, based on which of the two (current up or down) has the lower overlap
+        - If our overlap isn't greater, see which
 
 ## Data
 

@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import comb from "js-combinatorics";
-// import moment from "moment";
+// import moment om "moment";
+import { getNodeId } from "./util";
 import _ from "lodash";
 
 /*
@@ -12,7 +13,7 @@ const _ = require("lodash");
 // Constants
 const WIDTH = 2400;
 const HEIGHT = 1000;
-const CIRCLE_RADIUS = 10;
+const CIRCLE_RADIUS = 5;
 
 interface Team {
   name: string;
@@ -20,6 +21,13 @@ interface Team {
   won?: boolean;
   subs?: string[];
 }
+
+interface TeamNodePart {
+  tournamentIndex: number;
+}
+
+// @ts-ignore
+type TeamNode = Team & d3.SimulationNodeDatum & TeamNodePart;
 
 interface Tournament {
   name: string;
@@ -35,7 +43,7 @@ interface TournamentNode extends d3.SimulationNodeDatum {
   id: string; // combination of indices
 }
 
-type Link = d3.SimulationLinkDatum<TournamentNode>;
+type SimulationLink = d3.SimulationLinkDatum<TournamentNode>;
 
 //// GLOBAL STATE ////
 
@@ -46,13 +54,49 @@ type Link = d3.SimulationLinkDatum<TournamentNode>;
 // Functions that will be assigned
 let x: (idx: number) => number;
 
+// Raw data
 let tournaments: Tournament[];
-let allNodes: TournamentNode[];
-let sameTeamSameTournamentLinks: Link[] = [];
-let samePlayerLinks: Link[];
 
-function getNodes() {
-  return _.reduce(
+// Processed data
+let allNodes: TournamentNode[];
+let sameTeamSameTournamentLinks: SimulationLink[] = [];
+let diffTeamSameTournamentLinks: SimulationLink[] = [];
+let samePlayerLinks: SimulationLink[];
+// @ts-ignore
+let allTeams: TeamNode[];
+
+//// PROCESSING FUNCTIONS ////
+
+// Go through the tournaments and sort in-place
+
+// @ts-ignore
+function sortTeams() {
+  for (let i = 0; i < tournaments.length - 1; i++) {
+    const tournament = tournaments[i];
+    tournament.teams = _.sortBy(tournament.teams, team => {
+      // Return the number of players that stayed together for the next tournament
+      let numberStayedTogether = 0;
+      _.forEach(tournaments[i + 1].teams, otherTeam => {
+        numberStayedTogether =
+          _.max([numberStayedTogether, _.intersection(team.players, otherTeam.players).length]) ||
+          numberStayedTogether;
+      });
+      return numberStayedTogether;
+    });
+  }
+}
+
+function processTeams() {
+  allTeams = _.reduce(
+    tournaments,
+    (acc, tournament, tournamentIndex) =>
+      _.concat(acc, _.map(tournament.teams, team => ({ ...team, tournamentIndex }))),
+    [],
+  );
+}
+
+function processPlayers() {
+  allNodes = _.reduce(
     tournaments,
     (acc1, tournament, tournamentIndex) =>
       _.concat(
@@ -82,23 +126,7 @@ function getNodes() {
   );
 }
 
-//// UTILITY
-
-const getNodeId = (...indices: number[]): string => indices.join("-");
-// @ts-ignore
-const getNode = (id: string): Record<string, number> =>
-  id.split("-").reduce((acc, n, i) => {
-    acc[i === 0 ? "tournamentIndex" : i === 1 ? "teamIndex" : "playerIndex"] = Number.parseInt(n);
-    return acc;
-  }, {});
-
-// FORCES
-// 1. Nodes in the same team + tournament = attraction force? link force with repulsion?
-// 2. Nodes with the same player = link force
-// 3. Bounding box by tournament
-// 4. Nodes in the same tournament + different teams = repulsion force among
-
-function getLinks() {
+function processPlayerLinks() {
   // Basically we want a full list of links with source and target both being an index 3-tuple
   const inverseMap: Record<string, TournamentNode[]> = {};
   _.forEach(tournaments, (tournament, tournamentIndex) => {
@@ -126,7 +154,7 @@ function getLinks() {
   });
 
   // Compress inverseMap into all links
-  return _.reduce(
+  samePlayerLinks = _.reduce(
     inverseMap,
     (acc, nodes) => {
       // Combine nodes into an array of links
@@ -143,20 +171,43 @@ function getLinks() {
       }
       return _.concat(acc, links);
     },
-    [] as Link[],
+    [] as SimulationLink[],
   );
 }
 
+//// FORCE SIMULATION ////
+
+// Forces:
+// 1. Nodes in the same team + tournament = attraction force? link force with repulsion?
+// 2. Nodes with the same player = link force
+// 3. Bounding box by tournament
+// 4. Nodes in the same tournament + different teams = repulsion force among
+
+/*
+function teamForceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
+  // LELMAO LEL MAO
+  const simulation = d3.forceSimulation(allTeams).force(
+    "x",
+    d3
+      .forceX<TeamNode>()
+      .x(d => x(d.tournamentIndex))
+      .strength(0.1),
+  );
+
+  // const link = getLinkElements(chart, allTeamLinks);
+  const node = chart
+    .append("g")
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1.5)
+    .selectAll("circle")
+    .data(allTeams)
+    .join("circle")
+    .attr("r", 5);
+}
+*/
+
+// @ts-ignore
 function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
-  // Same tournament, different teams.
-  const sameTournamentDiffTeamForce = () => {
-    // Repel.
-  };
-
-  const playerLinks = () => {
-    // Attract. TODO replace the shit tier link force down below.
-  };
-
   const simulation = d3
     .forceSimulation(allNodes)
     .force(
@@ -187,7 +238,16 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
       d3
         .forceLink(sameTeamSameTournamentLinks)
         .id((d: TournamentNode) => d.id)
-        .strength(1),
+        .strength(1)
+        .distance(5),
+    )
+    .force(
+      "diffTeamSameTournament",
+      d3
+        .forceLink(diffTeamSameTournamentLinks)
+        .id((d: TournamentNode) => d.id)
+        .strength(1)
+        .distance(50),
     );
 
   const link = chart
@@ -230,6 +290,8 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
     node.attr("cx", d => d.x || null).attr("cy", d => d.y || null);
   });
 }
+
+//// SIMPLE TIMELINE ////
 
 // @ts-ignore
 function simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
@@ -293,15 +355,15 @@ function simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, a
     );
 }
 
-function processData() {
-  allNodes = getNodes();
-  samePlayerLinks = getLinks();
+function process(data: Tournament[]) {
+  tournaments = _.slice(data, 0, 2);
+
+  processPlayers();
+  processPlayerLinks();
+  processTeams();
 }
 
-function draw(data: Tournament[]) {
-  tournaments = data;
-  processData();
-
+function draw() {
   // min = _.get(_.minBy(tournaments, "start"), "start");
   // max = _.get(_.maxBy(tournaments, "end"), "end");
 
@@ -314,15 +376,19 @@ function draw(data: Tournament[]) {
   x = d3
     .scaleLinear()
     .domain([0, tournaments.length])
-    .range([150 + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
+    .range([15 * CIRCLE_RADIUS + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
 
   const chart = d3
     .select(".chart")
     .attr("width", WIDTH)
     .attr("height", HEIGHT);
 
-  // _simpleTimeline(chart);
-  forceSimulation(chart);
+  simpleTimeline(chart);
+  // forceSimulation(chart);
+  // teamForceSimulation(chart);
 }
 
-d3.json("data/tournaments.json").then(draw);
+d3.json("data/tournaments.json").then(data => {
+  process(data);
+  draw();
+});
