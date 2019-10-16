@@ -1,8 +1,8 @@
 import * as _ from "lodash";
 import * as d3 from "d3";
 
-import { Tournament, Chart, Team, RLVisualization } from "./types";
-import { CIRCLE_RADIUS, WIDTH } from "./constants";
+import { Tournament, Chart, Team, RLVisualization } from "../types";
+import { CIRCLE_RADIUS, WIDTH } from "../constants";
 
 interface TeamNode extends Team {
   tournamentIndex: number;

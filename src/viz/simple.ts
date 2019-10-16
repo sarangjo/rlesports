@@ -1,9 +1,9 @@
 import * as _ from "lodash";
 import * as d3 from "d3";
 
-import { Chart, Tournament, RLVisualization, Link, TournamentNode } from "./types";
-import { getNodeId } from "./util";
-import { CIRCLE_RADIUS, WIDTH } from "./constants";
+import { Chart, Tournament, RLVisualization, Link, TournamentNode } from "../types";
+import { getNodeId } from "../util";
+import { CIRCLE_RADIUS, WIDTH } from "../constants";
 
 export default class SimpleViz implements RLVisualization {
   private tournaments: Tournament[];

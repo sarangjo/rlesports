@@ -4,7 +4,7 @@ import * as _ from "lodash";
 import { WIDTH, HEIGHT } from "./constants";
 import { RLVisualization } from "./types";
 // import TeamSim from "./team-sim";
-import Simple from "./simple";
+import Simple from "./viz/simple";
 
 // Choose one visualization
 const viz: RLVisualization = new Simple();
