@@ -20,7 +20,8 @@ export const getLinkElements = (chart: any, links: any[]) =>
     .join("line");
 
 export const nodeDrag = {
-  start: (d: d3.SimulationNodeDatum) => {
+  start: (simulation: any, d: d3.SimulationNodeDatum) => {
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
     d.fx = d.x;
     d.fy = d.y;
   },
@@ -28,7 +29,8 @@ export const nodeDrag = {
     d.fx = d3.event.x;
     d.fy = d3.event.y;
   },
-  end: (d: d3.SimulationNodeDatum) => {
+  end: (simulation: any, d: d3.SimulationNodeDatum) => {
+    if (!d3.event.active) simulation.alphaTarget(0);
     d.fx = null;
     d.fy = null;
   },

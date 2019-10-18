@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import * as d3 from "d3";
 import { combination } from "js-combinatorics";
 
-// import { nodeDrag } from "../util";
+import { nodeDrag } from "../util";
 import { Chart, RLVisualization } from "../types";
 import { CIRCLE_RADIUS, WIDTH, HEIGHT } from "../constants";
 
@@ -57,8 +57,8 @@ export default class TimelineViz implements RLVisualization {
 
     _.forEach(teamMap, playerNames => {
       if (playerNames.length >= 2) {
-        this.playerLinks.push(
-          ...combination(playerNames, 2).map(playerCombo => ({
+        this.playerLinks = this.playerLinks.concat(
+          combination(playerNames, 2).map(playerCombo => ({
             source: playerCombo[0],
             target: playerCombo[1],
           })),
@@ -68,8 +68,17 @@ export default class TimelineViz implements RLVisualization {
   };
 
   draw = (chart: Chart) => {
+    // Simulation
+    const linkForce = d3.forceLink<Player, d3.SimulationLinkDatum<Player>>().id(d => d.name);
+    linkForce.links(this.playerLinks);
+    const simulation = d3
+      .forceSimulation<Player>(this.playerNodes)
+      .force("link", linkForce)
+      .force("charge", d3.forceManyBody())
+      .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2));
+
     // Nodes
-    const nodeSelection = chart
+    const nodeGSelection = chart
       .append("g")
       .attr("id", "nodes")
       .selectAll("circle")
@@ -77,27 +86,25 @@ export default class TimelineViz implements RLVisualization {
       .enter()
       .append("g");
 
-    nodeSelection
+    const nodeSelection = nodeGSelection
       .append("circle")
-      // .attr("cx", d => this.x(d.tournamentIndex))
-      // .attr("cy", y)
-      .attr("r", CIRCLE_RADIUS);
-    /*
-      TODO uncomment
+      .attr("r", CIRCLE_RADIUS)
       .call(
         d3
           .drag()
-          .on("start", nodeDrag.start)
+          .on("start", nodeDrag.start.bind(null, simulation))
           .on("drag", nodeDrag.in)
-          .on("end", nodeDrag.end),
+          .on("end", nodeDrag.end.bind(null, simulation)),
       );
-      */
 
-    nodeSelection
+    // TODO figure this out
+    /*
+    nodeGSelection
       .append("text")
       .attr("x", 6)
       .attr("y", 3)
       .text(d => d.name);
+    */
 
     // Links
     const linkSelection = chart
@@ -119,15 +126,7 @@ export default class TimelineViz implements RLVisualization {
       nodeSelection.attr("cx", d => d.x || 0).attr("cy", d => d.y || 0);
     };
 
-    // Simulation
-    const linkForce = d3.forceLink<Player, d3.SimulationLinkDatum<Player>>().id(d => d.name);
-    linkForce.links(this.playerLinks);
-    const simulation = d3
-      .forceSimulation<Player>(this.playerNodes)
-      .force("link", linkForce)
-      .force("charge", d3.forceManyBody())
-      .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2));
-
+    // Tick
     simulation.on("tick", ticked);
   };
 }
