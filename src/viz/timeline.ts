@@ -22,6 +22,7 @@ type Team = d3.SimulationLinkDatum<Player>;
 
 const CURRENT_DATE = "2015-07-10";
 
+// Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
 export default class TimelineViz implements RLVisualization {
   private playerNodes: Player[];
   private playerLinks: Team[];
@@ -69,11 +70,15 @@ export default class TimelineViz implements RLVisualization {
 
   draw = (chart: Chart) => {
     // Simulation
-    const linkForce = d3.forceLink<Player, d3.SimulationLinkDatum<Player>>().id(d => d.name);
-    linkForce.links(this.playerLinks);
     const simulation = d3
       .forceSimulation<Player>(this.playerNodes)
-      .force("link", linkForce)
+      .force(
+        "link",
+        d3
+          .forceLink<Player, d3.SimulationLinkDatum<Player>>()
+          .id(d => d.name)
+          .links(this.playerLinks),
+      )
       .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2));
 
@@ -115,6 +120,9 @@ export default class TimelineViz implements RLVisualization {
       .enter()
       .append("line")
       .attr("stroke", "black");
+
+    // Teams
+    // TODO
 
     const ticked = () => {
       linkSelection
