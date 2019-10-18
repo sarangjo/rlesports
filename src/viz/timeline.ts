@@ -1,4 +1,5 @@
 import * as _ from "lodash";
+import * as log from "loglevel";
 import * as d3 from "d3";
 import { combination } from "js-combinatorics";
 
@@ -55,6 +56,8 @@ export default class TimelineViz implements RLVisualization {
           }),
       ),
     );
+
+    log.debug(teamMap);
 
     _.forEach(teamMap, playerNames => {
       if (playerNames.length >= 2) {

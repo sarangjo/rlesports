@@ -4,6 +4,7 @@
     "@types/d3": "^5.7.2",
     "@types/js-combinatorics": "^0.5.31",
     "@types/lodash": "^4.14.134",
+    "@types/loglevel": "^1.6.3",
     "@types/node": "^12.0.7",
     "babel-preset-env": "^1.7.0",
     "babelify": "^10.0.0",
@@ -12,19 +13,22 @@
     "live-server": "^1.2.1",
     "tsify": "^4.0.1",
     "typescript": "^3.5.1",
-    "watchify": "^3.11.1"
+    "watchify": "^3.11.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
   },
   "scripts": {
-    "start": "concurrently \"yarn:watch-bundle\" \"yarn:watch-ts\"",
-    "watch-bundle": "live-server --watch=bundle.js,index.html,data",
-    "watch-ts": "watchify --debug -v -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/ -o bundle.js",
-    "build": "browserify -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/ > bundle.js"
+    "start": "webpack-dev-server --open",
+    "webpack": "webpack"
   },
   "dependencies": {
     "d3": "^5.9.2",
     "js-combinatorics": "^0.5.4",
     "lodash": "^4.17.11",
-    "moment": "^2.24.0"
+    "loglevel": "^1.6.4",
+    "moment": "^2.24.0",
+    "ts-loader": "^6.2.0"
   },
   "license": "MIT"
 }
