@@ -1,23 +1,74 @@
 import * as _ from "lodash";
 import * as d3 from "d3";
+import { combination } from "js-combinatorics";
 
-import { Chart, Tournament, RLVisualization, Link, TournamentNode } from "../types";
-import { getNodeId } from "../util";
-import { CIRCLE_RADIUS, WIDTH } from "../constants";
+// import { nodeDrag } from "../util";
+import { Chart, RLVisualization } from "../types";
+import { CIRCLE_RADIUS, WIDTH, HEIGHT } from "../constants";
+
+interface PlayerEvent {
+  start: string;
+  team: string;
+  end?: string;
+  role?: string;
+}
+
+interface Player extends d3.SimulationNodeDatum {
+  name: string;
+  events: Array<PlayerEvent>;
+}
+
+type Team = d3.SimulationLinkDatum<Player>;
+
+const CURRENT_DATE = "2015-07-10";
 
 export default class TimelineViz implements RLVisualization {
-  private playerNodes: d3.SimulationNodeDatum[];
-  private samePlayerLinks: Link[];
+  private playerNodes: Player[];
+  private playerLinks: Team[];
 
-  process = () => {};
+  process = async (players: Player[]) => {
+    this.playerNodes = players;
+    this.playerLinks = [];
+
+    const teamMap: Record<string, string[]> = {};
+    const lft = [];
+    await Promise.all(
+      _.map(
+        players,
+        player =>
+          new Promise(resolve => {
+            // TODO: only chooses the earlier on date changes
+            const event = _.findLast(
+              player.events,
+              event => CURRENT_DATE >= event.start && (!event.end || CURRENT_DATE <= event.end),
+            );
+            if (event) {
+              if (!(event.team in teamMap)) {
+                teamMap[event.team] = [];
+              }
+              teamMap[event.team].push(player.name);
+            } else {
+              lft.push(player.name);
+            }
+            resolve();
+          }),
+      ),
+    );
+
+    _.forEach(teamMap, playerNames => {
+      if (playerNames.length >= 2) {
+        this.playerLinks.push(
+          ...combination(playerNames, 2).map(playerCombo => ({
+            source: playerCombo[0],
+            target: playerCombo[1],
+          })),
+        );
+      }
+    });
+  };
 
   draw = (chart: Chart) => {
     // Nodes
-    const y = (d: TournamentNode) =>
-      4 * CIRCLE_RADIUS +
-      d.teamIndex * 5 * (2 * CIRCLE_RADIUS) +
-      d.playerIndex * (2 * CIRCLE_RADIUS);
-
     const nodeSelection = chart
       .append("g")
       .attr("id", "nodes")
@@ -28,53 +79,55 @@ export default class TimelineViz implements RLVisualization {
 
     nodeSelection
       .append("circle")
-      .attr("cx", d => this.x(d.tournamentIndex))
-      .attr("cy", y)
+      // .attr("cx", d => this.x(d.tournamentIndex))
+      // .attr("cy", y)
       .attr("r", CIRCLE_RADIUS);
+    /*
+      TODO uncomment
+      .call(
+        d3
+          .drag()
+          .on("start", nodeDrag.start)
+          .on("drag", nodeDrag.in)
+          .on("end", nodeDrag.end),
+      );
+      */
 
     nodeSelection
       .append("text")
-      .attr("text-anchor", "end")
-      .attr("x", d => this.x(d.tournamentIndex) - CIRCLE_RADIUS - 5)
-      .attr("y", y)
-      .html(d => this.tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex]);
+      .attr("x", 6)
+      .attr("y", 3)
+      .text(d => d.name);
 
     // Links
-    chart
+    const linkSelection = chart
       .append("g")
       .attr("id", "links")
       .selectAll("line")
-      .data(this.samePlayerLinks)
+      .data(this.playerLinks)
       .enter()
       .append("line")
-      .attr("x1", d => this.x(d.source.tournamentIndex))
-      .attr("y1", (d: Link) => y(d.source))
-      .attr("x2", d => this.x(d.target.tournamentIndex))
-      .attr("y2", (d: Link) => y(d.target))
       .attr("stroke", "black");
 
-    // Tournament titles
-    chart
-      .append("g")
-      .attr("id", "tournament-titles")
-      .selectAll("text")
-      .data(this.tournaments)
-      .enter()
-      .append("text")
-      .attr("x", (_d, i) => this.x(i))
-      .attr("y", "1em")
-      .attr("text-anchor", "middle")
-      .html(d =>
-        d.name
-          .split(/[^A-Za-z0-9]/)
-          .map(word => word[0])
-          .join(""),
-      );
+    const ticked = () => {
+      linkSelection
+        .attr("x1", d => _.get(d, "source.x"))
+        .attr("y1", d => _.get(d, "source.y"))
+        .attr("x2", d => _.get(d, "target.x"))
+        .attr("y2", d => _.get(d, "target.y"));
 
-    // Team names
-    chart
-      .append("g")
-      .attr("id", "team-titles")
-      .selectAll("text");
+      nodeSelection.attr("cx", d => d.x || 0).attr("cy", d => d.y || 0);
+    };
+
+    // Simulation
+    const linkForce = d3.forceLink<Player, d3.SimulationLinkDatum<Player>>().id(d => d.name);
+    linkForce.links(this.playerLinks);
+    const simulation = d3
+      .forceSimulation<Player>(this.playerNodes)
+      .force("link", linkForce)
+      .force("charge", d3.forceManyBody())
+      .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2));
+
+    simulation.on("tick", ticked);
   };
 }

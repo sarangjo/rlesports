@@ -1,14 +1,14 @@
 import * as _ from "lodash";
 import * as d3 from "d3";
 
-import { Chart, Tournament, RLVisualization, Link, TournamentNode } from "../types";
+import { Chart, Tournament, RLVisualization, TournamentLink, TournamentNode } from "../types";
 import { getNodeId } from "../util";
 import { CIRCLE_RADIUS, WIDTH } from "../constants";
 
 export default class SimpleViz implements RLVisualization {
   private tournaments: Tournament[];
   private playerNodes: TournamentNode[];
-  private samePlayerLinks: Link[];
+  private samePlayerLinks: TournamentLink[];
   private x: d3.ScaleLinear<number, number>;
 
   private processPlayers = (tournaments: Tournament[]) => {
@@ -76,7 +76,7 @@ export default class SimpleViz implements RLVisualization {
         }
         return _.concat(acc, links);
       },
-      [] as Link[],
+      [] as TournamentLink[],
     );
   };
 
@@ -128,9 +128,9 @@ export default class SimpleViz implements RLVisualization {
       .enter()
       .append("line")
       .attr("x1", d => this.x(d.source.tournamentIndex))
-      .attr("y1", (d: Link) => y(d.source))
+      .attr("y1", (d: TournamentLink) => y(d.source))
       .attr("x2", d => this.x(d.target.tournamentIndex))
-      .attr("y2", (d: Link) => y(d.target))
+      .attr("y2", (d: TournamentLink) => y(d.target))
       .attr("stroke", "black");
 
     // Tournament titles

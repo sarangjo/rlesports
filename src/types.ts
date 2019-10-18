@@ -23,7 +23,7 @@ export interface TournamentNode extends d3.SimulationNodeDatum {
   id: string; // combination of indices
 }
 
-export interface Link {
+export interface TournamentLink {
   source: TournamentNode;
   target: TournamentNode;
 }

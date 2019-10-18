@@ -17,7 +17,7 @@
   "scripts": {
     "start": "concurrently \"yarn:watch-bundle\" \"yarn:watch-ts\"",
     "watch-bundle": "live-server --watch=bundle.js,index.html,data",
-    "watch-ts": "watchify -v -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/ -o bundle.js",
+    "watch-ts": "watchify --debug -v -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/ -o bundle.js",
     "build": "browserify -p tsify -t [ babelify --extensions .ts --presets [ env ] ] src/ > bundle.js"
   },
   "dependencies": {
