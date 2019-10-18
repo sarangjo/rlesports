@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Kronovi",
+    "events": [
+      { "start": "2015-07-09", "end": "2015-10-30", "team": "Cosmic Aftershock" },
+      { "start": "2015-10-30", "end": "2016-09-07", "team": "iBUYPOWER" },
+      { "start": "2016-09-07", "end": "2019-01-07", "team": "G2 Esports" },
+      { "start": "2019-01-07", "team": "Rogue" }
+    ]
+  },
+  {
+    "name": "Gibbs",
+    "events": [
+      { "start": "2015-07-09", "end": "2015-10-30", "team": "Cosmic Aftershock" },
+      { "start": "2015-10-30", "end": "2016-04-01", "team": "iBUYPOWER" },
+      { "start": "2016-04-01", "end": "2016-11-03", "team": "iBUYPOWER", "role": "Manager" }
+    ]
+  },
+  {
+    "name": "Sadjunior",
+    "events": [
+      { "start": "2015-07-09", "end": "2015-10-30", "team": "Cosmic Aftershock" },
+      { "start": "2015-10-30", "end": "2016-03-29", "team": "iBUYPOWER" },
+      { "start": "2016-03-29", "end": "2016-04-09", "team": "Genesis" }
+    ]
+  }
+]
