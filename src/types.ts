@@ -35,6 +35,6 @@ export type Chart = d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
 
 export interface RLVisualization {
   // TODO move to constructor
-  process: (tournaments: Tournament[]) => void;
+  process: (data: any) => void;
   draw: (chart: Chart) => any;
 }

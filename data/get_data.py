@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import copy
 import json
 import pprint
@@ -38,8 +40,11 @@ DEFAULT_PARAMS = {"origin": "*", "format": "json"}
 
 # Files
 
-CACHE_FILE = "cache.json"
+TOURNAMENTS_CACHE_FILE = "cache.json"
 TOURNAMENTS_FILE = "tournaments.json"
+
+PLAYERS_CACHE_FILE = "pcache.json"
+PLAYERS_FILE = "players.json"
 
 # Util
 
@@ -64,8 +69,8 @@ def call_api(opts: Dict[str, Any]):
         sys.exit(1)
 
 
-def get_data() -> Dict[str, Dict]:
-    with open(CACHE_FILE, 'r') as f:
+def get_tournaments_data() -> Dict[str, Dict]:
+    with open(TOURNAMENTS_CACHE_FILE, 'r') as f:
         output = json.load(f)
 
     for (i, t) in enumerate(tournamentNames):
@@ -95,13 +100,13 @@ def get_data() -> Dict[str, Dict]:
             })
             output[t] = wiki_text['parse']
 
-    with open(CACHE_FILE, 'w') as f:
+    with open(TOURNAMENTS_CACHE_FILE, 'w') as f:
         json.dump(output, f, indent=4)
 
     return output
 
 
-def process_data(output: Dict[str, Dict]):
+def process_tournaments_data(output: Dict[str, Dict]):
     tournaments: List[Dict] = []
     for t in output:
         # We are processing all of the lines per tournament
@@ -147,9 +152,35 @@ def process_data(output: Dict[str, Dict]):
         json.dump(tournaments, f, indent=4)
 
 
+def get_players_data(player: str) -> Dict[str, Dict]:
+    with open(PLAYERS_CACHE_FILE, 'r') as f:
+        output = json.load(f)
+
+    if player not in output:
+        wiki_text = call_api({
+            "action": "parse",
+            "prop": "wikitext",
+            "page": player,
+            "format": "json",
+            "section": 0,
+        })
+        output[player] = wiki_text['parse']
+
+    with open(PLAYERS_CACHE_FILE, 'w') as f:
+        json.dump(output, f, indent=4)
+
+    return output
+
+
+def process_players_data(output: Dict[str, Dict]):
+    for player in output:
+        lines: List[str] = output[player]["wikitext"]["*"].split('\n')
+
+
+
 def main():
-    output = get_data()
-    process_data(output)
+    output = get_players_data("Gibbs")
+    process_players_data(output)
 
 
 if __name__ == '__main__':
