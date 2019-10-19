@@ -57,8 +57,9 @@ export default class TimelineViz implements RLVisualization {
       ),
     );
 
-    log.debug(teamMap);
     this.fullTeams = _.keys(_.filter(teamMap, ({}, p) => p.length >= 3));
+    log.debug(teamMap);
+    log.debug(this.fullTeams);
 
     _.forEach(teamMap, playerNames => {
       if (playerNames.length >= 2) {
@@ -83,7 +84,7 @@ export default class TimelineViz implements RLVisualization {
           .id(d => d.name)
           .links(this.playerLinks),
       )
-      .force("collide", d3.forceCollide(20))
+      .force("collide", d3.forceCollide(50))
       .force("x", d3.forceX(WIDTH / 2))
       .force("y", d3.forceY(HEIGHT / 2));
     // .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2).strength(1.5));

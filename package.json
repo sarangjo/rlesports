@@ -10,7 +10,9 @@
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "concurrently": "^4.1.0",
+    "gh-pages": "^2.1.1",
     "live-server": "^1.2.1",
+    "ts-loader": "^6.2.0",
     "tsify": "^4.0.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.1",
@@ -21,15 +23,16 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open",
-    "webpack": "webpack"
+    "build": "webpack",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "d3": "^5.9.2",
     "js-combinatorics": "^0.5.4",
     "lodash": "^4.17.11",
     "loglevel": "^1.6.4",
-    "moment": "^2.24.0",
-    "ts-loader": "^6.2.0"
+    "moment": "^2.24.0"
   },
   "license": "MIT"
 }
