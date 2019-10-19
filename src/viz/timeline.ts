@@ -1,11 +1,12 @@
 import * as d3 from "d3";
 import { combination } from "js-combinatorics";
 import _ from "lodash";
-import log from "loglevel";
 
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { Chart, RLVisualization } from "../types";
 import { nodeDrag } from "../util";
+
+import "./timeline.css";
 
 interface PlayerEvent {
   start: string;
@@ -14,23 +15,34 @@ interface PlayerEvent {
   role?: string;
 }
 
-interface Player extends d3.SimulationNodeDatum {
+interface Player {
   name: string;
   events: PlayerEvent[];
 }
 
-type Team = d3.SimulationLinkDatum<Player>;
+interface FrozenPlayer extends d3.SimulationNodeDatum {
+  name: string;
+  team?: string;
+}
+
+type Team = d3.SimulationLinkDatum<FrozenPlayer>;
 
 const CURRENT_DATE = "2019-10-18";
 
+// Used later to set group curve
+const valueline = d3
+  .line()
+  .x(d => d[0])
+  .y(d => d[1])
+  .curve(d3.curveCatmullRomClosed);
+
 // Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
 export default class TimelineViz implements RLVisualization {
-  private playerNodes: Player[];
+  private playerNodes: FrozenPlayer[] = [];
   private playerLinks: Team[] = [];
   private fullTeams: string[];
 
   public process = async (players: Player[]) => {
-    this.playerNodes = players;
     const teamMap: Record<string, string[]> = {};
 
     const lft = [];
@@ -44,22 +56,23 @@ export default class TimelineViz implements RLVisualization {
               player.events,
               ev => CURRENT_DATE >= ev.start && (!ev.end || CURRENT_DATE <= ev.end),
             );
+            const frozenPlayer: FrozenPlayer = { name: player.name };
             if (event) {
               if (!(event.team in teamMap)) {
                 teamMap[event.team] = [];
               }
               teamMap[event.team].push(player.name);
+              frozenPlayer.team = event.team;
             } else {
               lft.push(player.name);
             }
+            this.playerNodes.push(frozenPlayer);
             resolve();
           }),
       ),
     );
 
-    this.fullTeams = _.keys(_.filter(teamMap, ({}, p) => p.length >= 3));
-    log.debug(teamMap);
-    log.debug(this.fullTeams);
+    this.fullTeams = _.keys(_.pickBy(teamMap, p => p.length >= 3));
 
     _.forEach(teamMap, playerNames => {
       if (playerNames.length >= 2) {
@@ -76,11 +89,11 @@ export default class TimelineViz implements RLVisualization {
   public draw = (chart: Chart) => {
     // Simulation
     const simulation = d3
-      .forceSimulation<Player>(this.playerNodes)
+      .forceSimulation<FrozenPlayer>(this.playerNodes)
       .force(
         "link",
         d3
-          .forceLink<Player, d3.SimulationLinkDatum<Player>>()
+          .forceLink<FrozenPlayer, Team>()
           .id(d => d.name)
           .links(this.playerLinks),
       )
@@ -88,6 +101,22 @@ export default class TimelineViz implements RLVisualization {
       .force("x", d3.forceX(WIDTH / 2))
       .force("y", d3.forceY(HEIGHT / 2));
     // .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2).strength(1.5));
+
+    // Teams
+    const pathContainers = chart
+      .append("g")
+      .attr("id", "teams")
+      .selectAll(".group-path")
+      .data(this.fullTeams)
+      .enter()
+      .append("g")
+      .attr("class", "group-path");
+
+    const paths = pathContainers
+      .append("path")
+      .attr("stroke", "blue")
+      .attr("fill", "lightblue")
+      .attr("opacity", 1);
 
     // Nodes
     const nodeGSelection = chart
@@ -111,7 +140,7 @@ export default class TimelineViz implements RLVisualization {
 
     nodeGSelection
       .append("text")
-      .attr("x", 6)
+      .attr("x", CIRCLE_RADIUS + 1)
       .attr("y", 3)
       .text(d => d.name);
 
@@ -125,62 +154,15 @@ export default class TimelineViz implements RLVisualization {
       .append("line")
       .attr("stroke", "black");
 
-    // Teams: TODO
-    /*
-    const groupsSelection = chart.append("g").attr("id", "teams");
-    const paths = groupsSelection
-      .selectAll(".path")
-      .data(this.fullTeams)
-      .enter()
-      .append("g")
-      .attr("class", "path")
-      .append("path")
-      .attr("stroke", "blue")
-      .attr("fill", "lightblue")
-      .attr("opacity", 0);
-    paths
-      .transition()
-      .duration(2000)
-      .attr("opacity", 1);
-
-    const polygonGenerator = groupId => {
+    // Given a team name, generate the polygon for it
+    const polygonGenerator = (teamName: string) => {
       const nodeCoords = nodeGSelection
-        .filter(d => d. === groupId)
+        .filter(d => d.team === teamName)
         .data()
-        .map(function(d) {
-          return [d.x, d.y];
-        });
+        .map(d => [d.x, d.y]);
 
-      return d3.polygonHull(nodeCoords);
+      return d3.polygonHull(nodeCoords as Array<[number, number]>);
     };
-
-    const updateGroups = () => {
-      this.fullTeams.forEach(groupId => {
-        const path = paths
-          .filter(d => d == groupId)
-          .attr("transform", "scale(1) translate(0,0)")
-          .attr("d", d => {
-            polygon = polygonGenerator(d);
-            centroid = d3.polygonCentroid(polygon);
-
-            // to scale the shape properly around its points:
-            // move the 'g' element to the centroid point, translate
-            // all the path around the center of the 'g' and then
-            // we can scale the 'g' element properly
-            return valueline(
-              polygon.map(function(point) {
-                return [point[0] - centroid[0], point[1] - centroid[1]];
-              }),
-            );
-          });
-
-        d3.select(path.node().parentNode).attr(
-          "transform",
-          "translate(" + centroid[0] + "," + centroid[1] + ") scale(" + scaleFactor + ")",
-        );
-      });
-    };
-    */
 
     const ticked = () => {
       linkSelection
@@ -190,9 +172,37 @@ export default class TimelineViz implements RLVisualization {
         .attr("y2", d => _.get(d, "target.y"));
 
       nodeGSelection.attr("transform", d => `translate(${d.x},${d.y})`);
+
+      this.fullTeams.forEach(teamName => {
+        let centroid: [number, number] = [0, 0];
+
+        // Set the path
+        paths
+          .filter(d => d === teamName)
+          .attr("transform", "scale(1) translate(0,0)")
+          .attr("d", d => {
+            const polygon = polygonGenerator(d);
+            if (polygon) {
+              centroid = d3.polygonCentroid(polygon);
+
+              // to scale the shape properly around its points:
+              // move the 'g' element to the centroid point, translate
+              // all the path around the center of the 'g' and then
+              // we can scale the 'g' element properly
+              return valueline(
+                polygon.map(point => [point[0] - centroid[0], point[1] - centroid[1]]),
+              );
+            }
+            return null;
+          });
+
+        // Set the path container
+        pathContainers
+          .filter(d => d === teamName)
+          .attr("transform", "translate(" + centroid[0] + "," + centroid[1] + ") scale(1.2)");
+      });
     };
 
-    // Tick
     simulation.on("tick", ticked);
   };
 }
