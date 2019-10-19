@@ -1,352 +1,569 @@
 {
-    "Gibbs": {
-        "title": "Gibbs",
-        "pageid": 1482,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview |link1=Gibbs\n|name2=Results |link2=Gibbs/Results\n|name3=Broadcasts |link3=Gibbs/Broadcasts\n|This=1\n}}\n{{Infobox player\n|id=Gibbs\n|name=Randy Gibbons\n|country=United States\n|birth_date=\n|team=\n|image=DHMONTREAL 2019 RL GIBBS.jpg\n|status=Retired\n|role=Caster\n|game=sarpbc\n|twitter=Gibbs0o0\n|twitch=Gibbs0o0\n|youtube=user/Gibbs0o0\n|steam=id/Gibbs0o0\n|discord=0gBPfpdeoKJ17DR4\n|reddit=Gibbs0o0\n|history=\n{{TH|2015-07-09 \u2013 2015-10-30|Cosmic Aftershock}}\n{{TH|2015-10-30 \u2013 2016-04-01|iBUYPOWER}}\n{{TH|2015-04-01 \u2013 2016-11-03|iBUYPOWER|manager}}\n}}\nRandy '''\"Gibbs\"''' Gibbons was an [[:category:United States|American]] ''Rocket League'' player; he is now an analyst for [[RLCS]]."
-        }
-    },
-    "Kronovi": {
-        "title": "Kronovi",
-        "pageid": 687,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Kronovi\n|name2=Results\n|link2=Kronovi/Results\n|This=1\n}}\n{{Infobox player\n|id=Kronovi\n|ids=Kro\n|name=Cameron Bills\n|country=United States\n|birth_date={{birth_date_and_age|1997|08|30}}\n|team=Rogue\n|image=DHMONTREAL_2019_RL_KRONOVI.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=kronovirl\n|twitch=kronovi\n|steam=id/KronoviRL\n|youtube=user/stevebiIIs\n|history=\n{{TH|2015-07-09 \u2013 2015-10-30|Cosmic Aftershock}}\n{{TH|2015-10-30 \u2013 2016-09-07|iBUYPOWER}}\n{{TH|2016-09-07 \u2013 2019-01-07|G2 Esports}}\n{{TH|2019-01-07 - '''Present'''|Rogue}}\n}}\n{{upcoming matches player}}\nCameron '''\"Kronovi\"''' Bills {{born}} is an [[:category:United States|American]] ''Rocket League'' player and streamer who currently plays for [[Rogue]]."
-        }
-    },
-    "Alex161": {
-        "title": "Alex161",
-        "pageid": 20641,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Alex161\n|name2=Results\n|link2=Alex161/Results\n|This=1\n}}\n{{Infobox player\n|id=Alex161\n|name=Alex Ernst\n|country=Germany\n|birth_date={{birth_date_and_age|1998|10|09}}\n|team=Big Brained Gamers\n|image=DHLEIPZIG 2019 RL Alex161.jpg\n|status=Active\n|role=Player\n|twitter=xAlex161\n|twitch=Alex161x\n|steam=id/Carry161\n|history=\n{{TH|2016-10-?? \u2013 2017-01-?? |Parallax}}\n{{TH|2017-02-?? \u2013 2017-03-?? |Pentagram}}\n{{TH|2017-05-24 \u2013 2017-06-23|Parallax}}\n{{TH|2017-06-23 \u2013 2017-09-30|Epsilon eSports}}\n{{TH|2018-01-27 \u2013 2018-02-13|Placeholder}}\n{{TH|2017-08-07 \u2013 2018-03-16|ExRay}}\n{{TH|2018-03-16 \u2013 2018-07-11|Servette Geneva eSports}}\n{{TH|2018-07-11 \u2013 2018-07-30|Ex-Servette Geneva eSports}}\n{{TH|2018-07-30 \u2013 2019-06-11|mousesports}}\n{{TH|2019-08-24 - '''Present'''|Big Brained Gamers}}\n|history_gfinity=\n{{TH_Gfinity|1|Epsilon eSports}}\n}}\n{{upcoming matches player}}\nAlex '''\"Alex161\"''' Ernst {{born}} is a [[:category:Germany|German]] ''Rocket League'' player."
-        }
-    },
-    "Allushin": {
-        "title": "Allushin",
-        "pageid": 22798,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Allushin\n|name2=Results\n|link2=Allushin/Results\n|This=1\n}}\n{{Infobox player\n|id=Allushin\n|name=Braxton Lagarec\n|country=Canada\n|birth_date={{birth_date_and_age|1999|09|03}}\n|team=Ghost Gaming\n|image=DHMONTREAL 2019 RL ALLUSHIN.jpg\n|status=Active\n|role=Player\n|twitter=AllushinRL\n|twitch=allushin\n|steam=id/allushin\n|history=\n{{TH|2017-05-21 \u2013 2017-06-18|Fibeon Esports}}\n{{TH|2017-08-03 \u2013 2017-09-14|Emotion}}\n{{TH|2017-09-14 \u2013 2018-12-06|Allegiance}}\n{{TH|2018-12-06 \u2013  2019-02-05|Ex-Allegiance}}\n{{TH|2019-04-02 \u2013  '''Present'''|Ghost Gaming}}\n}}\n{{upcoming matches player}}\nBraxton '''\"Allushin\"''' Lagarec {{born}} is a [[:category:Canada|Canadian]] ''Rocket League'' player."
-        }
-    },
-    "AxB": {
-        "title": "AxB",
-        "pageid": 29538,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=AxB\n|name2=Results\n|link2=AxB/Results\n|This=1\n}}\n{{Infobox player\n|id=AxB\n|name=Alexandre Bellemare\n|country=Canada\n|birth_date={{birth_date_and_age|1995|09|19}}\n|team=Spacestation Gaming\n|image=DHDALLAS_2019_RL_AXB.jpg\n|status=Active\n|role=Player\n|twitter=AxB_RL\n|twitch=axb_rl\n|steam=profiles/76561198071944774\n|history=\n{{TH|2017-08-02 \u2013 2018-04-14|The D00ds}}\n{{TH|2018-08-01 \u2013 2019-04-04|Bread}}\n{{TH|2019-04-04 \u2013 '''Present'''|Spacestation Gaming}}\n}}\n{{upcoming matches player}}\nAlexandre \"'''AxB'''\" Bellemare {{born}} is a [[:category:Canada|Canadian]] Rocket League player."
-        }
-    },
-    "AyyJayy": {
-        "title": "AyyJayy",
-        "pageid": 25962,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=AyyJayy\n|name2=Results\n|link2=AyyJayy/Results\n|This=1\n}}\n{{Infobox player\n|id=AyyJayy\n|name=Austin Aebi\n|country=United States\n|birth_date={{birth_date_and_age|2002|12|10}}\n|team=Rogue\n|image=RLSUMMIT AYYJAYY 2.jpg\n|status=Active\n|role=Player\n|twitter=AyyJayyRL\n|steam=id/AyyJayyRL\n|twitch=ayyjayy\n|youtube=channel/UCktpnUzA1CI7rWna-Uc0tKA\n|history=\n{{TH|2018-01-09 - 2018-12-20|FlyQuest}}\n{{TH|2018-12-20 - '''Present'''|Rogue}}\n}}\n{{upcoming matches player}}\nAustin '''\"AyyJayy\"''' Aebi {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
-        }
-    },
-    "Bluey": {
-        "title": "Bluey",
-        "pageid": 7318,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Bluey\n|name2=Results\n|link2=Bluey/Results\n|This=1\n}}\n{{Infobox player\n|id=Bluey\n|ids=blueyMONSTER., blueyMACHINE.\n|name=Dan Bluett\n|country=England\n|country2=Spain\n|birth_date={{birth_date_and_age|2001|12|11}}\n|team=FC Barcelona\n|image=DHVALENCIA 2019 RL BLUEY.jpg\n|status=Active\n|role=Player\n|twitter=BlueyRL\n|twitch=Bluey\n|steam=id/Bluey4114\n|youtube=user/kbluett\n|history=\n{{TH|2016-04-?? \u2013 2016-05-29 |Gentlemen}}\n{{TH|2016-06-26 \u2013 2016-08-09|Savage!}}\n{{TH|2016-08-21 \u2013 2016-10-09|We Dem Babies}}\n{{TH|2017-02-20 \u2013 2017-04-06|Urban Myths}}\n{{TH|2017-04-06 \u2013 2017-??-??|Team Infused}}\n{{TH|2017-08-04 \u2013 2017-09-22|Frontline}}\n{{TH|2017-09-22 \u2013 2018-08-01|PSG Esports}}\n{{TH|2018-08-01 \u2013 2018-08-05|PSG Esports|Substitute}}\n{{TH|2018-08-05 \u2013 2019-04-04|Savage!}}\n{{TH|2019-04-04 \u2013 '''Present'''|FC Barcelona}}\n}}\n{{upcoming matches player}}\nDan '''\"Bluey\"''' Bluett {{born}} is an [[:category:England|English]] ''Rocket League'' player, who is currently living in Spain."
-        }
-    },
-    "CJCJ": {
-        "title": "CJCJ",
-        "pageid": 23087,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=CJCJ\n|name2=Results\n|link2=CJCJ/Results\n|This=1\n}}\n{{Infobox player\n|id=CJCJ\n|name= Cameron Johns\n|country=Australia\n|birth_date={{birth_date_and_age|1998|08|06}}\n|team=Chiefs Esports Club\n|image=DHVALENCIA 2019 RL CJCJ.jpg\n|status=Active\n|role=Player\n|twitter=CJCJ_RL\n|twitch=CJCJ_RL\n|steam=profiles/76561197998103705\n|history=\n{{TH|2017-01-21 \u2013 2017-02-12|The Drongos}}\n{{TH|2017-02-20 \u2013 2017-05-17|Trident Esports}}\n{{TH|2017-05-17 \u2013 2017-06-20|The Drongos}}\n{{TH|2017-06-20 \u2013 2017-07-25|You See Me}}\n{{TH|2017-07-25 \u2013 2017-11-28|Pale Horse eSports}}\n{{TH|2017-11-29 \u2013 2019-02-21|Tainted Minds}}\n{{TH|2019-02-21 \u2013 2019-06-26|ICON Esports}}\n{{TH|2019-06-26 \u2013 '''Present'''|Chiefs Esports Club}}\n\n|history_gfinity=\n{{TH_Gfinity_AU|2|Roar}}\n}}\n{{upcoming matches player}}\nCameron '''\"CJCJ\"''' Johns {{born}} is an [[:Category:Australia|Australian]] ''Rocket League'' player."
-        }
-    },
-    "Chausette45": {
-        "title": "Chausette45",
-        "pageid": 7080,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Chausette45\n|name2=Results\n|link2=Chausette45/Results\n|This=1\n}}\n{{Infobox player\n|id=Chausette45\n|ids=Chausette\n|name=Thibault Grzesiak\n|country=France\n|birth_date={{birth_date_and_age|2001|03|16}}\n|team=Team Reciprocity\n|image=DHMONTREAL 2019 RL CHAUSETTE45.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=ChausetteRL\n|youtube=\n|twitch=Chausette45\n|steam=id/chausette45\n|instagram=chausetterl\n|history=\n{{TH|2015-08-30 \u2013 2015-09-06|UltimaTeam}}\n{{TH|2015-09-06 \u2013 2015-09-19|RdyToFly}}\n{{TH|2015-10-10 \u2013 2015-10-25|PlaY0urLife}}\n{{TH|2015-10-25 \u2013 2015-12-26|inXtremis RL}}\n{{TH|2015-12-26 \u2013 2016-03-03|AneVia RL}}\n{{TH|2016-03-03 \u2013 2016-03-13|Shoot N Goal}}\n{{TH|2016-03-13 \u2013 2016-06-12|SnK eSports}}\n{{TH|2016-06-12 \u2013 2016-07-03|Shoot N Goal}}\n{{TH|2016-08-25 \u2013 2016-08-29|Shoot N Miss}}\n{{TH|2016-09-04 \u2013 2016-12-24|Red Eye}}\n{{TH|2017-02-17 \u2013 2017-04-07|Pocket Aces}}\n{{TH|2017-04-07 \u2013 2017-05-18|Gale Force eSports}}\n{{TH|2017-06-30 \u2013 2017-07-24|WeDemMois}}\n{{TH|2017-08-04 \u2013 2017-09-22|Frontline}}\n{{TH|2017-09-22 \u2013  2019-08-09|PSG Esports}}\n{{TH|2019-08-09 \u2013 2019-09-03|Frontline}}\n{{TH|2019-09-03 - '''Present'''|Team Reciprocity}}\n}}\n{{upcoming matches player}}\nThibault '''\"Chausette45\"''' Grzesiak {{born}} is a [[:category:France|French]] ''Rocket League'' player."
-        }
-    },
-    "Chicago": {
-        "title": "Chicago",
-        "pageid": 23362,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Chicago\n|name2=Results\n|link2=Chicago/Results\n|This=1\n}}\n{{Infobox player\n|id=Chicago\n|name=Reed Wilen\n|country=United States\n|birth_date={{birth_date_and_age|2001|06|12}}\n|team=G2 Esports\n|image=DHVALENCIA 2019 RL CHICAGO.jpg\n|status=Active\n|role=Player\n|twitter=Chicago_RL\n|twitch=Chicago_RL\n|steam=profiles/76561198293785594\n|history=\n{{TH|2016-11-22 \u2013 2016-12-10|Boom!}}\n{{TH|2017-05-16 \u2013 2017-07-01|Applesauce}}\n{{TH|2017-07-01 \u2013 2017-11-07|Fibeon eSports}}\n{{TH|2017-11-07 \u2013 2018-01-23|Applesauce}}\n{{TH|2018-01-23 \u2013 2018-05-22|Team Dignitas}}\n{{TH|2018-05-22 \u2013 2018-06-22|Ex-Dignitas}}\n{{TH|2018-06-22 \u2013 2019-01-07|Evil Geniuses}}\n{{TH|2019-01-07 \u2013 '''Present'''|G2 Esports}}\n}}\n{{upcoming matches player}}\nReed \"'''Chicago'''\" Wilen {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
-        }
-    },
-    "CorruptedG": {
-        "title": "CorruptedG",
-        "pageid": 7207,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=CorruptedG\n|name2=Results\n|link2=CorruptedG/Results\n|This=1\n}}\n{{Infobox player\n|id=CorruptedG\n|name=Gabriel Vallozzi\n|country=Canada\n|birth_date={{birth_date_and_age|1995|06|01}}\n|team=Chaos Esports Club\n|image=WGN NA CHAMPIONSHIP CORRUPTEDG.jpg\n|status=Active\n|role=Player\n|twitter=CorruptedGabe\n|twitch=corruptedg \n|youtube=TheGurtle\n|steam=id/corruptedg\n|history=\n{{TH|2016-04-03 \u2013 2016-06-06|Phoenix Infinity}}\n{{TH|2016-06-06 \u2013 2016-07-16|FakeOut Nation}}\n{{TH|2016-07-22 \u2013 2016-08-17|Empyreal eSports}}\n{{TH|2016-08-17 \u2013 2016-10-23|Deception}}\n{{TH|2017-01-21 \u2013 2017-02-25|eQuinox}}\n{{TH|2017-02-25 \u2013 2017-07-01|Denial Esports}}\n{{TH|2017-07-03 \u2013 2017-07-18|Lachinio's team}}\n{{TH|2017-07-18 \u2013 2017-08-07|Myth Gaming}}\n{{TH|2017-08-07 \u2013 2017-09-02|eQuinox}}\n{{TH|2017-09-02 \u2013 2018-01-09|FlyQuest}}\n{{TH|2018-01-09 \u2013 2018-03-13|eQuinox}}\n{{TH|2018-03-13 \u2013 2019-06-09|Evil Geniuses}}\n{{TH|2019-06-09 \u2013 2019-07-28|Randy Gibbons' River Rats}}\n{{TH|2019-07-28 \u2013 2019-10-06|Plot Twist}}\n{{TH|2019-10-06 - '''Present'''|Chaos Esports Club}}\n}}\n{{upcoming matches player}}\nGabriel '''\"CorruptedG\"''' Vallozzi {{born}} is a [[:category:Canada|Canadian]] ''Rocket League'' player."
-        }
-    },
-    "Deevo": {
-        "title": "Deevo",
-        "pageid": 7060,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Deevo\n|name2=Results\n|link2=Deevo/Results\n|This=1\n}}\n{{Infobox player\n|id=Deevo\n|ids=DynamicDave\n|name=David Morrow\n|country=England\n|country2=Spain\n|birth_date={{birth_date_and_age|2000|07|12}}\n|team=FC Barcelona\n|image=DHVALENCIA 2019 RL DEEVO.jpg\n|status=Active\n|role=Player\n|twitter=Deevo\n|twitch=deevo\n|steam=id/DeevoRL\n|history=\n{{TH|2016-01-17 \u2013 2016-03-14 |Dot Dot Dot}}\n{{TH|2016-03-27 \u2013 2016-03-29 |Cow Nose}}\n{{TH|2016-03-29 \u2013 2016-06-05 |eff0rt}}\n{{TH|2016-06-26 \u2013 2016-08-09 |Savage!}}\n{{TH|2016-08-27 \u2013 2016-09-07|WillyWonkerPoodles}}\n{{TH|2016-09-07 \u2013 2016-12-09|Mock-It eSports EU}}\n{{TH|2016-12-09 \u2013 2017-01-09|Aces}}\n{{TH|2017-01-09 \u2013 2017-06-21|Northern Gaming}}\n{{TH|2017-06-21 \u2013 2018-07-30|Team EnVyUs}}\n{{TH|2018-08-04 \u2013 2018-08-05|Washed Up!}}\n{{TH|2018-08-05 \u2013 2019-04-04|Savage!}}\n{{TH|2019-04-04 \u2013 '''Present'''|FC Barcelona}}\n}}\n{{upcoming matches player}}\nDavid '''\"Deevo\"''' Morrow {{born}} is an [[:category:England|English]] ''Rocket League'' player, who is currently living in Spain."
-        }
-    },
-    "Drippay": {
-        "title": "Drippay",
-        "pageid": 20013,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Drippay\n|link1=Drippay\n|name2=Results\n|link2=Drippay/Results\n|This=1\n}}\n{{Infobox player\n|id=Drippay\n|name=Matthew Den-Kaat\n|country=Australia\n|birth_date={{birth_date_and_age|2000|03|09}}\n|team=Chiefs Esports Club\n|image=DHDALLAS 2019 RL DRIPPAY.jpg\n|status=Active\n|role=Player\n|twitter=DrippayRL\n|twitch=drippay\n|youtube=channel/UCmuFdR5S_KdQkQxk1hKkYaQ\n|steam=id/DrippayRL\n|history=\n{{TH|2016-10-05 \u2013 2016-10-27|Legacy eSports|link=Legacy eSports (Australian team)}}\n{{TH|2016-10-27 \u2013 2017-07-07|Alpha Sydney}}\n{{TH|2017-07-07 \u2013 2017-08-12|Billy Fan Club}}\n{{TH|2017-08-12 \u2013 2019-01-11|Chiefs eSports Club}}\n{{TH|2019-01-11 \u2013 2019-08-15|Evil Geniuses}}\n{{TH|2019-09-13 \u2013 '''Present'''|Chiefs eSports Club}}\n|history_gfinity=\n{{TH_Gfinity_AU|1|Chiefs Esports Club}}\n{{TH_Gfinity_AU|2|Chiefs Esports Club}}\n}}\n{{upcoming matches player}}\nMatthew '''\"Drippay\"''' Den-Kaat {{born}} is an [[:category:Australia|Australian]] ''Rocket League'' player, who lived in the [[:category:United States|United States]] while playing for [[Evil Geniuses]]. He has now moved back over to [[:category:Oceania|Oceania]] to compete with [[Chiefs Esports Club|Chiefs ESC]]."
-        }
-    },
-    "Dumbo": {
-        "title": "Dumbo",
-        "pageid": 19203,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Dumbo\n|link1=Dumbo\n|name2=Results\n|link2=Dumbo/Results\n|This=1\n}}\n{{Infobox player\n|id=Dumbo\n|name=Phillip Donachie\n|country=Australia\n|birth_date=\n|team=\n|image=PlayerImagePlaceholder.png\n|status=Active\n|role=Player\n|twitter=DumboRL\n|twitch=dumborl\n|steam=id/dafreo\n|history=\n{{TH|2016-02-01 \u2013 2016-10-18|Alpha Sydney}}\n{{TH|2016-11-?? \u2013 2017-02-20|Sand Castle}}\n{{TH|2016-02-20 \u2013 2017-03-30|Athletico}}\n{{TH|2017-03-30 \u2013 2017-06-16|Sand Castle}}\n{{TH|2017-06-16 \u2013 2017-11-20|Scylla Esports}}\n{{TH|2017-12-14 \u2013 2018-06-27|Dark Sided}}\n{{TH|2018-06-27 \u2013 2018-08-17|Ex-Dark Sided}}\n{{TH|2018-08-17 \u2013 2018-08-19|Dumb}}\n{{TH|2018-08-19 \u2013 2019-02-25|ORDER}}\n{{TH|2019-03-06 \u2013 2019-05-25|Sand Castle}}\n{{TH|2019-06-19 \u2013 2019-10-18|EDGE}}\n|history_gfinity=\n{{TH_Gfinity_AU|1|ORDER}}\n{{TH_Gfinity_AU|2|ORDER}}\n}}\n{{upcoming matches player}}\nPhillip '''\"Dumbo\"''' Donachie is an [[:Category:Australia|Australian]] ''Rocket League'' player."
-        }
-    },
-    "Express": {
-        "title": "Express",
-        "pageid": 20010,
-        "wikitext": {
-            "*": "\n{{Tabs static\n|name1=Express\n|link1=Express\n|name2=Results\n|link2=Express/Results\n|This=1\n}}\n{{Infobox player\n|id=Express\n|name=Jonathan Slade\n|country=Australia\n|birth_date={{birth_date_and_age|1998|08|22}}\n|team=Chiefs Esports Club\n|image=DHMONTREAL_2019_RL_EXPRESS.jpg\n|status=Active\n|role=Player\n|twitter=ExpressRL_\n|steam=id/express157\n|twitch=\n|history=\n{{TH|2016-01-08 \u2013 2017-01-07|Abyss eSports}}\n{{TH|2017-01-07 \u2013 2017-03-06|1More}}\n{{TH|2017-03-06 \u2013 2017-11-08|JAM Gaming}}\n{{TH|2017-11-15 \u2013 2018-06-27|Dark Sided}}\n{{TH|2018-06-27 \u2013 2018-08-17|Ex-Dark Sided}}\n{{TH|2018-08-17 \u2013 2019-02-21|Tainted Minds}}\n{{TH|2019-02-21 \u2013 2019-06-26|ICON Esports}}\n{{TH|2019-06-26 \u2013 '''Present'''|Chiefs Esports Club}}\n|history_gfinity=\n{{TH_Gfinity_AU|1|ORDER}}\n{{TH_Gfinity_AU|2|Roar}}\n}}\n{{upcoming matches player}}\nJonathan '''\"Express\"''' Slade {{born}} is an [[:Category:Australia|Australian]] ''Rocket League'' player."
-        }
-    },
-    "EyeIgnite": {
-        "title": "EyeIgnite",
-        "pageid": 23141,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=EyeIgnite\n|name2=Results\n|link2=EyeIgnite/Results\n|This=1\n}}\n{{Infobox player\n|id=EyeIgnite\n|ids=\n|name=Jordan Stellon\n|country=England\n|birth_date={{birth_date_and_age|1996|04|23}}\n|team=Fadeaway\n|image=DHDALLAS 2019 RL EYEIGNITE.jpg\n|status=Active\n|role=Player\n|twitter=eyeignite\n|instagram=eyeignite_rl\n|twitch=EyeIgnite\n|steam=id/EyeIgnite10\n|history=\n{{TH|2016-09-05 - 2016-09-18|Swamp Monkeys}}\n{{TH|2017-02-22 \u2013 2017-03-05|Parhelion}}\n{{TH|2017-03-05 \u2013 2017-03-23|Rex Gaming}}\n{{TH|2017-04-06 \u2013 2017-08-07|Team Infused}}\n{{TH|2017-08-07 \u2013 2018-02-08|ExRay}}\n{{TH|2018-02-08 \u2013 2018-07-30|Team EnVyUs}}\n{{TH|2018-07-30 - 2018-08-05|Ex-Envy}}\n{{TH|2018-08-05 - 2019-01-04|We Dem Girlz}}\n{{TH|2019-01-04 - 2019-08-04|Team SoloMid}}\n{{TH|2019-08-25 \u2013 '''Present''' |Fadeaway}}\n|history_gfinity=\n{{TH_Gfinity|1|Team Infused}}\n{{TH_Gfinity|2|Prophecy}}\n{{TH_Gfinity|3|Team EnVyUs}}\n}}\n{{upcoming matches player}}\nJordan '''\"EyeIgnite\"''' Stellon {{born}} is an [[:category:England|English]] ''Rocket League'' player."
-        }
-    },
-    "BoritoB": {
-        "title": "BoritoB",
-        "pageid": 24786,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=BoritoB\n|name2=Results\n|link2=BoritoB/Results\n|This=1\n}}{{DISPLAYTITLE:Borito B}}\n{{Infobox player\n|id=Borito B\n|name=Boris Pieper \n|country=Netherlands\n|birth_date={{birth_date_and_age|1999|03|17}}\n|team=Method\n|image=GFINITY_JOEBRADY_BORITOB.jpg\n|status=Active\n|role=Player\n|twitter=BoritoB_RL\n|steam=id/broritob\n|twitch=borito_b\n|history=\n{{TH|2015-11-01 \u2013 2015-11-18|The 3 Musketeers}}\n{{TH|2016-05-19 \u2013 2016-08-03|Kden}}\n{{TH|2017-07-03 \u2013 2017-09-06|BitterSweet}}\n{{TH|2017-09-06 \u2013 2017-10-21|Defusekids}}\n{{TH|2017-09-17 \u2013 2018-01-05|Reason Gaming}}\n{{TH|2018-01-05 \u2013 2018-02-10|ShaBoRix}}\n{{TH|2018-02-10 \u2013 '''Present''' |Method}}\n|history_gfinity=\n{{TH_Gfinity|2|Reason Gaming}}\n{{TH_Gfinity|3|Method}}\n{{TH_Gfinity|4|Method}}\n}}\n{{upcoming matches player}}\nBoris '''\"Borito B\"''' Pieper {{born}} is a [[:category:Netherlands|Dutch]] ''Rocket League'' Player."
-        }
-    },
-    "Fairy Peak": {
-        "title": "Fairy Peak",
-        "pageid": 11613,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Fairy Peak\n|name2=Results\n|link2=Fairy Peak/Results\n|This=1\n}}\n{{Infobox player\n|id=Fairy Peak\n|name=Victor Locquet\n|country=France\n|birth_date={{birth_date_and_age|1998|05|26}}\n|team=Renault Sport Team Vitality\n|image=DHMONTREAL 2019 RL FAIRY PEAK.jpg\n|status=Active\n|role=Player\n|twitter=FairyyPeak\n|youtube=channel/UCkRN972D6W5IoAAEm10ULsQ\n|twitch=fairypeak\n|steam=id/fairypeak\n|discord=r2bVw3x\n|history=\n{{TH|2016-??-?? \u2013 2016-08-08 |Supernova}}\n{{TH|2016-08-08 \u2013 2016-08-22 |Xylaga}}\n{{TH|2016-08-22 \u2013 2016-12-12 |Luminance}}\n{{TH|2017-01-20 \u2013 2017-06-20|Mock-It eSports EU}}\n{{TH|2017-06-20 \u2013 2018-01-09|Mock-It eSports}}\n{{TH|2018-01-09 \u2013 2018-02-12|Guess Who}}\n{{TH|2018-02-12 \u2013 '''Present'''|Renault Vitality}}\n|history_gfinity=\n{{TH_Gfinity|3|Renault Sport Team Vitality}}\n{{TH_Gfinity|4|Renault Sport Team Vitality}}\n}}\n{{upcoming matches player}}\nVictor '''\"Fairy Peak\"''' Locquet {{born}} is a [[:category:France|French]] ''Rocket League'' player."
-        }
-    },
-    "Ferra": {
-        "title": "Ferra",
-        "pageid": 18504,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Ferra\n|name2=Results\n|link2=Ferra/Results\n|This=1\n}}\n{{Infobox player\n|id=Ferra\n|name=Victor Francal\n|country=France\n|birth_date={{birth_date_and_age|1996|10|31}}\n|team=Team Reciprocity\n|image=DHMONTREAL 2019 RL FERRA.jpg\n|status=Active\n|role=Player\n|twitter=Ferra_RL\n|youtube=\n|twitch=ferra\n|steam=id/42ferra\n|history=\n{{TH|2016-??-?? \u2013 2016-06-19 |Rare Penguins}}\n{{TH|2016-06-26 \u2013 2016-08-08 |Supernova}}\n{{TH|2016-08-08 \u2013 2016-08-22 |Xylaga}}\n{{TH|2016-08-22 \u2013 2016-12-12 |Luminance}}\n{{TH|2017-02-22 \u2013 2017-07-07|The Leftovers}}\n{{TH|2017-08-04 \u2013 2017-09-22|Frontline}}\n{{TH|2017-09-22 \u2013 2019-08-09|PSG Esports}}\n{{TH|2019-08-09 \u2013 2019-09-03|Frontline}}\n{{TH|2019-09-03 - '''Present'''|Team Reciprocity}}\n}}\n{{upcoming matches player}}\nVictor '''\"Ferra\"''' Francal {{born}} is a [[:category:France|French]] ''Rocket League'' player."
-        }
-    },
-    "FreaKii": {
-        "title": "FreaKii",
-        "pageid": 6683,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=FreaKii\n|name2=Results\n|link2=FreaKii/Results\n|This=1\n}}\n{{Infobox player\n|id=FreaKii\n|name=Sandro Holzwarth\n|country=Germany\n|birth_date={{birth_date_and_age|1996|08|02}}\n|team=Veloce Esports\n|image=DHVALENCIA 2019 RL FREAKII.jpg\n|status=Active\n|role=Player\n|twitter=FreaKiiRL\n|twitch=freakiirl\n|steam=id/freakiirl\n|discord=invite/YG5EeYY\n|history=\n{{TH|2016-03-13 \u2013 2016-05-15|Zeus eSports}}\n{{TH|2016-05-15 \u2013 2016-09-03|Team Enjoy}}\n{{TH|2016-09-03 \u2013 2017-01-19|PENTA Sports}}\n{{TH|2017-01-19 \u2013 2017-01-30|Aces}}\n{{TH|2017-01-30 \u2013 2017-06-20|PENTA Sports}}\n{{TH|2017-06-20 \u2013 2018-01-09|Mock-It eSports}}\n{{TH|2018-01-09 \u2013 2018-02-12|Guess Who}}\n{{TH|2018-02-12 \u2013 2018-06-15|Renault Vitality}}\n{{TH|2018-06-15 \u2013 2018-07-18|Renault Vitality|Inactive}}\n{{TH|2018-08-08 \u2013 2019-01-28|Team Secret}}\n{{TH|2019-01-28 - 2019-02-06 |Ex-Secret}}\n{{TH|2019-02-06 - 2019-02-14|Melon Squad}}\n{{TH|2019-02-14 - '''Present'''|Veloce Esports}}\n|history_gfinity=\n{{TH_Gfinity|3|Renault Vitality}}\n}}\n{{upcoming matches player}}\nSandro '''\"FreaKii\"''' Holzwarth {{born}} is a [[:category:Germany|German]] ''Rocket League'' player."
-        }
-    },
-    "GarrettG": {
-        "title": "GarrettG",
-        "pageid": 2935,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=GarrettG\n|name2=Results\n|link2=GarrettG/Results\n|This=1\n}}\n{{Infobox player\n|id=GarrettG\n|name=Garrett Gordon\n|country=United States\n|birth_date={{birth_date_and_age|2001|02|06}}\n|team=NRG Esports\n|image=DHMONTREAL_2019_RL_GARRETTG.jpg\n|status=Active\n|role=Player\n|twitter=GarrettG\n|twitch=garrettg\n|youtube=channel/UCjZCggPJ2xeo08V2jJpI6mA\n|instagram=garrettg.c\n|steam=id/garrettg34\n|history=\n{{TH|2015-12-27 \u2013 2016-02-24|Foremost}}\n{{TH|2016-02-28 \u2013 2016-03-04|Turbulence}}\n{{TH|2016-03-04 \u2013 2016-05-23|VexX Gaming}}\n{{TH|2016-05-29 \u2013 2016-06-08|Eanix}}\n{{TH|2016-06-11 \u2013 2016-10-21|Exodus}}\n{{TH|2016-10-21 \u2013 2016-12-06|Orbit eSports}}\n{{TH|2017-01-11 \u2013 '''Present'''|NRG Esports}}\n}}\n{{upcoming matches player}}\nGarrett '''\"GarrettG\"''' Gordon {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
-        }
-    },
-    "Gimmick": {
-        "title": "Gimmick",
-        "pageid": 20558,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Gimmick\n|name2=Results\n|link2=Gimmick/Results\n|This=1\n}}\n{{Infobox player\n|id=Gimmick\n|name=Jesus Parra\n|country=United States\n|birth_date={{birth_date_and_age|2000|06|30}}\n|team=Cloud9\n|image=RLSUMMIT GIMMICK.jpg\n|status=Active\n|role=Player\n|twitter=Gimmickrl\n|twitch=gummick\n|steam=id/123du\n|history=\n{{TH|2017-01-19 \u2013 2017-04-07|Iris|Substitute}}\n{{TH|2017-04-07 \u2013 2017-05-08|Iris}}\n{{TH|2017-05-08 \u2013 2017-07-28|The Muffin Men}}\n{{TH|2017-07-28 \u2013 '''Present'''|Cloud9}}\n\n}}\n{{upcoming matches player}}\nJesus '''\"Gimmick\"''' Parra {{born}} is an American ''Rocket League'' player."
-        }
-    },
-    "Gnagflow06": {
-        "title": "Gnagflow06",
-        "pageid": 30698,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Gnagflow06\n|name2=Results\n|link2=Gnagflow06/Results\n|This=1\n}}\n{{Infobox player\n|id=Gnagflow06\n|name=Alexander B\u00f6ttcher\n|country=Germany\n|team=MINKZ\n|team2=Upset\n|image=GFINITY_JOEBRADY_GNAGFLOW.jpg\n|status=Active\n|role=Player\n|twitter=Gnagflow06\n|steam=id/Gnagflow06\n|twitch=gnagflow06\n|history=\n{{TH|2016-08-?? \u2013 2016-9-??|Get Raptorized}}\n{{TH|2016-10-?? \u2013 2016-12-??|ParralaX}}\n{{TH|2016-12-12 \u2013 2017-01-13|Team Enjoy}}\n{{TH|2017-02-20 \u2013 2017-08-??|Team Enjoy}}\n{{TH|2017-08-?? \u2013 2017-12-??|Tree}}\n{{TH|2017-12-22 \u2013 2018-02-13|1UpeSport}}\n{{TH|2018-02-13 \u2013 2018-07-17|Team Vitality|Substitute}}\n{{TH|2018-08-01 \u2013 2018-09-??|2/3 made wc}}\n{{TH|2018-09-?? \u2013 2019-08-17|GartenH\u00fcttenGang}}\n{{TH|2019-08-26 \u2013 '''Present'''|Upset}}\n{{TH|2019-09-23 \u2013 '''Present'''|MINKZ}}\n|history_gfinity=\n{{TH_Gfinity|3|Team Vitality}}\n{{TH_Gfinity|4|Fnatic}}\n}}\n{{upcoming matches player}}\nAlexander '''\"Gnagflow06\"''' B\u00f6ttcher is a [[:category:Germany|German]] ''Rocket League'' player."
-        }
-    },
-    "JKnaps": {
-        "title": "JKnaps",
-        "pageid": 7436,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=JKnaps\n|name2=Results\n|link2=JKnaps/Results\n|This=1\n}}\n{{Infobox player\n|id=JKnaps\n|ids=J_Knaps\n|name=Jacob Knapman\n|country=Canada\n|birth_date= {{birth_date_and_age|1999|09|30}}\n|team=G2 Esports\n|image=DHMONTREAL 2019 RL JKNAPS.jpg\n|status=Active\n|role=Player\n|twitter=JKnaps\n|twitch=jknapsrl\n|instagram=jknapsrl\n|steam=profiles/76561198061585314\n|history=\n{{TH|2015-07-12 \u2013 2016-11-15|Nova}}\n{{TH|2015-11-15 \u2013 2016-01-10|Equinox}}\n{{TH|2016-01-10 \u2013 2016-01-17|Wolfves Pack}}\n{{TH|2016-02-14 \u2013 2016-02-28|Rocket Fatigue}}\n{{TH|2016-01-10 \u2013 2016-01-17|Wolfves Pack}}\n{{TH|2016-03-06 \u2013 2016-04-03|Forsaken}}\n{{TH|2016-04-10 \u2013 2016-05-07|Checkmate}}\n{{TH|2016-05-07 \u2013 2016-05-15|VwS Gaming}}\n{{TH|2016-06-12 \u2013 2016-07-16|Lucky Bounce}}\n{{TH|2016-07-21 \u2013 2016-09-05|Momentum}}\n{{TH|2016-09-05 \u2013 2016-11-13|Selfless Gaming}}\n{{TH|2017-02-22 \u2013 '''Present'''|G2 Esports}}\n}}\n{{upcoming matches player}}\nJacob '''\"JKnaps\"'''  Knapman {{born}} is a Canadian ''Rocket League'' player."
-        }
-    },
-    "Jacob": {
-        "title": "Jacob",
-        "pageid": 1484,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Jacob\n|name2=Results\n|link2=Jacob/Results\n|This=1\n}}\n{{Infobox player\n|id=Jacob\n|name=Jacob McDowell\n|country=United States\n|birth_date={{birth_date_and_age|1997|01|01}}\n|team=\n|image=RL_Jacob.jpg\n|status=Inactive\n|role=Player\n|twitter=RL_Jacob\n|twitch=jacoblol\n|reddit=Jacoblol\n|discord=hMMd8m5\n|youtube=channel/UCv3b3NIXIov1IygspQpIk_w\n|instagram=rl_jacob\n|snapchat=rl_jacob\n|steam=id/jacoblol2\n|history=\n{{TH|2015-08-18 \u2013 2015-10-14|Perfect Storm}}\n{{TH|2015-10-14 \u2013 2016-10-01|Kings of Urban}}\n{{TH|2016-10-01 \u2013 2018-01-08|NRG Esports}}\n{{TH|2018-02-02 \u2013 2018-12-20|Rogue}}\n{{TH|2018-12-20 \u2013 2019-02-11|Ex-Rogue}}\n{{TH|2019-05-11 \u2013 2019-06-??|RBG Esports|Stand-In}}\n{{TH|2019-08-06 - 2019-10-14|72 Pin Connector}}\n}}\n{{upcoming matches player}}\nJacob '''\"Jacob\"''' McDowell {{born}} is an [[:category:USA|American]] ''Rocket League'' player."
-        }
-    },
-    "Julz": {
-        "title": "Julz",
-        "pageid": 27334,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Julz\n|name2=Results\n|link2=Julz/Results\n|This=1\n}}\n{{Infobox player\n|id=Julz\n|name= Tom Jullienne\n|country=Australia\n|birth_date=\n|team=Ground Zero Gaming\n|image=DHVALENCIA 2019 RL JULZ.jpg\n|status=Active\n|role=Player\n|twitter=julz_rl\n|steam=id/Julzzyy\n|twitch=\n|history=\n{{TH|2016-08-31 \u2013 2016-11-08|Gameroos XD}}\n{{TH|2016-12-10 \u2013 2016-12-19|Team FuroX}}\n{{TH|2016-12-19 \u2013 2017-01-23|SubZero}}\n{{TH|2017-01-23 \u2013 2017-02-11|Just Dreameh Things}}\n{{TH|2017-02-11 \u2013 2017-05-17|Trident Esports}}\n{{TH|2017-05-17 \u2013 2017-06-20|The Drongos}}\n{{TH|2017-06-20 \u2013 2017-07-25|You See Me|substitute}}\n{{TH|2017-07-25 \u2013 2017-11-28|Pale Horse eSports|substitute}}\n{{TH|2017-11-29 \u2013 2018-08-17 |Tainted Minds}}\n{{TH|2018-08-17 - 2018-08-19|Dumb}}\n{{TH|2018-08-19 - 2019-03-28|ORDER}}\n{{TH|2019-03-28 - 2019-06-03|Out of Order}}\n{{TH|2019-06-03 - '''Present'''|Ground Zero Gaming}}\n|history_gfinity=\n{{TH_Gfinity_AU|2|ORDER}}\n}}\n{{upcoming matches player}}\nTom '''\"Julz\"''' Jullienne is an [[:category:Australia|Australian]] ''Rocket League'' player."
-        }
-    },
-    "Kamii": {
-        "title": "Kamii",
-        "pageid": 23083,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Kamii\n|name2=Results\n|link2=Kamii/Results\n|This=1\n}}\n{{Infobox player\n|id=Kamii\n|name=Cameron Ingram\n|country=New Zealand\n|image=WSOE4 KAMII.jpg\n|birth_date={{birth_date_and_age|2000|09|21}}\n|team=Renegades\n|status=Active\n|role=Player\n|twitter=KamiiRL\n|twitch=kamiirl\n|steam=id/KamiiRL\n|history=\n{{TH|2017-06-10 \u2013 2017-06-20|Masterminds}}\n{{TH|2017-06-20 \u2013 2017-07-25|You See Me}}\n{{TH|2017-07-25 \u2013 2017-11-28|Pale Horse eSports}}\n{{TH|2017-11-29 \u2013 2018-08-17 |Tainted Minds}}\n{{TH|2018-08-17 - 2019-05-01|Chiefs eSports Club}}\n{{TH|2019-05-01 \u2013 '''Present'''|Renegades}}\n|history_gfinity=\n{{TH_Gfinity_AU|2|Chiefs Esports Club}}\n}}\n{{upcoming matches player}}\nCameron '''\"Kamii\"''' Ingram {{born}} is a [[:Category:New Zealand|New Zealand]] ''Rocket League'' player."
-        }
-    },
-    "Kassio": {
-        "title": "Kassio",
-        "pageid": 28286,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Kassio\n|name2=Results\n|link2=Kassio/Results\n|This=1\n}}\n{{Infobox player\n|id=Kassio\n|name=Andy Landais\n|country=France\n|birth_date={{birth_date_and_age|2001|04|24}}\n|team=Veloce Esports\n|image=DHVALENCIA 2019 RL KASSIO.jpg\n|status=Active\n|role=Player\n|twitter=Kassio_RL\n|steam=id/Kassiona\n|twitch=kassio_rl\n|history=\n{{TH|2017-07-22 \u2013 2017-10-25|Redworld}}\n{{TH|2017-11-10 \u2013 2018-02-07|Triple Trouble}}\n{{TH|2018-02-14 \u2013 2018-08-05|no idea}}\n{{TH|2018-08-05 \u2013 2019-02-02|Method}}\n{{TH|2019-02-02 \u2013 2019-07-31|Triple Trouble}}\n{{TH|2019-08-16 - '''Present'''|Veloce Esports}}\n|history_gfinity=\n{{TH_Gfinity|4|Method}}\n}}\n{{upcoming matches player}}\nAndy '''\"Kassio\"''' Landais {{born}} is a [[:category:France|French]] ''Rocket League'' player."
-        }
-    },
-    "Kaydop": {
-        "title": "Kaydop",
-        "pageid": 4041,
-        "wikitext": {
-            "*": "{{DISPLAYTITLE:Kaydop}}\n{{Tabs static\n|name1=Overview\n|link1=Kaydop\n|name2=Results\n|link2=Kaydop/Results\n|This=1\n}}\n{{Infobox player\n|id=Kaydop\n|name=Alexandre Courant\n|country=France\n|birth_date={{birth_date_and_age|1998|05|22}}\n|team=Renault Sport Team Vitality\n|image=DHVALENCIA 2019 RL KAYDOP.jpg\n|status=Active\n|role=Player\n|twitter=Kaydops\n|twitch=Kaydop\n|youtube=channel/UCbJWraz5h4F-IX2frhqKglQ\n|discord=invite/t4zs3PE\n|steam=id/KayDop\n|history=\n{{TH|2015-12-26 \u2013 2016-??-??|Stoic}}\n{{TH|2016-02-10 \u2013 2016-??-??|eSportsWall}}\n{{TH|2016-03-31 \u2013 2016-04-14|Team Shazoo}}\n{{TH|2016-04-14 \u2013 2016-04-27|Hard-On Colliders}}\n{{TH|2016-04-?? \u2013 2016-05-29|Gentlemen}}\n{{TH|2016-06-07 \u2013 2016-07-08|Aeriality}}\n{{TH|2016-07-08 \u2013 2016-07-25|Crown and Jewels}}\n{{TH|2016-07-31 \u2013 2016-09-04|Precision Z}}\n{{TH|2016-09-04 \u2013 2016-09-07|Pocket Aces}}\n{{TH|2016-09-08 \u2013 2016-12-09|Precision Z}}\n{{TH|2017-01-20 \u2013 2017-06-11|Mock-It eSports EU}}\n{{TH|2017-06-11 - 2018-05-22|Gale Force eSports}}\n{{TH|2018-05-22 - 2019-01-13|Dignitas}}\n{{TH|2019-01-13 - '''Present'''|Renault Vitality}}\n}}\n{{upcoming matches player}}\nAlexandre '''\"Kaydop\"''' Courant {{born}} is a [[:category:France|French]] ''Rocket League'' player."
-        }
-    },
-    "Maestro": {
-        "title": "Maestro",
-        "pageid": 1532,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Maestro\n|name2=Results\n|link2=Maestro/Results\n|This=1\n}}\n{{Infobox player\n|id=Maestro\n|ids=BANG! \n|name=Nicolai Bang\n|country=Denmark\n|birth_date={{birth_date_and_age|1997|06|04}}\n|teamicon=\n|team=Copenhagen Flames\n|image=DHLEIPZIG_RL_Maestro.jpg\n|status=Active\n|role=Player\n|twitter=97Maestro\n|twitch=MaestroRL\n|steam=id/1337Maestro\n|history=\n{{TH|2015-08-31 - 2015-10-11 |Hercules}}\n{{TH|2015-10-11 \u2013 2016-12-04|Dot Dot Dot}}\n{{TH|2015-12-04 \u2013 2016-03-08|Supersonic Avengers}}\n{{TH|2016-03-08 \u2013 2016-07-28|We Dem Girlz}}\n{{TH|2016-07-28 \u2013 2017-06-21|Northern Gaming}}\n{{TH|2017-06-21 \u2013 2017-08-07|Team EnVyUs}}\n{{TH|2017-08-07 - 2017-10-06|The Leftovers}}\n{{TH|2017-10-06 \u2013 2019-01-18|Fnatic}}\n{{TH|2019-01-18 \u2013 2019-06-20|Vikings}}\n{{TH|2019-08-30 \u2013 2019-10-17|Dot Dot Dot}}\n{{TH|2019-10-17 - '''Present'''|Copenhagen Flames}}\n|history_gfinity=\n{{TH_Gfinity|3|Fnatic}}\n{{TH_Gfinity|4|Fnatic}}\n}}\n{{upcoming matches player}}\nNicolai '''\"Maestro\"''' Bang {{born}} is a [[:category:Denmark|Danish]] ''Rocket League'' player."
-        }
-    },
-    "Memory": {
-        "title": "Memory",
-        "pageid": 18614,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Memory\n|name2=Results\n|link2=Memory/Results\n|This=1\n}}\n{{Infobox player\n|id=Memory\n|ids=memorycode, Dr. Memory\n|name=Michael Moss\n|country=United States\n|birth_date={{birth_date_and_age|2002|01|18}}\n|team=Ghost Gaming\n|image=DHMONTREAL 2019 RL MEMORY 2.jpg\n|status=Active\n|role=Player\n|twitter=MemoryRL_\n|twitch=MemoryRL\n|youtube=channel/UC0u2YDyGHpo2ofCMOREKRzw\n|steam=id/MemoryRL\n|instagram=memoryrl\n|history=\n{{TH|2016-07-17 \u2013 2016-07-21|Lucky Bounce}}\n{{TH|2016-11-25 \u2013 2017-02-08|Incognito}}\n{{TH|2017-02-20 \u2013 2017-03-18|Radiance}}\n{{TH|2017-03-18 \u2013 2017-09-17|SetToDestroyX}}\n{{TH|2017-09-17 \u2013 2017-09-22|Radiance}}\n{{TH|2017-09-22 \u2013 2018-01-17 |Hollywood Hammers}}\n{{TH|2018-02-15 \u2013 2018-03-13|Radiance}}\n{{TH|2018-03-13 \u2013 2018-07-28 |Spacestation Gaming}}\n{{TH|2018-07-28 \u2013 '''Present''' |Ghost Gaming}}\n}}\n{{upcoming matches player}}\nMichael '''\"Memory\"''' Moss {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
-        }
-    },
-    "Metsanauris": {
-        "title": "Metsanauris",
-        "pageid": 7304,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Metsanauris\n|name2=Results\n|link2=Metsanauris/Results\n|This=1\n}}\n{{Infobox player\n|id=Metsanauris\n|name=Otto Kaipiainen\n|country=Finland\n|birth_date={{birth_date_and_age|1998 |12|12}}\n|team=Team SoloMid\n|image=DHMONTREAL 2019 RL METSANAURIS.jpg\n|status=Active\n|role=Player\n|twitter=Metsanauris\n|instagram=metsanauris\n|youtube=channel/UC4iVL2DBT-zUXcG1Ixqml0Q\n|twitch=metsanauris\n|steam=profiles/76561198080528613\n|discord=DpcS4Tq\n|history=\n{{TH|2016-05-07 \u2013 2016-??-??|Challengers}}\n{{TH|2016-06-05 \u2013 2016-06-19|Team Shazoo}}\n{{TH|2016-07-12 \u2013 2016-10-30|Aeriality}}\n{{TH|2016-10-30 \u2013 2016-12-01|ProficiencyHQ}}\n{{TH|2016-12-01 \u2013 2017-01-13|Aeriality}}\n{{TH|2017-01-13 \u2013 2017-04-02|Secrecy}}\n{{TH|2017-04-02 \u2013 2017-05-28|Resonant Esports}}\n{{TH|2017-05-28 \u2013 2017-06-07|Element}}\n{{TH|2017-06-07 \u2013 2018-02-09|Method}}\n{{TH|2018-02-09 \u2013 2018-03-01|Run'n'Hide}}\n{{TH|2018-03-01 \u2013 2018-07-12|compLexity Gaming}}\n{{TH|2018-07-30 - 2018-08-05|Ex-Envy}}\n{{TH|2018-08-05 - 2019-01-04|We Dem Girlz}}\n{{TH|2019-01-04 - '''Present'''|Team SoloMid}}\n|history_gfinity=\n{{TH_Gfinity|1|Method}}\n{{TH_Gfinity|2|Method}}\n}}\n{{upcoming matches player}}\nOtto '''\"Metsanauris\"''' Kaipiainen {{born}} is a [[:category:Finland|Finnish]] ''Rocket League'' player."
-        }
-    },
-    "Mognus": {
-        "title": "Mognus",
-        "pageid": 8358,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Mognus\n|name2=Results\n|link2=Mognus/Results\n|This=1\n}}\n{{Infobox player\n|id=Mognus\n|name=Joonas Salo\n|country=Finland\n|birth_date={{birth_date_and_age|1999|12|07}}\n|team=Complexity Gaming\n|image=DHMONTREAL_2019_RL_MOGNUS.jpg\n|status=Active\n|role=Player\n|twitter=Mognus_RL\n|instagram=mognus99\n|twitch=mognus1\n|steam=profiles/76561198072970081\n|history=\n{{TH|2016-06-25 \u2013 2016-09-19|Cow Nose}}\n{{TH|2016-10-11 \u2013 2016-10-30|Aeriality}}\n{{TH|2016-10-30 \u2013 2016-12-01|ProficiencyHQ}}\n{{TH|2016-12-01 \u2013 2017-01-13|Aeriality}}\n{{TH|2017-01-13 \u2013 2017-04-02|Secrecy}}\n{{TH|2017-04-02 \u2013 2017-05-28|Resonant Esports}}\n{{TH|2017-05-28 \u2013 2017-06-07|Element}}\n{{TH|2017-06-07 \u2013 2018-02-09|Method}}\n{{TH|2018-02-09 \u2013 2018-03-01|Run'n'Hide}}\n{{TH|2018-03-01 \u2013 '''Present'''|Complexity Gaming}}\n|history_gfinity=\n{{TH_Gfinity|1|Method}}\n{{TH_Gfinity|2|Method}}\n}}\n{{upcoming matches player}}\nJoonas '''\"Mognus\"''' Salo {{born}} is a [[:category:Finland|Finnish]] ''Rocket League'' player."
-        }
-    },
-    "Mout": {
-        "title": "Mout",
-        "pageid": 18510,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Mout\n|name2=Results\n|link2=Mout/Results\n|This=1\n}}\n{{Infobox player\n|id=Mout\n|name=Alexandre Moutarde\n|country=France\n|birth_date={{birth_date_and_age|1995|07|31}}\n|team=\n|team2=\n|image=DHVALENCIA 2019 RL MOUT.jpg\n|status=Active\n|role=Player\n|twitter=Alex_Moutmout\n|youtube=\n|twitch=\n|steam=id/alexmout02\n|history=\n{{TH|2016-01-?? \u2013 2016-08-?? |Bootz 'n Catz}}\n{{TH|2016-08-??  \u2013 2016-11-18 |Sector One}}\n{{TH|2016-11-18 \u2013 2016-11-?? |Bootz 'n Catz}}\n{{TH|2017-02-22 \u2013 2017-??-??|The Leftovers|Substitute}}\n{{TH|2017-07-07 \u2013 201?-??-??|EnVyUs Academy}}\n{{TH|2018-02-14 \u2013 2018-08-23|Zebra Nose}}\n|history_gfinity=\n{{TH_Gfinity|1|EnVyUs Academy}}\n{{TH_Gfinity|2|EnVyUs Academy}}\n{{TH_Gfinity|3|Team EnVyUs}}\n{{TH_Gfinity|4|Team EnVyUs}}\n}}\n{{upcoming matches player}}\nAlexandre '''\"Mout\"''' Moutarde {{born}} is a [[:category:France|French]] ''Rocket League'' player."
-        }
-    },
-    "MummiSnow": {
-        "title": "MummiSnow",
-        "pageid": 20496,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=MummiSnow\n|name2=Results\n|link2=MummiSnow/Results\n|This=1\n}}\n{{Infobox player\n|id=MummiSnow\n|name=Mohammed Joseph Salameh\n|country=Denmark\n|birth_date=\n|team=\n|teamicon=\n|image=MummiSnow.png\n|status=Active\n|role=Player\n|twitter=MummiSnow\n|twitch=mummisnow\n|instagram=MummiSnow\n|steam=id/mummisnow\n|history=\n{{TH|2015-10-10 \u2013 2015-12-02|Ka-Pow}}\n{{TH|2015-12-02 \u2013 2016-03-03|myXMG}}\n{{TH|2015-10-30 \u2013 2016-04-14|Hard-On Colliders}}\n{{TH|2017-05-08 \u2013 2017-07-??|Prophecy}}\n{{TH|2017-08-07 \u2013 2018-03-16|ExRay}}\n{{TH|2018-03-16 \u2013 2018-07-11|Servette Geneva eSports}}\n{{TH|2018-07-30 \u2013 2019-01-18|Fnatic}}\n{{TH|2019-01-18 \u2013 2019-01-24|Vikings}}\n{{TH|2019-03-29 \u2013 2019-06-21|Vikings}}\n|history_gfinity=\n{{TH_Gfinity|1|Prophecy}}\n{{TH_Gfinity|2|Prophecy}}\n{{TH_Gfinity|4|Fnatic}}\n}}\n{{upcoming matches player}}\nMohammed '''\"MummiSnow\"''' Joseph Salameh is a [[:category:Denmark|Danish]] ''Rocket League'' player."
-        }
-    },
-    "Neqzo": {
-        "title": "Neqzo",
-        "pageid": 26856,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Neqzo\n|name2=Results\n|link2=Neqzo/Results\n|This=1\n}}\n{{Infobox player\n|id=Neqzo\n|name=Florian Esnault\n|country=France\n|birth_date={{birth_date_and_age|1998|08|31}}\n|team=\n|image=PlayerImagePlaceholder.png\n|status=Active\n|role=Player\n|twitter=NeqzoRL\n|twitch=neqzorl\n|steam=id/NeqzoRL\n|youtube=\n|history=\n{{TH|2018-01-27 \u2013 2018-02-14 |Placeholder}}\n{{TH|2018-02-14 \u2013 2018-08-06|Zebra Nose}}\n{{TH|2018-08-06 \u2013 2019-07-01|Renault Vitality|Substitute}}\n|history_gfinity=\n{{TH_Gfinity|3|Team EnVyUs}}\n{{TH_Gfinity|4|Renault Sport Team Vitality}}\n}}\n{{upcoming matches player}}\nFlorian '''\"Neqzo\"''' Esnault {{born}} is a [[:category:France|French]] ''Rocket League'' player."
-        }
-    },
-    "PrimeThunder": {
-        "title": "PrimeThunder",
-        "pageid": 18905,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=PrimeThunder\n|name2=Results\n|link2=PrimeThunder/Results\n|This=1\n}}\n{{Infobox player\n|id=PrimeThunder\n|name=Ronin D'Auria\n|country=United States\n|birth_date={{birth_date_and_age|2001|08|28}}\n|team=\n|image=DHATL_RL_PrimeThunder.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=PrimeThunder_RL\n|youtube=channel/UCqh276Qzwxqb7U67txmOp1Q\n|steam=id/slowlydriftingaway\n|twitch=primethunderrl\n|history=\n{{TH|2015-10-10 \u2013 2015-10-27|Apollo 11}}\n{{TH|2015-10-27 \u2013 2016-01-26|SnK eSports}}\n{{TH|2016-01-26 \u2013 2016-02-21|Apollo 11}}\n{{TH|2016-03-06 \u2013 2016-05-04|No Clue}}\n{{TH|2016-09-06 \u2013 2016-09-19|Lucky Bounce}}\n{{TH|2016-09-19 - 2016-10-10|Goofy Goobers}}\n{{TH|2016-10-16 - 2016-12-22|Wild Card}}\n{{TH|2017-02-18 - 2017-06-14|Nova}}\n{{TH|2017-06-18 - 2018-01-09|Ambition Gamers}}\n{{TH|2018-01-09 - 2018-12-20|FlyQuest}}\n{{TH|2019-02-15 \u2013 2019-09-28|Pink Hair Fan Club}}\n}}\n{{upcoming matches player}}\nRonin '''\"PrimeThunder\"''' D'Auria {{born}} is an [[:category:USA|American]] ''Rocket League'' player."
-        }
-    },
-    "Rix Ronday": {
-        "title": "Rix Ronday",
-        "pageid": 24731,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Rix Ronday\n|name2=Results\n|link2=Rix Ronday/Results\n|This=1\n}}\n{{Infobox player\n|id=Rix Ronday\n|name=Rix Ronday\n|country=Netherlands\n|birth_date={{birth_date_and_age|1999|08|18}}\n|team=Method\n|image=DHVALENCIA 2019 RL RIX RONDAY.jpg\n|status=Active\n|role=Player\n|twitter=Rix_Ronday\n|steam=profiles/76561198236145850\n|twitch=rixronday\n|discord=Nb2WH7Y\n|history=\n{{TH|2017-??-05 \u2013 2017-??-??|HeliCOBter}}\n{{TH|2017-??-05 \u2013 2017-??-??|Pressure}}\n{{TH|2017-02-05 \u2013 2017-03-15|Xedec Nation|Substitute}}\n{{TH|2017-03-15 \u2013 2017-06-11|Cow Nose|Substitute}}\n{{TH|2017-09-06 \u2013 2017-10-21|Defusekids}}\n{{TH|2017-09-17 \u2013 2018-01-05|Reason Gaming}}\n{{TH|2018-01-05 \u2013 2018-02-10|ShaBoRix}}\n{{TH|2018-02-10 \u2013 '''Present''' |Method}}\n|history_gfinity=\n{{TH_Gfinity|1|Reason Gaming}}\n{{TH_Gfinity|2|Reason Gaming}}\n{{TH_Gfinity|3|Method}}\n{{TH_Gfinity|4|Method}}\n}}\n{{upcoming matches player}}\nRix '''\"Rix Ronday\"''' Ronday {{born}} is a [[:category:Netherlands|Dutch]] ''Rocket League'' player."
-        }
-    },
-    "Rizzo": {
-        "title": "Rizzo",
-        "pageid": 2451,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Rizzo\n|link1=Rizzo\n|name2=Results\n|link2=Rizzo/Results\n|This=1\n}}\n{{Infobox player\n|id=Rizzo\n|name=Dillon Rizzo\n|country=United States\n|birth_date={{birth_date_and_age|1997|05|26}}\n|team=G2 Esports\n|image=DHMONTREAL 2019 RL RIZZO.jpg\n|status=Active\n|role=Player\n|twitter=Rizzo_TV\n|twitch=rizzo\n|youtube=xRizzo00\n|steam=id/Rizzotv\n|history=\n{{TH|2015-11-15 \u2013 2015-11-18 |Orange Creamsicle}}\n{{TH|2016-02-25 \u2013 2016-07-29 |Mock-It eSports NA}}\n{{TH|2016-08-28 \u2013 2017-02-14|Take 3}}\n{{TH|2017-02-22 \u2013 '''Present'''|G2 Esports}}\n}}\n{{upcoming matches player}}\nDillon '''\"Rizzo\"''' Rizzo {{born}} is an American ''Rocket League'' player and streamer."
-        }
-    },
-    "Ronaky": {
-        "title": "Ronaky",
-        "pageid": 28356,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Ronaky\n|name2=Results\n|link2=Ronaky/Results\n|This=1\n}}\n{{Infobox player\n|id=Ronaky\n|name=Aldin Hodzic\n|country=Denmark\n|birth_date={{birth_date_and_age|2000|09|21}}\n|team=FC Barcelona\n|image=DHLEIPZIG 2019 RL Ronaky.jpg\n|status=Active\n|role=Player\n|twitter=RonakyRL\n|snapchat=aldinhodzhit\n|twitch=Ronaky\n|youtube=channel/UCf5Z8X08r8dhqnE6wLwZbeA\n|instagram=ronakyrl\n|steam=id/ronaky\n|history=\n{{TH|2017-11-10 \u2013 2018-09-24|Triple Trouble}}\n{{TH|2018-09-24 - 2019-01-31|Red Reserve}}\n{{TH|2019-01-31 - 2019-07-29|Triple Trouble}}\n{{TH|2019-08-02 - '''Present'''|FC Barcelona}}\n|history_gfinity=\n{{TH_Gfinity|3|ARES}}\n}}\n{{upcoming matches player}}\nAldin '''\"Ronaky\"''' Hodzic {{born}} is a [[:category:Denmark|Danish]] ''Rocket League'' player."
-        }
-    },
-    "Scrub Killa": {
-        "title": "Scrub Killa",
-        "pageid": 1404,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Scrub Killa\n|name2=Results\n|link2=Scrub Killa/Results\n|This=1\n}}\n{{Infobox player\n|id=Scrub Killa\n|name=Kyle Robertson\n|country=Scotland\n|birth_date={{birth_date_and_age|2003|05|08}}\n|team=Renault Sport Team Vitality\n|image=DHMONTREAL 2019 RL SCRUB KILLA.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=ScrubKillaRL\n|twitch=Scrub\n|steam=id/ScrubKillaRL\n|youtube=channel/UCyQegW3fe-DUMeQA78Vizhw\n|discord=scrub\n|instagram=scrubkillarl\n|history=\n{{TH|2015-10-17 \u2013 2015-12-05|Smokin Rockets}}\n{{TH|2015-12-05 \u2013 2016-01-10|Gold Rush}}\n{{TH|2016-02-27 \u2013 2016-03-12|Crown & Jewels}}\n{{TH|2016-03-14 \u2013 2016-??-??|Mock-It eSports EU}}\n{{TH|2016-??-?? \u2013 2016-??-?? |Mockingbirds}}\n{{TH|2016-??-?? \u2013 2016-07-02|Mock-It eSports International}}\n{{TH|2016-07-02 \u2013 2016-07-25|Crown & Jewels}}\n{{TH|2016-08-21 \u2013 2016-10-09|We Dem Babies}}\n{{TH|2018-08-04 \u2013 '''Present'''|Renault Vitality}}\n}}\n{{upcoming matches player}}\nKyle '''\"Scrub Killa\"''' Robertson {{born}} is a [[:category:Scotland|Scottish]] ''Rocket League'' player."
-        }
-    },
-    "Sea-Bass": {
-        "title": "Sea-Bass",
-        "pageid": 22800,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Sea-Bass\n|name2=Results\n|link2=Sea-Bass/Results\n|This=1\n}}\n{{Infobox player\n|id=Sea-Bass\n|name= Sebastian Becerra\n|country=United States\n|birth_date=\n|team=RBG Esports\n|image=WGN NA CHAMPIONSHIP SEA-BASS.jpg\n|status=Active\n|role=Player\n|twitter=Sea_BassRL\n|twitch=sea_bassrl\n|steam=profiles/76561198247356798\n|history=\n{{TH|2017-05-21 \u2013 2017-06-18|Fibeon Esports}}\n{{TH|2017-08-03 \u2013 2017-09-14|Emotion}}\n{{TH|2017-09-14 \u2013 2018-12-06|Allegiance}}\n{{TH|2018-12-06 \u2013  2019-02-05|Ex-Allegiance}}\n{{TH|2019-06-10 \u2013  '''Present'''|RBG Esports}}\n}}\n{{upcoming matches player}}\nSebastian '''\"Sea-Bass\"''' Becerra is an [[:category:United States|American]] ''Rocket League'' player."
-        }
-    },
-    "Sizz": {
-        "title": "Sizz",
-        "pageid": 7439,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Sizz\n|name2=Results\n|link2=Sizz/Results\n|This=1\n}}\n{{Infobox player\n|id=Sizz\n|name=Emiliano Benny\n|country=United States\n|birth_date={{birth_date_and_age|1996|11|05}}\n|team=NRG Esports\n|image=DHMONTREAL_2019_RL_SIZZ.jpg\n|status=Active\n|role=Coach\n|twitter=Sizz\n|youtube=ItzSizz\n|twitch=Sizz\n|instagram=therealsizz\n|steam=id/ItzSizz\n|history=\n{{TH|2015-10-04 \u2013 2015-10-25|Battlecar Galactica}}\n{{TH|2015-10-25 \u2013 2016-02-10|Lucky Bounce}}\n{{TH|2016-04-03 \u2013 2016-05-07|Team Chemistry}}\n{{TH|2016-05-07 \u2013 2016-08-28|Selfless Gaming}}\n{{TH|2016-08-28 \u2013 2016-09-06|Lucky Bounce}}\n{{TH|2017-02-20 \u2013 2017-05-09|Atelier}}\n{{TH|2017-05-09 \u2013 2018-12-20|Rogue}}\n{{TH|2018-12-20 \u2013 2019-01-07|Ex-Rogue}}\n{{TH|2019-01-07 \u2013 2019-10-14|Rogue|Substitute}}\n{{TH|2019-10-14 \u2013 '''Present'''|NRG Esports|Coach}}\n}}\n{{upcoming matches player}}\nEmiliano '''\"Sizz\"''' Benny {{born}} is an [[:category:United States|American]] ''Rocket League'' player and content creator."
-        }
-    },
-    "Skyline": {
-        "title": "Skyline",
-        "pageid": 1540,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Skyline\n|name2=Results\n|link2=Skyline/Results\n|This=1\n}}\n{{Infobox player\n|id=Skyline\n|ids=Mikageishi, Mephisto\n|name=Kevin Carvalho\n|country=Switzerland\n|birth_date={{birth_date_and_age|1997|11|13}}\n|team=Servette Geneva eSports\n|image=RLCS-S2---PZ---Skyline.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=skylinerl\n|twitch=skylinerl\n|steam=id/Mikageishi\n|history=\n{{TH|2015-08-16 \u2013 2015-10-28|Team Shazoo}}\n{{TH|2015-10-28 \u2013 2016-02-28|Noble eSports}}\n{{TH|2016-03-31 \u2013 2016-06-22|Precision Z}}\n{{TH|2016-07-31 \u2013 2016-09-04|Precision Z}}\n{{TH|2016-09-04 \u2013 2016-09-07|Pocket Aces}}\n{{TH|2016-09-08 \u2013 2016-12-09|Precision Z}}\n{{TH|2017-02-22 \u2013 2017-03-17|Red Eye}}\n{{TH|2017-03-23 \u2013 2017-06-15|Rex Gaming}}\n{{TH|2017-08-07 \u2013 2018-03-16|ExRay}}\n{{TH|2018-03-16 \u2013 2018-07-11|Servette Geneva eSports}}\n{{TH|2018-07-11 \u2013 2018-07-30|Ex-Servette Geneva eSports}}\n{{TH|2018-07-30 \u2013 2019-01-10|mousesports}}\n{{TH|2019-02-25 - 2019-05-26|The Rightovers}}\n{{TH|2018-08-26 - '''Present''' |Servette Geneva eSports}}\n}}\n{{upcoming matches player}}\nKevin '''\"Skyline\"''' Carvalho {{born}} is a [[:category:Switzerland|Swiss]] ''Rocket League'' player."
-        }
-    },
-    "SquishyMuffinz": {
-        "title": "SquishyMuffinz",
-        "pageid": 9111,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=SquishyMuffinz\n|name2=Results\n|link2=SquishyMuffinz/Results\n|This=1\n}}\n{{Infobox player\n|id=SquishyMuffinz\n|ids=Squishy\n|name=Mariano Arruda\n|country=Canada\n|birth_date={{birth_date_and_age|2000|11|29}}\n|team=Cloud9\n|image=DHMONTREAL 2019 RL SQUISHY.jpg\n|status=Active\n|role=Player\n|rl=y\n|site=http://squishymuffinz.com/\n|twitter=SquishyMuffinz\n|instagram=squishymuffinzrl\n|twitch=squishymuffinz\n|youtube=user/SquishyMuffinz\n|steam=id/SquishyMuffinz\n|history=\n{{TH|2016-08-?? \u2013 2016-08-28|Chronix}}\n{{TH|2016-08-28 \u2013 2016-09-04|Vendetta}}\n{{TH|2016-11-20 \u2013 2017-05-08|Iris}}\n{{TH|2017-05-08 \u2013 2017-07-28|The Muffin Men}}\n{{TH|2017-07-28 \u2013 '''Present'''|Cloud9}}\n}}\n{{upcoming matches player}}\nMariano '''\"SquishyMuffinz\"''' Arruda {{born}} is a [[:category:Canada|Canadian]] ''Rocket League'' player."
-        }
-    },
-    "Tadpole": {
-        "title": "Tadpole",
-        "pageid": 28299,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Tadpole\n|name2=Results\n|link2=Tadpole/Results\n|This=1\n}}\n{{Infobox player\n|id=Tadpole\n|name=Euan Ingram\n|country=Wales\n|birth_date={{birth_date_and_age|1997|10|17}}\n|team=Method\n|image=DHVALENCIA 2019 RL TADPOLE.jpg\n|status=Active\n|role=Player\n|twitter=TadpoleRL\n|twitch=tadpolerl\n|steam=id/tadpolescfc\n|history=\n{{TH|2017-08-14 \u2013 2018-02-14|Circa eSports}}\n{{TH|2018-02-14 \u2013 2018-09-24|Triple Trouble}}\n{{TH|2018-09-24 - 2019-01-31|Red Reserve}}\n{{TH|2019-01-31 - 2019-07-31|Triple Trouble}}\n{{TH|2019-09-20 - '''Present'''|Method}}\n}}\n{{upcoming matches player}}\nEuan '''\"Tadpole\"''' Ingram {{born}} is a [[:category:Wales|Welsh]] ''Rocket League'' player."
-        }
-    },
-    "Tigreee": {
-        "title": "Tigreee",
-        "pageid": 24808,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Tigreee\n|name2=Results\n|link2=Tigreee/Results\n|This=1\n}}\n{{Infobox player\n|id=Tigreee\n|name=Maik Hoffmann\n|country=Germany\n|birth_date={{birth_date_and_age|2000|08|19}}\n|team=Fadeaway\n|image=DHMONTREAL 2019 RL TIGREEE.jpg\n|status=Active\n|role=Player\n|twitter=TigreeeRL\n|twitch=TigreeeRL\n|steam=profiles/76561198306168245\n|instagram=tigreee_rl\n|history=\n{{TH|2017-09-17 \u2013 2018-01-01|Reason Gaming}}\n{{TH|2018-01-27 \u2013 2018-02-03|Placeholder}}\n{{TH|2018-02-10 \u2013 2018-07-30|Team Secret}}\n{{TH|2018-07-30 \u2013 2019-08-01|mousesports}}\n{{TH|2019-08-25 \u2013 '''Present''' |Fadeaway}}\n|history_gfinity=\n{{TH_Gfinity|2|Reason Gaming}}\n}}\n{{upcoming matches player}}\nMaik '''\"Tigreee\"''' Hoffmann {{born}} is a [[:category:Germany|German]] ''Rocket League'' player."
-        }
-    },
-    "Torment": {
-        "title": "Torment",
-        "pageid": 7118,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Torment\n|name2=Results\n|link2=Torment/Results\n|This=1\n}}\n{{Infobox player\n|id=Torment\n|name=Kyle Storer\n|country=United States\n|birth_date={{birth_date_and_age|2000|06|06}}\n|team=Cloud9\n|image=DHMONTREAL 2019 RL TORMENT.jpg\n|status=Active\n|role=Player\n|twitter=Torment\n|twitch=TormentRL\n|steam=id/Tormentt\n|youtube=channel/UCKVuFhw6B9ViUkwInIEc2gw\n|history=\n{{TH|2016-??-?? \u2013 2016-05-25|Savage Gaming}}\n{{TH|2016-05-25 \u2013 2016-07-21|Lucky Bounce}}\n{{TH|2016-07-29 \u2013 2016-08-24|Lucky Bounce}}\n{{TH|2016-08-28 \u2013 2016-09-28|Vendetta}}\n{{TH|2016-09-28 \u2013 2016-11-02|VindicatorGG}}\n{{TH|2016-11-02 \u2013 2016-11-12|Vendetta}}\n{{TH|2016-11-20 \u2013 2017-05-08|Iris}}\n{{TH|2017-05-08 \u2013 2017-07-28|The Muffin Men}}\n{{TH|2017-07-28 \u2013 '''Present'''|Cloud9}}\n}}\n{{upcoming matches player}}\nKyle '''\"Torment\"''' Storer {{born}} is an American ''Rocket League'' player."
-        }
-    },
-    "Torsos": {
-        "title": "Torsos",
-        "pageid": 20015,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Torsos\n|link1=Torsos\n|name2=Results\n|link2=Torsos/Results\n|This=1\n}}\n{{Infobox player\n|id=Torsos\n|name=Daniel Parsons\n|country=Australia\n|birth_date={{birth_date_and_age|2000|08|30}}\n|team=Renegades\n|image=DHDALLAS 2019 RL TORSOS.jpg\n|status=Active\n|role=Player\n|twitter=TorsosRL\n|twitch=TorsosRL\n|steam=id/troveismylife\n|history=\n{{TH|2016-10-27 \u2013 2017-07-07|Alpha Sydney}}\n{{TH|2017-07-07 \u2013 2017-08-12|Billy Fan Club}}\n{{TH|2017-08-12 \u2013 2019-05-01|Chiefs eSports Club}}\n{{TH|2019-05-01 \u2013 '''Present'''|Renegades}}\n|history_gfinity=\n{{TH_Gfinity_AU|1|Chiefs Esports Club}}\n{{TH_Gfinity_AU|2|Chiefs Esports Club}}\n}}\n{{upcoming matches player}}\nDaniel '''\"Torsos\"''' Parsons {{born}} is an [[:Category:Australia|Australian]] ''Rocket League'' player."
-        }
-    },
-    "Turbopolsa": {
-        "title": "Turbopolsa",
-        "pageid": 1755,
-        "wikitext": {
-            "*": "{{Tabs static\n|name1=Overview\n|link1=Turbopolsa\n|name2=Results\n|link2=Turbopolsa/Results\n|This=1\n}}\n{{Infobox player\n|id=Turbopolsa\n|ids=Turururu, Turbop0lsa, Turbo\n|name=Pierre Silfver\n|country=Sweden\n|country2=United States\n|birth_date={{birth_date_and_age|1998|08|09}}\n|team=NRG Esports\n|image=DHMONTREAL_2019_RL_TURBO.jpg\n|status=Active\n|role=Player\n|twitter=Turbopolsa\n|discord=jTNFZj9\n|twitch=turbopolsa\n|steam=profiles/76561198194977850\n|history=\n{{TH|2015-11-18 \u2013 2015-12-02|Ka-Pow}}\n{{TH|2015-12-02 \u2013 2016-03-03|myXMG}}\n{{TH|2016-03-03 \u2013 2016-05-23|Ka-Pow}}\n{{TH|2016-05-23 \u2013 2016-08-09|Mock-It eSports EU}}\n{{TH|2016-08-24 \u2013 2016-11-08|OhMyDog}}\n{{TH|2017-06-23 \u2013 2018-05-22|Gale Force eSports}}\n{{TH|2018-05-22 \u2013 2019-06-19|Dignitas}}\n{{TH|2019-07-25 \u2013 '''Present'''|NRG Esports}}\n}}\n{{upcoming matches player}}\nPierre '''\"Turbopolsa\"''' Silfver {{born}} is a [[:category:Sweden|Swedish]] ''Rocket League'' player. He won [[Rocket_League_Championship_Series/Season_3|RLCS S3]] subbing for [[Northern Gaming]]'s [[Maestro]], as well as becoming the first ever three-time [[RLCS]] World Champion, winning [[Rocket_League_Championship_Series/Season_4|RLCS S4]] and [[Rocket_League_Championship_Series/Season_5|RLCS S5]] as well. He currently lives in the [[:category:United States|United States]], playing for [[NRG Esports]]."
-        }
+  "Gibbs": {
+    "title": "Gibbs",
+    "pageid": 1482,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview |link1=Gibbs\n|name2=Results |link2=Gibbs/Results\n|name3=Broadcasts |link3=Gibbs/Broadcasts\n|This=1\n}}\n{{Infobox player\n|id=Gibbs\n|name=Randy Gibbons\n|country=United States\n|birth_date=\n|team=\n|image=DHMONTREAL 2019 RL GIBBS.jpg\n|status=Retired\n|role=Caster\n|game=sarpbc\n|twitter=Gibbs0o0\n|twitch=Gibbs0o0\n|youtube=user/Gibbs0o0\n|steam=id/Gibbs0o0\n|discord=0gBPfpdeoKJ17DR4\n|reddit=Gibbs0o0\n|history=\n{{TH|2015-07-09 \u2013 2015-10-30|Cosmic Aftershock}}\n{{TH|2015-10-30 \u2013 2016-04-01|iBUYPOWER}}\n{{TH|2015-04-01 \u2013 2016-11-03|iBUYPOWER|manager}}\n}}\nRandy '''\"Gibbs\"''' Gibbons was an [[:category:United States|American]] ''Rocket League'' player; he is now an analyst for [[RLCS]]."
     }
+  },
+  "Kronovi": {
+    "title": "Kronovi",
+    "pageid": 687,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Kronovi\n|name2=Results\n|link2=Kronovi/Results\n|This=1\n}}\n{{Infobox player\n|id=Kronovi\n|ids=Kro\n|name=Cameron Bills\n|country=United States\n|birth_date={{birth_date_and_age|1997|08|30}}\n|team=Rogue\n|image=DHMONTREAL_2019_RL_KRONOVI.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=kronovirl\n|twitch=kronovi\n|steam=id/KronoviRL\n|youtube=user/stevebiIIs\n|history=\n{{TH|2015-07-09 \u2013 2015-10-30|Cosmic Aftershock}}\n{{TH|2015-10-30 \u2013 2016-09-07|iBUYPOWER}}\n{{TH|2016-09-07 \u2013 2019-01-07|G2 Esports}}\n{{TH|2019-01-07 - '''Present'''|Rogue}}\n}}\n{{upcoming matches player}}\nCameron '''\"Kronovi\"''' Bills {{born}} is an [[:category:United States|American]] ''Rocket League'' player and streamer who currently plays for [[Rogue]]."
+    }
+  },
+  "Alex161": {
+    "title": "Alex161",
+    "pageid": 20641,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Alex161\n|name2=Results\n|link2=Alex161/Results\n|This=1\n}}\n{{Infobox player\n|id=Alex161\n|name=Alex Ernst\n|country=Germany\n|birth_date={{birth_date_and_age|1998|10|09}}\n|team=Big Brained Gamers\n|image=DHLEIPZIG 2019 RL Alex161.jpg\n|status=Active\n|role=Player\n|twitter=xAlex161\n|twitch=Alex161x\n|steam=id/Carry161\n|history=\n{{TH|2016-10-?? \u2013 2017-01-?? |Parallax}}\n{{TH|2017-02-?? \u2013 2017-03-?? |Pentagram}}\n{{TH|2017-05-24 \u2013 2017-06-23|Parallax}}\n{{TH|2017-06-23 \u2013 2017-09-30|Epsilon eSports}}\n{{TH|2018-01-27 \u2013 2018-02-13|Placeholder}}\n{{TH|2017-08-07 \u2013 2018-03-16|ExRay}}\n{{TH|2018-03-16 \u2013 2018-07-11|Servette Geneva eSports}}\n{{TH|2018-07-11 \u2013 2018-07-30|Ex-Servette Geneva eSports}}\n{{TH|2018-07-30 \u2013 2019-06-11|mousesports}}\n{{TH|2019-08-24 - '''Present'''|Big Brained Gamers}}\n|history_gfinity=\n{{TH_Gfinity|1|Epsilon eSports}}\n}}\n{{upcoming matches player}}\nAlex '''\"Alex161\"''' Ernst {{born}} is a [[:category:Germany|German]] ''Rocket League'' player."
+    }
+  },
+  "Allushin": {
+    "title": "Allushin",
+    "pageid": 22798,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Allushin\n|name2=Results\n|link2=Allushin/Results\n|This=1\n}}\n{{Infobox player\n|id=Allushin\n|name=Braxton Lagarec\n|country=Canada\n|birth_date={{birth_date_and_age|1999|09|03}}\n|team=Ghost Gaming\n|image=DHMONTREAL 2019 RL ALLUSHIN.jpg\n|status=Active\n|role=Player\n|twitter=AllushinRL\n|twitch=allushin\n|steam=id/allushin\n|history=\n{{TH|2017-05-21 \u2013 2017-06-18|Fibeon Esports}}\n{{TH|2017-08-03 \u2013 2017-09-14|Emotion}}\n{{TH|2017-09-14 \u2013 2018-12-06|Allegiance}}\n{{TH|2018-12-06 \u2013  2019-02-05|Ex-Allegiance}}\n{{TH|2019-04-02 \u2013  '''Present'''|Ghost Gaming}}\n}}\n{{upcoming matches player}}\nBraxton '''\"Allushin\"''' Lagarec {{born}} is a [[:category:Canada|Canadian]] ''Rocket League'' player."
+    }
+  },
+  "AxB": {
+    "title": "AxB",
+    "pageid": 29538,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=AxB\n|name2=Results\n|link2=AxB/Results\n|This=1\n}}\n{{Infobox player\n|id=AxB\n|name=Alexandre Bellemare\n|country=Canada\n|birth_date={{birth_date_and_age|1995|09|19}}\n|team=Spacestation Gaming\n|image=DHDALLAS_2019_RL_AXB.jpg\n|status=Active\n|role=Player\n|twitter=AxB_RL\n|twitch=axb_rl\n|steam=profiles/76561198071944774\n|history=\n{{TH|2017-08-02 \u2013 2018-04-14|The D00ds}}\n{{TH|2018-08-01 \u2013 2019-04-04|Bread}}\n{{TH|2019-04-04 \u2013 '''Present'''|Spacestation Gaming}}\n}}\n{{upcoming matches player}}\nAlexandre \"'''AxB'''\" Bellemare {{born}} is a [[:category:Canada|Canadian]] Rocket League player."
+    }
+  },
+  "AyyJayy": {
+    "title": "AyyJayy",
+    "pageid": 25962,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=AyyJayy\n|name2=Results\n|link2=AyyJayy/Results\n|This=1\n}}\n{{Infobox player\n|id=AyyJayy\n|name=Austin Aebi\n|country=United States\n|birth_date={{birth_date_and_age|2002|12|10}}\n|team=Rogue\n|image=RLSUMMIT AYYJAYY 2.jpg\n|status=Active\n|role=Player\n|twitter=AyyJayyRL\n|steam=id/AyyJayyRL\n|twitch=ayyjayy\n|youtube=channel/UCktpnUzA1CI7rWna-Uc0tKA\n|history=\n{{TH|2018-01-09 - 2018-12-20|FlyQuest}}\n{{TH|2018-12-20 - '''Present'''|Rogue}}\n}}\n{{upcoming matches player}}\nAustin '''\"AyyJayy\"''' Aebi {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Bluey": {
+    "title": "Bluey",
+    "pageid": 7318,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Bluey\n|name2=Results\n|link2=Bluey/Results\n|This=1\n}}\n{{Infobox player\n|id=Bluey\n|ids=blueyMONSTER., blueyMACHINE.\n|name=Dan Bluett\n|country=England\n|country2=Spain\n|birth_date={{birth_date_and_age|2001|12|11}}\n|team=FC Barcelona\n|image=DHVALENCIA 2019 RL BLUEY.jpg\n|status=Active\n|role=Player\n|twitter=BlueyRL\n|twitch=Bluey\n|steam=id/Bluey4114\n|youtube=user/kbluett\n|history=\n{{TH|2016-04-?? \u2013 2016-05-29|Gentlemen}}\n{{TH|2016-06-26 \u2013 2016-08-09|Savage!}}\n{{TH|2016-08-21 \u2013 2016-10-09|We Dem Babies}}\n{{TH|2017-02-20 \u2013 2017-04-06|Urban Myths}}\n{{TH|2017-04-06 \u2013 2017-??-??|Team Infused}}\n{{TH|2017-08-04 \u2013 2017-09-22|Frontline}}\n{{TH|2017-09-22 \u2013 2018-08-01|PSG Esports}}\n{{TH|2018-08-01 \u2013 2018-08-05|PSG Esports|Substitute}}\n{{TH|2018-08-05 \u2013 2019-04-04|Savage!}}\n{{TH|2019-04-04 \u2013 '''Present'''|FC Barcelona}}\n}}\n{{upcoming matches player}}\nDan '''\"Bluey\"''' Bluett {{born}} is an [[:category:England|English]] ''Rocket League'' player, who is currently living in Spain."
+    }
+  },
+  "CJCJ": {
+    "title": "CJCJ",
+    "pageid": 23087,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=CJCJ\n|name2=Results\n|link2=CJCJ/Results\n|This=1\n}}\n{{Infobox player\n|id=CJCJ\n|name= Cameron Johns\n|country=Australia\n|birth_date={{birth_date_and_age|1998|08|06}}\n|team=Chiefs Esports Club\n|image=DHVALENCIA 2019 RL CJCJ.jpg\n|status=Active\n|role=Player\n|twitter=CJCJ_RL\n|twitch=CJCJ_RL\n|steam=profiles/76561197998103705\n|history=\n{{TH|2017-01-21 \u2013 2017-02-12|The Drongos}}\n{{TH|2017-02-20 \u2013 2017-05-17|Trident Esports}}\n{{TH|2017-05-17 \u2013 2017-06-20|The Drongos}}\n{{TH|2017-06-20 \u2013 2017-07-25|You See Me}}\n{{TH|2017-07-25 \u2013 2017-11-28|Pale Horse eSports}}\n{{TH|2017-11-29 \u2013 2019-02-21|Tainted Minds}}\n{{TH|2019-02-21 \u2013 2019-06-26|ICON Esports}}\n{{TH|2019-06-26 \u2013 '''Present'''|Chiefs Esports Club}}\n\n|history_gfinity=\n{{TH_Gfinity_AU|2|Roar}}\n}}\n{{upcoming matches player}}\nCameron '''\"CJCJ\"''' Johns {{born}} is an [[:Category:Australia|Australian]] ''Rocket League'' player."
+    }
+  },
+  "Chausette45": {
+    "title": "Chausette45",
+    "pageid": 7080,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Chausette45\n|name2=Results\n|link2=Chausette45/Results\n|This=1\n}}\n{{Infobox player\n|id=Chausette45\n|ids=Chausette\n|name=Thibault Grzesiak\n|country=France\n|birth_date={{birth_date_and_age|2001|03|16}}\n|team=Team Reciprocity\n|image=DHMONTREAL 2019 RL CHAUSETTE45.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=ChausetteRL\n|youtube=\n|twitch=Chausette45\n|steam=id/chausette45\n|instagram=chausetterl\n|history=\n{{TH|2015-08-30 \u2013 2015-09-06|UltimaTeam}}\n{{TH|2015-09-06 \u2013 2015-09-19|RdyToFly}}\n{{TH|2015-10-10 \u2013 2015-10-25|PlaY0urLife}}\n{{TH|2015-10-25 \u2013 2015-12-26|inXtremis RL}}\n{{TH|2015-12-26 \u2013 2016-03-03|AneVia RL}}\n{{TH|2016-03-03 \u2013 2016-03-13|Shoot N Goal}}\n{{TH|2016-03-13 \u2013 2016-06-12|SnK eSports}}\n{{TH|2016-06-12 \u2013 2016-07-03|Shoot N Goal}}\n{{TH|2016-08-25 \u2013 2016-08-29|Shoot N Miss}}\n{{TH|2016-09-04 \u2013 2016-12-24|Red Eye}}\n{{TH|2017-02-17 \u2013 2017-04-07|Pocket Aces}}\n{{TH|2017-04-07 \u2013 2017-05-18|Gale Force eSports}}\n{{TH|2017-06-30 \u2013 2017-07-24|WeDemMois}}\n{{TH|2017-08-04 \u2013 2017-09-22|Frontline}}\n{{TH|2017-09-22 \u2013  2019-08-09|PSG Esports}}\n{{TH|2019-08-09 \u2013 2019-09-03|Frontline}}\n{{TH|2019-09-03 - '''Present'''|Team Reciprocity}}\n}}\n{{upcoming matches player}}\nThibault '''\"Chausette45\"''' Grzesiak {{born}} is a [[:category:France|French]] ''Rocket League'' player."
+    }
+  },
+  "Chicago": {
+    "title": "Chicago",
+    "pageid": 23362,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Chicago\n|name2=Results\n|link2=Chicago/Results\n|This=1\n}}\n{{Infobox player\n|id=Chicago\n|name=Reed Wilen\n|country=United States\n|birth_date={{birth_date_and_age|2001|06|12}}\n|team=G2 Esports\n|image=DHVALENCIA 2019 RL CHICAGO.jpg\n|status=Active\n|role=Player\n|twitter=Chicago_RL\n|twitch=Chicago_RL\n|steam=profiles/76561198293785594\n|history=\n{{TH|2016-11-22 \u2013 2016-12-10|Boom!}}\n{{TH|2017-05-16 \u2013 2017-07-01|Applesauce}}\n{{TH|2017-07-01 \u2013 2017-11-07|Fibeon eSports}}\n{{TH|2017-11-07 \u2013 2018-01-23|Applesauce}}\n{{TH|2018-01-23 \u2013 2018-05-22|Team Dignitas}}\n{{TH|2018-05-22 \u2013 2018-06-22|Ex-Dignitas}}\n{{TH|2018-06-22 \u2013 2019-01-07|Evil Geniuses}}\n{{TH|2019-01-07 \u2013 '''Present'''|G2 Esports}}\n}}\n{{upcoming matches player}}\nReed \"'''Chicago'''\" Wilen {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "CorruptedG": {
+    "title": "CorruptedG",
+    "pageid": 7207,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=CorruptedG\n|name2=Results\n|link2=CorruptedG/Results\n|This=1\n}}\n{{Infobox player\n|id=CorruptedG\n|name=Gabriel Vallozzi\n|country=Canada\n|birth_date={{birth_date_and_age|1995|06|01}}\n|team=Chaos Esports Club\n|image=WGN NA CHAMPIONSHIP CORRUPTEDG.jpg\n|status=Active\n|role=Player\n|twitter=CorruptedGabe\n|twitch=corruptedg \n|youtube=TheGurtle\n|steam=id/corruptedg\n|history=\n{{TH|2016-04-03 \u2013 2016-06-06|Phoenix Infinity}}\n{{TH|2016-06-06 \u2013 2016-07-16|FakeOut Nation}}\n{{TH|2016-07-22 \u2013 2016-08-17|Empyreal eSports}}\n{{TH|2016-08-17 \u2013 2016-10-23|Deception}}\n{{TH|2017-01-21 \u2013 2017-02-25|eQuinox}}\n{{TH|2017-02-25 \u2013 2017-07-01|Denial Esports}}\n{{TH|2017-07-03 \u2013 2017-07-18|Lachinio's team}}\n{{TH|2017-07-18 \u2013 2017-08-07|Myth Gaming}}\n{{TH|2017-08-07 \u2013 2017-09-02|eQuinox}}\n{{TH|2017-09-02 \u2013 2018-01-09|FlyQuest}}\n{{TH|2018-01-09 \u2013 2018-03-13|eQuinox}}\n{{TH|2018-03-13 \u2013 2019-06-09|Evil Geniuses}}\n{{TH|2019-06-09 \u2013 2019-07-28|Randy Gibbons' River Rats}}\n{{TH|2019-07-28 \u2013 2019-10-06|Plot Twist}}\n{{TH|2019-10-06 - '''Present'''|Chaos Esports Club}}\n}}\n{{upcoming matches player}}\nGabriel '''\"CorruptedG\"''' Vallozzi {{born}} is a [[:category:Canada|Canadian]] ''Rocket League'' player."
+    }
+  },
+  "Deevo": {
+    "title": "Deevo",
+    "pageid": 7060,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Deevo\n|name2=Results\n|link2=Deevo/Results\n|This=1\n}}\n{{Infobox player\n|id=Deevo\n|ids=DynamicDave\n|name=David Morrow\n|country=England\n|country2=Spain\n|birth_date={{birth_date_and_age|2000|07|12}}\n|team=FC Barcelona\n|image=DHVALENCIA 2019 RL DEEVO.jpg\n|status=Active\n|role=Player\n|twitter=Deevo\n|twitch=deevo\n|steam=id/DeevoRL\n|history=\n{{TH|2016-01-17 \u2013 2016-03-14 |Dot Dot Dot}}\n{{TH|2016-03-27 \u2013 2016-03-29 |Cow Nose}}\n{{TH|2016-03-29 \u2013 2016-06-05 |eff0rt}}\n{{TH|2016-06-26 \u2013 2016-08-09 |Savage!}}\n{{TH|2016-08-27 \u2013 2016-09-07|WillyWonkerPoodles}}\n{{TH|2016-09-07 \u2013 2016-12-09|Mock-It eSports EU}}\n{{TH|2016-12-09 \u2013 2017-01-09|Aces}}\n{{TH|2017-01-09 \u2013 2017-06-21|Northern Gaming}}\n{{TH|2017-06-21 \u2013 2018-07-30|Team EnVyUs}}\n{{TH|2018-08-04 \u2013 2018-08-05|Washed Up!}}\n{{TH|2018-08-05 \u2013 2019-04-04|Savage!}}\n{{TH|2019-04-04 \u2013 '''Present'''|FC Barcelona}}\n}}\n{{upcoming matches player}}\nDavid '''\"Deevo\"''' Morrow {{born}} is an [[:category:England|English]] ''Rocket League'' player, who is currently living in Spain."
+    }
+  },
+  "Drippay": {
+    "title": "Drippay",
+    "pageid": 20013,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Drippay\n|link1=Drippay\n|name2=Results\n|link2=Drippay/Results\n|This=1\n}}\n{{Infobox player\n|id=Drippay\n|name=Matthew Den-Kaat\n|country=Australia\n|birth_date={{birth_date_and_age|2000|03|09}}\n|team=Chiefs Esports Club\n|image=DHDALLAS 2019 RL DRIPPAY.jpg\n|status=Active\n|role=Player\n|twitter=DrippayRL\n|twitch=drippay\n|youtube=channel/UCmuFdR5S_KdQkQxk1hKkYaQ\n|steam=id/DrippayRL\n|history=\n{{TH|2016-10-05 \u2013 2016-10-27|Legacy eSports|link=Legacy eSports (Australian team)}}\n{{TH|2016-10-27 \u2013 2017-07-07|Alpha Sydney}}\n{{TH|2017-07-07 \u2013 2017-08-12|Billy Fan Club}}\n{{TH|2017-08-12 \u2013 2019-01-11|Chiefs Esports Club}}\n{{TH|2019-01-11 \u2013 2019-08-15|Evil Geniuses}}\n{{TH|2019-09-13 \u2013 '''Present'''|Chiefs Esports Club}}\n|history_gfinity=\n{{TH_Gfinity_AU|1|Chiefs Esports Club}}\n{{TH_Gfinity_AU|2|Chiefs Esports Club}}\n}}\n{{upcoming matches player}}\nMatthew '''\"Drippay\"''' Den-Kaat {{born}} is an [[:category:Australia|Australian]] ''Rocket League'' player, who lived in the [[:category:United States|United States]] while playing for [[Evil Geniuses]]. He has now moved back over to [[:category:Oceania|Oceania]] to compete with [[Chiefs Esports Club|Chiefs ESC]]."
+    }
+  },
+  "Dumbo": {
+    "title": "Dumbo",
+    "pageid": 19203,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Dumbo\n|link1=Dumbo\n|name2=Results\n|link2=Dumbo/Results\n|This=1\n}}\n{{Infobox player\n|id=Dumbo\n|name=Phillip Donachie\n|country=Australia\n|birth_date=\n|team=\n|image=PlayerImagePlaceholder.png\n|status=Active\n|role=Player\n|twitter=DumboRL\n|twitch=dumborl\n|steam=id/dafreo\n|history=\n{{TH|2016-02-01 \u2013 2016-10-18|Alpha Sydney}}\n{{TH|2016-11-?? \u2013 2017-02-20|Sand Castle}}\n{{TH|2016-02-20 \u2013 2017-03-30|Athletico}}\n{{TH|2017-03-30 \u2013 2017-06-16|Sand Castle}}\n{{TH|2017-06-16 \u2013 2017-11-20|Scylla Esports}}\n{{TH|2017-12-14 \u2013 2018-06-27|Dark Sided}}\n{{TH|2018-06-27 \u2013 2018-08-17|Ex-Dark Sided}}\n{{TH|2018-08-17 \u2013 2018-08-19|Dumb}}\n{{TH|2018-08-19 \u2013 2019-02-25|ORDER}}\n{{TH|2019-03-06 \u2013 2019-05-25|Sand Castle}}\n{{TH|2019-06-19 \u2013 2019-10-18|EDGE}}\n|history_gfinity=\n{{TH_Gfinity_AU|1|ORDER}}\n{{TH_Gfinity_AU|2|ORDER}}\n}}\n{{upcoming matches player}}\nPhillip '''\"Dumbo\"''' Donachie is an [[:Category:Australia|Australian]] ''Rocket League'' player."
+    }
+  },
+  "Express": {
+    "title": "Express",
+    "pageid": 20010,
+    "wikitext": {
+      "*": "\n{{Tabs static\n|name1=Express\n|link1=Express\n|name2=Results\n|link2=Express/Results\n|This=1\n}}\n{{Infobox player\n|id=Express\n|name=Jonathan Slade\n|country=Australia\n|birth_date={{birth_date_and_age|1998|08|22}}\n|team=Chiefs Esports Club\n|image=DHMONTREAL_2019_RL_EXPRESS.jpg\n|status=Active\n|role=Player\n|twitter=ExpressRL_\n|steam=id/express157\n|twitch=\n|history=\n{{TH|2016-01-08 \u2013 2017-01-07|Abyss eSports}}\n{{TH|2017-01-07 \u2013 2017-03-06|1More}}\n{{TH|2017-03-06 \u2013 2017-11-08|JAM Gaming}}\n{{TH|2017-11-15 \u2013 2018-06-27|Dark Sided}}\n{{TH|2018-06-27 \u2013 2018-08-17|Ex-Dark Sided}}\n{{TH|2018-08-17 \u2013 2019-02-21|Tainted Minds}}\n{{TH|2019-02-21 \u2013 2019-06-26|ICON Esports}}\n{{TH|2019-06-26 \u2013 '''Present'''|Chiefs Esports Club}}\n|history_gfinity=\n{{TH_Gfinity_AU|1|ORDER}}\n{{TH_Gfinity_AU|2|Roar}}\n}}\n{{upcoming matches player}}\nJonathan '''\"Express\"''' Slade {{born}} is an [[:Category:Australia|Australian]] ''Rocket League'' player."
+    }
+  },
+  "EyeIgnite": {
+    "title": "EyeIgnite",
+    "pageid": 23141,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=EyeIgnite\n|name2=Results\n|link2=EyeIgnite/Results\n|This=1\n}}\n{{Infobox player\n|id=EyeIgnite\n|ids=\n|name=Jordan Stellon\n|country=England\n|birth_date={{birth_date_and_age|1996|04|23}}\n|team=Fadeaway\n|image=DHDALLAS 2019 RL EYEIGNITE.jpg\n|status=Active\n|role=Player\n|twitter=eyeignite\n|instagram=eyeignite_rl\n|twitch=EyeIgnite\n|steam=id/EyeIgnite10\n|history=\n{{TH|2016-09-05 - 2016-09-18|Swamp Monkeys}}\n{{TH|2017-02-22 \u2013 2017-03-05|Parhelion}}\n{{TH|2017-03-05 \u2013 2017-03-23|Rex Gaming}}\n{{TH|2017-04-06 \u2013 2017-08-07|Team Infused}}\n{{TH|2017-08-07 \u2013 2018-02-08|ExRay}}\n{{TH|2018-02-08 \u2013 2018-07-30|Team EnVyUs}}\n{{TH|2018-07-30 - 2018-08-05|Ex-Envy}}\n{{TH|2018-08-05 - 2019-01-04|We Dem Girlz}}\n{{TH|2019-01-04 - 2019-08-04|Team SoloMid}}\n{{TH|2019-08-25 \u2013 '''Present''' |Fadeaway}}\n|history_gfinity=\n{{TH_Gfinity|1|Team Infused}}\n{{TH_Gfinity|2|Prophecy}}\n{{TH_Gfinity|3|Team EnVyUs}}\n}}\n{{upcoming matches player}}\nJordan '''\"EyeIgnite\"''' Stellon {{born}} is an [[:category:England|English]] ''Rocket League'' player."
+    }
+  },
+  "BoritoB": {
+    "title": "BoritoB",
+    "pageid": 24786,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=BoritoB\n|name2=Results\n|link2=BoritoB/Results\n|This=1\n}}{{DISPLAYTITLE:Borito B}}\n{{Infobox player\n|id=Borito B\n|name=Boris Pieper \n|country=Netherlands\n|birth_date={{birth_date_and_age|1999|03|17}}\n|team=Method\n|image=GFINITY_JOEBRADY_BORITOB.jpg\n|status=Active\n|role=Player\n|twitter=BoritoB_RL\n|steam=id/broritob\n|twitch=borito_b\n|history=\n{{TH|2015-11-01 \u2013 2015-11-18|The 3 Musketeers}}\n{{TH|2016-05-19 \u2013 2016-08-03|Kden}}\n{{TH|2017-07-03 \u2013 2017-09-06|BitterSweet}}\n{{TH|2017-09-06 \u2013 2017-10-21|Defusekids}}\n{{TH|2017-09-17 \u2013 2018-01-05|Reason Gaming}}\n{{TH|2018-01-05 \u2013 2018-02-10|ShaBoRix}}\n{{TH|2018-02-10 \u2013 '''Present''' |Method}}\n|history_gfinity=\n{{TH_Gfinity|2|Reason Gaming}}\n{{TH_Gfinity|3|Method}}\n{{TH_Gfinity|4|Method}}\n}}\n{{upcoming matches player}}\nBoris '''\"Borito B\"''' Pieper {{born}} is a [[:category:Netherlands|Dutch]] ''Rocket League'' Player."
+    }
+  },
+  "Fairy Peak": {
+    "title": "Fairy Peak",
+    "pageid": 11613,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Fairy Peak\n|name2=Results\n|link2=Fairy Peak/Results\n|This=1\n}}\n{{Infobox player\n|id=Fairy Peak\n|name=Victor Locquet\n|country=France\n|birth_date={{birth_date_and_age|1998|05|26}}\n|team=Renault Sport Team Vitality\n|image=DHMONTREAL 2019 RL FAIRY PEAK.jpg\n|status=Active\n|role=Player\n|twitter=FairyyPeak\n|youtube=channel/UCkRN972D6W5IoAAEm10ULsQ\n|twitch=fairypeak\n|steam=id/fairypeak\n|discord=r2bVw3x\n|history=\n{{TH|2016-??-?? \u2013 2016-08-08 |Supernova}}\n{{TH|2016-08-08 \u2013 2016-08-22 |Xylaga}}\n{{TH|2016-08-22 \u2013 2016-12-12 |Luminance}}\n{{TH|2017-01-20 \u2013 2017-06-20|Mock-It eSports EU}}\n{{TH|2017-06-20 \u2013 2018-01-09|Mock-It eSports}}\n{{TH|2018-01-09 \u2013 2018-02-12|Guess Who}}\n{{TH|2018-02-12 \u2013 '''Present'''|Renault Vitality}}\n|history_gfinity=\n{{TH_Gfinity|3|Renault Sport Team Vitality}}\n{{TH_Gfinity|4|Renault Sport Team Vitality}}\n}}\n{{upcoming matches player}}\nVictor '''\"Fairy Peak\"''' Locquet {{born}} is a [[:category:France|French]] ''Rocket League'' player."
+    }
+  },
+  "Ferra": {
+    "title": "Ferra",
+    "pageid": 18504,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Ferra\n|name2=Results\n|link2=Ferra/Results\n|This=1\n}}\n{{Infobox player\n|id=Ferra\n|name=Victor Francal\n|country=France\n|birth_date={{birth_date_and_age|1996|10|31}}\n|team=Team Reciprocity\n|image=DHMONTREAL 2019 RL FERRA.jpg\n|status=Active\n|role=Player\n|twitter=Ferra_RL\n|youtube=\n|twitch=ferra\n|steam=id/42ferra\n|history=\n{{TH|2016-??-?? \u2013 2016-06-19 |Rare Penguins}}\n{{TH|2016-06-26 \u2013 2016-08-08 |Supernova}}\n{{TH|2016-08-08 \u2013 2016-08-22 |Xylaga}}\n{{TH|2016-08-22 \u2013 2016-12-12 |Luminance}}\n{{TH|2017-02-22 \u2013 2017-07-07|The Leftovers}}\n{{TH|2017-08-04 \u2013 2017-09-22|Frontline}}\n{{TH|2017-09-22 \u2013 2019-08-09|PSG Esports}}\n{{TH|2019-08-09 \u2013 2019-09-03|Frontline}}\n{{TH|2019-09-03 - '''Present'''|Team Reciprocity}}\n}}\n{{upcoming matches player}}\nVictor '''\"Ferra\"''' Francal {{born}} is a [[:category:France|French]] ''Rocket League'' player."
+    }
+  },
+  "FreaKii": {
+    "title": "FreaKii",
+    "pageid": 6683,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=FreaKii\n|name2=Results\n|link2=FreaKii/Results\n|This=1\n}}\n{{Infobox player\n|id=FreaKii\n|name=Sandro Holzwarth\n|country=Germany\n|birth_date={{birth_date_and_age|1996|08|02}}\n|team=Veloce Esports\n|image=DHVALENCIA 2019 RL FREAKII.jpg\n|status=Active\n|role=Player\n|twitter=FreaKiiRL\n|twitch=freakiirl\n|steam=id/freakiirl\n|discord=invite/YG5EeYY\n|history=\n{{TH|2016-03-13 \u2013 2016-05-15|Zeus eSports}}\n{{TH|2016-05-15 \u2013 2016-09-03|Team Enjoy}}\n{{TH|2016-09-03 \u2013 2017-01-19|PENTA Sports}}\n{{TH|2017-01-19 \u2013 2017-01-30|Aces}}\n{{TH|2017-01-30 \u2013 2017-06-20|PENTA Sports}}\n{{TH|2017-06-20 \u2013 2018-01-09|Mock-It eSports}}\n{{TH|2018-01-09 \u2013 2018-02-12|Guess Who}}\n{{TH|2018-02-12 \u2013 2018-06-15|Renault Vitality}}\n{{TH|2018-06-15 \u2013 2018-07-18|Renault Vitality|Inactive}}\n{{TH|2018-08-08 \u2013 2019-01-28|Team Secret}}\n{{TH|2019-01-28 - 2019-02-06 |Ex-Secret}}\n{{TH|2019-02-06 - 2019-02-14|Melon Squad}}\n{{TH|2019-02-14 - '''Present'''|Veloce Esports}}\n|history_gfinity=\n{{TH_Gfinity|3|Renault Vitality}}\n}}\n{{upcoming matches player}}\nSandro '''\"FreaKii\"''' Holzwarth {{born}} is a [[:category:Germany|German]] ''Rocket League'' player."
+    }
+  },
+  "GarrettG": {
+    "title": "GarrettG",
+    "pageid": 2935,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=GarrettG\n|name2=Results\n|link2=GarrettG/Results\n|This=1\n}}\n{{Infobox player\n|id=GarrettG\n|name=Garrett Gordon\n|country=United States\n|birth_date={{birth_date_and_age|2001|02|06}}\n|team=NRG Esports\n|image=DHMONTREAL_2019_RL_GARRETTG.jpg\n|status=Active\n|role=Player\n|twitter=GarrettG\n|twitch=garrettg\n|youtube=channel/UCjZCggPJ2xeo08V2jJpI6mA\n|instagram=garrettg.c\n|steam=id/garrettg34\n|history=\n{{TH|2015-12-27 \u2013 2016-02-24|Foremost}}\n{{TH|2016-02-28 \u2013 2016-03-04|Turbulence}}\n{{TH|2016-03-04 \u2013 2016-05-23|VexX Gaming}}\n{{TH|2016-05-29 \u2013 2016-06-08|Eanix}}\n{{TH|2016-06-11 \u2013 2016-10-21|Exodus}}\n{{TH|2016-10-21 \u2013 2016-12-06|Orbit eSports}}\n{{TH|2017-01-11 \u2013 '''Present'''|NRG Esports}}\n}}\n{{upcoming matches player}}\nGarrett '''\"GarrettG\"''' Gordon {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Gimmick": {
+    "title": "Gimmick",
+    "pageid": 20558,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Gimmick\n|name2=Results\n|link2=Gimmick/Results\n|This=1\n}}\n{{Infobox player\n|id=Gimmick\n|name=Jesus Parra\n|country=United States\n|birth_date={{birth_date_and_age|2000|06|30}}\n|team=Cloud9\n|image=RLSUMMIT GIMMICK.jpg\n|status=Active\n|role=Player\n|twitter=Gimmickrl\n|twitch=gummick\n|steam=id/123du\n|history=\n{{TH|2017-01-19 \u2013 2017-04-07|Iris|Substitute}}\n{{TH|2017-04-07 \u2013 2017-05-08|Iris}}\n{{TH|2017-05-08 \u2013 2017-07-28|The Muffin Men}}\n{{TH|2017-07-28 \u2013 '''Present'''|Cloud9}}\n\n}}\n{{upcoming matches player}}\nJesus '''\"Gimmick\"''' Parra {{born}} is an American ''Rocket League'' player."
+    }
+  },
+  "Gnagflow06": {
+    "title": "Gnagflow06",
+    "pageid": 30698,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Gnagflow06\n|name2=Results\n|link2=Gnagflow06/Results\n|This=1\n}}\n{{Infobox player\n|id=Gnagflow06\n|name=Alexander B\u00f6ttcher\n|country=Germany\n|team=MINKZ\n|team2=Upset\n|image=GFINITY_JOEBRADY_GNAGFLOW.jpg\n|status=Active\n|role=Player\n|twitter=Gnagflow06\n|steam=id/Gnagflow06\n|twitch=gnagflow06\n|history=\n{{TH|2016-08-?? \u2013 2016-9-??|Get Raptorized}}\n{{TH|2016-10-?? \u2013 2016-12-??|ParralaX}}\n{{TH|2016-12-12 \u2013 2017-01-13|Team Enjoy}}\n{{TH|2017-02-20 \u2013 2017-08-??|Team Enjoy}}\n{{TH|2017-08-?? \u2013 2017-12-??|Tree}}\n{{TH|2017-12-22 \u2013 2018-02-13|1UpeSport}}\n{{TH|2018-02-13 \u2013 2018-07-17|Team Vitality|Substitute}}\n{{TH|2018-08-01 \u2013 2018-09-??|2/3 made wc}}\n{{TH|2018-09-?? \u2013 2019-08-17|GartenH\u00fcttenGang}}\n{{TH|2019-08-26 \u2013 '''Present'''|Upset}}\n{{TH|2019-09-23 \u2013 '''Present'''|MINKZ}}\n|history_gfinity=\n{{TH_Gfinity|3|Team Vitality}}\n{{TH_Gfinity|4|Fnatic}}\n}}\n{{upcoming matches player}}\nAlexander '''\"Gnagflow06\"''' B\u00f6ttcher is a [[:category:Germany|German]] ''Rocket League'' player."
+    }
+  },
+  "JKnaps": {
+    "title": "JKnaps",
+    "pageid": 7436,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=JKnaps\n|name2=Results\n|link2=JKnaps/Results\n|This=1\n}}\n{{Infobox player\n|id=JKnaps\n|ids=J_Knaps\n|name=Jacob Knapman\n|country=Canada\n|birth_date= {{birth_date_and_age|1999|09|30}}\n|team=G2 Esports\n|image=DHMONTREAL 2019 RL JKNAPS.jpg\n|status=Active\n|role=Player\n|twitter=JKnaps\n|twitch=jknapsrl\n|instagram=jknapsrl\n|steam=profiles/76561198061585314\n|history=\n{{TH|2015-07-12 \u2013 2016-11-15|Nova}}\n{{TH|2015-11-15 \u2013 2016-01-10|Equinox}}\n{{TH|2016-01-10 \u2013 2016-01-17|Wolfves Pack}}\n{{TH|2016-02-14 \u2013 2016-02-28|Rocket Fatigue}}\n{{TH|2016-01-10 \u2013 2016-01-17|Wolfves Pack}}\n{{TH|2016-03-06 \u2013 2016-04-03|Forsaken}}\n{{TH|2016-04-10 \u2013 2016-05-07|Checkmate}}\n{{TH|2016-05-07 \u2013 2016-05-15|VwS Gaming}}\n{{TH|2016-06-12 \u2013 2016-07-16|Lucky Bounce}}\n{{TH|2016-07-21 \u2013 2016-09-05|Momentum}}\n{{TH|2016-09-05 \u2013 2016-11-13|Selfless Gaming}}\n{{TH|2017-02-22 \u2013 '''Present'''|G2 Esports}}\n}}\n{{upcoming matches player}}\nJacob '''\"JKnaps\"'''  Knapman {{born}} is a Canadian ''Rocket League'' player."
+    }
+  },
+  "Jacob": {
+    "title": "Jacob",
+    "pageid": 1484,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Jacob\n|name2=Results\n|link2=Jacob/Results\n|This=1\n}}\n{{Infobox player\n|id=Jacob\n|name=Jacob McDowell\n|country=United States\n|birth_date={{birth_date_and_age|1997|01|01}}\n|team=\n|image=RL_Jacob.jpg\n|status=Inactive\n|role=Player\n|twitter=RL_Jacob\n|twitch=jacoblol\n|reddit=Jacoblol\n|discord=hMMd8m5\n|youtube=channel/UCv3b3NIXIov1IygspQpIk_w\n|instagram=rl_jacob\n|snapchat=rl_jacob\n|steam=id/jacoblol2\n|history=\n{{TH|2015-08-18 \u2013 2015-10-14|Perfect Storm}}\n{{TH|2015-10-14 \u2013 2016-10-01|Kings of Urban}}\n{{TH|2016-10-01 \u2013 2018-01-08|NRG Esports}}\n{{TH|2018-02-02 \u2013 2018-12-20|Rogue}}\n{{TH|2018-12-20 \u2013 2019-02-11|Ex-Rogue}}\n{{TH|2019-05-11 \u2013 2019-06-??|RBG Esports|Stand-In}}\n{{TH|2019-08-06 - 2019-10-14|72 Pin Connector}}\n}}\n{{upcoming matches player}}\nJacob '''\"Jacob\"''' McDowell {{born}} is an [[:category:USA|American]] ''Rocket League'' player."
+    }
+  },
+  "Julz": {
+    "title": "Julz",
+    "pageid": 27334,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Julz\n|name2=Results\n|link2=Julz/Results\n|This=1\n}}\n{{Infobox player\n|id=Julz\n|name= Tom Jullienne\n|country=Australia\n|birth_date=\n|team=Ground Zero Gaming\n|image=DHVALENCIA 2019 RL JULZ.jpg\n|status=Active\n|role=Player\n|twitter=julz_rl\n|steam=id/Julzzyy\n|twitch=\n|history=\n{{TH|2016-08-31 \u2013 2016-11-08|Gameroos XD}}\n{{TH|2016-12-10 \u2013 2016-12-19|Team FuroX}}\n{{TH|2016-12-19 \u2013 2017-01-23|SubZero}}\n{{TH|2017-01-23 \u2013 2017-02-11|Just Dreameh Things}}\n{{TH|2017-02-11 \u2013 2017-05-17|Trident Esports}}\n{{TH|2017-05-17 \u2013 2017-06-20|The Drongos}}\n{{TH|2017-06-20 \u2013 2017-07-25|You See Me|substitute}}\n{{TH|2017-07-25 \u2013 2017-11-28|Pale Horse eSports|substitute}}\n{{TH|2017-11-29 \u2013 2018-08-17 |Tainted Minds}}\n{{TH|2018-08-17 - 2018-08-19|Dumb}}\n{{TH|2018-08-19 - 2019-03-28|ORDER}}\n{{TH|2019-03-28 - 2019-06-03|Out of Order}}\n{{TH|2019-06-03 - '''Present'''|Ground Zero Gaming}}\n|history_gfinity=\n{{TH_Gfinity_AU|2|ORDER}}\n}}\n{{upcoming matches player}}\nTom '''\"Julz\"''' Jullienne is an [[:category:Australia|Australian]] ''Rocket League'' player."
+    }
+  },
+  "Kamii": {
+    "title": "Kamii",
+    "pageid": 23083,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Kamii\n|name2=Results\n|link2=Kamii/Results\n|This=1\n}}\n{{Infobox player\n|id=Kamii\n|name=Cameron Ingram\n|country=New Zealand\n|image=WSOE4 KAMII.jpg\n|birth_date={{birth_date_and_age|2000|09|21}}\n|team=Renegades\n|status=Active\n|role=Player\n|twitter=KamiiRL\n|twitch=kamiirl\n|steam=id/KamiiRL\n|history=\n{{TH|2017-06-10 \u2013 2017-06-20|Masterminds}}\n{{TH|2017-06-20 \u2013 2017-07-25|You See Me}}\n{{TH|2017-07-25 \u2013 2017-11-28|Pale Horse eSports}}\n{{TH|2017-11-29 \u2013 2018-08-17 |Tainted Minds}}\n{{TH|2018-08-17 - 2019-05-01|Chiefs eSports Club}}\n{{TH|2019-05-01 \u2013 '''Present'''|Renegades}}\n|history_gfinity=\n{{TH_Gfinity_AU|2|Chiefs Esports Club}}\n}}\n{{upcoming matches player}}\nCameron '''\"Kamii\"''' Ingram {{born}} is a [[:Category:New Zealand|New Zealand]] ''Rocket League'' player."
+    }
+  },
+  "Kassio": {
+    "title": "Kassio",
+    "pageid": 28286,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Kassio\n|name2=Results\n|link2=Kassio/Results\n|This=1\n}}\n{{Infobox player\n|id=Kassio\n|name=Andy Landais\n|country=France\n|birth_date={{birth_date_and_age|2001|04|24}}\n|team=Veloce Esports\n|image=DHVALENCIA 2019 RL KASSIO.jpg\n|status=Active\n|role=Player\n|twitter=Kassio_RL\n|steam=id/Kassiona\n|twitch=kassio_rl\n|history=\n{{TH|2017-07-22 \u2013 2017-10-25|Redworld}}\n{{TH|2017-11-10 \u2013 2018-02-07|Triple Trouble}}\n{{TH|2018-02-14 \u2013 2018-08-05|no idea}}\n{{TH|2018-08-05 \u2013 2019-02-02|Method}}\n{{TH|2019-02-02 \u2013 2019-07-31|Triple Trouble}}\n{{TH|2019-08-16 - '''Present'''|Veloce Esports}}\n|history_gfinity=\n{{TH_Gfinity|4|Method}}\n}}\n{{upcoming matches player}}\nAndy '''\"Kassio\"''' Landais {{born}} is a [[:category:France|French]] ''Rocket League'' player."
+    }
+  },
+  "Kaydop": {
+    "title": "Kaydop",
+    "pageid": 4041,
+    "wikitext": {
+      "*": "{{DISPLAYTITLE:Kaydop}}\n{{Tabs static\n|name1=Overview\n|link1=Kaydop\n|name2=Results\n|link2=Kaydop/Results\n|This=1\n}}\n{{Infobox player\n|id=Kaydop\n|name=Alexandre Courant\n|country=France\n|birth_date={{birth_date_and_age|1998|05|22}}\n|team=Renault Sport Team Vitality\n|image=DHVALENCIA 2019 RL KAYDOP.jpg\n|status=Active\n|role=Player\n|twitter=Kaydops\n|twitch=Kaydop\n|youtube=channel/UCbJWraz5h4F-IX2frhqKglQ\n|discord=invite/t4zs3PE\n|steam=id/KayDop\n|history=\n{{TH|2015-12-26 \u2013 2016-??-??|Stoic}}\n{{TH|2016-02-10 \u2013 2016-??-??|eSportsWall}}\n{{TH|2016-03-31 \u2013 2016-04-14|Team Shazoo}}\n{{TH|2016-04-14 \u2013 2016-04-27|Hard-On Colliders}}\n{{TH|2016-04-?? \u2013 2016-05-29|Gentlemen}}\n{{TH|2016-06-07 \u2013 2016-07-08|Aeriality}}\n{{TH|2016-07-08 \u2013 2016-07-25|Crown and Jewels}}\n{{TH|2016-07-31 \u2013 2016-09-04|Precision Z}}\n{{TH|2016-09-04 \u2013 2016-09-07|Pocket Aces}}\n{{TH|2016-09-08 \u2013 2016-12-09|Precision Z}}\n{{TH|2017-01-20 \u2013 2017-06-11|Mock-It eSports EU}}\n{{TH|2017-06-11 - 2018-05-22|Gale Force eSports}}\n{{TH|2018-05-22 - 2019-01-13|Dignitas}}\n{{TH|2019-01-13 - '''Present'''|Renault Vitality}}\n}}\n{{upcoming matches player}}\nAlexandre '''\"Kaydop\"''' Courant {{born}} is a [[:category:France|French]] ''Rocket League'' player."
+    }
+  },
+  "Maestro": {
+    "title": "Maestro",
+    "pageid": 1532,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Maestro\n|name2=Results\n|link2=Maestro/Results\n|This=1\n}}\n{{Infobox player\n|id=Maestro\n|ids=BANG! \n|name=Nicolai Bang\n|country=Denmark\n|birth_date={{birth_date_and_age|1997|06|04}}\n|teamicon=\n|team=Copenhagen Flames\n|image=DHLEIPZIG_RL_Maestro.jpg\n|status=Active\n|role=Player\n|twitter=97Maestro\n|twitch=MaestroRL\n|steam=id/1337Maestro\n|history=\n{{TH|2015-08-31 - 2015-10-11 |Hercules}}\n{{TH|2015-10-11 \u2013 2016-12-04|Dot Dot Dot}}\n{{TH|2015-12-04 \u2013 2016-03-08|Supersonic Avengers}}\n{{TH|2016-03-08 \u2013 2016-07-28|We Dem Girlz}}\n{{TH|2016-07-28 \u2013 2017-06-21|Northern Gaming}}\n{{TH|2017-06-21 \u2013 2017-08-07|Team EnVyUs}}\n{{TH|2017-08-07 - 2017-10-06|The Leftovers}}\n{{TH|2017-10-06 \u2013 2019-01-18|Fnatic}}\n{{TH|2019-01-18 \u2013 2019-06-20|Vikings}}\n{{TH|2019-08-30 \u2013 2019-10-17|Dot Dot Dot}}\n{{TH|2019-10-17 - '''Present'''|Copenhagen Flames}}\n|history_gfinity=\n{{TH_Gfinity|3|Fnatic}}\n{{TH_Gfinity|4|Fnatic}}\n}}\n{{upcoming matches player}}\nNicolai '''\"Maestro\"''' Bang {{born}} is a [[:category:Denmark|Danish]] ''Rocket League'' player."
+    }
+  },
+  "Memory": {
+    "title": "Memory",
+    "pageid": 18614,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Memory\n|name2=Results\n|link2=Memory/Results\n|This=1\n}}\n{{Infobox player\n|id=Memory\n|ids=memorycode, Dr. Memory\n|name=Michael Moss\n|country=United States\n|birth_date={{birth_date_and_age|2002|01|18}}\n|team=Ghost Gaming\n|image=DHMONTREAL 2019 RL MEMORY 2.jpg\n|status=Active\n|role=Player\n|twitter=MemoryRL_\n|twitch=MemoryRL\n|youtube=channel/UC0u2YDyGHpo2ofCMOREKRzw\n|steam=id/MemoryRL\n|instagram=memoryrl\n|history=\n{{TH|2016-07-17 \u2013 2016-07-21|Lucky Bounce}}\n{{TH|2016-11-25 \u2013 2017-02-08|Incognito}}\n{{TH|2017-02-20 \u2013 2017-03-18|Radiance}}\n{{TH|2017-03-18 \u2013 2017-09-17|SetToDestroyX}}\n{{TH|2017-09-17 \u2013 2017-09-22|Radiance}}\n{{TH|2017-09-22 \u2013 2018-01-17 |Hollywood Hammers}}\n{{TH|2018-02-15 \u2013 2018-03-13|Radiance}}\n{{TH|2018-03-13 \u2013 2018-07-28 |Spacestation Gaming}}\n{{TH|2018-07-28 \u2013 '''Present''' |Ghost Gaming}}\n}}\n{{upcoming matches player}}\nMichael '''\"Memory\"''' Moss {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Metsanauris": {
+    "title": "Metsanauris",
+    "pageid": 7304,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Metsanauris\n|name2=Results\n|link2=Metsanauris/Results\n|This=1\n}}\n{{Infobox player\n|id=Metsanauris\n|name=Otto Kaipiainen\n|country=Finland\n|birth_date={{birth_date_and_age|1998 |12|12}}\n|team=Team SoloMid\n|image=DHMONTREAL 2019 RL METSANAURIS.jpg\n|status=Active\n|role=Player\n|twitter=Metsanauris\n|instagram=metsanauris\n|youtube=channel/UC4iVL2DBT-zUXcG1Ixqml0Q\n|twitch=metsanauris\n|steam=profiles/76561198080528613\n|discord=DpcS4Tq\n|history=\n{{TH|2016-05-07 \u2013 2016-??-??|Challengers}}\n{{TH|2016-06-05 \u2013 2016-06-19|Team Shazoo}}\n{{TH|2016-07-12 \u2013 2016-10-30|Aeriality}}\n{{TH|2016-10-30 \u2013 2016-12-01|ProficiencyHQ}}\n{{TH|2016-12-01 \u2013 2017-01-13|Aeriality}}\n{{TH|2017-01-13 \u2013 2017-04-02|Secrecy}}\n{{TH|2017-04-02 \u2013 2017-05-28|Resonant Esports}}\n{{TH|2017-05-28 \u2013 2017-06-07|Element}}\n{{TH|2017-06-07 \u2013 2018-02-09|Method}}\n{{TH|2018-02-09 \u2013 2018-03-01|Run'n'Hide}}\n{{TH|2018-03-01 \u2013 2018-07-12|compLexity Gaming}}\n{{TH|2018-07-30 - 2018-08-05|Ex-Envy}}\n{{TH|2018-08-05 - 2019-01-04|We Dem Girlz}}\n{{TH|2019-01-04 - '''Present'''|Team SoloMid}}\n|history_gfinity=\n{{TH_Gfinity|1|Method}}\n{{TH_Gfinity|2|Method}}\n}}\n{{upcoming matches player}}\nOtto '''\"Metsanauris\"''' Kaipiainen {{born}} is a [[:category:Finland|Finnish]] ''Rocket League'' player."
+    }
+  },
+  "Mognus": {
+    "title": "Mognus",
+    "pageid": 8358,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Mognus\n|name2=Results\n|link2=Mognus/Results\n|This=1\n}}\n{{Infobox player\n|id=Mognus\n|name=Joonas Salo\n|country=Finland\n|birth_date={{birth_date_and_age|1999|12|07}}\n|team=Complexity Gaming\n|image=DHMONTREAL_2019_RL_MOGNUS.jpg\n|status=Active\n|role=Player\n|twitter=Mognus_RL\n|instagram=mognus99\n|twitch=mognus1\n|steam=profiles/76561198072970081\n|history=\n{{TH|2016-06-25 \u2013 2016-09-19|Cow Nose}}\n{{TH|2016-10-11 \u2013 2016-10-30|Aeriality}}\n{{TH|2016-10-30 \u2013 2016-12-01|ProficiencyHQ}}\n{{TH|2016-12-01 \u2013 2017-01-13|Aeriality}}\n{{TH|2017-01-13 \u2013 2017-04-02|Secrecy}}\n{{TH|2017-04-02 \u2013 2017-05-28|Resonant Esports}}\n{{TH|2017-05-28 \u2013 2017-06-07|Element}}\n{{TH|2017-06-07 \u2013 2018-02-09|Method}}\n{{TH|2018-02-09 \u2013 2018-03-01|Run'n'Hide}}\n{{TH|2018-03-01 \u2013 '''Present'''|Complexity Gaming}}\n|history_gfinity=\n{{TH_Gfinity|1|Method}}\n{{TH_Gfinity|2|Method}}\n}}\n{{upcoming matches player}}\nJoonas '''\"Mognus\"''' Salo {{born}} is a [[:category:Finland|Finnish]] ''Rocket League'' player."
+    }
+  },
+  "Mout": {
+    "title": "Mout",
+    "pageid": 18510,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Mout\n|name2=Results\n|link2=Mout/Results\n|This=1\n}}\n{{Infobox player\n|id=Mout\n|name=Alexandre Moutarde\n|country=France\n|birth_date={{birth_date_and_age|1995|07|31}}\n|team=\n|team2=\n|image=DHVALENCIA 2019 RL MOUT.jpg\n|status=Active\n|role=Player\n|twitter=Alex_Moutmout\n|youtube=\n|twitch=\n|steam=id/alexmout02\n|history=\n{{TH|2016-01-?? \u2013 2016-08-?? |Bootz 'n Catz}}\n{{TH|2016-08-??  \u2013 2016-11-18 |Sector One}}\n{{TH|2016-11-18 \u2013 2016-11-?? |Bootz 'n Catz}}\n{{TH|2017-02-22 \u2013 2017-??-??|The Leftovers|Substitute}}\n{{TH|2017-07-07 \u2013 201?-??-??|EnVyUs Academy}}\n{{TH|2018-02-14 \u2013 2018-08-23|Zebra Nose}}\n|history_gfinity=\n{{TH_Gfinity|1|EnVyUs Academy}}\n{{TH_Gfinity|2|EnVyUs Academy}}\n{{TH_Gfinity|3|Team EnVyUs}}\n{{TH_Gfinity|4|Team EnVyUs}}\n}}\n{{upcoming matches player}}\nAlexandre '''\"Mout\"''' Moutarde {{born}} is a [[:category:France|French]] ''Rocket League'' player."
+    }
+  },
+  "MummiSnow": {
+    "title": "MummiSnow",
+    "pageid": 20496,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=MummiSnow\n|name2=Results\n|link2=MummiSnow/Results\n|This=1\n}}\n{{Infobox player\n|id=MummiSnow\n|name=Mohammed Joseph Salameh\n|country=Denmark\n|birth_date=\n|team=\n|teamicon=\n|image=MummiSnow.png\n|status=Active\n|role=Player\n|twitter=MummiSnow\n|twitch=mummisnow\n|instagram=MummiSnow\n|steam=id/mummisnow\n|history=\n{{TH|2015-10-10 \u2013 2015-12-02|Ka-Pow}}\n{{TH|2015-12-02 \u2013 2016-03-03|myXMG}}\n{{TH|2015-10-30 \u2013 2016-04-14|Hard-On Colliders}}\n{{TH|2017-05-08 \u2013 2017-07-??|Prophecy}}\n{{TH|2017-08-07 \u2013 2018-03-16|ExRay}}\n{{TH|2018-03-16 \u2013 2018-07-11|Servette Geneva eSports}}\n{{TH|2018-07-30 \u2013 2019-01-18|Fnatic}}\n{{TH|2019-01-18 \u2013 2019-01-24|Vikings}}\n{{TH|2019-03-29 \u2013 2019-06-21|Vikings}}\n|history_gfinity=\n{{TH_Gfinity|1|Prophecy}}\n{{TH_Gfinity|2|Prophecy}}\n{{TH_Gfinity|4|Fnatic}}\n}}\n{{upcoming matches player}}\nMohammed '''\"MummiSnow\"''' Joseph Salameh is a [[:category:Denmark|Danish]] ''Rocket League'' player."
+    }
+  },
+  "Neqzo": {
+    "title": "Neqzo",
+    "pageid": 26856,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Neqzo\n|name2=Results\n|link2=Neqzo/Results\n|This=1\n}}\n{{Infobox player\n|id=Neqzo\n|name=Florian Esnault\n|country=France\n|birth_date={{birth_date_and_age|1998|08|31}}\n|team=\n|image=PlayerImagePlaceholder.png\n|status=Active\n|role=Player\n|twitter=NeqzoRL\n|twitch=neqzorl\n|steam=id/NeqzoRL\n|youtube=\n|history=\n{{TH|2018-01-27 \u2013 2018-02-14 |Placeholder}}\n{{TH|2018-02-14 \u2013 2018-08-06|Zebra Nose}}\n{{TH|2018-08-06 \u2013 2019-07-01|Renault Vitality|Substitute}}\n|history_gfinity=\n{{TH_Gfinity|3|Team EnVyUs}}\n{{TH_Gfinity|4|Renault Sport Team Vitality}}\n}}\n{{upcoming matches player}}\nFlorian '''\"Neqzo\"''' Esnault {{born}} is a [[:category:France|French]] ''Rocket League'' player."
+    }
+  },
+  "PrimeThunder": {
+    "title": "PrimeThunder",
+    "pageid": 18905,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=PrimeThunder\n|name2=Results\n|link2=PrimeThunder/Results\n|This=1\n}}\n{{Infobox player\n|id=PrimeThunder\n|name=Ronin D'Auria\n|country=United States\n|birth_date={{birth_date_and_age|2001|08|28}}\n|team=\n|image=DHATL_RL_PrimeThunder.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=PrimeThunder_RL\n|youtube=channel/UCqh276Qzwxqb7U67txmOp1Q\n|steam=id/slowlydriftingaway\n|twitch=primethunderrl\n|history=\n{{TH|2015-10-10 \u2013 2015-10-27|Apollo 11}}\n{{TH|2015-10-27 \u2013 2016-01-26|SnK eSports}}\n{{TH|2016-01-26 \u2013 2016-02-21|Apollo 11}}\n{{TH|2016-03-06 \u2013 2016-05-04|No Clue}}\n{{TH|2016-09-06 \u2013 2016-09-19|Lucky Bounce}}\n{{TH|2016-09-19 - 2016-10-10|Goofy Goobers}}\n{{TH|2016-10-16 - 2016-12-22|Wild Card}}\n{{TH|2017-02-18 - 2017-06-14|Nova}}\n{{TH|2017-06-18 - 2018-01-09|Ambition Gamers}}\n{{TH|2018-01-09 - 2018-12-20|FlyQuest}}\n{{TH|2019-02-15 \u2013 2019-09-28|Pink Hair Fan Club}}\n}}\n{{upcoming matches player}}\nRonin '''\"PrimeThunder\"''' D'Auria {{born}} is an [[:category:USA|American]] ''Rocket League'' player."
+    }
+  },
+  "Rix Ronday": {
+    "title": "Rix Ronday",
+    "pageid": 24731,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Rix Ronday\n|name2=Results\n|link2=Rix Ronday/Results\n|This=1\n}}\n{{Infobox player\n|id=Rix Ronday\n|name=Rix Ronday\n|country=Netherlands\n|birth_date={{birth_date_and_age|1999|08|18}}\n|team=Method\n|image=DHVALENCIA 2019 RL RIX RONDAY.jpg\n|status=Active\n|role=Player\n|twitter=Rix_Ronday\n|steam=profiles/76561198236145850\n|twitch=rixronday\n|discord=Nb2WH7Y\n|history=\n{{TH|2017-??-05 \u2013 2017-??-??|HeliCOBter}}\n{{TH|2017-??-05 \u2013 2017-??-??|Pressure}}\n{{TH|2017-02-05 \u2013 2017-03-15|Xedec Nation|Substitute}}\n{{TH|2017-03-15 \u2013 2017-06-11|Cow Nose|Substitute}}\n{{TH|2017-09-06 \u2013 2017-10-21|Defusekids}}\n{{TH|2017-09-17 \u2013 2018-01-05|Reason Gaming}}\n{{TH|2018-01-05 \u2013 2018-02-10|ShaBoRix}}\n{{TH|2018-02-10 \u2013 '''Present''' |Method}}\n|history_gfinity=\n{{TH_Gfinity|1|Reason Gaming}}\n{{TH_Gfinity|2|Reason Gaming}}\n{{TH_Gfinity|3|Method}}\n{{TH_Gfinity|4|Method}}\n}}\n{{upcoming matches player}}\nRix '''\"Rix Ronday\"''' Ronday {{born}} is a [[:category:Netherlands|Dutch]] ''Rocket League'' player."
+    }
+  },
+  "Rizzo": {
+    "title": "Rizzo",
+    "pageid": 2451,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Rizzo\n|link1=Rizzo\n|name2=Results\n|link2=Rizzo/Results\n|This=1\n}}\n{{Infobox player\n|id=Rizzo\n|name=Dillon Rizzo\n|country=United States\n|birth_date={{birth_date_and_age|1997|05|26}}\n|team=G2 Esports\n|image=DHMONTREAL 2019 RL RIZZO.jpg\n|status=Active\n|role=Player\n|twitter=Rizzo_TV\n|twitch=rizzo\n|youtube=xRizzo00\n|steam=id/Rizzotv\n|history=\n{{TH|2015-11-15 \u2013 2015-11-18 |Orange Creamsicle}}\n{{TH|2016-02-25 \u2013 2016-07-29 |Mock-It eSports NA}}\n{{TH|2016-08-28 \u2013 2017-02-14|Take 3}}\n{{TH|2017-02-22 \u2013 '''Present'''|G2 Esports}}\n}}\n{{upcoming matches player}}\nDillon '''\"Rizzo\"''' Rizzo {{born}} is an American ''Rocket League'' player and streamer."
+    }
+  },
+  "Ronaky": {
+    "title": "Ronaky",
+    "pageid": 28356,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Ronaky\n|name2=Results\n|link2=Ronaky/Results\n|This=1\n}}\n{{Infobox player\n|id=Ronaky\n|name=Aldin Hodzic\n|country=Denmark\n|birth_date={{birth_date_and_age|2000|09|21}}\n|team=FC Barcelona\n|image=DHLEIPZIG 2019 RL Ronaky.jpg\n|status=Active\n|role=Player\n|twitter=RonakyRL\n|snapchat=aldinhodzhit\n|twitch=Ronaky\n|youtube=channel/UCf5Z8X08r8dhqnE6wLwZbeA\n|instagram=ronakyrl\n|steam=id/ronaky\n|history=\n{{TH|2017-11-10 \u2013 2018-09-24|Triple Trouble}}\n{{TH|2018-09-24 - 2019-01-31|Red Reserve}}\n{{TH|2019-01-31 - 2019-07-29|Triple Trouble}}\n{{TH|2019-08-02 - '''Present'''|FC Barcelona}}\n|history_gfinity=\n{{TH_Gfinity|3|ARES}}\n}}\n{{upcoming matches player}}\nAldin '''\"Ronaky\"''' Hodzic {{born}} is a [[:category:Denmark|Danish]] ''Rocket League'' player."
+    }
+  },
+  "Scrub Killa": {
+    "title": "Scrub Killa",
+    "pageid": 1404,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Scrub Killa\n|name2=Results\n|link2=Scrub Killa/Results\n|This=1\n}}\n{{Infobox player\n|id=Scrub Killa\n|name=Kyle Robertson\n|country=Scotland\n|birth_date={{birth_date_and_age|2003|05|08}}\n|team=Renault Sport Team Vitality\n|image=DHMONTREAL 2019 RL SCRUB KILLA.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=ScrubKillaRL\n|twitch=Scrub\n|steam=id/ScrubKillaRL\n|youtube=channel/UCyQegW3fe-DUMeQA78Vizhw\n|discord=scrub\n|instagram=scrubkillarl\n|history=\n{{TH|2015-10-17 \u2013 2015-12-05|Smokin Rockets}}\n{{TH|2015-12-05 \u2013 2016-01-10|Gold Rush}}\n{{TH|2016-02-27 \u2013 2016-03-12|Crown & Jewels}}\n{{TH|2016-03-14 \u2013 2016-??-??|Mock-It eSports EU}}\n{{TH|2016-??-?? \u2013 2016-??-?? |Mockingbirds}}\n{{TH|2016-??-?? \u2013 2016-07-02|Mock-It eSports International}}\n{{TH|2016-07-02 \u2013 2016-07-25|Crown & Jewels}}\n{{TH|2016-08-21 \u2013 2016-10-09|We Dem Babies}}\n{{TH|2018-08-04 \u2013 '''Present'''|Renault Vitality}}\n}}\n{{upcoming matches player}}\nKyle '''\"Scrub Killa\"''' Robertson {{born}} is a [[:category:Scotland|Scottish]] ''Rocket League'' player."
+    }
+  },
+  "Sea-Bass": {
+    "title": "Sea-Bass",
+    "pageid": 22800,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Sea-Bass\n|name2=Results\n|link2=Sea-Bass/Results\n|This=1\n}}\n{{Infobox player\n|id=Sea-Bass\n|name= Sebastian Becerra\n|country=United States\n|birth_date=\n|team=RBG Esports\n|image=WGN NA CHAMPIONSHIP SEA-BASS.jpg\n|status=Active\n|role=Player\n|twitter=Sea_BassRL\n|twitch=sea_bassrl\n|steam=profiles/76561198247356798\n|history=\n{{TH|2017-05-21 \u2013 2017-06-18|Fibeon Esports}}\n{{TH|2017-08-03 \u2013 2017-09-14|Emotion}}\n{{TH|2017-09-14 \u2013 2018-12-06|Allegiance}}\n{{TH|2018-12-06 \u2013  2019-02-05|Ex-Allegiance}}\n{{TH|2019-06-10 \u2013  '''Present'''|RBG Esports}}\n}}\n{{upcoming matches player}}\nSebastian '''\"Sea-Bass\"''' Becerra is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Sizz": {
+    "title": "Sizz",
+    "pageid": 7439,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Sizz\n|name2=Results\n|link2=Sizz/Results\n|This=1\n}}\n{{Infobox player\n|id=Sizz\n|name=Emiliano Benny\n|country=United States\n|birth_date={{birth_date_and_age|1996|11|05}}\n|team=NRG Esports\n|image=DHMONTREAL_2019_RL_SIZZ.jpg\n|status=Active\n|role=Coach\n|twitter=Sizz\n|youtube=ItzSizz\n|twitch=Sizz\n|instagram=therealsizz\n|steam=id/ItzSizz\n|history=\n{{TH|2015-10-04 \u2013 2015-10-25|Battlecar Galactica}}\n{{TH|2015-10-25 \u2013 2016-02-10|Lucky Bounce}}\n{{TH|2016-04-03 \u2013 2016-05-07|Team Chemistry}}\n{{TH|2016-05-07 \u2013 2016-08-28|Selfless Gaming}}\n{{TH|2016-08-28 \u2013 2016-09-06|Lucky Bounce}}\n{{TH|2017-02-20 \u2013 2017-05-09|Atelier}}\n{{TH|2017-05-09 \u2013 2018-12-20|Rogue}}\n{{TH|2018-12-20 \u2013 2019-01-07|Ex-Rogue}}\n{{TH|2019-01-07 \u2013 2019-10-14|Rogue|Substitute}}\n{{TH|2019-10-14 \u2013 '''Present'''|NRG Esports|Coach}}\n}}\n{{upcoming matches player}}\nEmiliano '''\"Sizz\"''' Benny {{born}} is an [[:category:United States|American]] ''Rocket League'' player and content creator."
+    }
+  },
+  "Skyline": {
+    "title": "Skyline",
+    "pageid": 1540,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Skyline\n|name2=Results\n|link2=Skyline/Results\n|This=1\n}}\n{{Infobox player\n|id=Skyline\n|ids=Mikageishi, Mephisto\n|name=Kevin Carvalho\n|country=Switzerland\n|birth_date={{birth_date_and_age|1997|11|13}}\n|team=Servette Geneva eSports\n|image=RLCS-S2---PZ---Skyline.jpg\n|status=Active\n|role=Player\n|game=sarpbc\n|twitter=skylinerl\n|twitch=skylinerl\n|steam=id/Mikageishi\n|history=\n{{TH|2015-08-16 \u2013 2015-10-28|Team Shazoo}}\n{{TH|2015-10-28 \u2013 2016-02-28|Noble eSports}}\n{{TH|2016-03-31 \u2013 2016-06-22|Precision Z}}\n{{TH|2016-07-31 \u2013 2016-09-04|Precision Z}}\n{{TH|2016-09-04 \u2013 2016-09-07|Pocket Aces}}\n{{TH|2016-09-08 \u2013 2016-12-09|Precision Z}}\n{{TH|2017-02-22 \u2013 2017-03-17|Red Eye}}\n{{TH|2017-03-23 \u2013 2017-06-15|Rex Gaming}}\n{{TH|2017-08-07 \u2013 2018-03-16|ExRay}}\n{{TH|2018-03-16 \u2013 2018-07-11|Servette Geneva eSports}}\n{{TH|2018-07-11 \u2013 2018-07-30|Ex-Servette Geneva eSports}}\n{{TH|2018-07-30 \u2013 2019-01-10|mousesports}}\n{{TH|2019-02-25 - 2019-05-26|The Rightovers}}\n{{TH|2018-08-26 - '''Present''' |Servette Geneva eSports}}\n}}\n{{upcoming matches player}}\nKevin '''\"Skyline\"''' Carvalho {{born}} is a [[:category:Switzerland|Swiss]] ''Rocket League'' player."
+    }
+  },
+  "SquishyMuffinz": {
+    "title": "SquishyMuffinz",
+    "pageid": 9111,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=SquishyMuffinz\n|name2=Results\n|link2=SquishyMuffinz/Results\n|This=1\n}}\n{{Infobox player\n|id=SquishyMuffinz\n|ids=Squishy\n|name=Mariano Arruda\n|country=Canada\n|birth_date={{birth_date_and_age|2000|11|29}}\n|team=Cloud9\n|image=DHMONTREAL 2019 RL SQUISHY.jpg\n|status=Active\n|role=Player\n|rl=y\n|site=http://squishymuffinz.com/\n|twitter=SquishyMuffinz\n|instagram=squishymuffinzrl\n|twitch=squishymuffinz\n|youtube=user/SquishyMuffinz\n|steam=id/SquishyMuffinz\n|history=\n{{TH|2016-08-?? \u2013 2016-08-28|Chronix}}\n{{TH|2016-08-28 \u2013 2016-09-04|Vendetta}}\n{{TH|2016-11-20 \u2013 2017-05-08|Iris}}\n{{TH|2017-05-08 \u2013 2017-07-28|The Muffin Men}}\n{{TH|2017-07-28 \u2013 '''Present'''|Cloud9}}\n}}\n{{upcoming matches player}}\nMariano '''\"SquishyMuffinz\"''' Arruda {{born}} is a [[:category:Canada|Canadian]] ''Rocket League'' player."
+    }
+  },
+  "Tadpole": {
+    "title": "Tadpole",
+    "pageid": 28299,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Tadpole\n|name2=Results\n|link2=Tadpole/Results\n|This=1\n}}\n{{Infobox player\n|id=Tadpole\n|name=Euan Ingram\n|country=Wales\n|birth_date={{birth_date_and_age|1997|10|17}}\n|team=Method\n|image=DHVALENCIA 2019 RL TADPOLE.jpg\n|status=Active\n|role=Player\n|twitter=TadpoleRL\n|twitch=tadpolerl\n|steam=id/tadpolescfc\n|history=\n{{TH|2017-08-14 \u2013 2018-02-14|Circa eSports}}\n{{TH|2018-02-14 \u2013 2018-09-24|Triple Trouble}}\n{{TH|2018-09-24 - 2019-01-31|Red Reserve}}\n{{TH|2019-01-31 - 2019-07-31|Triple Trouble}}\n{{TH|2019-09-20 - '''Present'''|Method}}\n}}\n{{upcoming matches player}}\nEuan '''\"Tadpole\"''' Ingram {{born}} is a [[:category:Wales|Welsh]] ''Rocket League'' player."
+    }
+  },
+  "Tigreee": {
+    "title": "Tigreee",
+    "pageid": 24808,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Tigreee\n|name2=Results\n|link2=Tigreee/Results\n|This=1\n}}\n{{Infobox player\n|id=Tigreee\n|name=Maik Hoffmann\n|country=Germany\n|birth_date={{birth_date_and_age|2000|08|19}}\n|team=Fadeaway\n|image=DHMONTREAL 2019 RL TIGREEE.jpg\n|status=Active\n|role=Player\n|twitter=TigreeeRL\n|twitch=TigreeeRL\n|steam=profiles/76561198306168245\n|instagram=tigreee_rl\n|history=\n{{TH|2017-09-17 \u2013 2018-01-01|Reason Gaming}}\n{{TH|2018-01-27 \u2013 2018-02-03|Placeholder}}\n{{TH|2018-02-10 \u2013 2018-07-30|Team Secret}}\n{{TH|2018-07-30 \u2013 2019-08-01|mousesports}}\n{{TH|2019-08-25 \u2013 '''Present''' |Fadeaway}}\n|history_gfinity=\n{{TH_Gfinity|2|Reason Gaming}}\n}}\n{{upcoming matches player}}\nMaik '''\"Tigreee\"''' Hoffmann {{born}} is a [[:category:Germany|German]] ''Rocket League'' player."
+    }
+  },
+  "Torment": {
+    "title": "Torment",
+    "pageid": 7118,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Torment\n|name2=Results\n|link2=Torment/Results\n|This=1\n}}\n{{Infobox player\n|id=Torment\n|name=Kyle Storer\n|country=United States\n|birth_date={{birth_date_and_age|2000|06|06}}\n|team=Cloud9\n|image=DHMONTREAL 2019 RL TORMENT.jpg\n|status=Active\n|role=Player\n|twitter=Torment\n|twitch=TormentRL\n|steam=id/Tormentt\n|youtube=channel/UCKVuFhw6B9ViUkwInIEc2gw\n|history=\n{{TH|2016-??-?? \u2013 2016-05-25|Savage Gaming}}\n{{TH|2016-05-25 \u2013 2016-07-21|Lucky Bounce}}\n{{TH|2016-07-29 \u2013 2016-08-24|Lucky Bounce}}\n{{TH|2016-08-28 \u2013 2016-09-28|Vendetta}}\n{{TH|2016-09-28 \u2013 2016-11-02|VindicatorGG}}\n{{TH|2016-11-02 \u2013 2016-11-12|Vendetta}}\n{{TH|2016-11-20 \u2013 2017-05-08|Iris}}\n{{TH|2017-05-08 \u2013 2017-07-28|The Muffin Men}}\n{{TH|2017-07-28 \u2013 '''Present'''|Cloud9}}\n}}\n{{upcoming matches player}}\nKyle '''\"Torment\"''' Storer {{born}} is an American ''Rocket League'' player."
+    }
+  },
+  "Torsos": {
+    "title": "Torsos",
+    "pageid": 20015,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Torsos\n|link1=Torsos\n|name2=Results\n|link2=Torsos/Results\n|This=1\n}}\n{{Infobox player\n|id=Torsos\n|name=Daniel Parsons\n|country=Australia\n|birth_date={{birth_date_and_age|2000|08|30}}\n|team=Renegades\n|image=DHDALLAS 2019 RL TORSOS.jpg\n|status=Active\n|role=Player\n|twitter=TorsosRL\n|twitch=TorsosRL\n|steam=id/troveismylife\n|history=\n{{TH|2016-10-27 \u2013 2017-07-07|Alpha Sydney}}\n{{TH|2017-07-07 \u2013 2017-08-12|Billy Fan Club}}\n{{TH|2017-08-12 \u2013 2019-05-01|Chiefs eSports Club}}\n{{TH|2019-05-01 \u2013 '''Present'''|Renegades}}\n|history_gfinity=\n{{TH_Gfinity_AU|1|Chiefs Esports Club}}\n{{TH_Gfinity_AU|2|Chiefs Esports Club}}\n}}\n{{upcoming matches player}}\nDaniel '''\"Torsos\"''' Parsons {{born}} is an [[:Category:Australia|Australian]] ''Rocket League'' player."
+    }
+  },
+  "Turbopolsa": {
+    "title": "Turbopolsa",
+    "pageid": 1755,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Turbopolsa\n|name2=Results\n|link2=Turbopolsa/Results\n|This=1\n}}\n{{Infobox player\n|id=Turbopolsa\n|ids=Turururu, Turbop0lsa, Turbo\n|name=Pierre Silfver\n|country=Sweden\n|country2=United States\n|birth_date={{birth_date_and_age|1998|08|09}}\n|team=NRG Esports\n|image=DHMONTREAL_2019_RL_TURBO.jpg\n|status=Active\n|role=Player\n|twitter=Turbopolsa\n|discord=jTNFZj9\n|twitch=turbopolsa\n|steam=profiles/76561198194977850\n|history=\n{{TH|2015-11-18 \u2013 2015-12-02|Ka-Pow}}\n{{TH|2015-12-02 \u2013 2016-03-03|myXMG}}\n{{TH|2016-03-03 \u2013 2016-05-23|Ka-Pow}}\n{{TH|2016-05-23 \u2013 2016-08-09|Mock-It eSports EU}}\n{{TH|2016-08-24 \u2013 2016-11-08|OhMyDog}}\n{{TH|2017-06-23 \u2013 2018-05-22|Gale Force eSports}}\n{{TH|2018-05-22 \u2013 2019-06-19|Dignitas}}\n{{TH|2019-07-25 \u2013 '''Present'''|NRG Esports}}\n}}\n{{upcoming matches player}}\nPierre '''\"Turbopolsa\"''' Silfver {{born}} is a [[:category:Sweden|Swedish]] ''Rocket League'' player. He won [[Rocket_League_Championship_Series/Season_3|RLCS S3]] subbing for [[Northern Gaming]]'s [[Maestro]], as well as becoming the first ever three-time [[RLCS]] World Champion, winning [[Rocket_League_Championship_Series/Season_4|RLCS S4]] and [[Rocket_League_Championship_Series/Season_5|RLCS S5]] as well. He currently lives in the [[:category:United States|United States]], playing for [[NRG Esports]]."
+    }
+  },
+  "TyNotTyler": {
+    "title": "TyNotTyler",
+    "pageid": 22806,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=TyNotTyler\n|name2=Results\n|link2=TyNotTyler/Results\n|This=1\n}}\n{{Infobox player\n|id=TyNotTyler\n|ids=Ty.\n|name= Ty Helewa\n|country=United States\n|birth_date=\n|team=\n|image=DHDALLAS 2019 RL TYNOTTYLER.jpg\n|status=Active\n|role=Player\n|twitter=TyNotTyler_\n|twitch=tynottyler\n|steam=id/Tynottylerreal\n|history=\n{{TH|2017-05-21 \u2013 2017-06-24|Fibeon Esports}}\n{{TH|2017-08-03 \u2013 2017-09-14|Emotion}}\n{{TH|2017-09-14 \u2013 2018-12-06|Allegiance}}\n{{TH|2018-12-06 \u2013  2019-02-05|Ex-Allegiance}}\n{{TH|2019-02-13 \u2013  2019-02-23|Egg}}\n{{TH|2019-02-23 \u2013  2019-06-05|Afterthought}}\n{{TH|2019-07-02 \u2013 2019-08-16|Goal Patrol}}\n{{TH|2019-08-24 \u2013 2019-09-28|Pink Hair Fan Club}}\n}}\n{{upcoming matches player}}\nTy '''\"TyNotTyler\"''' Helewa is an [[:category:USA|American]] ''Rocket League'' Player."
+    }
+  },
+  "ViolentPanda": {
+    "title": "ViolentPanda",
+    "pageid": 7128,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=ViolentPanda\n|name2=Results\n|link2=ViolentPanda/Results\n|This=1\n}}\n{{Infobox player\n|id=ViolentPanda\n|name=Jos van Meurs\n|country=Netherlands\n|birth_date={{birth_date_and_age|1998|11|02}}\n|team=Dignitas\n|image=DHMONTREAL 2019 RL VIOLENTPANDA.jpg\n|status=Active\n|role=Player\n|twitter=violentpandarl\n|twitch=violentpandarl\n|youtube=channel/UCoXZdZ2XOjE958ZbXIfU9UA\n|steam=id/DigViolentPanda\n|history=\n{{TH|2015-11-01 \u2013 2016-03-23|The 3 Musketeers}}\n{{TH|2016-03-23 \u2013 2016-05-15|Crown & Jewels}}\n{{TH|2016-05-15 \u2013 2016-05-18|Crown & Jewels Frost}}\n{{TH|2016-06-06 \u2013 2016-06-26|Ka-Pow}}\n{{TH|2016-07-24 \u2013 2016-08-21|The 3 Musketeers}}\n{{TH|2016-08-28 \u2013 2016-09-07 |WillyWonkerPoodles}}\n{{TH|2016-09-07 \u2013 2016-12-09|Mock-It eSports EU}}\n{{TH|2016-12-09 \u2013 2017-02-17|Aces}}\n{{TH|2017-02-17 \u2013 2017-04-07|Pocket Aces}}\n{{TH|2017-04-07 \u2013 2018-05-22|Gale Force eSports}}\n{{TH|2018-05-22 \u2013 '''Present'''|Dignitas}}\n}}\n{{Upcoming matches player}}\nJos '''\"ViolentPanda\"''' van Meurs {{born}} is a [[:Category:Netherlands|Dutch]] ''Rocket League'' player."
+    }
+  },
+  "Wonder": {
+    "title": "Wonder",
+    "pageid": 23353,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Wonder\n|name2=Results\n|link2=Wonder/Results\n|This=1\n}}\n{{Infobox player\n|id=Wonder\n|name= Nicholas Blackerby\n|country=United States\n|birth_date={{birth_date_and_age|1996|08|02}}\n|team=Rogue\n|image=DHMONTREAL_2019_RL_WONDER.jpg\n|status=Active\n|role=Player\n|twitter=Wonder_RL\n|twitch=Wonder_RL\n|steam=id/gpobeardo\n|history=\n{{TH|2016-09-05 \u2013 2016-11-25|Better in Reverse}}\n{{TH|2017-02-18 \u2013 2017-06-14|Nova}}\n{{TH|2017-06-18 \u2013 2018-01-09|Ambition Gamers}}\n{{TH|2018-01-09 - 2018-12-20|FlyQuest}}\n{{TH|2018-12-20 - '''Present'''|Rogue}}\n}}\n{{upcoming matches player}}\nNicholas '''\"Wonder\"''' Blackerby {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Yukeo": {
+    "title": "Yukeo",
+    "pageid": 24763,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Yukeo\n|name2=Results\n|link2=Yukeo/Results\n|This=1\n}}\n{{Infobox player\n|id=Yukeo\n|name=Maurice Weihs\n|country=Austria\n|birth_date={{birth_date_and_age|2000|01|26}}\n|team=Dignitas\n|image=DHVALENCIA 2019 RL YUKEO.jpg\n|status=Active\n|role=Player\n|twitter=YukeoRL\n|twitch=YukeoRL\n|instagram=yukeorl\n|steam=id/YukeoRL\n|youtube=channel/UCp4qZf6AAf-goxAkLCHzlCw\n|history=\n{{TH|2018-01-16 - 2019-01-17|FlipSid3 Tactics}}\n{{TH|2019-01-17 - '''Present'''|Dignitas}}\n}}\n{{upcoming matches player}}\nMaurice '''\"Yukeo\"''' Weihs {{born}} is an [[:category:Austria|Austrian]] ''Rocket League'' player who currently plays for [[Dignitas]]."
+    }
+  },
+  "al0t": {
+    "title": "Al0t",
+    "pageid": 3728,
+    "wikitext": {
+      "*": "{{DISPLAYTITLE:al0t}}\n{{Tabs static\n|name1=Overview\n|link1=al0t\n|name2=Results\n|link2=al0t/Results\n|This=1\n}}\n{{Infobox player\n|id=al0t\n|ids=al0t97\n|name=Linus M\u00f6llergren\n|country=Sweden\n|birth_date={{birth_date_and_age|1997|03|31}}\n|team=mousesports\n|image=DHMONTREAL_2019_RL_AL0T.jpg\n|status=Active\n|role=Player\n|twitter=al0t97\n|twitch=al0t97\n|instagram=linusmollergren\n|steam=id/al0t97\n|youtube=channel/UCQ4nhHfxrUAGZ5eS8EElIwA\n|history=\n{{TH|2015-08-22 - 2015-10-10|Team Renewal}}\n{{TH|2015-10-10 \u2013 2015-12-02|Ka-Pow}}\n{{TH|2015-12-02 \u2013 2016-03-03|myXMG}}\n{{TH|2016-03-03 \u2013 2016-06-26|Ka-Pow}}\n{{TH|2016-08-24 \u2013 2016-11-08|OhMyDog}}\n{{TH|2017-02-11 \u2013 2017-04-02|Secrecy}}\n{{TH|2017-04-02 \u2013 2017-05-28|Resonant Esports}}\n{{TH|2017-05-28 \u2013 2017-06-07|Element}}\n{{TH|2017-06-07 \u2013 2018-02-09|Method}}\n{{TH|2018-02-09 \u2013 2018-03-01|Run'n'Hide}}\n{{TH|2018-03-01 \u2013 2019-01-10|compLexity Gaming}}\n{{TH|2019-01-10 - 2019-08-01|mousesports}}\n{{TH|2019-09-05 \u2013 '''Present'''|mousesports}}\n|history_gfinity=\n{{TH_Gfinity|1|Method}}\n{{TH_Gfinity|2|Method}}\n}}\n{{upcoming matches player}}\nLinus '''\"al0t\"''' M\u00f6llergren {{born}} is a [[:category:Sweden|Swedish]] ''Rocket League'' player."
+    }
+  },
+  "fruity": {
+    "title": "Fruity",
+    "pageid": 30985,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Fruity\n|name2=Results\n|link2=Fruity/Results\n|This=1\n}}{{DISPLAYTITLE:fruity}}\n{{Infobox player\n|id=fruity\n|ids=fruityl0l\n|name=Emil Moselund\n|country=Denmark\n|birth_date={{birth_date_and_age|1996|02|22}}\n|team=Team Reciprocity\n|image=DHMONTREAL 2019 RL FRUITY.jpg\n|status=Active\n|role=Player\n|twitter=fruityl0l\n|twitch=fruity\n|steam=id/Moselund24\n|discord=invite/Wngszke\n|history=\n{{TH|2017-02-01 \u2013 2017-04-30|S\u00f8rby eSport}}\n{{TH|2017-09-25 \u2013 2018-04-04|Copenhagen Flames}}\n{{TH|2018-05-06 \u2013 2018-08-01|The Bricks}}\n{{TH|2018-08-01 \u2013  2019-08-09|PSG Esports}}\n{{TH|2019-08-09 \u2013 2019-09-03|Frontline}}\n{{TH|2019-09-03 - '''Present'''|Team Reciprocity}}\n\n\n}}\n{{upcoming matches player}}\nEmil '''\"fruity\"''' Moselund {{born}} is a [[:category:Denmark|Danish]] ''Rocket League'' player."
+    }
+  },
+  "gReazymeister": {
+    "title": "GReazymeister",
+    "pageid": 1530,
+    "wikitext": {
+      "*": "{{DISPLAYTITLE:gReazymeister}}\n{{Tabs static\n|name1=Overview\n|link1=gReazymeister\n|name2=Results\n|link2=gReazymeister/Results\n|This=1\n}}\n{{Infobox player\n|id=gReazymeister\n|ids=gReazy\n|name=Marius Ranheim\n|country=Norway\n|birth_date={{birth_date_and_age|1996|04|05}}\n|team=Complexity Gaming\n|image=DHMONTREAL_2019_RL_GREAZY.jpg\n|status=Active\n|role=Player\n|twitter=gReazymeister\n|twitch=gReazymeister\n|steam=id/gReazymeister\n|youtube=channel/UCVMqJfdRSw69ehp4eLFzNxw\n|instagram=mariusranheim\n|history=\n{{TH|2015-09-26 - 2015-10-17|Nice one team}}\n{{TH|2015-10-17 - 2015-10-31|Error 404 Name not Found}}\n{{TH|2015-12-04 \u2013 2016-03-08|Supersonic Avengers}}\n{{TH|2016-03-08 \u2013 2016-07-28|We Dem Girlz}}\n{{TH|2016-07-28 \u2013 2016-08-15|Northern Gaming}}\n{{TH|2016-08-15 \u2013 2017-07-06|FlipSid3 Tactics}}\n{{TH|2017-08-07 \u2013 2018-02-08|Team EnVyUs}}\n{{TH|2018-02-08 \u2013 2018-07-12|Team EnVyUs|Substitute}}\n{{TH|2018-07-12 \u2013 '''Present'''|Complexity Gaming}}\n}}\nMarius '''\"gReazymeister\"''' Ranheim {{born}} is a [[:category:Norway|Norwegian]] ''Rocket League'' player."
+    }
+  },
+  "jstn": {
+    "title": "Jstn",
+    "pageid": 23369,
+    "wikitext": {
+      "*": "{{DISPLAYTITLE:jstn}}{{Tabs static\n|name1=Overview\n|link1=jstn\n|name2=Results\n|link2=jstn/Results\n|This=1\n}}\n{{Infobox player\n|id=jstn\n|ids=jstncrdbl\n|name=Justin Morales\n|country= United States\n|birth_date={{birth_date_and_age|2002|08|05}}\n|team=NRG Esports\n|image=DHMONTREAL 2019 RL JSTN.jpg\n|status=Active\n|role=Player\n|twitter=Its_JSTN\n|twitch=itsjstn\n|youtube=channel/UCuQzbFfhOAdtj5CSPTD38qw\n|steam=id/ItsJSTN\n|instagram=its_jstn\n|history=\n{{TH|2017-08-07 \u2013 2018-01-18|Out of Style}}\n{{TH|2018-01-18 \u2013 '''Present'''|NRG Esports}}\n}}\n{{upcoming matches player}}\nJustin '''\"jstn\"''' Morales {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "kuxir97": {
+    "title": "Kuxir97",
+    "pageid": 1359,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=kuxir97\n|name2=Results\n|link2=kuxir97/Results\n|This=1\n}}{{DISPLAYTITLE:kuxir97}}\n{{Infobox player\n|id=kuxir97\n|name=Francesco Cinquemani\n|country=Italy\n|birth_date={{birth_date_and_age|1997|02|19}}\n|team=mousesports\n|image=DHMONTREAL_2019_RL_KUXIR.jpg\n|status=Active\n|role=Player\n|twitter=kuxir97\n|twitch=kuxir97\n|steam=id/kuxir97\n|facebook=kuxir97\n|youtube=kuxir97\n|game=sarpbc\n|history=\n{{TH|2015-08-13 \u2013 2015-08-25|Teamy Weamy}}\n{{TH|2015-08-25 \u2013 2019-02-28|FlipSid3 Tactics}}\n{{TH|2019-02-28 \u2013 2019-03-31|Ex-FlipSid3}}\n{{TH|2019-03-31 \u2013 2019-09-05|The Bricks}}\n{{TH|2019-09-05 \u2013 '''Present'''|mousesports}}\n}}\n{{upcoming matches player}}\nFrancesco '''\"kuxir97\"''' Cinquemani {{born}} is an [[:Category:Italy|Italian]] ''Rocket League'' player."
+    }
+  },
+  "remkoe": {
+    "title": "Remkoe",
+    "pageid": 1497,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=remkoe\n|name2=Results\n|link2=remkoe/Results\n|This=1\n}}{{DISPLAYTITLE:remkoe}}\n{{Infobox player\n|id=remkoe\n|name=Remco den Boer\n|country=Netherlands\n|birth_date={{birth_date_and_age|1995|05|27}}\n|team=Team SoloMid\n|image=DHMONTREAL_2019_RL_REMKOE.jpg\n|status=Active\n|role=Player\n|twitter=remkoe\n|instagram=remkoerl\n|twitch=remkoe\n|youtube=Remkoee\n|discord=remkoe\n|steam=id/remkoerl\n|history=\n{{TH|2015-09-30 \u2013 2016-02-21|Spectral}}\n{{TH|2016-03-08 \u2013 2016-07-28|We Dem Girlz}}\n{{TH|2016-07-28 \u2013 2017-06-21|Northern Gaming}}\n{{TH|2017-06-21 \u2013 2018-07-30|Team EnVyUs}}\n{{TH|2018-07-30 - 2018-08-05|Ex-Envy}}\n{{TH|2018-08-05 - 2019-01-04|We Dem Girlz}}\n{{TH|2019-01-04 - '''Present'''|Team SoloMid}}\n|history_gfinity=\n{{TH_Gfinity|1|Team EnVyUs}}\n{{TH_Gfinity|2|Team EnVyUs}}\n}}\n{{upcoming matches player}}\nRemco '''\"remkoe\"''' den Boer {{born}} is a [[:category:Netherlands|Dutch]] ''Rocket League'' player."
+    }
+  },
+  "Lachinio": {
+    "title": "Lachinio",
+    "pageid": 2735,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Lachinio\n|name2=Results\n|link2=Lachinio/Results\n|This=1\n}}\n{{Infobox player\n|id=Lachinio\n|ids=Lach\n|name=Brandon Lachin\n|country=Canada\n|birth_date=\n{{birth_date_and_age|1999|10|31}}\n|team=\n|image=Lachinio RLCS.png\n|status=Inactive\n|role=Player\n|game=sarpbc\n|twitter=Lachinio\n|twitch=Lachinio\n|youtube=user/BuSamra1\n|steam=id/lachinio\n|history=\n{{TH|2015-08-04 \u2013 2015-08-??|Untethered}}\n{{TH|2015-08-?? \u2013 2015-11-??|vQ Untethered}}\n{{TH|2015-11-12 \u2013 2016-01-29|Nexus eSports}}\n{{TH|2016-01-29 \u2013 2016-03-10|Untethered}}\n{{TH|2016-04-01 \u2013 2016-09-07|iBUYPOWER}}\n{{TH|2016-09-07 \u2013 2016-11-12|G2 Esports}}\n{{TH|2016-11-20 \u2013 2017-05-08|Iris}}\n{{TH|2017-07-03 \u2013 2017-07-18|Lachinio's team}}\n{{TH|2017-07-18 \u2013 2017-08-07|Myth Gaming}}\n{{TH|2017-08-07 \u2013 2018-07-28|Out of Style}}\n{{TH|2019-02-25 \u2013 2019-04-??|Icy}}\n}}\n{{upcoming matches player}}\nBrandon '''\"Lachinio\"''' Lachin {{born}} is a [[:category:Canada|Canadian]] ''Rocket League'' player."
+    }
+  },
+  "Alpha54": {
+    "title": "Alpha54",
+    "pageid": 34888,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Alpha54\n|name2=Results\n|link2=Alpha54/Results\n|This=1\n}}\n{{Infobox player\n|id=Alpha54\n|ids=\n|name=Yanis Champenois\t\n|country=France\n|birth_date={{birth_date_and_age|2003|06|27}}\n|team=Team SoloMid\n|image=DHVALENCIA 2019 RL ALPHA54.jpg\n|status=Active\n|role=Player\n|twitter=Alpha54RL\n|twitch=Alpha54\n|steam=id/Alpha54RL\n|history=\n{{TH|2018-08-05 \u2013 2019-04-04|Savage!}}\n{{TH|2019-04-04 \u2013 2019-07-29|FC Barcelona}}\n{{TH|2019-08-04 \u2013 '''Present'''|Team SoloMid}}\n}}\n{{upcoming matches player}}\nYanis '''\"Alpha54\"''' Champenois {{born}} is a [[:category:France|French]] ''Rocket League'' player."
+    }
+  },
+  "Arsenal": {
+    "title": "Arsenal",
+    "pageid": 36421,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Arsenal\n|name2=Results\n|link2=Arsenal/Results\n|This=1\n}}\n{{Infobox player\n|id=Arsenal\n|name=Tshaka Lateef Taylor Jr\n|country=United States\n|birth_date={{birth_date_and_age|2002|03|16}}\n|team=Spacestation Gaming\n|image=DHMONTREAL 2019 RL ARSENAL.jpg\n|status=Active\n|ids=\n|role=Player\n|twitter=ArsenalRL\n|steam=profiles/76561198368482029\n|twitch=Arsenal\n|history=\n{{TH|2018-07-29 - 2019-06-11|The Peeps}}\n{{TH|2019-06-23 - '''Present'''|Spacestation Gaming}}\n}}\n{{upcoming matches player}}\nTshaka '''\"Arsenal\"''' Lateef Taylor Jr {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Dappur": {
+    "title": "Dappur",
+    "pageid": 7427,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Dappur\n|name2=Results\n|link2=Dappur/Results\n|This=1\n}}\n{{Infobox player\n|id=Dappur\n|ids=dap.\n|name=Chris Mendoza\n|country=United States\n|birth_date={{birth_date_and_age|1999|02|22}}\n|image=RLCS_S4_LAN_TimBright_Dappur.jpg\n|team=Afterthought\n|status=Active\n|role=Player\n|twitter=Dappur\n|twitch=dappur\n|youtube=dappuh\n|steam=id/dappur\n|history=\n{{TH|2015-10-25 \u2013 2016-12-20|Royal letdowns}}\n{{TH|2015-12-20 \u2013 2016-01-04|Cynosure}}\n{{TH|2016-01-10 \u2013 2016-03-03|Jetpack Flyers}}\n{{TH|2016-03-03 \u2013 2016-04-06|Forsaken}}\n{{TH|2016-04-06 \u2013 2016-04-17|CANCER OG}}\n{{TH|2016-04-17 \u2013 2016-05-02|Above}}\n{{TH|2016-06-05 \u2013 2016-06-19|Cynosure}}\n{{TH|2016-06-19 \u2013 2016-06-26|The Muffin Men}}\n{{TH|2016-06-26 \u2013 2016-09-05|Momentum}}\n{{TH|2016-09-05 \u2013 2017-07-18|Selfless Gaming}}\n{{TH|2017-07-18 \u2013 2018-01-17|Renegades}}\n{{TH|2018-01-17 \u2013 2018-03-14|Momentum}}\n{{TH|2018-03-14 \u2013 2018-08-01 |Counter Logic Gaming}}\n{{TH|2019-02-17 \u2013 2019-04-30|Triple Commit}}\n{{TH|2019-04-30 \u2013 2019-07-02|Upper 90 Esports|Stand-in}}\n{{TH|2019-07-02 \u2013 2019-08-09|Goal Patrol}}\n{{TH|2019-08-09 \u2013 '''Present'''|Afterthought}}\n}}\n{{upcoming matches player}}\nChris '''\"Dappur\"''' Mendoza {{born}} is an American ''Rocket League'' player."
+    }
+  },
+  "Fireburner": {
+    "title": "Fireburner",
+    "pageid": 1485,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Fireburner\n|name2=Results\n|link2=Fireburner/Results\n|This=1\n}}\n{{Infobox player\n|id=Fireburner\n|name=Jayson Nunez\n|country=United States\n|country2=Colombia\n|birth_date={{birth_date_and_age|1997|10|18}}\n|team=Cloud9\n|image=DHMONTREAL 2019 RL FIREBURNER.jpg\n|status=Retired\n|role=Coach\n|game=sarpbc\n|twitter=Fireburner_\n|twitch=fireburner\n|youtube=channel/UCGEb1g_gBAVpMoFUq2ggFBg\n|instagram=fireburner__\n|steam=id/fireburner124\n|history=\n{{TH|2015-08-29 \u2013 2016-10-01|Kings of Urban}}\n{{TH|2016-10-01 \u2013 2019-06-27|NRG Esports}}\n{{TH|2019-09-05 \u2013 '''Present'''|Cloud9|Coach}}\n}}\n{{upcoming matches player}}\nJayson '''\"Fireburner\"''' Nunez {{born}} is an [[:category:USA|American]]/[[:category:Colombia|Colombian]] ''Rocket League'' player who retired on June 27th, 2019, currently coaching [[Cloud9]]."
+    }
+  },
+  "FlamE": {
+    "title": "FlamE",
+    "pageid": 23002,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=FlamE\n|name2=Results\n|link2= FlamE/Results\n|This=1\n}}\n{{Infobox player\n|id=FlamE\n|name= Jack Pearton\n|country=England\n|birth_date={{birth_date_and_age|1999|09|27}}\n|team=Veloce Esports\n|image=DHVALENCIA 2019 RL FLAME.jpg\n|status=Active\n|role=Player\n|twitter=FlamE_RL\n|twitch=flame__rl\n|steam=id/flame_rl\n|history=\n{{TH|2017-07-11 \u2013 2017-09-16|Aeriality}}\n{{TH|2017-09-16 \u2013 2019-01-28|Team Secret}}\n{{TH|2019-01-28 - 2019-02-06 |Ex-Secret}}\n{{TH|2019-02-06 - 2019-02-14|Melon Squad}}\n{{TH|2019-02-14 - '''Present'''|Veloce Esports}}\n|history_gfinity=\n{{TH_Gfinity|1|Method}}\n}}\n{{upcoming matches player}}\nJack '''\"FlamE\"''' Pearton {{born}} is an [[:category:England|English]] ''Rocket League'' player."
+    }
+  },
+  "ExplosiveGyro": {
+    "title": "ExplosiveGyro",
+    "pageid": 36235,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=ExplosiveGyro\n|name2=Results\n|link2=ExplosiveGyro/Results\n|This=1\n}}\n{{Infobox player\n|id=ExplosiveGyro\n|name=Jirair Papazian\n|country=United States\n|country2=Armenia\n|birth_date={{birth_date_and_age|2002|10|13}}\n|team=Pittsburgh Knights\n|image=DHMONTREAL 2019 RL EXPLOSIVEGYRO.jpg\n|status=Active\n|ids=Gyro.\n|role=Player\n|twitter=ExplosiveGyro\n|steam=profiles/76561198153124313\n|twitch=\n|history=\n{{TH|2018-07-29 - 2019-10-02|The Peeps}}\n{{TH|2019-10-02 \u2013 '''Present'''|Pittsburgh Knights}}\n}}\n{{upcoming matches player}}\nJirair '''\"ExplosiveGyro\"''' Papazian {{born}} is an [[:category:United States|American]]/[[:category:Armenia|Armenian]] ''Rocket League'' player."
+    }
+  },
+  "Lethamyr": {
+    "title": "Lethamyr",
+    "pageid": 7125,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Lethamyr\n|name2=Results\n|link2=Lethamyr/Results\n|This=1\n}}\n{{Infobox player\n|id=Lethamyr\n|name=Treyven Robitaille\n|country=Canada\n|age=\n|birth_date={{birth_date_and_age|1995|03|31}}\n|team=mousesports\n|image=DHMONTREAL 2019 RL LETHAMYR.jpg\n|status=Active\n|role=Coach\n|twitter=Lethamyr_RL\n|twitch=Lethamyr_RL\n|youtube=channel/UCkNYoWK1LqjFhxYI6BM_kOA\n|discord=ByUTANF\n|steam=profiles/76561198085868465\n|history=\n{{TH|2016-04-03 \u2013 2016-06-08|Phoenix Infinity}}\n{{TH|2016-08-?? \u2013 2016-08-28|Chronix}}\n{{TH|2016-08-28 \u2013 2016-09-27|Vendetta}}\n{{TH|2017-01-13 \u2013 2017-01-21|Insomnia eSports}}\n{{TH|2017-01-21 \u2013 2017-02-25|eQuinox}}\n{{TH|2017-02-25 \u2013 2017-07-01|Denial Esports}}\n{{TH|2017-07-01 \u2013 2017-08-18|Genesis}}\n{{TH|2017-08-18 \u2013 2019-07-19|Ghost Gaming}}\n{{TH|2019-07-19 \u2013 2019-09-05|Ghost Gaming|Inactive}}\n{{TH|2019-09-06 \u2013 '''Present'''|mousesports|Coach}}\n}}\n{{upcoming matches player}}\nTreyven '''\"Lethamyr\"''' Robitaille {{born}} is a [[:category:Canada|Canadian]] ''Rocket League'' player, coach and content creator."
+    }
+  },
+  "Mist": {
+    "title": "Mist",
+    "pageid": 46146,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Mist\n|name2=Results\n|link2=Mist/Results\n|This=1\n}}{{DISPLAYTITLE:mist}}\n{{Infobox player\n|id=mist\n|name=Nick Costello\n|country=United States\n|birth_date={{birth_date_and_age|2003|08|22}}\n|team=Pittsburgh Knights\n|image=DHMONTREAL 2019 RL MIST.jpg\n|status=Active\n|role=Player\n|twitter=mist_525\n|steam=profiles/76561198245238200\n|twitch=mist_rl\n|history=\n{{TH|2019-01-13 \u2013 2019-02-23|Afterthought}}\n{{TH|2019-02-23 \u2013 2019-07-19|Birds and the Beez}}\n{{TH|2019-07-25 \u2013 2019-10-02|The Peeps}}\n{{TH|2019-10-02 \u2013 '''Present'''|Pittsburgh Knights}}\n}}\n{{upcoming matches player}}\nNick '''\"mist\"''' Costello {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Speed": {
+    "title": "Speed",
+    "pageid": 30687,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Speed\n|name2=Results\n|link2=Speed/Results\n|This=1\n}}\n{{Infobox player\n|id=Speed\n|name=Jack Packwood-Clarke\n|country=England\n|birth_date={{birth_date_and_age|2001|02|26}}\n|team=mousesports\n|image=DHMONTREAL_2019_RL_SPEED.jpg\n|status=Active\n|role=Player\n|twitter=speed_rl\n|twitch=speed_rl\n|steam=id/Speedfreak678\n|history=\n{{TH|2017-08-?? \u2013 2017-09-??|BackPost}}\n{{TH|2017-09-17 \u2013 2018-01-01|Reason Gaming|Substitute}}\n{{TH|2018-02-27 \u2013 2018-05-06|UNILAD Esports}}\n{{TH|2018-05-06 \u2013 2018-08-03|The Bricks}}\n{{TH|2018-08-03 \u2013 2018-09-24|Triple Trouble}}\n{{TH|2018-09-24 - 2019-01-17|Red Reserve}}\n{{TH|2019-01-17 - 2019-01-31|Red Reserve|Inactive}}\n{{TH|2019-01-17 - 2019-01-31|FlipSid3 Tactics|loan}}\n{{TH|2019-01-31 - 2019-02-02|Triple Trouble|Inactive}}\n{{TH|2019-02-24 - 2019-02-28|FlipSid3 Tactics}}\n{{TH|2019-02-28 \u2013 2019-03-31|Ex-FlipSid3}}\n{{TH|2019-03-31 \u2013 2019-09-05|The Bricks}}\n{{TH|2019-09-05 \u2013 '''Present'''|mousesports}}\n|history_gfinity=\n{{TH_Gfinity|2|Reason Gaming}}\n{{TH_Gfinity|3|UNILAD Esports}}\n}}\n{{upcoming matches player}}\nJack \"'''Speed'''\" Packwood-Clarke {{born}} is an [[:category:England|English]] ''Rocket League'' player."
+    }
+  },
+  "Sypical": {
+    "title": "Sypical",
+    "pageid": 35789,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Sypical\n|name2=Results\n|link2=Sypical/Results\n|This=1\n}}\n{{Infobox player\n|id=Sypical\n|ids=syp\n|name=Caden Pellegrin\n|country=United States\n|birth_date={{birth_date_and_age|2003|08|05}}\n|team=Spacestation Gaming\n|image=DHDALLAS 2019 RL SYPICAL.jpg\n|status=Active\n|role=Player\n|twitter=Sypical \n|twitch=sypical\n|steam=id/Sypical\n|history=\n{{TH|2018-08-01 \u2013 2019-04-04|Bread}}\n{{TH|2019-04-04 \u2013 '''Present'''|Spacestation Gaming}}\n}}\n{{upcoming matches player}}\nCaden '''\"Sypical\"''' Pellegrin {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Atomic": {
+    "title": "Atomic",
+    "pageid": 52237,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Atomic\n|name2=Results\n|link2=Atomic/Results\n|This=1\n}}\n{{Infobox player\n|id=Atomic\n|name=Massimo Franceschi\n|country=United States\n|birth_date={{birth_date_and_age|2003|08|12}}\n|team=Ghost Gaming\n|image=DHMONTREAL 2019 RL ATOMIC.jpg\n|status=Active\n|role=Player\n|twitter=AT00MlC\n|twitch=AtomicRL\n|youtube=\n|instagram=\n|steam=id/at0mic_rl/\n|history=\n{{TH|2019-09-06 \u2013 '''Present''' |Ghost Gaming}}\n}}\n{{upcoming matches player}}\nMassimo '''\"Atomic\"''' Franceschi {{born}} is an [[:category:United States|American]] ''Rocket League'' player. [[Atomic]] was involved in a [[RLRS]] ban in 2017, by illegally subbing in the play-ins when he was an underage and unregistered player. His team at the time, [[Naventic]], released him and his teammates, and the RLCS/RLRS admins banned him from [[Rocket_League_Championship_Series/Season_4/North_America/Rocket_League_Rival_Series|RLCS S4 - RLRS]] and other Psyonix sponsored seasons and tournaments until June 30th, 2019."
+    }
+  },
+  "Chrome": {
+    "title": "Chrome",
+    "pageid": 7110,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Chrome\n|name2=Results\n|link2=Chrome/Results\n|This=1\n}}\n{{Infobox player\n|id=Chrome\n|name=Robert Gomez\n|country=United States\n|birth_date={{birth_date_and_age|1993|03|29}}\n|team=Spacestation Gaming\n|image=PlayerImagePlaceholder.png\n|status=Active\n|role=Coach\n|twitter=ChromeRL\n|twitch=Chrome\n|steam=id/ChromeRL\n|instagram=robchrome\n|youtube=channel/UCKMAVuNsSQnJ-SCZhdIwPEQ\n|history=\n{{TH|2016-02-06 \u2013 2016-04-16|Back That Pass Up}}\n{{TH|2016-04-16 \u2013 2016-05-01|No Clue}}\n{{TH|2016-05-01 \u2013 2016-06-07|Back That Pass Up}}\n{{TH|2016-05-29 \u2013 2016-06-07|Eanix}}\n{{TH|2016-06-07 \u2013 2016-07-14|Retrospect}}\n{{TH|2016-07-14 \u2013 2016-08-14|Foresight}}\n{{TH|2016-08-30 \u2013 2016-10-29|Revival}}\n{{TH|2017-01-21 \u2013 2017-02-16|eQuinox}}\n{{TH|2017-02-20 \u2013 2017-05-06|Genesis}}\n{{TH|2017-08-07 \u2013 2017-09-02|eQuinox}}\n{{TH|2017-09-02 \u2013 2018-01-09|FlyQuest}}\n{{TH|2018-01-09 \u2013 2018-03-13|eQuinox}}\n{{TH|2018-03-13 \u2013 2018-06-21|Evil Geniuses}}\n{{TH|2018-06-21 \u2013 2018-07-28|Evil Geniuses|Inactive}}\n{{TH|2018-07-28 \u2013 2018-10-05|The Hosses}}\n{{TH|2018-10-13 - 2019-07-05|NRG Esports|Coach}}\n{{TH|2019-10-05 - '''Present'''|Spacestation Gaming|Coach}}\n}}\n{{upcoming matches player}}\nRobert '''\"Chrome\"''' Gomez {{born}} is an [[:category:United States|American]] ''Rocket League'' coach and former player."
+    }
+  },
+  "Retals": {
+    "title": "Retals",
+    "pageid": 34065,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Retals\n|name2=Results\n|link2=Retals/Results\n|This=1\n}}\n{{Infobox player\n|id=Retals\n|ids=Rookzie\n|name=Slater Thomas\n|country=United States\n|birth_date={{birth_date_and_age|2003|01|02}}\n|team=Pittsburgh Knights\n|image=DHVALENCIA 2019 RL RETALS.jpg\n|status=Active\n|role=Player\n|twitter=retalsRL\n|reddit=RetalsRL\n|steam=profiles/76561198353975600\n|twitch=\n|history=\n{{TH|2018-02-14 \u2013 2018-03-06|Mech G}}\n{{TH|2018-07-28 \u2013 2018-09-02|The D00ds}}\n{{TH|2018-10-31 \u2013 2019-01-10|The D00ds}}\n{{TH|2019-01-10 \u2013 2019-02-13|Honduras}}\n{{TH|2019-02-13 \u2013 2019-10-02|The Peeps}}\n{{TH|2019-10-02 \u2013 '''Present'''|Pittsburgh Knights}}\n}}\n{{upcoming matches player}}\nSlater '''\"Retals\"''' Thomas {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "hockser": {
+    "title": "Hockser",
+    "pageid": 41523,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Hockser\n|name2=Results\n|link2=Hockser/Results\n|This=1\n}}{{DISPLAYTITLE:hockser}}\n{{Infobox player\n|id=hockser\n|name=Colby James\n|country=United States\n|birth_date={{birth_date_and_age|2002|01|23}}\n|team=Birds\n|image=WSOE4_HOCKSER.jpg\n|status=Active\n|role=Player\n|twitter=hockserRL\n|twitch=hockser\n|steam=profiles/76561198271931020\n|history=\n{{TH|2018-08-05 \u2013 2019-02-23|Afterthought}}\n{{TH|2019-02-23 \u2013 '''Present'''|Birds}}\n}}\n{{upcoming matches player}}\nColby '''\"hockser\"''' James {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Roll Dizz": {
+    "title": "Roll Dizz",
+    "pageid": 34051,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Roll Dizz\n|name2=Results\n|link2=Roll Dizz/Results\n|This=1\n}}\n{{Infobox player\n|id=Roll Dizz\n|ids=RollDizz\n|name=Raul Diaz\n|country=United States\n|birth_date={{birth_date_and_age|1996|09|06}}\n|team=Birds\n|image=DHDALLAS 2019 RL ROLL DIZZ.jpg\n|status=Active\n|role=Player\n|twitter=RollDizz\n|twitch=rolldizz\n|steam=profiles/76561198237161718\n|history=\n{{TH|2016-08-?? \u2013 2016-09-??|Resonance}}\n{{TH|2017-08-?? \u2013 2017-08-??|Schmackers v2}}\n{{TH|2018-01-24 \u2013 2018-02-14|Royalty}}\n{{TH|2018-02-14 \u2013 2018-03-10|Genesis}}\n{{TH|2018-07-28 \u2013 2018-09-02|The D00ds}}\n{{TH|2019-01-10 - 2019-01-18|Honduras}}\n{{TH|2019-02-13 \u2013  2019-02-23|Egg}}\n{{TH|2019-02-23 \u2013 '''Present'''|Birds}}\n}}\n{{upcoming matches player}}\nRaul '''\"Roll Dizz\"''' Diaz {{born}} is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "ayjacks": {
+    "title": "Ayjacks",
+    "pageid": 29550,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Ayjacks\n|name2=Results\n|link2=Ayjacks/Results\n|This=1\n}}{{DISPLAYTITLE:ayjacks}}\n{{Infobox player\n|id=ayjacks\n|name= Jackson Carter\n|country=United States\n|birth_date=\n|team=Birds\n|image=DHDALLAS_2019_RL_AYJACKS.jpg\n|status=Active\n|role=Player\n|twitter=ayjacksrl\n|twitch=ayjacksrl\n|steam=id/ayjacksrl\n|history=\n{{TH|2018-02-15 \u2013 2018-10-12|Manhattan}}\n{{TH|2019-02-20 - 2019-03-??|Avocado}}\n{{TH|2019-08-05 - '''Present'''|Birds}}\n}}\n{{upcoming matches player}}\nJackson '''\"ayjacks\"''' Carter is an [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Flakes": {
+    "title": "Flakes",
+    "pageid": 22249,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Flakes\n|name2=Results\n|link2=Flakes/Results\n|This=1\n}}\n{{Infobox player\n|id=Flakes\n|ids=P0wrnflakes\n|name=Hrant Yakoub\n|country=Netherlands\n|country2=Armenia\n|birth_date={{birth_date_and_age|2000|04|12}}\n|team=Complexity Gaming\n|image=DHVALENCIA 2019 RL FLAKES 2.jpg\n|status=Active\n|role=Player\n|twitter=Flakes_RL\n|twitch=Flakes\n|discord=YFbtwar\n|steam=id/P0wrnflakes\n|history=\n{{TH|2016-09-04 \u2013 2016-09-?? |Godlike}}\n{{TH|2017-02-21 \u2013 2017-03-12|Pentagram}}\n{{TH|2017-03-26 \u2013 2017-05-13|One Trick Pony}}\n{{TH|2017-05-13 \u2013 2017-08-08 |Pnda Gaming}}\n{{TH|2018-12-27 \u2013 2019-01-20|We Dem Broz}}\n{{TH|2019-03-04 \u2013 '''Present''' |Complexity Gaming}}\n|history_gfinity=\n{{TH_Gfinity|4|Renault Sport Team Vitality}}\n}}\n{{upcoming matches player}}\nHrant '''\"Flakes\"''' Yakoub {{born}} is a [[:category:Netherlands|Dutch]]/[[:category:Armenia|Armenian]] ''Rocket League'' player and streamer."
+    }
+  },
+  "Aztral": {
+    "title": "Aztral",
+    "pageid": 40330,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Aztral\n|name2=Results\n|link2=Aztral/Results\n|This=1\n}}\n{{Infobox player\n|id=Aztral\n|name=Maello Ernst\n|country=Belgium\n|birth_date={{birth_date_and_age|2002|12|26}}\n|team=Dignitas\n|image=DHMONTREAL 2019 RL AZTRAL.jpg\n|status=Active\n|role=Player\n|twitter=AztralRL\n|twitch=Aztral\n|instagram=aztral07\n|steam=id/AztralRL\n|youtube=channel/UCcwofDr7relCTyN1WQPM37A\n|history=\n{{TH|2019-07-20 \u2013 '''Present'''|Dignitas}}\n}}\n{{upcoming matches player}}\nMaello '''\"Aztral\"''' Ernst {{born}} is a [[:category:Belgium|Belgian]] ''Rocket League'' player."
+    }
+  },
+  "Extra": {
+    "title": "Extra",
+    "pageid": 56290,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Extra\n|name2=Results\n|link2=Extra/Results\n|This=1\n}}\n{{Infobox player\n|id=Extra\n|ids=\n|name=Alex Paoli\n|country=France\n|birth_date=\n|team=Fadeaway\n|image=DHVALENCIA 2019 RL EXTRA.jpg\n|status=Active\n|role=Player\n|twitter=Extra_RL\n|steam=id/extrarl\n|twitch=\n|history=\n{{TH|2018-04-12 \u2013 2018-09-?? |Exalty}}\n{{TH|2019-02-26 \u2013 2019-08-25 |Baguette Squad}}\n{{TH|2019-08-25 \u2013 '''Present''' |Fadeaway}}\n}}\n{{upcoming matches player}}\nAlex '''\"Extra\"''' Paoli is a [[:category:France|French]] ''Rocket League'' player."
+    }
+  },
+  "Siki": {
+    "title": "Siki",
+    "pageid": 23071,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Siki\n|name2=Results\n|link2=Siki/Results\n|This=1\n}}\n{{Infobox player\n|id=Siki\n|name= Christopher Magee\n|country=Australia\n|birth_date={{birth_date_and_age|1999|09|17}}\n|team=Renegades\n|image=DHVALENCIA 2019 RL SIKI.jpg\n|status=Active\n|role=Player\n|twitter=SikiRL\n|twitch=\n|steam=id/Siiki\n|history=\n{{TH|2016-08-17 \u2013 2017-06-10|Corvidae}}\n{{TH|2017-06-10 \u2013 2017-08-19|The Other Team}}\n{{TH|2017-08-19 \u2013 2017-??-??|Avant Gaming}}\n{{TH|2018-02-12 \u2013 2018-11-27|Legacy eSports|link=Legacy eSports (Australian team)}}\n{{TH|2019-02-25 - 2019-03-28|ORDER}}\n{{TH|2019-03-28 - 2019-06-03|Out of Order}}\n{{TH|2019-06-03 - 2019-08-03|Ground Zero Gaming}}\n{{TH|2019-08-16 - '''Present'''|Renegades}}\n|history_gfinity=\n{{TH_Gfinity|1|Ground Zero Gaming}}\n}}\n{{upcoming matches player}}\nChristopher '''\"Siki\"''' Magee {{born}} is an [[:Category:Australia|Australian]] ''Rocket League'' player."
+    }
+  }
 }

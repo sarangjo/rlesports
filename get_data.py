@@ -178,7 +178,7 @@ def get_players_data(players: List[str]) -> Dict[str, Dict]:
     return output
 
 
-DATE_RE = re.compile(r"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")
+DATE_RE = re.compile(r"[\w?]{4}-[\w?]{2}-[\w?]{2}")
 
 
 def process_players_data(output: Dict[str, Dict]):
@@ -198,7 +198,7 @@ def process_players_data(output: Dict[str, Dict]):
                 if line.startswith('|id='):
                     player["name"] = line.replace('|id=', '')
 
-            if line.startswith('|history'):
+            if not in_history and line.startswith('|history'):
                 in_history = True
             elif in_history:
                 if not line.startswith('{{TH'):
@@ -224,7 +224,7 @@ NOTABLE_PLAYERS = json.load(open("notable.json"))
 
 
 def main():
-    output = get_players_data([])
+    output = get_players_data(NOTABLE_PLAYERS)
     process_players_data(output)
 
 
