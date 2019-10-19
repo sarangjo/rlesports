@@ -6,6 +6,7 @@ import pprint
 import re
 import sys
 from typing import List, Any, Dict
+import time
 
 import requests
 
@@ -152,24 +153,28 @@ def process_tournaments_data(output: Dict[str, Dict]):
         json.dump(tournaments, f, indent=4)
 
 
-def get_players_data(player: str) -> Dict[str, Dict]:
-    with open(PLAYERS_CACHE_FILE, 'r') as f:
+def get_players_data(players: List[str]) -> Dict[str, Dict]:
+    for player in players:
+        with open(PLAYERS_CACHE_FILE, 'r') as f:
+            output = json.load(f)
+        if player not in output:
+            wiki_text = call_api({
+                "action": "parse",
+                "prop": "wikitext",
+                "page": player,
+                "format": "json",
+                "section": 0,
+            })
+            print("called api for", player)
+            output[player] = wiki_text['parse']
+            with open(PLAYERS_CACHE_FILE, 'w') as f:
+                json.dump(output, f, indent=4)
+            time.sleep(30)
+        else:
+            print("didn't need api for", player)
+
+    with open(PLAYERS_CACHE_FILE) as f:
         output = json.load(f)
-
-    if player not in output:
-        wiki_text = call_api({
-            "action": "parse",
-            "prop": "wikitext",
-            "page": player,
-            "format": "json",
-            "section": 0,
-        })
-        print("called api")
-        output[player] = wiki_text['parse']
-
-    with open(PLAYERS_CACHE_FILE, 'w') as f:
-        json.dump(output, f, indent=4)
-
     return output
 
 
@@ -215,8 +220,11 @@ def process_players_data(output: Dict[str, Dict]):
         json.dump(processed, f, indent=4)
 
 
+NOTABLE_PLAYERS = json.load(open("notable.json"))
+
+
 def main():
-    output = get_players_data("Kronovi")
+    output = get_players_data([])
     process_players_data(output)
 
 

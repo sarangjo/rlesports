@@ -12,6 +12,7 @@
     "concurrently": "^4.1.0",
     "live-server": "^1.2.1",
     "tsify": "^4.0.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.1",
     "watchify": "^3.11.1",
     "webpack": "^4.41.2",

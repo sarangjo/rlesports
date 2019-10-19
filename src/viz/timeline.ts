@@ -1,11 +1,11 @@
-import * as _ from "lodash";
-import * as log from "loglevel";
 import * as d3 from "d3";
 import { combination } from "js-combinatorics";
+import _ from "lodash";
+import log from "loglevel";
 
-import { nodeDrag } from "../util";
+import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { Chart, RLVisualization } from "../types";
-import { CIRCLE_RADIUS, WIDTH, HEIGHT } from "../constants";
+import { nodeDrag } from "../util";
 
 interface PlayerEvent {
   start: string;
@@ -16,23 +16,23 @@ interface PlayerEvent {
 
 interface Player extends d3.SimulationNodeDatum {
   name: string;
-  events: Array<PlayerEvent>;
+  events: PlayerEvent[];
 }
 
 type Team = d3.SimulationLinkDatum<Player>;
 
-const CURRENT_DATE = "2015-07-10";
+const CURRENT_DATE = "2019-10-18";
 
 // Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
 export default class TimelineViz implements RLVisualization {
   private playerNodes: Player[];
-  private playerLinks: Team[];
+  private playerLinks: Team[] = [];
+  private fullTeams: string[];
 
-  process = async (players: Player[]) => {
+  public process = async (players: Player[]) => {
     this.playerNodes = players;
-    this.playerLinks = [];
-
     const teamMap: Record<string, string[]> = {};
+
     const lft = [];
     await Promise.all(
       _.map(
@@ -42,7 +42,7 @@ export default class TimelineViz implements RLVisualization {
             // TODO: only chooses the earlier on date changes
             const event = _.findLast(
               player.events,
-              event => CURRENT_DATE >= event.start && (!event.end || CURRENT_DATE <= event.end),
+              ev => CURRENT_DATE >= ev.start && (!ev.end || CURRENT_DATE <= ev.end),
             );
             if (event) {
               if (!(event.team in teamMap)) {
@@ -58,6 +58,7 @@ export default class TimelineViz implements RLVisualization {
     );
 
     log.debug(teamMap);
+    this.fullTeams = _.keys(_.filter(teamMap, ({}, p) => p.length >= 3));
 
     _.forEach(teamMap, playerNames => {
       if (playerNames.length >= 2) {
@@ -71,7 +72,7 @@ export default class TimelineViz implements RLVisualization {
     });
   };
 
-  draw = (chart: Chart) => {
+  public draw = (chart: Chart) => {
     // Simulation
     const simulation = d3
       .forceSimulation<Player>(this.playerNodes)
@@ -82,8 +83,10 @@ export default class TimelineViz implements RLVisualization {
           .id(d => d.name)
           .links(this.playerLinks),
       )
-      .force("charge", d3.forceManyBody())
-      .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2));
+      .force("collide", d3.forceCollide(20))
+      .force("x", d3.forceX(WIDTH / 2))
+      .force("y", d3.forceY(HEIGHT / 2));
+    // .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2).strength(1.5));
 
     // Nodes
     const nodeGSelection = chart
@@ -94,7 +97,7 @@ export default class TimelineViz implements RLVisualization {
       .enter()
       .append("g");
 
-    const nodeSelection = nodeGSelection
+    nodeGSelection
       .append("circle")
       .attr("r", CIRCLE_RADIUS)
       .call(
@@ -105,14 +108,11 @@ export default class TimelineViz implements RLVisualization {
           .on("end", nodeDrag.end.bind(null, simulation)),
       );
 
-    // TODO figure this out
-    /*
     nodeGSelection
       .append("text")
       .attr("x", 6)
       .attr("y", 3)
       .text(d => d.name);
-    */
 
     // Links
     const linkSelection = chart
@@ -124,8 +124,62 @@ export default class TimelineViz implements RLVisualization {
       .append("line")
       .attr("stroke", "black");
 
-    // Teams
-    // TODO
+    // Teams: TODO
+    /*
+    const groupsSelection = chart.append("g").attr("id", "teams");
+    const paths = groupsSelection
+      .selectAll(".path")
+      .data(this.fullTeams)
+      .enter()
+      .append("g")
+      .attr("class", "path")
+      .append("path")
+      .attr("stroke", "blue")
+      .attr("fill", "lightblue")
+      .attr("opacity", 0);
+    paths
+      .transition()
+      .duration(2000)
+      .attr("opacity", 1);
+
+    const polygonGenerator = groupId => {
+      const nodeCoords = nodeGSelection
+        .filter(d => d. === groupId)
+        .data()
+        .map(function(d) {
+          return [d.x, d.y];
+        });
+
+      return d3.polygonHull(nodeCoords);
+    };
+
+    const updateGroups = () => {
+      this.fullTeams.forEach(groupId => {
+        const path = paths
+          .filter(d => d == groupId)
+          .attr("transform", "scale(1) translate(0,0)")
+          .attr("d", d => {
+            polygon = polygonGenerator(d);
+            centroid = d3.polygonCentroid(polygon);
+
+            // to scale the shape properly around its points:
+            // move the 'g' element to the centroid point, translate
+            // all the path around the center of the 'g' and then
+            // we can scale the 'g' element properly
+            return valueline(
+              polygon.map(function(point) {
+                return [point[0] - centroid[0], point[1] - centroid[1]];
+              }),
+            );
+          });
+
+        d3.select(path.node().parentNode).attr(
+          "transform",
+          "translate(" + centroid[0] + "," + centroid[1] + ") scale(" + scaleFactor + ")",
+        );
+      });
+    };
+    */
 
     const ticked = () => {
       linkSelection
@@ -134,7 +188,7 @@ export default class TimelineViz implements RLVisualization {
         .attr("x2", d => _.get(d, "target.x"))
         .attr("y2", d => _.get(d, "target.y"));
 
-      nodeSelection.attr("cx", d => d.x || 0).attr("cy", d => d.y || 0);
+      nodeGSelection.attr("transform", d => `translate(${d.x},${d.y})`);
     };
 
     // Tick
