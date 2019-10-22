@@ -4,7 +4,7 @@ import _ from "lodash";
 
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { Chart, RLVisualization } from "../types";
-import { nodeDrag } from "../util";
+import { nodeDrag, valueline } from "../util";
 
 import "./timeline.css";
 
@@ -28,13 +28,6 @@ interface FrozenPlayer extends d3.SimulationNodeDatum {
 type Team = d3.SimulationLinkDatum<FrozenPlayer>;
 
 const CURRENT_DATE = "2019-10-18";
-
-// Used later to set group curve
-const valueline = d3
-  .line()
-  .x(d => d[0])
-  .y(d => d[1])
-  .curve(d3.curveCatmullRomClosed);
 
 // Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
 export default class TimelineViz implements RLVisualization {
@@ -153,6 +146,9 @@ export default class TimelineViz implements RLVisualization {
       .enter()
       .append("line")
       .attr("stroke", "black");
+
+    // Misc
+    chart.append("text").text(`Date: ${CURRENT_DATE}`);
 
     // Given a team name, generate the polygon for it
     const polygonGenerator = (teamName: string) => {
