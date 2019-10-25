@@ -28,9 +28,9 @@ interface FrozenPlayer extends d3.SimulationNodeDatum {
 type Teammates = d3.SimulationLinkDatum<FrozenPlayer>;
 
 interface Selections {
-  nodeGSelection?: d3.Selection<SVGGElement, FrozenPlayer, any, any>;
-  linkSelection?: d3.Selection<SVGLineElement, Teammates, any, any>;
-  pathContainers?: d3.Selection<SVGGElement, string, any, any>;
+  node?: d3.Selection<SVGGElement, FrozenPlayer, any, any>;
+  link?: d3.Selection<SVGLineElement, Teammates, any, any>;
+  pathContainer?: d3.Selection<SVGGElement, string, any, any>;
   paths?: d3.Selection<SVGPathElement, string, any, any>;
 }
 
@@ -91,13 +91,16 @@ export default class TimelineViz implements RLVisualization {
   // Update pattern
   public restart = () => {
     // Nodes
-    if (this.selections.nodeGSelection) {
-      this.selections.nodeGSelection = this.selections.nodeGSelection
-        .data(this.playerNodes, d => d.name)
-        .enter()
-        .append("g");
+    if (this.selections.node) {
+      this.selections.node = this.selections.node.data(this.playerNodes, d => d.name);
+      this.selections.node.exit().remove();
 
-      this.selections.nodeGSelection
+      this.selections.node = this.selections.node
+        .enter()
+        .append("g")
+        .merge(this.selections.node);
+
+      this.selections.node
         .append("circle")
         .attr("r", CIRCLE_RADIUS)
         .call(
@@ -108,7 +111,7 @@ export default class TimelineViz implements RLVisualization {
             .on("end", nodeDrag.end.bind(null, this.simulation)),
         );
 
-      this.selections.nodeGSelection
+      this.selections.node
         .append("text")
         .attr("x", CIRCLE_RADIUS + 1)
         .attr("y", 3)
@@ -116,17 +119,21 @@ export default class TimelineViz implements RLVisualization {
     }
 
     // Links
-    if (this.selections.linkSelection) {
-      this.selections.linkSelection = this.selections.linkSelection
-        .data(this.playerLinks)
+    if (this.selections.link) {
+      this.selections.link = this.selections.link.data(
+        this.playerLinks,
+        d => `${(d.source as FrozenPlayer).name}-${(d.target as FrozenPlayer).name}`,
+      );
+      this.selections.link.exit().remove();
+      this.selections.link = this.selections.link
         .enter()
         .append("line")
         .attr("stroke", "black");
     }
 
     // Paths
-    if (this.selections.pathContainers) {
-      this.selections.pathContainers = this.selections.pathContainers
+    if (this.selections.pathContainer) {
+      this.selections.pathContainer = this.selections.pathContainer
         .data(this.fullTeams)
         .enter()
         .append("g")
@@ -151,25 +158,25 @@ export default class TimelineViz implements RLVisualization {
     // .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2).strength(1.5));
 
     // Teams
-    this.selections.pathContainers = chart
+    this.selections.pathContainer = chart
       .append("g")
       .attr("id", "teams")
       .selectAll(".group-path");
 
-    this.selections.paths = this.selections.pathContainers
+    this.selections.paths = this.selections.pathContainer
       .append("path")
       .attr("stroke", "blue")
       .attr("fill", "lightblue")
       .attr("opacity", 1);
 
     // Nodes
-    this.selections.nodeGSelection = chart
+    this.selections.node = chart
       .append("g")
       .attr("id", "nodes")
       .selectAll("circle");
 
     // Links
-    this.selections.linkSelection = chart
+    this.selections.link = chart
       .append("g")
       .attr("id", "links")
       .selectAll("line");
@@ -180,7 +187,7 @@ export default class TimelineViz implements RLVisualization {
     // Given a team name, generate the polygon for it
     const polygonGenerator = (teamName: string) => {
       const nodeCoords = this.selections
-        .nodeGSelection!.filter((d: FrozenPlayer) => d.team === teamName)
+        .node!.filter((d: FrozenPlayer) => d.team === teamName)
         .data()
         .map((d: any) => [d.x, d.y]);
 
@@ -189,12 +196,12 @@ export default class TimelineViz implements RLVisualization {
 
     const ticked = () => {
       this.selections
-        .linkSelection!.attr("x1", (d: Teammates) => _.get(d, "source.x"))
+        .link!.attr("x1", (d: Teammates) => _.get(d, "source.x"))
         .attr("y1", (d: Teammates) => _.get(d, "source.y"))
         .attr("x2", (d: Teammates) => _.get(d, "target.x"))
         .attr("y2", (d: Teammates) => _.get(d, "target.y"));
 
-      this.selections.nodeGSelection!.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
+      this.selections.node!.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
 
       this.fullTeams.forEach(teamName => {
         let centroid: [number, number] = [0, 0];
@@ -221,7 +228,7 @@ export default class TimelineViz implements RLVisualization {
 
         // Set the path container
         this.selections
-          .pathContainers!.filter((d: any) => d === teamName)
+          .pathContainer!.filter((d: any) => d === teamName)
           .attr("transform", "translate(" + centroid[0] + "," + centroid[1] + ") scale(1.2)");
       });
     };
