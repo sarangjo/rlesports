@@ -34,29 +34,33 @@ interface Selections {
   paths?: d3.Selection<SVGPathElement, string, any, any>;
 }
 
-const CURRENT_DATE = "2019-10-18";
-
 // Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
 export default class TimelineViz implements RLVisualization {
+  private players: Player[];
+  private currentDate = "2019-10-18";
   private playerNodes: FrozenPlayer[] = [];
   private playerLinks: Teammates[] = [];
   private fullTeams: string[];
   private selections: Selections = {};
   private simulation: d3.Simulation<FrozenPlayer, Teammates>;
 
-  public process = async (players: Player[]) => {
+  constructor(players: Player[]) {
+    this.players = players;
+  }
+
+  public process = async () => {
     const teamMap: Record<string, string[]> = {};
 
     const lft = [];
     await Promise.all(
       _.map(
-        players,
+        this.players,
         player =>
           new Promise(resolve => {
             // TODO: only chooses the earlier on date changes
             const event = _.findLast(
               player.events,
-              ev => CURRENT_DATE >= ev.start && (!ev.end || CURRENT_DATE <= ev.end),
+              ev => this.currentDate >= ev.start && (!ev.end || this.currentDate <= ev.end),
             );
             const frozenPlayer: FrozenPlayer = { name: player.name };
             if (event) {
@@ -181,9 +185,6 @@ export default class TimelineViz implements RLVisualization {
       .attr("id", "links")
       .selectAll("line");
 
-    // Misc
-    chart.append("text").text(`Date: ${CURRENT_DATE}`);
-
     // Given a team name, generate the polygon for it
     const polygonGenerator = (teamName: string) => {
       const nodeCoords = this.selections
@@ -236,6 +237,13 @@ export default class TimelineViz implements RLVisualization {
     this.simulation.on("tick", ticked);
 
     // Updatable
+    this.restart();
+  };
+
+  public setDate = (newDate: string) => {
+    this.currentDate = newDate;
+
+    this.process();
     this.restart();
   };
 }
