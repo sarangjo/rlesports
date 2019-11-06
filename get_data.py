@@ -117,15 +117,13 @@ def process_tournaments_data(output: Dict[str, Dict]):
         # These are used as we parse one team at a time
         team = copy.deepcopy(EMPTY_TEAM)
         found_team = False
-        """
-        Line format is:
-        |team=iBUYPOWER
-        |p1=Kronovi |p1flag=us
-        |p2=Lachinio |p2flag=ca
-        |p3=Gambit |p3flag=us
-        |p4=0ver Zer0|p4flag=us
-        |qualifier=[[Rocket_League_Championship_Series/Season_1/North_America/Qualifier_1|Qualifier #1]]
-        """
+        # Line format is:
+        # |team=iBUYPOWER
+        # |p1=Kronovi |p1flag=us
+        # |p2=Lachinio |p2flag=ca
+        # |p3=Gambit |p3flag=us
+        # |p4=0ver Zer0|p4flag=us
+        # |qualifier=[[Rocket_League_Championship_Series/Season_1/North_America/Qualifier_1|Qualifier #1]]
         for line in lines:
             # This divides teams
             if line.startswith('|team'):
@@ -182,6 +180,9 @@ DATE_RE = re.compile(r"[\w?]{4}-[\w?]{2}-[\w?]{2}")
 
 
 def process_players_data(output: Dict[str, Dict]):
+    """
+    Go through the wikitext output and process it into a clean JSON format
+    """
     processed = []
     for player in output:
         lines: List[str] = output[player]["wikitext"]["*"].split('\n')
@@ -220,11 +221,11 @@ def process_players_data(output: Dict[str, Dict]):
         json.dump(processed, f, indent=2)
 
 
-NOTABLE_PLAYERS = json.load(open("notable.json"))
+PLAYER_LIST = json.load(open("playerlist.json"))
 
 
 def main():
-    output = get_players_data(NOTABLE_PLAYERS)
+    output = get_players_data(PLAYER_LIST)
     process_players_data(output)
 
 

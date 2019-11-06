@@ -565,5 +565,19 @@
     "wikitext": {
       "*": "{{Tabs static\n|name1=Overview\n|link1=Siki\n|name2=Results\n|link2=Siki/Results\n|This=1\n}}\n{{Infobox player\n|id=Siki\n|name= Christopher Magee\n|country=Australia\n|birth_date={{birth_date_and_age|1999|09|17}}\n|team=Renegades\n|image=DHVALENCIA 2019 RL SIKI.jpg\n|status=Active\n|role=Player\n|twitter=SikiRL\n|twitch=\n|steam=id/Siiki\n|history=\n{{TH|2016-08-17 \u2013 2017-06-10|Corvidae}}\n{{TH|2017-06-10 \u2013 2017-08-19|The Other Team}}\n{{TH|2017-08-19 \u2013 2017-??-??|Avant Gaming}}\n{{TH|2018-02-12 \u2013 2018-11-27|Legacy eSports|link=Legacy eSports (Australian team)}}\n{{TH|2019-02-25 - 2019-03-28|ORDER}}\n{{TH|2019-03-28 - 2019-06-03|Out of Order}}\n{{TH|2019-06-03 - 2019-08-03|Ground Zero Gaming}}\n{{TH|2019-08-16 - '''Present'''|Renegades}}\n|history_gfinity=\n{{TH_Gfinity|1|Ground Zero Gaming}}\n}}\n{{upcoming matches player}}\nChristopher '''\"Siki\"''' Magee {{born}} is an [[:Category:Australia|Australian]] ''Rocket League'' player."
     }
+  },
+  "Zanejackey": {
+    "title": "Zanejackey",
+    "pageid": 4849,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=Zanejackey\n|name2=Results\n|link2=Zanejackey/Results\n|This=1\n}}\n{{Infobox player\n|id=Zanejackey\n|name=Christopher Jacobs\n|country=United States\n|birth_date=\n|team=\n|image=DHLEIPZIG_RL_Zanejackey.jpg\n|status=Retired\n|role=Player\n|twitter=Zanejackey\n|twitch=zanejackey\n|steam=id/Zanejackey\n|history=\n{{TH|2015-10-18 \u2013 2016-03-31|Failure to Launch}}\n{{TH|2016-03-31 \u2013 2016-06-05|Team Orbit}}\n{{TH|2016-06-06 \u2013 2016-??-??|Mock-It eSports NA}}\n{{TH|2016-08-28 \u2013 2017-07-14|Take 3}}\n{{TH|2017-07-14 \u2013 2017-08-04|Hollywood Hammers}}\n{{TH|2017-08-07 \u2013 2017-08-18|Genesis}}\n{{TH|2017-08-18 \u2013 2019-04-02|Ghost Gaming}}\n}}\n{{upcoming matches player}}\nChristopher '''\"Zanejackey\"''' Jacobs is a former [[:category:United States|American]] ''Rocket League'' player."
+    }
+  },
+  "Shadey": {
+    "title": "Shadey",
+    "pageid": 20966,
+    "wikitext": {
+      "*": "{{Tabs static\n|name1=Overview\n|link1=shadey\n|name2=Results\n|link2=shadey/Results\n|This=1\n}}{{DISPLAYTITLE:shadey}}\n{{Infobox player\n|id=shadey\n|name=Nathan Logan\n|country=Australia\n|birth_date={{birth_date_and_age|1999|06|22}}\n|team=\n|image=DHVALENCIA 2019 RL SHADEY.jpg\n|status=Retired\n|role=Player\n|twitter=shadeyRL\n|steam=id/shadeyy_\n|twitch=shadeyRL\n|history=\n{{TH|2016-01-?? \u2013 2016-05-??|Corvidae}}\n{{TH|2017-01-?? \u2013 2017-02-??|SSU eSports}}\n{{TH|2017-03-02 \u2013 2017-05-24|1More}}\n{{TH|2017-06-14 \u2013 2017-07-01|1More}}\n{{TH|2017-07-01 \u2013 2017-11-08|JAM Gaming}}\n{{TH|2017-11-15 \u2013 2018-06-27|Dark Sided}}\n{{TH|2018-06-27 \u2013 2018-08-17|Ex-Dark Sided}}\n{{TH|2018-08-17 \u2013 2019-02-21|Tainted Minds}}\n{{TH|2019-02-21 \u2013 2019-06-26|ICON Esports}}\n{{TH|2019-06-26 \u2013 2019-08-03|Chiefs Esports Club}}\n\n|history_gfinity=\n{{TH_Gfinity_AU|1|ORDER}}\n{{TH_Gfinity_AU|2|Roar}}\n}}\n{{upcoming matches player}}\nNathan \"'''shadey'''\" Logan is an [[:Category:Australia|Australian]] ''Rocket League'' player. He is also the '''CEO''' and one of the 3 founding members of the community-driven [http://twitter.com/rl6mans Rocket League 6 Mans]. He retired from competitive play on August 3rd, 2019."
+    }
   }
 }

@@ -7,7 +7,7 @@ import { RLVisualization } from "./types";
 import Timeline from "./viz/timeline";
 
 // import data from "./data/tournaments.json";
-import data from "./data/test.json";
+import data from "./data/players.json";
 
 log.setLevel("debug");
 
