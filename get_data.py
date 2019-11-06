@@ -102,7 +102,7 @@ def get_tournaments_data() -> Dict[str, Dict]:
             output[t] = wiki_text['parse']
 
     with open(TOURNAMENTS_CACHE_FILE, 'w') as f:
-        json.dump(output, f, indent=4)
+        json.dump(output, f, indent=2)
 
     return output
 
@@ -150,7 +150,7 @@ def process_tournaments_data(output: Dict[str, Dict]):
         tournaments.append({"name": t, "teams": teams})
 
     with open(TOURNAMENTS_FILE, 'w') as f:
-        json.dump(tournaments, f, indent=4)
+        json.dump(tournaments, f, indent=2)
 
 
 def get_players_data(players: List[str]) -> Dict[str, Dict]:
@@ -168,7 +168,7 @@ def get_players_data(players: List[str]) -> Dict[str, Dict]:
             print("called api for", player)
             output[player] = wiki_text['parse']
             with open(PLAYERS_CACHE_FILE, 'w') as f:
-                json.dump(output, f, indent=4)
+                json.dump(output, f, indent=2)
             time.sleep(30)
         else:
             print("didn't need api for", player)
@@ -217,7 +217,7 @@ def process_players_data(output: Dict[str, Dict]):
         processed.append(player)
 
     with open(PLAYERS_FILE, 'w') as f:
-        json.dump(processed, f, indent=4)
+        json.dump(processed, f, indent=2)
 
 
 NOTABLE_PLAYERS = json.load(open("notable.json"))

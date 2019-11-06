@@ -15,20 +15,20 @@ interface PlayerEvent {
   role?: string;
 }
 
-interface Player {
+interface FullPlayer {
   name: string;
   events: PlayerEvent[];
 }
 
-interface FrozenPlayer extends d3.SimulationNodeDatum {
+interface Player extends d3.SimulationNodeDatum {
   name: string;
   team?: string;
 }
 
-type Teammates = d3.SimulationLinkDatum<FrozenPlayer>;
+type Teammates = d3.SimulationLinkDatum<Player>;
 
 interface Selections {
-  node?: d3.Selection<SVGGElement, FrozenPlayer, any, any>;
+  node?: d3.Selection<SVGGElement, Player, any, any>;
   link?: d3.Selection<SVGLineElement, Teammates, any, any>;
   pathContainer?: d3.Selection<SVGGElement, string, any, any>;
   paths?: d3.Selection<SVGPathElement, string, any, any>;
@@ -36,58 +36,57 @@ interface Selections {
 
 // Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
 export default class TimelineViz implements RLVisualization {
-  private players: Player[];
   private currentDate = "2019-10-18";
-  private playerNodes: FrozenPlayer[] = [];
+  private playerEvents: Record<string, PlayerEvent[]>;
+  private playerNodes: Player[];
   private playerLinks: Teammates[] = [];
   private fullTeams: string[];
   private selections: Selections = {};
-  private simulation: d3.Simulation<FrozenPlayer, Teammates>;
+  private simulation: d3.Simulation<Player, Teammates>;
 
-  constructor(players: Player[]) {
-    this.players = players;
+  // Set up initial values for player nodes
+  constructor(players: FullPlayer[]) {
+    this.playerNodes = players.map(player => ({ name: player.name }));
+    this.playerEvents = players.reduce((map, obj) => {
+      map[obj.name] = obj.events;
+      return map;
+    }, {});
   }
 
+  // For the current value of `currentDate`, go through and assign teams to the players
   public process = async () => {
-    const teamMap: Record<string, string[]> = {};
+    const teamMap: Record<string, Player[]> = {};
 
     const lft = [];
-    await Promise.all(
-      _.map(
-        this.players,
-        player =>
-          new Promise(resolve => {
-            // TODO: only chooses the earlier on date changes
-            const event = _.findLast(
-              player.events,
-              ev => this.currentDate >= ev.start && (!ev.end || this.currentDate <= ev.end),
-            );
-            const frozenPlayer: FrozenPlayer = { name: player.name };
-            if (event) {
-              if (!(event.team in teamMap)) {
-                teamMap[event.team] = [];
-              }
-              teamMap[event.team].push(player.name);
-              frozenPlayer.team = event.team;
-            } else {
-              lft.push(player.name);
-            }
-            this.playerNodes.push(frozenPlayer);
-            resolve();
-          }),
-      ),
-    );
+    this.playerNodes.forEach(player => {
+      // TODO: only chooses the earlier on date changes
+      player.team = _.get(
+        _.findLast(
+          this.playerEvents[player.name],
+          ev => this.currentDate >= ev.start && (!ev.end || this.currentDate <= ev.end),
+        ),
+        "team",
+      );
+      if (player.team) {
+        if (!(player.team in teamMap)) {
+          teamMap[player.team] = [];
+        }
+        teamMap[player.team].push(player);
+      } else {
+        lft.push(player);
+      }
+    });
 
     this.fullTeams = _.keys(_.pickBy(teamMap, p => p.length >= 3));
 
+    this.playerLinks.length = 0;
     _.forEach(teamMap, playerNames => {
       if (playerNames.length >= 2) {
-        this.playerLinks = this.playerLinks.concat(
-          combination(playerNames, 2).map(playerCombo => ({
-            source: playerCombo[0],
-            target: playerCombo[1],
-          })),
-        );
+        const newLinks = combination(playerNames, 2).map(playerCombo => ({
+          source: playerCombo[0],
+          target: playerCombo[1],
+        }));
+        this.playerLinks.push(...newLinks);
       }
     });
   };
@@ -119,14 +118,14 @@ export default class TimelineViz implements RLVisualization {
         .append("text")
         .attr("x", CIRCLE_RADIUS + 1)
         .attr("y", 3)
-        .text((d: FrozenPlayer) => d.name);
+        .text((d: Player) => d.name);
     }
 
     // Links
     if (this.selections.link) {
       this.selections.link = this.selections.link.data(
         this.playerLinks,
-        d => `${(d.source as FrozenPlayer).name}-${(d.target as FrozenPlayer).name}`,
+        d => `${(d.source as Player).name}-${(d.target as Player).name}`,
       );
       this.selections.link.exit().remove();
       this.selections.link = this.selections.link
@@ -148,11 +147,11 @@ export default class TimelineViz implements RLVisualization {
   public draw = (chart: Chart) => {
     // Simulation
     this.simulation = d3
-      .forceSimulation<FrozenPlayer>(this.playerNodes)
+      .forceSimulation<Player>(this.playerNodes)
       .force(
         "link",
         d3
-          .forceLink<FrozenPlayer, Teammates>()
+          .forceLink<Player, Teammates>()
           .id(d => d.name)
           .links(this.playerLinks),
       )
@@ -188,7 +187,7 @@ export default class TimelineViz implements RLVisualization {
     // Given a team name, generate the polygon for it
     const polygonGenerator = (teamName: string) => {
       const nodeCoords = this.selections
-        .node!.filter((d: FrozenPlayer) => d.team === teamName)
+        .node!.filter((d: Player) => d.team === teamName)
         .data()
         .map((d: any) => [d.x, d.y]);
 
