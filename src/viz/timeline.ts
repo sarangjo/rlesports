@@ -8,6 +8,7 @@ import { nodeDrag, valueline } from "../util";
 
 import "./timeline.css";
 
+// Events as read in from the JSON
 interface PlayerEvent {
   start: string;
   team: string;
@@ -15,34 +16,47 @@ interface PlayerEvent {
   role?: string;
 }
 
+// Each player has a full list of their events
 interface FullPlayer {
   name: string;
   events: PlayerEvent[];
 }
 
+// The translated Player node which stays fixed, with the team changing based on the date chosen
 interface Player extends d3.SimulationNodeDatum {
   name: string;
   team?: string;
 }
 
+// We use links to ensure proximity of teammates
 type Teammates = d3.SimulationLinkDatum<Player>;
 
+// Convenient container to hold onto all of the SVG selections used by D3
 interface Selections {
   node?: d3.Selection<SVGGElement, Player, any, any>;
   link?: d3.Selection<SVGLineElement, Teammates, any, any>;
   pathContainer?: d3.Selection<SVGGElement, string, any, any>;
-  paths?: d3.Selection<SVGPathElement, string, any, any>;
+  path?: d3.Selection<SVGPathElement, string, any, any>;
 }
+
+const LINK_FORCE = "link";
 
 // Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
 export default class TimelineViz implements RLVisualization {
+  // User-selected date
   private currentDate = "2019-10-18";
+  // Easy access to array of events for given player
   private playerEvents: Record<string, PlayerEvent[]>;
+  // Node-link data points
   private playerNodes: Player[];
   private playerLinks: Teammates[] = [];
+  // Used to determine where to draw the team bubbles (we don't want bubbles for incomplete teams
   private fullTeams: string[];
+  // Simulation pieces
   private selections: Selections = {};
   private simulation: d3.Simulation<Player, Teammates>;
+
+  ////// SETUP FUNCTIONS //////
 
   // Set up initial values for player nodes
   constructor(players: FullPlayer[]) {
@@ -52,6 +66,103 @@ export default class TimelineViz implements RLVisualization {
       return map;
     }, {});
   }
+
+  public draw = (chart: Chart) => {
+    // Simulation
+    this.simulation = d3
+      .forceSimulation<Player>(this.playerNodes)
+      .force(
+        LINK_FORCE,
+        d3
+          .forceLink<Player, Teammates>()
+          .id(d => d.name)
+          .links(this.playerLinks),
+      )
+      .force("collide", d3.forceCollide(50))
+      .force("x", d3.forceX(WIDTH / 2))
+      .force("y", d3.forceY(HEIGHT / 2));
+    // .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2).strength(1.5));
+
+    // Team bubbles
+    this.selections.pathContainer = chart
+      .append("g")
+      .attr("id", "teams")
+      .selectAll(".group-path");
+
+    this.selections.path = this.selections.pathContainer
+      .append("path")
+      .attr("stroke", "blue")
+      .attr("fill", "lightblue")
+      .attr("opacity", 1);
+
+    // Nodes
+    this.selections.node = chart
+      .append("g")
+      .attr("id", "nodes")
+      .selectAll("circle");
+
+    // Links
+    this.selections.link = chart
+      .append("g")
+      .attr("id", "links")
+      .selectAll("line");
+
+    // Given a team name, generate the polygon for it
+    const polygonGenerator = (teamName: string) => {
+      const nodeCoords = this.selections
+        .node!.filter((d: Player) => d.team === teamName)
+        .data()
+        .map((d: any) => [d.x, d.y]);
+
+      return d3.polygonHull(nodeCoords as Array<[number, number]>);
+    };
+
+    const ticked = () => {
+      this.selections
+        .link!.attr("x1", d => _.get(d, "source.x"))
+        .attr("y1", d => _.get(d, "source.y"))
+        .attr("x2", d => _.get(d, "target.x"))
+        .attr("y2", d => _.get(d, "target.y"));
+
+      this.selections.node!.attr("transform", d => `translate(${d.x},${d.y})`);
+
+      this.fullTeams.forEach(teamName => {
+        let centroid: [number, number] = [0, 0];
+
+        // Set the path
+        this.selections
+          .path!.filter((d: string) => d === teamName)
+          .attr("transform", "scale(1) translate(0,0)")
+          .attr("d", (d: string) => {
+            const polygon = polygonGenerator(d);
+            if (polygon) {
+              centroid = d3.polygonCentroid(polygon);
+
+              // to scale the shape properly around its points:
+              // move the 'g' element to the centroid point, translate
+              // all the path around the center of the 'g' and then
+              // we can scale the 'g' element properly
+              return valueline(
+                polygon.map(point => [point[0] - centroid[0], point[1] - centroid[1]]),
+              );
+            }
+            return null;
+          });
+
+        // Set the path container
+        this.selections
+          .pathContainer!.filter((d: any) => d === teamName)
+          .attr("transform", "translate(" + centroid[0] + "," + centroid[1] + ") scale(1.2)");
+      });
+    };
+
+    this.simulation.on("tick", ticked);
+
+    // Updatable
+    this.restart();
+  };
+
+  ////// UPDATE FUNCTIONS //////
 
   // For the current value of `currentDate`, go through and assign teams to the players
   public process = async () => {
@@ -91,18 +202,18 @@ export default class TimelineViz implements RLVisualization {
     });
   };
 
-  // Update pattern
+  // Update pattern: data, exit, enter + merge
   public restart = () => {
     // Nodes
     if (this.selections.node) {
       this.selections.node = this.selections.node.data(this.playerNodes, d => d.name);
       this.selections.node.exit().remove();
-
       this.selections.node = this.selections.node
         .enter()
         .append("g")
         .merge(this.selections.node);
 
+      // Extra: two components per node
       this.selections.node
         .append("circle")
         .attr("r", CIRCLE_RADIUS)
@@ -113,7 +224,6 @@ export default class TimelineViz implements RLVisualization {
             .on("drag", nodeDrag.in)
             .on("end", nodeDrag.end.bind(null, this.simulation)),
         );
-
       this.selections.node
         .append("text")
         .attr("x", CIRCLE_RADIUS + 1)
@@ -131,10 +241,12 @@ export default class TimelineViz implements RLVisualization {
       this.selections.link = this.selections.link
         .enter()
         .append("line")
-        .attr("stroke", "black");
+        .attr("stroke", "black")
+        .merge(this.selections.link);
     }
 
     // Paths
+    // TODO needs update pattern
     if (this.selections.pathContainer) {
       this.selections.pathContainer = this.selections.pathContainer
         .data(this.fullTeams)
@@ -142,101 +254,14 @@ export default class TimelineViz implements RLVisualization {
         .append("g")
         .attr("class", "group-path");
     }
-  };
 
-  public draw = (chart: Chart) => {
-    // Simulation
-    this.simulation = d3
-      .forceSimulation<Player>(this.playerNodes)
-      .force(
-        "link",
-        d3
-          .forceLink<Player, Teammates>()
-          .id(d => d.name)
-          .links(this.playerLinks),
-      )
-      .force("collide", d3.forceCollide(50))
-      .force("x", d3.forceX(WIDTH / 2))
-      .force("y", d3.forceY(HEIGHT / 2));
-    // .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2).strength(1.5));
-
-    // Teams
-    this.selections.pathContainer = chart
-      .append("g")
-      .attr("id", "teams")
-      .selectAll(".group-path");
-
-    this.selections.paths = this.selections.pathContainer
-      .append("path")
-      .attr("stroke", "blue")
-      .attr("fill", "lightblue")
-      .attr("opacity", 1);
-
-    // Nodes
-    this.selections.node = chart
-      .append("g")
-      .attr("id", "nodes")
-      .selectAll("circle");
-
-    // Links
-    this.selections.link = chart
-      .append("g")
-      .attr("id", "links")
-      .selectAll("line");
-
-    // Given a team name, generate the polygon for it
-    const polygonGenerator = (teamName: string) => {
-      const nodeCoords = this.selections
-        .node!.filter((d: Player) => d.team === teamName)
-        .data()
-        .map((d: any) => [d.x, d.y]);
-
-      return d3.polygonHull(nodeCoords as Array<[number, number]>);
-    };
-
-    const ticked = () => {
-      this.selections
-        .link!.attr("x1", (d: Teammates) => _.get(d, "source.x"))
-        .attr("y1", (d: Teammates) => _.get(d, "source.y"))
-        .attr("x2", (d: Teammates) => _.get(d, "target.x"))
-        .attr("y2", (d: Teammates) => _.get(d, "target.y"));
-
-      this.selections.node!.attr("transform", (d: any) => `translate(${d.x},${d.y})`);
-
-      this.fullTeams.forEach(teamName => {
-        let centroid: [number, number] = [0, 0];
-
-        // Set the path
-        this.selections
-          .paths!.filter((d: string) => d === teamName)
-          .attr("transform", "scale(1) translate(0,0)")
-          .attr("d", (d: string) => {
-            const polygon = polygonGenerator(d);
-            if (polygon) {
-              centroid = d3.polygonCentroid(polygon);
-
-              // to scale the shape properly around its points:
-              // move the 'g' element to the centroid point, translate
-              // all the path around the center of the 'g' and then
-              // we can scale the 'g' element properly
-              return valueline(
-                polygon.map(point => [point[0] - centroid[0], point[1] - centroid[1]]),
-              );
-            }
-            return null;
-          });
-
-        // Set the path container
-        this.selections
-          .pathContainer!.filter((d: any) => d === teamName)
-          .attr("transform", "translate(" + centroid[0] + "," + centroid[1] + ") scale(1.2)");
-      });
-    };
-
-    this.simulation.on("tick", ticked);
-
-    // Updatable
-    this.restart();
+    // Restart simulation
+    this.simulation.nodes(this.playerNodes);
+    const linkForce = this.simulation.force(LINK_FORCE);
+    if (linkForce) {
+      (linkForce as d3.ForceLink<Player, Teammates>).links(this.playerLinks);
+    }
+    this.simulation.restart();
   };
 
   public setDate = (newDate: string) => {
