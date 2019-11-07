@@ -1,4 +1,5 @@
-import * as d3 from "d3";
+import { SimulationNodeDatum } from "d3-force";
+import { event } from "d3-selection";
 
 //// UTILITY
 
@@ -20,19 +21,19 @@ export const getLinkElements = (chart: any, links: any[]) =>
     .join("line");
 
 export const nodeDrag = {
-  start: (simulation: any, d: d3.SimulationNodeDatum) => {
-    if (!d3.event.active) {
+  start: (simulation: any, d: SimulationNodeDatum) => {
+    if (!event.active) {
       simulation.alphaTarget(0.3).restart();
     }
     d.fx = d.x;
     d.fy = d.y;
   },
-  in: (d: d3.SimulationNodeDatum) => {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
+  in: (d: SimulationNodeDatum) => {
+    d.fx = event.x;
+    d.fy = event.y;
   },
-  end: (simulation: any, d: d3.SimulationNodeDatum) => {
-    if (!d3.event.active) {
+  end: (simulation: any, d: SimulationNodeDatum) => {
+    if (!event.active) {
       simulation.alphaTarget(0);
     }
     d.fx = null;
@@ -41,8 +42,10 @@ export const nodeDrag = {
 };
 
 // Used to set group curve for teams
-export const valueline = d3
-  .line()
+/*
+export const valueline =
+  line()
   .x(d => d[0])
   .y(d => d[1])
-  .curve(d3.curveCatmullRomClosed);
+  .curve(curveCatmullRomClosed);
+  */
