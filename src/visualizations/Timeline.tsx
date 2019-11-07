@@ -54,23 +54,33 @@ interface Selections {
 */
 
 interface Props {
-  data: FullPlayer[];
+  initialData: FullPlayer[];
   date: string;
 }
 
+/* Thinking area */
+/*
+Okay so what do we have going on here?
+- The simulation is passed an array of nodes that we want to maintain; we don't want to create new
+nodes every time data changes.
+- However, whenever the props change, we want to propagate that by updating the team names for all
+the nodes and updating links
+- So let's try this out.
+*/
 export default class TimelineViz extends Component<Props> {
   // DOM selections
   private node: SVGSVGElement | null = null;
 
-  public createChart = () => {
+  public createChart = () => {};
+
+  public componentDidMount() {
+    log.debug("mounted");
+
     if (!this.node) {
       // can only create chart after mounting
       return;
     }
     const chart = select(this.node);
-    chart.selectAll("*").remove();
-
-    const { playerNodes, playerLinks } = this.processData();
 
     // Simulation
     // TODO i removed passing in playerNodes and playerLinks
@@ -86,18 +96,18 @@ export default class TimelineViz extends Component<Props> {
       .force("y", forceY(HEIGHT / 2));
 
     /*
-    // Team bubbles (TODO)
-    this.selections.pathContainer = chart
-      .append("g")
-      .attr("id", "teams")
-      .selectAll(".group-path");
+// Team bubbles (TODO)
+this.selections.pathContainer = chart
+  .append("g")
+  .attr("id", "teams")
+  .selectAll(".group-path");
 
-    this.selections.path = this.selections.pathContainer
-      .append("path")
-      .attr("stroke", "blue")
-      .attr("fill", "lightblue")
-      .attr("opacity", 1);
-      */
+this.selections.path = this.selections.pathContainer
+  .append("path")
+  .attr("stroke", "blue")
+  .attr("fill", "lightblue")
+  .attr("opacity", 1);
+  */
 
     // Nodes: g + (circle, text)
     const nodeG = chart
@@ -135,14 +145,14 @@ export default class TimelineViz extends Component<Props> {
 
     // Given a team name, generate the polygon for it
     /*
-    const polygonGenerator = (teamName: string) => {
-    const nodeCoords = nodeGSelection
-      .filter(d => d.team === teamName)
-      .data()
-      .map(d => [d.x, d.y]);
+const polygonGenerator = (teamName: string) => {
+const nodeCoords = nodeGSelection
+  .filter(d => d.team === teamName)
+  .data()
+  .map(d => [d.x, d.y]);
 
-    return d3.polygonHull(nodeCoords as Array<[number, number]>);
-  };*/
+return d3.polygonHull(nodeCoords as Array<[number, number]>);
+};*/
 
     const ticked = () => {
       link
@@ -154,45 +164,41 @@ export default class TimelineViz extends Component<Props> {
       nodeG.attr("transform", d => `translate(${d.x},${d.y})`);
 
       /*
-    this.fullTeams.forEach(teamName => {
-      let centroid: [number, number] = [0, 0];
+this.fullTeams.forEach(teamName => {
+  let centroid: [number, number] = [0, 0];
 
-      // Set the path
-      this.selections
-        .path!.filter((d: string) => d === teamName)
-        .attr("transform", "scale(1) translate(0,0)")
-        .attr("d", (d: string) => {
-          const polygon = polygonGenerator(d);
-          if (polygon) {
-            centroid = polygonCentroid(polygon);
+  // Set the path
+  this.selections
+    .path!.filter((d: string) => d === teamName)
+    .attr("transform", "scale(1) translate(0,0)")
+    .attr("d", (d: string) => {
+      const polygon = polygonGenerator(d);
+      if (polygon) {
+        centroid = polygonCentroid(polygon);
 
-            // to scale the shape properly around its points:
-            // move the 'g' element to the centroid point, translate
-            // all the path around the center of the 'g' and then
-            // we can scale the 'g' element properly
-            return valueline(
-              polygon.map(point => [point[0] - centroid[0], point[1] - centroid[1]]),
-            );
-          }
-          return null;
-        });
-
-      // Set the path container
-      this.selections
-        .pathContainer!.filter((d: any) => d === teamName)
-        .attr("transform", "translate(" + centroid[0] + "," + centroid[1] + ") scale(1.2)");
+        // to scale the shape properly around its points:
+        // move the 'g' element to the centroid point, translate
+        // all the path around the center of the 'g' and then
+        // we can scale the 'g' element properly
+        return valueline(
+          polygon.map(point => [point[0] - centroid[0], point[1] - centroid[1]]),
+        );
+      }
+      return null;
     });
-    */
+
+  // Set the path container
+  this.selections
+    .pathContainer!.filter((d: any) => d === teamName)
+    .attr("transform", "translate(" + centroid[0] + "," + centroid[1] + ") scale(1.2)");
+});
+*/
     };
     simulation.on("tick", ticked);
-  };
-
-  public componentDidMount() {
-    log.debug("mounted");
-    this.createChart();
   }
 
   public componentDidUpdate() {
+    log.debug("updated");
     // This is where we handle updates to `date` and `data`
     this.createChart();
   }
@@ -205,9 +211,9 @@ export default class TimelineViz extends Component<Props> {
 
   private processData = () => {
     // Construct playerNodes and playerLinks
-    const playerNodes: Player[] = this.props.data.map(player => ({ name: player.name }));
+    const playerNodes: Player[] = this.props.initialData.map(player => ({ name: player.name }));
     const playerLinks: Teammates[] = [];
-    const playerEvents = this.props.data.reduce((map, obj) => {
+    const playerEvents = this.props.initialData.reduce((map, obj) => {
       map[obj.name] = obj.events;
       return map;
     }, {});

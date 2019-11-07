@@ -16,7 +16,7 @@ const App: React.FC = () => {
         <input type="date" value={date} onChange={e => setDate(e.target.value)} />
         <button onClick={handleClick}>Go</button>
       </div>
-      <TimelineViz data={data} date={date} />
+      <TimelineViz initialData={data} date={date} />
     </div>
   );
 };
