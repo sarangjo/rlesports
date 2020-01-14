@@ -34,5 +34,5 @@ export type SimulationLink = d3.SimulationLinkDatum<TournamentNode>;
 export type Chart = d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
 
 export interface RLVisualization {
-  main: (data: any, chart: Chart) => Promise<void> | void;
+  main: (data: any, chart: Chart) => any;
 }
