@@ -1,47 +1,17 @@
 import { drag } from "d3-drag";
-import {
-  forceCollide,
-  forceLink,
-  forceSimulation,
-  forceX,
-  forceY,
-  SimulationLinkDatum,
-  SimulationNodeDatum,
-} from "d3-force";
+import { forceCollide, forceLink, forceSimulation, forceX, forceY } from "d3-force";
 import { select } from "d3-selection";
-import { combination } from "js-combinatorics";
 import _ from "lodash";
 import log from "loglevel";
 import React, { Component } from "react";
 
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
+import { toNodesAndLinks } from "../processor";
+import { FullPlayer, Player, Teammates } from "../types";
 import { nodeDrag } from "../util";
 
 // The name of the link force
 const LINK_FORCE = "link";
-
-// Events as read in from the JSON
-interface PlayerEvent {
-  start: string;
-  team: string;
-  end?: string;
-  role?: string;
-}
-
-// Each player has a full list of their events
-interface FullPlayer {
-  name: string;
-  events: PlayerEvent[];
-}
-
-// The translated Player node which stays fixed, with the team changing based on the date chosen
-interface Player extends SimulationNodeDatum {
-  name: string;
-  team?: string;
-}
-
-// We use links to ensure proximity of teammates
-type Teammates = SimulationLinkDatum<Player>;
 
 // Convenient container to hold onto all of the SVG selections used by D3
 /*
@@ -71,25 +41,25 @@ export default class TimelineViz extends Component<Props> {
   // DOM selections
   private node: SVGSVGElement | null = null;
 
-  public createChart = () => {};
-
-  public componentDidMount() {
-    log.debug("mounted");
-
+  public createChart = () => {
     if (!this.node) {
       // can only create chart after mounting
       return;
     }
     const chart = select(this.node);
 
+    chart.selectAll("*").remove();
+
+    const nodesAndLinks = toNodesAndLinks(this.props.initialData, this.props.date);
+
     // Simulation
     // TODO i removed passing in playerNodes and playerLinks
-    const simulation = forceSimulation<Player>(playerNodes)
+    const simulation = forceSimulation<Player>(nodesAndLinks.playerNodes)
       .force(
         LINK_FORCE,
         forceLink<Player, Teammates>()
           .id(d => d.name)
-          .links(playerLinks),
+          .links(nodesAndLinks.playerLinks),
       )
       .force("collide", forceCollide(50))
       .force("x", forceX(WIDTH / 2))
@@ -109,12 +79,15 @@ this.selections.path = this.selections.pathContainer
   .attr("opacity", 1);
   */
 
+    // TODO need exit
+
     // Nodes: g + (circle, text)
     const nodeG = chart
       .append("g")
       .attr("id", "nodes")
       .selectAll("circle")
-      .data(playerNodes)
+      .data(nodesAndLinks.playerNodes)
+
       .enter()
       .append("g");
     nodeG
@@ -138,7 +111,7 @@ this.selections.path = this.selections.pathContainer
       .append("g")
       .attr("id", "links")
       .selectAll("line")
-      .data(playerLinks)
+      .data(nodesAndLinks.playerLinks)
       .enter()
       .append("line")
       .attr("stroke", "black");
@@ -195,6 +168,12 @@ this.fullTeams.forEach(teamName => {
 */
     };
     simulation.on("tick", ticked);
+  };
+
+  public componentDidMount() {
+    log.debug("mounted");
+
+    this.createChart();
   }
 
   public componentDidUpdate() {
@@ -208,55 +187,4 @@ this.fullTeams.forEach(teamName => {
       <svg className="chart" ref={node => (this.node = node)} width={WIDTH} height={HEIGHT}></svg>
     );
   }
-
-  private processData = () => {
-    // Construct playerNodes and playerLinks
-    const playerNodes: Player[] = this.props.initialData.map(player => ({ name: player.name }));
-    const playerLinks: Teammates[] = [];
-    const playerEvents = this.props.initialData.reduce((map, obj) => {
-      map[obj.name] = obj.events;
-      return map;
-    }, {});
-
-    // Process props
-    const teamMap: Record<string, Player[]> = {};
-
-    const lft = [];
-    playerNodes.forEach(player => {
-      // TODO: only chooses the earlier on date changes
-      player.team = _.get(
-        _.findLast(
-          playerEvents[player.name],
-          ev => this.props.date >= ev.start && (!ev.end || this.props.date <= ev.end),
-        ),
-        "team",
-      );
-      if (player.team) {
-        if (!(player.team in teamMap)) {
-          teamMap[player.team] = [];
-        }
-        teamMap[player.team].push(player);
-      } else {
-        lft.push(player);
-      }
-    });
-
-    // const fullTeams = _.keys(_.pickBy(teamMap, p => p.length >= 3));
-
-    playerLinks.length = 0;
-    _.forEach(teamMap, playerNames => {
-      if (playerNames.length >= 2) {
-        const newLinks = combination(playerNames, 2).map(playerCombo => ({
-          source: playerCombo[0],
-          target: playerCombo[1],
-        }));
-        playerLinks.push(...newLinks);
-      }
-    });
-
-    return {
-      playerNodes,
-      playerLinks,
-    };
-  };
 }
