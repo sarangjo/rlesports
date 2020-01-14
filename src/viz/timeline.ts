@@ -58,15 +58,6 @@ export default class TimelineViz implements RLVisualization {
 
   ////// SETUP FUNCTIONS //////
 
-  // Set up initial values for player nodes
-  constructor(players: FullPlayer[]) {
-    this.playerNodes = players.map(player => ({ name: player.name }));
-    this.playerEvents = players.reduce((map, obj) => {
-      map[obj.name] = obj.events;
-      return map;
-    }, {});
-  }
-
   public draw = (chart: Chart) => {
     // Simulation
     this.simulation = d3
@@ -157,9 +148,6 @@ export default class TimelineViz implements RLVisualization {
     };
 
     this.simulation.on("tick", ticked);
-
-    // Updatable
-    this.restart();
   };
 
   ////// UPDATE FUNCTIONS //////
@@ -266,6 +254,21 @@ export default class TimelineViz implements RLVisualization {
 
   public setDate = (newDate: string) => {
     this.currentDate = newDate;
+
+    this.process();
+    this.restart();
+  };
+
+  main = (players: FullPlayer[], chart: Chart) => {
+    // Set up initial values for player nodes
+    this.playerNodes = players.map(player => ({ name: player.name }));
+    this.playerEvents = players.reduce((map, obj) => {
+      map[obj.name] = obj.events;
+      return map;
+    }, {});
+
+    // Draw chart
+    this.draw(chart);
 
     this.process();
     this.restart();

@@ -11,20 +11,14 @@ import data from "./data/players.json";
 
 log.setLevel("debug");
 
-const viz: RLVisualization = new Timeline(data);
+const viz: RLVisualization = new Timeline();
 
-async function main() {
-  // 1. Process data
-  await viz.process(data);
-  // 2. Build visualization
-  await viz.draw(
-    select("svg")
-      .attr("width", WIDTH)
-      .attr("height", HEIGHT),
-  );
-}
-
-main();
+viz.main(
+  data,
+  select("svg")
+    .attr("width", WIDTH)
+    .attr("height", HEIGHT),
+);
 
 const button = document.getElementById("date-button");
 const date = document.getElementById("date");

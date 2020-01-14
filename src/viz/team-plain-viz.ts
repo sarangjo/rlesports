@@ -24,7 +24,10 @@ export default class TeamSimulation implements RLVisualization {
     this.teamNodes = _.reduce(
       tournaments,
       (acc, tournament, tournamentIndex) =>
-        _.concat(acc, _.map(tournament.teams, team => ({ ...team, tournamentIndex }))),
+        _.concat(
+          acc,
+          _.map(tournament.teams, team => ({ ...team, tournamentIndex })),
+        ),
       [],
     );
   };
@@ -45,5 +48,10 @@ export default class TeamSimulation implements RLVisualization {
       .data(this.teamNodes)
       .join("circle")
       .attr("r", 5);
+  };
+
+  main = (data: Tournament[], chart: Chart) => {
+    this.process(data);
+    this.draw(chart);
   };
 }

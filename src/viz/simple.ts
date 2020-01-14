@@ -157,4 +157,9 @@ export default class SimpleViz implements RLVisualization {
       .attr("id", "team-titles")
       .selectAll("text");
   };
+
+  main = (data: Tournament[], chart: Chart) => {
+    this.process(data);
+    this.draw(chart);
+  };
 }
