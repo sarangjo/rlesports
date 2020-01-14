@@ -3,9 +3,11 @@
   <body>
     <h1>Welcome to RL Esports!</h1>
     <div>
-      <input value="2021-01-01" id="date" type="date" />
-      <button id="date-button">Go</button>
+      <select name="viz" value="team-map" id="viz">
+        <option value="team-map">Team Map</option>
+      </select>
     </div>
+    <div id="ui-area"></div>
     <svg class="chart"></svg>
     <script type="text/javascript" src="bundle.js"></script>
   </body>

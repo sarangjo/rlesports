@@ -59,6 +59,23 @@ export default class TimelineViz implements RLVisualization {
   ////// SETUP FUNCTIONS //////
 
   public draw = (chart: Chart) => {
+    // UI
+    const uiArea = document.getElementById("ui-area");
+    if (!uiArea) {
+      return;
+    }
+
+    const date = document.createElement("input");
+    date.setAttribute("value", "2021-01-01");
+    date.setAttribute("type", "date");
+
+    const button = document.createElement("button");
+    button.appendChild(document.createTextNode("Go"));
+    button.addEventListener("click", () => this.setDate((date as HTMLInputElement).value));
+
+    uiArea.appendChild(date);
+    uiArea.appendChild(button);
+
     // Simulation
     this.simulation = d3
       .forceSimulation<Player>(this.playerNodes)
@@ -259,7 +276,7 @@ export default class TimelineViz implements RLVisualization {
     this.restart();
   };
 
-  main = (players: FullPlayer[], chart: Chart) => {
+  public main = (players: FullPlayer[], chart: Chart) => {
     // Set up initial values for player nodes
     this.playerNodes = players.map(player => ({ name: player.name }));
     this.playerEvents = players.reduce((map, obj) => {

@@ -11,22 +11,30 @@ import data from "./data/players.json";
 
 log.setLevel("debug");
 
-const viz: RLVisualization = new Timeline();
+let viz: RLVisualization;
+const chart = select("svg")
+  .attr("width", WIDTH)
+  .attr("height", HEIGHT);
 
-viz.main(
-  data,
-  select("svg")
-    .attr("width", WIDTH)
-    .attr("height", HEIGHT),
-);
+function setView(view: string) {
+  chart.selectAll("*").remove();
 
-const button = document.getElementById("date-button");
-const date = document.getElementById("date");
-if (button && date) {
-  log.debug(button);
-  button.addEventListener("click", () => {
-    const newDate = (date as HTMLInputElement).value;
-    log.debug(newDate);
-    (viz as Timeline).setDate(newDate);
+  switch (view) {
+    default:
+      viz = new Timeline();
+    // TODO process data so we simply pass in v simple player nodes and team info
+  }
+
+  viz.main(data, chart);
+}
+
+// Init
+setView("team-map");
+
+// User input
+const vizSelect = document.getElementById("viz");
+if (vizSelect) {
+  vizSelect.addEventListener("change", () => {
+    setView((vizSelect as HTMLSelectElement).value);
   });
 }
