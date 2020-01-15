@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      .link {
+        fill: none;
+        stroke: #000;
+        stroke-opacity: 0.2;
+      }
+      .link:hover {
+        stroke-opacity: 0.5;
+      }
+    </style>
+  </head>
   <body>
     <h1>Welcome to RL Esports!</h1>
     <div>
-      <select name="viz" value="team-map" id="viz">
-        <option value="team-map">Team Map</option>
+      <select name="viz" value="sankey" id="viz">
+        <option value="sankey">Sankey</option>
       </select>
     </div>
     <div id="ui-area"></div>

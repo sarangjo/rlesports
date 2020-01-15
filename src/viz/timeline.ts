@@ -3,6 +3,7 @@ import { combination } from "js-combinatorics";
 import _ from "lodash";
 
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
+import players from "../data/players.json";
 import { Chart, RLVisualization } from "../types";
 import { nodeDrag, valueline } from "../util";
 
@@ -17,7 +18,7 @@ interface PlayerEvent {
 }
 
 // Each player has a full list of their events
-interface FullPlayer {
+export interface FullPlayer {
   name: string;
   events: PlayerEvent[];
 }
@@ -276,7 +277,7 @@ export default class TimelineViz implements RLVisualization {
     this.restart();
   };
 
-  public main = (players: FullPlayer[], chart: Chart) => {
+  public main = (chart: Chart) => {
     // Set up initial values for player nodes
     this.playerNodes = players.map(player => ({ name: player.name }));
     this.playerEvents = players.reduce((map, obj) => {

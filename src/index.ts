@@ -4,10 +4,10 @@ import log from "loglevel";
 import { HEIGHT, WIDTH } from "./constants";
 import { RLVisualization } from "./types";
 // import Simple from "./viz/simple";
-import Timeline from "./viz/timeline";
+// import Timeline from "./viz/timeline";
 
 // import data from "./data/tournaments.json";
-import data from "./data/players.json";
+import { SankeyViz } from "./viz/sankey";
 
 log.setLevel("debug");
 
@@ -19,13 +19,16 @@ const chart = select("svg")
 function setView(view: string) {
   chart.selectAll("*").remove();
 
-  switch (view) {
-    default:
-      viz = new Timeline();
-    // TODO process data so we simply pass in v simple player nodes and team info
-  }
+  viz = new SankeyViz();
+  // switch (view) {
+  //   case "sankey":
+  //     break;
+  //   // default:
+  //   //   viz = new Timeline();
+  //   // TODO process data so we simply pass in v simple player nodes and team info
+  // }
 
-  viz.main(data, chart);
+  viz.main(chart);
 }
 
 // Init
