@@ -225,8 +225,8 @@ PLAYER_LIST = json.load(open("playerlist.json"))
 
 
 def main():
-    output = get_players_data(PLAYER_LIST)
-    process_players_data(output)
+    output = get_tournaments_data()
+    process_tournaments_data(output)
 
 
 if __name__ == '__main__':

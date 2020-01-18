@@ -1,5 +1,6 @@
-import { sankey, sankeyCenter, sankeyLinkHorizontal } from "d3-sankey";
+import { sankey, sankeyLinkHorizontal } from "d3-sankey";
 import _ from "lodash";
+import log from "loglevel";
 import { HEIGHT, WIDTH } from "../constants";
 import tournaments from "../data/tournaments.json";
 import { Chart, RLVisualization, Tournament } from "../types";
@@ -10,12 +11,12 @@ export class SankeyViz implements RLVisualization {
     // Links are
     const nodes: any[] = [];
     const links: any[] = [];
-    _.forEach(tournaments, tourney => {
+    _.forEach(tournaments, (tourney, i) => {
       // Add nodes for each team
       _.forEach(tourney.teams, team => {
-        nodes.push({ name: `${team.name} at ${tourney.name}` });
+        nodes.push({ name: `${team.name} at ${tourney.name}`, tournamentIndex: i });
       });
-      nodes.push({ name: `NONE at ${tourney.name}` });
+      // nodes.push({ name: `NONE at ${tourney.name}`, tournamentIndex: i });
     });
 
     _.forEach(tournaments.slice(0, tournaments.length - 1), (tourney, i) => {
@@ -23,12 +24,14 @@ export class SankeyViz implements RLVisualization {
       _.forEach(tourney.teams, team => {
         _.forEach(team.players, player => {
           const destTeam = this.getName(tournaments[i + 1], player);
-          links.push({
-            source: `${team.name} at ${tourney.name}`,
-            target: destTeam,
-            value: 1,
-            player,
-          });
+          if (destTeam) {
+            links.push({
+              source: `${team.name} at ${tourney.name}`,
+              target: destTeam,
+              value: 1,
+              player,
+            });
+          }
         });
       });
     });
@@ -53,7 +56,13 @@ export class SankeyViz implements RLVisualization {
       .nodeId((d: any) => d.name)
       .nodeWidth(20)
       .nodePadding(10)
-      .nodeAlign(sankeyCenter);
+      .nodeAlign((d, n) => {
+        log.debug(d, n);
+        return _.get(d, "tournamentIndex");
+      })
+      .linkSort((a: any, b: any) => {
+        return _.get(a, "player") - _.get(b, "player");
+      });
     const graph = fn(data as any);
 
     // Links
@@ -94,11 +103,10 @@ export class SankeyViz implements RLVisualization {
   };
 
   private getName = (tourney: Partial<Tournament>, player: string) => {
-    const team =
-      _.get(
-        _.find(tourney.teams, t => _.find(t.players, p => p === player)),
-        "name",
-      ) || "NONE";
-    return `${team} at ${tourney.name}`;
+    const team = _.get(
+      _.find(tourney.teams, t => _.find(t.players, p => p === player)),
+      "name",
+    );
+    return team ? `${team} at ${tourney.name}` : null;
   };
 }
