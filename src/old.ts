@@ -44,10 +44,10 @@ let allTeams: TeamNode[];
 function sortTeams() {
   for (let i = 0; i < tournaments.length - 1; i++) {
     const tournament = tournaments[i];
-    tournament.teams = _.sortBy(tournament.teams, team => {
+    tournament.teams = _.sortBy(tournament.teams, (team) => {
       // Return the number of players that stayed together for the next tournament
       let numberStayedTogether = 0;
-      _.forEach(tournaments[i + 1].teams, otherTeam => {
+      _.forEach(tournaments[i + 1].teams, (otherTeam) => {
         numberStayedTogether =
           _.max([numberStayedTogether, _.intersection(team.players, otherTeam.players).length]) ||
           numberStayedTogether;
@@ -61,7 +61,10 @@ function processTeams() {
   allTeams = _.reduce(
     tournaments,
     (acc, tournament, tournamentIndex) =>
-      _.concat(acc, _.map(tournament.teams, team => ({ ...team, tournamentIndex }))),
+      _.concat(
+        acc,
+        _.map(tournament.teams, (team) => ({ ...team, tournamentIndex })),
+      ),
     [],
   );
 }
@@ -105,7 +108,7 @@ function processPlayerLinks() {
       // Same team + same tournament
       sameTeamSameTournamentLinks = _.concat(
         sameTeamSameTournamentLinks,
-        comb.combination(_.range(team.players.length), 2).map(pair => ({
+        comb.combination(_.range(team.players.length), 2).map((pair) => ({
           source: getNodeId(tournamentIndex, teamIndex, pair[0]),
           target: getNodeId(tournamentIndex, teamIndex, pair[1]),
         })),
@@ -193,7 +196,7 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
       "x",
       d3
         .forceX<TournamentNode>()
-        .x(d => x(d.tournamentIndex))
+        .x((d) => x(d.tournamentIndex))
         .strength(1),
     )
     .force(
@@ -244,7 +247,7 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
   node
     .append("title")
     .text(
-      d =>
+      (d) =>
         `${d.tournamentIndex}-${d.teamIndex}-${d.playerIndex} ${
           tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex]
         }`,
@@ -253,12 +256,12 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
   // On tick, set actual HTML attributes on SVG elements
   simulation.on("tick", () => {
     link
-      .attr("x1", d => (d.source as any).x)
-      .attr("y1", d => (d.source as any).y)
-      .attr("x2", d => (d.target as any).x)
-      .attr("y2", d => (d.target as any).y);
+      .attr("x1", (d) => (d.source as any).x)
+      .attr("y1", (d) => (d.source as any).y)
+      .attr("x2", (d) => (d.target as any).x)
+      .attr("y2", (d) => (d.target as any).y);
 
-    node.attr("cx", d => d.x || null).attr("cy", d => d.y || null);
+    node.attr("cx", (d) => d.x || null).attr("cy", (d) => d.y || null);
   });
 }
 
@@ -280,16 +283,16 @@ function simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, a
 
   nodeSelection
     .append("circle")
-    .attr("cx", d => x(d.tournamentIndex))
+    .attr("cx", (d) => x(d.tournamentIndex))
     .attr("cy", y)
     .attr("r", CIRCLE_RADIUS);
 
   nodeSelection
     .append("text")
     .attr("text-anchor", "end")
-    .attr("x", d => x(d.tournamentIndex) - CIRCLE_RADIUS - 5)
+    .attr("x", (d) => x(d.tournamentIndex) - CIRCLE_RADIUS - 5)
     .attr("y", y)
-    .html(d => tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex]);
+    .html((d) => tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex]);
 
   // Links
   chart
@@ -318,10 +321,10 @@ function simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, a
     .attr("x", (_d, i) => x(i))
     .attr("y", "1em")
     .attr("text-anchor", "middle")
-    .html(d =>
+    .html((d) =>
       d.name
         .split(/[^A-Za-z0-9]/)
-        .map(word => word[0])
+        .map((word) => word[0])
         .join(""),
     );
 }
@@ -349,17 +352,14 @@ function draw() {
     .domain([0, tournaments.length])
     .range([15 * CIRCLE_RADIUS + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
 
-  const chart = d3
-    .select(".chart")
-    .attr("width", WIDTH)
-    .attr("height", HEIGHT);
+  const chart = d3.select(".chart").attr("width", WIDTH).attr("height", HEIGHT);
 
   simpleTimeline(chart);
   // forceSimulation(chart);
   // teamForceSimulation(chart);
 }
 
-d3.json("data/tournaments.json").then(data => {
-  process(data);
+d3.json("data/tournaments.json").then((data) => {
+  process(data as Tournament[]);
   draw();
 });

@@ -7,7 +7,7 @@ import players from "../data/players.json";
 import { Chart, RLVisualization } from "../types";
 import { nodeDrag, valueline } from "../util";
 
-import "./timeline.css";
+import "./playerTeams.css";
 
 // Events as read in from the JSON
 interface PlayerEvent {
@@ -43,7 +43,7 @@ interface Selections {
 const LINK_FORCE = "link";
 
 // Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
-export default class TimelineViz implements RLVisualization {
+export default class PlayerTeamsViz implements RLVisualization {
   // User-selected date
   private currentDate = "2019-10-18";
   // Easy access to array of events for given player
@@ -84,7 +84,7 @@ export default class TimelineViz implements RLVisualization {
         LINK_FORCE,
         d3
           .forceLink<Player, Teammates>()
-          .id(d => d.name)
+          .id((d) => d.name)
           .links(this.playerLinks),
       )
       .force("collide", d3.forceCollide(50))
@@ -93,10 +93,7 @@ export default class TimelineViz implements RLVisualization {
     // .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2).strength(1.5));
 
     // Team bubbles
-    this.selections.pathContainer = chart
-      .append("g")
-      .attr("id", "teams")
-      .selectAll(".group-path");
+    this.selections.pathContainer = chart.append("g").attr("id", "teams").selectAll(".group-path");
 
     this.selections.path = this.selections.pathContainer
       .append("path")
@@ -105,16 +102,10 @@ export default class TimelineViz implements RLVisualization {
       .attr("opacity", 1);
 
     // Nodes
-    this.selections.node = chart
-      .append("g")
-      .attr("id", "nodes")
-      .selectAll("circle");
+    this.selections.node = chart.append("g").attr("id", "nodes").selectAll("circle");
 
     // Links
-    this.selections.link = chart
-      .append("g")
-      .attr("id", "links")
-      .selectAll("line");
+    this.selections.link = chart.append("g").attr("id", "links").selectAll("line");
 
     // Given a team name, generate the polygon for it
     const polygonGenerator = (teamName: string) => {
@@ -128,14 +119,14 @@ export default class TimelineViz implements RLVisualization {
 
     const ticked = () => {
       this.selections
-        .link!.attr("x1", d => _.get(d, "source.x"))
-        .attr("y1", d => _.get(d, "source.y"))
-        .attr("x2", d => _.get(d, "target.x"))
-        .attr("y2", d => _.get(d, "target.y"));
+        .link!.attr("x1", (d) => _.get(d, "source.x"))
+        .attr("y1", (d) => _.get(d, "source.y"))
+        .attr("x2", (d) => _.get(d, "target.x"))
+        .attr("y2", (d) => _.get(d, "target.y"));
 
-      this.selections.node!.attr("transform", d => `translate(${d.x},${d.y})`);
+      this.selections.node!.attr("transform", (d) => `translate(${d.x},${d.y})`);
 
-      this.fullTeams.forEach(teamName => {
+      this.fullTeams.forEach((teamName) => {
         let centroid: [number, number] = [0, 0];
 
         // Set the path
@@ -152,7 +143,7 @@ export default class TimelineViz implements RLVisualization {
               // all the path around the center of the 'g' and then
               // we can scale the 'g' element properly
               return valueline(
-                polygon.map(point => [point[0] - centroid[0], point[1] - centroid[1]]),
+                polygon.map((point) => [point[0] - centroid[0], point[1] - centroid[1]]),
               );
             }
             return null;
@@ -175,12 +166,12 @@ export default class TimelineViz implements RLVisualization {
     const teamMap: Record<string, Player[]> = {};
 
     const lft = [];
-    this.playerNodes.forEach(player => {
+    this.playerNodes.forEach((player) => {
       // TODO: only chooses the earlier on date changes
       player.team = _.get(
         _.findLast(
           this.playerEvents[player.name],
-          ev => this.currentDate >= ev.start && (!ev.end || this.currentDate <= ev.end),
+          (ev) => this.currentDate >= ev.start && (!ev.end || this.currentDate <= ev.end),
         ),
         "team",
       );
@@ -194,12 +185,12 @@ export default class TimelineViz implements RLVisualization {
       }
     });
 
-    this.fullTeams = _.keys(_.pickBy(teamMap, p => p.length >= 3));
+    this.fullTeams = _.keys(_.pickBy(teamMap, (p) => p.length >= 3));
 
     this.playerLinks.length = 0;
-    _.forEach(teamMap, playerNames => {
+    _.forEach(teamMap, (playerNames) => {
       if (playerNames.length >= 2) {
-        const newLinks = combination(playerNames, 2).map(playerCombo => ({
+        const newLinks = combination(playerNames, 2).map((playerCombo) => ({
           source: playerCombo[0],
           target: playerCombo[1],
         }));
@@ -212,12 +203,9 @@ export default class TimelineViz implements RLVisualization {
   public restart = () => {
     // Nodes
     if (this.selections.node) {
-      this.selections.node = this.selections.node.data(this.playerNodes, d => d.name);
+      this.selections.node = this.selections.node.data(this.playerNodes, (d) => d.name);
       this.selections.node.exit().remove();
-      this.selections.node = this.selections.node
-        .enter()
-        .append("g")
-        .merge(this.selections.node);
+      this.selections.node = this.selections.node.enter().append("g").merge(this.selections.node);
 
       // Extra: two components per node
       this.selections.node
@@ -241,7 +229,7 @@ export default class TimelineViz implements RLVisualization {
     if (this.selections.link) {
       this.selections.link = this.selections.link.data(
         this.playerLinks,
-        d => `${(d.source as Player).name}-${(d.target as Player).name}`,
+        (d) => `${(d.source as Player).name}-${(d.target as Player).name}`,
       );
       this.selections.link.exit().remove();
       this.selections.link = this.selections.link
@@ -279,7 +267,7 @@ export default class TimelineViz implements RLVisualization {
 
   public main = (chart: Chart) => {
     // Set up initial values for player nodes
-    this.playerNodes = players.map(player => ({ name: player.name }));
+    this.playerNodes = players.map((player) => ({ name: player.name }));
     this.playerEvents = players.reduce((map, obj) => {
       map[obj.name] = obj.events;
       return map;

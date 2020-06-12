@@ -7,26 +7,26 @@ import { RLVisualization } from "./types";
 // import Timeline from "./viz/timeline";
 
 // import data from "./data/tournaments.json";
+// import { SankeyViz } from "./viz/sankey";
+import PlayerTeamsViz from "./viz/playerTeams";
 import { SankeyViz } from "./viz/sankey";
 
 log.setLevel("debug");
 
 let viz: RLVisualization;
-const chart = select("svg")
-  .attr("width", WIDTH)
-  .attr("height", HEIGHT);
+const chart = select("svg").attr("width", WIDTH).attr("height", HEIGHT);
 
 function setView(view: string) {
   chart.selectAll("*").remove();
 
-  viz = new SankeyViz();
-  // switch (view) {
-  //   case "sankey":
-  //     break;
-  //   // default:
-  //   //   viz = new Timeline();
-  //   // TODO process data so we simply pass in v simple player nodes and team info
-  // }
+  switch (view) {
+    case "sankey":
+      viz = new SankeyViz();
+      break;
+    default:
+      viz = new PlayerTeamsViz();
+      break;
+  }
 
   viz.main(chart);
 }

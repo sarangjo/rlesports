@@ -33,23 +33,8 @@ def get_tournaments_data() -> Dict[str, Dict]:
     with open(TOURNAMENTS_CACHE_FILE, 'r') as f:
         output = json.load(f)
 
-    for (i, t) in enumerate(tournamentNames):
+    for t in tournamentNames:
         if t not in output:
-            """
-            try:
-                # Get sections and find "Participants"
-                sections = call_api({
-                    "action": "parse",
-                    "prop": "sections",
-                    "page": t,
-                })
-
-                p_section = next(s for s in sections['parse']['sections'] if s['line'] == 'Participants')
-            except StopIteration:
-                output[t] = "could not get sections"
-            finally:
-                p_section = 3
-            """
             p_section = {'index': 3}
 
             wiki_text = call_api({
