@@ -43,3 +43,7 @@ The data for the visualization is fetched from [Liquipedia](https://liquipedia.n
 If you want to look at the processed data without running the Python script, switch to the `gh-pages` branch, which has the full generated `data/tournaments.json` file.
 
 The processed data is a list of tournaments. Each tournament comprises teams of at least 3 players/subs.
+
+```
+$ python3 -m venv env
+```
