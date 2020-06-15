@@ -42,50 +42,63 @@ interface Selections {
 
 const LINK_FORCE = "link";
 
-// Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
-export default class PlayerTeamsViz implements RLVisualization {
-  // User-selected date
-  private currentDate = "2019-10-18";
-  // Easy access to array of events for given player
-  private playerEvents: Record<string, PlayerEvent[]>;
-  // Node-link data points
-  private playerNodes: Player[];
-  private playerLinks: Teammates[] = [];
-  // Used to determine where to draw the team bubbles (we don't want bubbles for incomplete teams
-  private fullTeams: string[];
-  // Simulation pieces
-  private selections: Selections = {};
-  private simulation: d3.Simulation<Player, Teammates>;
+const DATE_INPUT = "date-input";
+const DATE_INPUT_BUTTON = "date-input-button";
 
+// User-selected date
+let currentDate = "2019-10-18";
+// Easy access to array of events for given player
+let playerEvents: Record<string, PlayerEvent[]>;
+// Node-link data points
+let playerNodes: Player[];
+const playerLinks: Teammates[] = [];
+// Used to determine where to draw the team bubbles (we don't want bubbles for incomplete teams
+let fullTeams: string[];
+// Simulation pieces
+const selections: Selections = {};
+let simulation: d3.Simulation<Player, Teammates>;
+
+// TODO not great, should be explicit
+type PlayerTeamsViz = RLVisualization & Record<string, any>;
+
+// Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
+const playerTeamsViz: PlayerTeamsViz = {
   ////// SETUP FUNCTIONS //////
 
-  public draw = (chart: Chart) => {
+  draw: (chart: Chart) => {
     // UI
     const uiArea = document.getElementById("ui-area");
     if (!uiArea) {
       return;
     }
 
-    const date = document.createElement("input");
-    date.setAttribute("value", "2021-01-01");
-    date.setAttribute("type", "date");
+    let date = document.getElementById(DATE_INPUT);
+    if (!date) {
+      date = document.createElement("input");
+      date.setAttribute("value", "2021-01-01");
+      date.setAttribute("type", "date");
+      uiArea.appendChild(date);
+    }
 
-    const button = document.createElement("button");
-    button.appendChild(document.createTextNode("Go"));
-    button.addEventListener("click", () => this.setDate((date as HTMLInputElement).value));
-
-    uiArea.appendChild(date);
-    uiArea.appendChild(button);
+    let button = document.getElementById(DATE_INPUT_BUTTON);
+    if (!button) {
+      button = document.createElement("button");
+      button.appendChild(document.createTextNode("Go"));
+      button.addEventListener("click", () =>
+        playerTeamsViz.setDate((date as HTMLInputElement).value),
+      );
+      uiArea.appendChild(button);
+    }
 
     // Simulation
-    this.simulation = d3
-      .forceSimulation<Player>(this.playerNodes)
+    simulation = d3
+      .forceSimulation<Player>(playerNodes)
       .force(
         LINK_FORCE,
         d3
           .forceLink<Player, Teammates>()
           .id((d) => d.name)
-          .links(this.playerLinks),
+          .links(playerLinks),
       )
       .force("collide", d3.forceCollide(50))
       .force("x", d3.forceX(WIDTH / 2))
@@ -93,23 +106,23 @@ export default class PlayerTeamsViz implements RLVisualization {
     // .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2).strength(1.5));
 
     // Team bubbles
-    this.selections.pathContainer = chart.append("g").attr("id", "teams").selectAll(".group-path");
+    selections.pathContainer = chart.append("g").attr("id", "teams").selectAll(".group-path");
 
-    this.selections.path = this.selections.pathContainer
+    selections.path = selections.pathContainer
       .append("path")
       .attr("stroke", "blue")
       .attr("fill", "lightblue")
       .attr("opacity", 1);
 
     // Nodes
-    this.selections.node = chart.append("g").attr("id", "nodes").selectAll("circle");
+    selections.node = chart.append("g").attr("id", "nodes").selectAll("circle");
 
     // Links
-    this.selections.link = chart.append("g").attr("id", "links").selectAll("line");
+    selections.link = chart.append("g").attr("id", "links").selectAll("line");
 
     // Given a team name, generate the polygon for it
     const polygonGenerator = (teamName: string) => {
-      const nodeCoords = this.selections
+      const nodeCoords = selections
         .node!.filter((d: Player) => d.team === teamName)
         .data()
         .map((d: any) => [d.x, d.y]);
@@ -118,19 +131,19 @@ export default class PlayerTeamsViz implements RLVisualization {
     };
 
     const ticked = () => {
-      this.selections
+      selections
         .link!.attr("x1", (d) => _.get(d, "source.x"))
         .attr("y1", (d) => _.get(d, "source.y"))
         .attr("x2", (d) => _.get(d, "target.x"))
         .attr("y2", (d) => _.get(d, "target.y"));
 
-      this.selections.node!.attr("transform", (d) => `translate(${d.x},${d.y})`);
+      selections.node!.attr("transform", (d) => `translate(${d.x},${d.y})`);
 
-      this.fullTeams.forEach((teamName) => {
+      fullTeams.forEach((teamName) => {
         let centroid: [number, number] = [0, 0];
 
         // Set the path
-        this.selections
+        selections
           .path!.filter((d: string) => d === teamName)
           .attr("transform", "scale(1) translate(0,0)")
           .attr("d", (d: string) => {
@@ -150,28 +163,28 @@ export default class PlayerTeamsViz implements RLVisualization {
           });
 
         // Set the path container
-        this.selections
+        selections
           .pathContainer!.filter((d: any) => d === teamName)
           .attr("transform", "translate(" + centroid[0] + "," + centroid[1] + ") scale(1.2)");
       });
     };
 
-    this.simulation.on("tick", ticked);
-  };
+    simulation.on("tick", ticked);
+  },
 
   ////// UPDATE FUNCTIONS //////
 
   // For the current value of `currentDate`, go through and assign teams to the players
-  public process = async () => {
+  process: async () => {
     const teamMap: Record<string, Player[]> = {};
 
     const lft = [];
-    this.playerNodes.forEach((player) => {
+    playerNodes.forEach((player) => {
       // TODO: only chooses the earlier on date changes
       player.team = _.get(
         _.findLast(
-          this.playerEvents[player.name],
-          (ev) => this.currentDate >= ev.start && (!ev.end || this.currentDate <= ev.end),
+          playerEvents[player.name],
+          (ev) => currentDate >= ev.start && (!ev.end || currentDate <= ev.end),
         ),
         "team",
       );
@@ -185,40 +198,40 @@ export default class PlayerTeamsViz implements RLVisualization {
       }
     });
 
-    this.fullTeams = _.keys(_.pickBy(teamMap, (p) => p.length >= 3));
+    fullTeams = _.keys(_.pickBy(teamMap, (p) => p.length >= 3));
 
-    this.playerLinks.length = 0;
+    playerLinks.length = 0;
     _.forEach(teamMap, (playerNames) => {
       if (playerNames.length >= 2) {
         const newLinks = combination(playerNames, 2).map((playerCombo) => ({
           source: playerCombo[0],
           target: playerCombo[1],
         }));
-        this.playerLinks.push(...newLinks);
+        playerLinks.push(...newLinks);
       }
     });
-  };
+  },
 
   // Update pattern: data, exit, enter + merge
-  public restart = () => {
+  restart: () => {
     // Nodes
-    if (this.selections.node) {
-      this.selections.node = this.selections.node.data(this.playerNodes, (d) => d.name);
-      this.selections.node.exit().remove();
-      this.selections.node = this.selections.node.enter().append("g").merge(this.selections.node);
+    if (selections.node) {
+      selections.node = selections.node.data(playerNodes, (d) => d.name);
+      selections.node.exit().remove();
+      selections.node = selections.node.enter().append("g").merge(selections.node);
 
       // Extra: two components per node
-      this.selections.node
+      selections.node
         .append("circle")
         .attr("r", CIRCLE_RADIUS)
         .call(
           d3
             .drag()
-            .on("start", nodeDrag.start.bind(null, this.simulation))
+            .on("start", nodeDrag.start.bind(null, simulation))
             .on("drag", nodeDrag.in)
-            .on("end", nodeDrag.end.bind(null, this.simulation)),
+            .on("end", nodeDrag.end.bind(null, simulation)),
         );
-      this.selections.node
+      selections.node
         .append("text")
         .attr("x", CIRCLE_RADIUS + 1)
         .attr("y", 3)
@@ -226,57 +239,59 @@ export default class PlayerTeamsViz implements RLVisualization {
     }
 
     // Links
-    if (this.selections.link) {
-      this.selections.link = this.selections.link.data(
-        this.playerLinks,
+    if (selections.link) {
+      selections.link = selections.link.data(
+        playerLinks,
         (d) => `${(d.source as Player).name}-${(d.target as Player).name}`,
       );
-      this.selections.link.exit().remove();
-      this.selections.link = this.selections.link
+      selections.link.exit().remove();
+      selections.link = selections.link
         .enter()
         .append("line")
         .attr("stroke", "black")
-        .merge(this.selections.link);
+        .merge(selections.link);
     }
 
     // Paths
     // TODO needs update pattern
-    if (this.selections.pathContainer) {
-      this.selections.pathContainer = this.selections.pathContainer
-        .data(this.fullTeams)
+    if (selections.pathContainer) {
+      selections.pathContainer = selections.pathContainer
+        .data(fullTeams)
         .enter()
         .append("g")
         .attr("class", "group-path");
     }
 
     // Restart simulation
-    this.simulation.nodes(this.playerNodes);
-    const linkForce = this.simulation.force(LINK_FORCE);
+    simulation.nodes(playerNodes);
+    const linkForce = simulation.force(LINK_FORCE);
     if (linkForce) {
-      (linkForce as d3.ForceLink<Player, Teammates>).links(this.playerLinks);
+      (linkForce as d3.ForceLink<Player, Teammates>).links(playerLinks);
     }
-    this.simulation.restart();
-  };
+    simulation.restart();
+  },
 
-  public setDate = (newDate: string) => {
-    this.currentDate = newDate;
+  setDate: (newDate: string) => {
+    currentDate = newDate;
 
-    this.process();
-    this.restart();
-  };
+    playerTeamsViz.process();
+    playerTeamsViz.restart();
+  },
 
-  public main = (chart: Chart) => {
+  main: (chart: Chart) => {
     // Set up initial values for player nodes
-    this.playerNodes = players.map((player) => ({ name: player.name }));
-    this.playerEvents = players.reduce((map, obj) => {
+    playerNodes = players.map((player) => ({ name: player.name }));
+    playerEvents = players.reduce((map, obj) => {
       map[obj.name] = obj.events;
       return map;
     }, {});
 
     // Draw chart
-    this.draw(chart);
+    playerTeamsViz.draw(chart);
 
-    this.process();
-    this.restart();
-  };
-}
+    playerTeamsViz.process();
+    playerTeamsViz.restart();
+  },
+};
+
+export default playerTeamsViz;

@@ -2,11 +2,14 @@ import json
 import re
 import time
 from typing import List, Dict, Any
+import os.path
 
 from api import call_api
 
-PLAYERS_CACHE_FILE = "./cache/pcache.json"
-PLAYERS_FILE = "./src/data/players.json"
+DIR = os.path.dirname(__file__)
+
+PLAYERS_CACHE_FILE = os.path.join(DIR, "..", "cache", "pcache.json")
+PLAYERS_FILE = os.path.join(DIR, "..", "src", "data", "players.json")
 
 
 def get_players_data(players: List[str]) -> Dict[str, Dict]:
@@ -78,5 +81,3 @@ def process_players_data(output: Dict[str, Dict]):
     with open(PLAYERS_FILE, 'w') as f:
         json.dump(processed, f, indent=2)
 
-
-PLAYER_LIST = json.load(open("playerlist.json"))

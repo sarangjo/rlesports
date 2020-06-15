@@ -8,23 +8,32 @@ import { RLVisualization } from "./types";
 
 // import data from "./data/tournaments.json";
 // import { SankeyViz } from "./viz/sankey";
-import PlayerTeamsViz from "./viz/playerTeams";
-import { SankeyViz } from "./viz/sankey";
+import playerTeamsViz from "./viz/playerTeams";
+import sankeyViz from "./viz/sankey";
 
 log.setLevel("debug");
 
 let viz: RLVisualization;
 const chart = select("svg").attr("width", WIDTH).attr("height", HEIGHT);
 
-function setView(view: string) {
+// Removes all elements in the view
+function clear() {
   chart.selectAll("*").remove();
+  const uiArea = document.getElementById("ui-area");
+  while (uiArea && uiArea.firstChild) {
+    uiArea.removeChild(uiArea.lastChild!);
+  }
+}
+
+function setView(view: string) {
+  clear();
 
   switch (view) {
     case "sankey":
-      viz = new SankeyViz();
+      viz = sankeyViz;
       break;
     default:
-      viz = new PlayerTeamsViz();
+      viz = playerTeamsViz;
       break;
   }
 

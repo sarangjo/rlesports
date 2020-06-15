@@ -5,8 +5,13 @@ import { HEIGHT, WIDTH } from "../constants";
 import tournaments from "../data/tournaments.json";
 import { Chart, RLVisualization, Tournament } from "../types";
 
-export class SankeyViz implements RLVisualization {
-  public process = () => {
+interface SankeyViz extends RLVisualization {
+  process: () => { nodes: any[]; links: any[] };
+  getName: (tourney: Partial<Tournament>, player: string) => string | null;
+}
+
+const sankeyViz: SankeyViz = {
+  process: () => {
     // Nodes are each team.
     // Links are
     const nodes: any[] = [];
@@ -23,7 +28,7 @@ export class SankeyViz implements RLVisualization {
       // Go through each player in each team and compose source/target
       _.forEach(tourney.teams, (team) => {
         _.forEach(team.players, (player) => {
-          const destTeam = this.getName(tournaments[i + 1], player);
+          const destTeam = sankeyViz.getName(tournaments[i + 1], player);
           if (destTeam) {
             links.push({
               source: `${team.name} at ${tourney.name}`,
@@ -45,11 +50,11 @@ export class SankeyViz implements RLVisualization {
         { source: "Source 2", target: "Dest 1", value: 1 },
       ],
     };*/
-  };
+  },
 
-  public main = (chart: Chart) => {
+  main: (chart: Chart) => {
     // Set up nodes and links
-    const data = this.process();
+    const data = sankeyViz.process();
 
     const fn = (sankey()
       .size([WIDTH, HEIGHT])
@@ -99,13 +104,15 @@ export class SankeyViz implements RLVisualization {
       .attr("opacity", 0.8)
       .append("title")
       .text((d) => d.name);
-  };
+  },
 
-  private getName = (tourney: Partial<Tournament>, player: string) => {
+  getName: (tourney: Partial<Tournament>, player: string) => {
     const team = _.get(
       _.find(tourney.teams, (t) => _.find(t.players, (p) => p === player)),
       "name",
     );
     return team ? `${team} at ${tourney.name}` : null;
-  };
-}
+  },
+};
+
+export default sankeyViz;
