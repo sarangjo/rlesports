@@ -1,3 +1,4 @@
+// Data types
 export interface Team {
   name: string;
   players: string[];
@@ -5,15 +6,16 @@ export interface Team {
   subs?: string[];
 }
 
-export interface TeamNodePart {
-  tournamentIndex: number;
-}
-
 export interface Tournament {
   name: string;
-  start: string;
-  end: string;
+  start?: string;
+  end?: string;
   teams: Team[];
+}
+
+// Graph types
+export interface TeamNodePart {
+  tournamentIndex: number;
 }
 
 export interface TournamentNode extends d3.SimulationNodeDatum {

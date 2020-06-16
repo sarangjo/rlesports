@@ -43,6 +43,6 @@ export const nodeDrag = {
 // Used to set group curve for teams
 export const valueline = d3
   .line()
-  .x(d => d[0])
-  .y(d => d[1])
+  .x((d) => d[0])
+  .y((d) => d[1])
   .curve(d3.curveCatmullRomClosed);

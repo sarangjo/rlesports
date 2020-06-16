@@ -1,3 +1,5 @@
+import pymongo
+import db
 import re
 import copy
 from typing import Dict, List, Any
@@ -9,7 +11,7 @@ from api import call_api, get_section, get_sections
 DIR = dirname(__file__)
 
 TOURNAMENTS_CACHE_FILE = join(DIR, "..", "cache", "cache.json")
-TOURNAMENTS_FILE = join(DIR, "..", "src", "data", "tournaments.json")
+TOURNAMENTS_FILE = join(DIR, "frontend", "data", "tournaments.json")
 
 MIN_TEAM_SIZE = 1  # Turbo as the sub for S3 LAN
 EMPTY_TEAM: Dict[str, Any] = {'players': [], 'subs': []}
@@ -74,7 +76,7 @@ def get_tournaments_data() -> Dict[str, Dict]:
     return output
 
 
-def process_tournaments_data(output: Dict[str, Dict]):
+def process_tournaments_data(output: Dict[str, Dict]) -> List:
     tournaments: List[Dict] = []
     for t in output:
         # We are processing all of the lines per tournament
@@ -116,3 +118,9 @@ def process_tournaments_data(output: Dict[str, Dict]):
 
     with open(TOURNAMENTS_FILE, 'w') as f:
         json.dump(tournaments, f, indent=2)
+
+    return tournaments
+
+
+def upload_tournaments_data(processed: List):
+    db.upload_tournaments(processed)

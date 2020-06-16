@@ -46,4 +46,7 @@ The processed data is a list of tournaments. Each tournament comprises teams of 
 
 ```
 $ python3 -m venv env
+$ source env/bin/activate
+$ pip3 install wheel # weird edge case
+$ pip3 install -r requirements.txt
 ```

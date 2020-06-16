@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": ".",
     "module": "es6",
     "moduleResolution": "node",
     "target": "es5",
@@ -21,7 +20,7 @@
     ],
     "sourceMap": true,
     "allowJs": true,
-    "rootDir": "src",
+    "rootDir": "src/frontend",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,

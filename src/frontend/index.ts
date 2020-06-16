@@ -10,6 +10,7 @@ import { RLVisualization } from "./types";
 // import { SankeyViz } from "./viz/sankey";
 import playerTeamsViz from "./viz/playerTeams";
 import sankeyViz from "./viz/sankey";
+import simpleViz from "./viz/simple";
 
 log.setLevel("debug");
 
@@ -25,27 +26,31 @@ function clear() {
   }
 }
 
-function setView(view: string) {
+async function setView(view: string) {
   clear();
 
   switch (view) {
     case "sankey":
       viz = sankeyViz;
       break;
-    default:
+    case "team-map":
       viz = playerTeamsViz;
+      break;
+    default:
+      viz = simpleViz;
       break;
   }
 
-  viz.main(chart);
+  await viz.main(chart);
 }
 
-// Init
-setView("team-map");
-
-// User input
 const vizSelect = document.getElementById("viz");
+
 if (vizSelect) {
+  // Init
+  setView((vizSelect as HTMLSelectElement).value);
+
+  // User input
   vizSelect.addEventListener("change", () => {
     setView((vizSelect as HTMLSelectElement).value);
   });
