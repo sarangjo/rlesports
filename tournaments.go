@@ -12,3 +12,5 @@ type Tournament struct {
 	Name  string `json:"name"`
 	Teams []Team `json:"teams"`
 }
+
+const playersSectionTitle = "participants"
