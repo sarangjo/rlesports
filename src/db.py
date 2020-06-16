@@ -4,11 +4,10 @@ import os.path
 import os
 import json
 
+global password
 if os.environ['DB_PASSWORD']:
-    global password
     password = os.environ['DB_PASSWORD']
 else:
-    global password
     with open(os.path.join(os.path.dirname(__file__), "db.json")) as f:
         password = json.load(f)["password"]
 

@@ -7,7 +7,7 @@ from flask_cors import CORS
 import db
 
 app = Flask("rlesports")
-app.config["DEBUG"] = True
+app.config["DEBUG"] = os.environ["ENV"] != "production"
 cors = CORS(app)
 
 
@@ -16,6 +16,11 @@ def tournaments():
     res = make_response(dumps(db.get_tournaments()))
     res.mimetype = "application/json"
     return res
+
+
+@app.route('/')
+def hello():
+    return "Hello, world!"
 
 
 app.run(port=os.environ["PORT"] if os.environ["PORT"] else 5001)
