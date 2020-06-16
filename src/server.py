@@ -1,6 +1,9 @@
+import os
+from bson.json_util import dumps
+
 from flask import jsonify, Flask, make_response
 from flask_cors import CORS
-from bson.json_util import dumps
+
 import db
 
 app = Flask("rlesports")
@@ -15,4 +18,4 @@ def tournaments():
     return res
 
 
-app.run(port=5001)
+app.run(port=os.environ["PORT"] if os.environ["PORT"] else 5001)

@@ -1,0 +1,7 @@
+{
+  "name": "Rocket League Esports",
+  "description": "Rocket League Esports",
+  "image": "heroku/python",
+  "repository": "https://github.com/sarangjo/rlesports",
+  "keywords": ["python", "flask"]
+}
