@@ -23,4 +23,8 @@ def hello():
     return "Hello, world!"
 
 
-app.run(port=os.environ["PORT"] if os.environ["PORT"] else 5001)
+port = os.environ["PORT"] if os.environ["PORT"] else 5001
+
+print(f"Running at port {port}")
+
+app.run(port=port)
