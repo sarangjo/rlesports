@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+const inServerMode = false
+
 func home(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, world!")
 }
@@ -25,16 +27,22 @@ func tournaments(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	port := os.Getenv("PORT")
+	if inServerMode {
+		port := os.Getenv("PORT")
 
-	if port == "" {
-		port = "5001"
-		fmt.Println("FYI, using port", port)
+		if port == "" {
+			port = "5001"
+			fmt.Println("FYI, using port", port)
+		}
+
+		InitializeClient()
+
+		http.HandleFunc("/api/tournaments", tournaments)
+		http.HandleFunc("/", home)
+		http.ListenAndServe(":"+port, nil)
+	} else {
+		GetTournamentsData()
+		// data := ProcessTournamentsData(output)
+		// fmt.Println(data)
 	}
-
-	InitializeClient()
-
-	http.HandleFunc("/api/tournaments", tournaments)
-	http.HandleFunc("/", home)
-	http.ListenAndServe(":"+port, nil)
 }

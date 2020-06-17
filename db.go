@@ -46,6 +46,19 @@ func InitializeClient() {
 	db = client.Database("rlesports")
 }
 
+// UploadTournaments uploads all given tournaments
+func UploadTournaments(data []Tournament) {
+	tournaments := db.Collection("tournaments-test")
+
+	models := make([]mongo.WriteModel, len(data))
+
+	for _, tournament := range data {
+		models = append(models, mongo.NewReplaceOneModel().SetFilter(bson.M{"name": tournament.Name}).SetReplacement(tournament).SetUpsert(true))
+	}
+
+	tournaments.BulkWrite(context.Background(), models)
+}
+
 // GetTournaments returns a list of all tournaments in the db
 func GetTournaments() []Tournament {
 	tournaments := db.Collection("tournaments")
