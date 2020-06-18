@@ -7,13 +7,15 @@ import (
 	"os"
 )
 
-const inServerMode = false
+const inServerMode = true
 
 func home(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, world!")
 }
 
 func tournaments(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("tournaments")
+
 	t := GetTournaments()
 
 	bytes, err := json.Marshal(t)
@@ -23,6 +25,7 @@ func tournaments(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(bytes)
 }
 
@@ -32,17 +35,20 @@ func main() {
 
 		if port == "" {
 			port = "5001"
-			fmt.Println("FYI, using port", port)
 		}
 
 		InitializeClient()
 
+		fmt.Println("mongo client initialized")
+
 		http.HandleFunc("/api/tournaments", tournaments)
 		http.HandleFunc("/", home)
+
+		fmt.Println("About to use port", port)
+
 		http.ListenAndServe(":"+port, nil)
 	} else {
-		GetTournamentsData()
-		// data := ProcessTournamentsData(output)
-		// fmt.Println(data)
+		output := GetTournamentsData()
+		ProcessTournamentsData(output)
 	}
 }

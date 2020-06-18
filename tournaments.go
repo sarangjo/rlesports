@@ -41,7 +41,7 @@ var tournamentNames = []string{
 	fmt.Sprintf("%s6/%s", prefix, region),
 	fmt.Sprintf("%s6", prefix),
 	fmt.Sprintf("%s7/%s", prefix, region),
-	// fmt.Sprintf("%s7", prefix),
+	fmt.Sprintf("%s7", prefix),
 	// fmt.Sprintf("%s8/%s", prefix, region),
 	// fmt.Sprintf("%s8", prefix),
 }
@@ -91,8 +91,7 @@ func GetTournamentsData() (output map[string]interface{}) {
 				continue
 			}
 
-			var sectionText map[string]interface{} = GetSection(t, sectionIndex)
-			output[t] = sectionText
+			output[t] = GetSection(t, sectionIndex)
 		}
 	}
 
@@ -101,7 +100,7 @@ func GetTournamentsData() (output map[string]interface{}) {
 		fmt.Println("Unable to marshal output", err)
 		os.Exit(1)
 	}
-	err = ioutil.WriteFile(tournamentsCacheFile, outputBytes, 0755)
+	err = ioutil.WriteFile(tournamentsCacheFile, outputBytes, 0644)
 	if err != nil {
 		fmt.Println("Unable to write out tournaments cache file", err)
 		os.Exit(1)
@@ -113,11 +112,14 @@ func GetTournamentsData() (output map[string]interface{}) {
 // ProcessTournamentsData processes the wikitext from GetTournamentsData and produces a list of
 // Tournaments
 func ProcessTournamentsData(output map[string]interface{}) []Tournament {
-	tournaments := make([]Tournament, len(output))
+	tournaments := make([]Tournament, 0, len(output))
 
-	for t, tourney := range output {
+	// Order matches tournament names
+	for _, t := range tournamentNames {
+		tourney := output[t]
+
 		// We are processing all of the lines per tournament
-		lines := strings.Split(tourney.(map[string]map[string]string)["wikitext"]["*"], "\n")
+		lines := strings.Split(tourney.(map[string]interface{})["wikitext"].(map[string]interface{})["*"].(string), "\n")
 		// Each tournament has a set of teams
 		teams := []Team{}
 		// These are used as we parse one team at a time

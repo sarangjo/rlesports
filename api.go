@@ -15,20 +15,23 @@ const userAgent = "RL Esports"
 
 var httpClient = &http.Client{}
 
-type parseData interface{}
-
-type sectionsParseData struct {
-	Title    string                   `json:"title"`
-	PageID   int                      `json:"pageid"`
-	Sections []map[string]interface{} `json:"sections"`
-}
-
 type parseResult struct {
-	Parse parseData `json:"parse"`
+	Parse interface{} `json:"parse"`
 }
 
-type getSectionsParseResult struct {
-	Parse sectionsParseData `json:"parse"`
+// GetPlayer gets player information
+func GetPlayer(player string) map[string]interface{} {
+	opts := url.Values{
+		"action":  {"parse"},
+		"prop":    {"wikitext"},
+		"page":    {player},
+		"format":  {"json"},
+		"section": {"0"},
+	}
+	var res parseResult
+	resp := CallAPI(opts)
+	json.Unmarshal(resp, &res)
+	return res.Parse.(map[string]interface{})
 }
 
 // GetSection gets the section wikitext for the given page and section
@@ -41,7 +44,6 @@ func GetSection(page string, section int) map[string]interface{} {
 	}
 	var res parseResult
 	resp := CallAPI(opts)
-	fmt.Println(string(resp))
 	json.Unmarshal(resp, &res)
 	return res.Parse.(map[string]interface{})
 }
@@ -53,10 +55,17 @@ func GetSections(page string) []map[string]interface{} {
 		"prop":   {"sections"},
 		"page":   {page},
 	}
-	var res getSectionsParseResult
+	var res parseResult
 	resp := CallAPI(opts)
 	json.Unmarshal(resp, &res)
-	return res.Parse.Sections
+
+	// Can't type assert a slice
+	rawSections := res.Parse.(map[string]interface{})["sections"].([]interface{})
+	sections := make([]map[string]interface{}, 0, len(rawSections))
+	for _, raw := range rawSections {
+		sections = append(sections, raw.(map[string]interface{}))
+	}
+	return sections
 }
 
 // CallAPI calls Liquipedia API

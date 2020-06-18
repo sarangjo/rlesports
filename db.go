@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -28,7 +29,7 @@ func InitializeClient() {
 			os.Exit(1)
 		}
 		byteValue, _ := ioutil.ReadAll(file)
-		password = string(byteValue)
+		password = strings.TrimSpace(string(byteValue))
 	}
 
 	var err error
@@ -40,7 +41,8 @@ func InitializeClient() {
 		fmt.Sprintf("mongodb+srv://dbUser:%s@cluster0.xhiax.mongodb.net/rlesports?retryWrites=true&w=majority", password),
 	))
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("Unable to connect", err)
+		os.Exit(1)
 	}
 
 	db = client.Database("rlesports")
