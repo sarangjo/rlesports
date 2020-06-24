@@ -21,6 +21,7 @@ type Team struct {
 type Tournament struct {
 	Name  string `json:"name"`
 	Teams []Team `json:"teams"`
+	Start string `json:"start"`
 }
 
 const tournamentsCacheFile = "cache/cache.json"

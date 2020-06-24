@@ -34,7 +34,7 @@ func main() {
 		port := os.Getenv("PORT")
 
 		if port == "" {
-			port = "5001"
+			port = "5002"
 		}
 
 		InitializeClient()

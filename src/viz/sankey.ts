@@ -6,7 +6,7 @@ import { Chart, RLVisualization, Tournament } from "../types";
 
 const sankeyViz: RLVisualization & Record<string, Function> = {
   main: async (chart: Chart) => {
-    const result = await fetch("http://localhost:5001/api/tournaments");
+    const result = await fetch("http://localhost:5002/api/tournaments");
     const tournaments: Tournament[] = await result.json();
 
     // Set up nodes and links

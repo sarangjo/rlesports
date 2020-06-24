@@ -1,7 +1,7 @@
 import * as d3 from "d3";
-import { concat, forEach, reduce, slice, map, intersection, size } from "lodash";
+import { concat, forEach, reduce, slice, map, intersection, size, sortBy } from "lodash";
 import { CIRCLE_RADIUS, WIDTH } from "../constants";
-import { Chart, RLVisualization, Tournament, TournamentLink, TournamentNode } from "../types";
+import { Chart, RLVisualization, Tournament, TournamentLink, TournamentNode, Team } from "../types";
 import { getNodeId } from "../util";
 
 const sort = (tournaments: Tournament[]): Tournament[] => {
@@ -13,17 +13,41 @@ const sort = (tournaments: Tournament[]): Tournament[] => {
 
     const prevTourn = tournaments[index - 1];
 
-    const newIndices = map(tournament.teams, (team, teamIndex) => {
-      return (
+    let overflowIndex = size(prevTourn.teams);
+
+    // Pair of original index (0-based) and new index (1-based)
+    const indexPairs = map(tournament.teams, (team, teamIndex) => {
+      let newIndex =
         reduce(
           prevTourn.teams,
           (acc, prevTeam, prevTeamIndex) => {
-            return acc + prevTeamIndex * size(intersection(prevTeam.players, team.players));
+            // Here if size == 0, we should return the overflowIndex, yeah?
+            return acc + (prevTeamIndex + 1) * size(intersection(prevTeam.players, team.players));
           },
           0,
-        ) / size(team.players)
-      );
+        ) / size(team.players);
+
+      if (newIndex === 0) {
+        newIndex = overflowIndex++;
+      }
+      return {
+        originalIndex: teamIndex,
+        newIndex: newIndex,
+      };
     });
+
+    const sortedIndexPairs = sortBy(indexPairs, ["newIndex"]);
+
+    const newTeams: Team[] = [];
+
+    forEach(sortedIndexPairs, (pair) => {
+      newTeams.push({
+        ...tournament.teams[pair.originalIndex],
+        metadata: JSON.stringify(pair),
+      });
+    });
+
+    tournament.teams = newTeams;
 
     return tournament;
   });
@@ -120,9 +144,9 @@ const process = (t: Tournament[]): { nodes: TournamentNode[]; links: TournamentL
 
 const simpleViz: RLVisualization = {
   main: async (chart: Chart) => {
-    const result = await fetch("http://localhost:5001/api/tournaments");
+    const result = await fetch("http://localhost:5002/api/tournaments");
     const allTournaments: Tournament[] = await result.json();
-    const tournaments = slice(allTournaments, 0, 2);
+    const tournaments = slice(allTournaments, size(allTournaments) - 2); //0, 2);
 
     const data = process(tournaments);
 

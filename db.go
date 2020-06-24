@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -64,7 +65,8 @@ func UploadTournaments(data []Tournament) {
 // GetTournaments returns a list of all tournaments in the db
 func GetTournaments() []Tournament {
 	tournaments := db.Collection("tournaments")
-	cur, err := tournaments.Find(context.Background(), bson.D{})
+	opts := options.Find().SetSort(bson.D{primitive.E{Key: "start", Value: 1}})
+	cur, err := tournaments.Find(context.Background(), bson.D{}, opts)
 	if err != nil {
 		fmt.Println("Failed to find", err)
 		os.Exit(1)

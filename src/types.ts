@@ -4,6 +4,7 @@ export interface Team {
   players: string[];
   won?: boolean;
   subs?: string[];
+  metadata?: any;
 }
 
 export interface Tournament {
