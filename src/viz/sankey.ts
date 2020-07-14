@@ -1,6 +1,5 @@
 import { sankey, sankeyLinkHorizontal } from "d3-sankey";
 import _, { find, forEach, get } from "lodash";
-import log from "loglevel";
 import { HEIGHT, WIDTH } from "../constants";
 import { Chart, RLVisualization, Tournament } from "../types";
 
@@ -18,7 +17,6 @@ const sankeyViz: RLVisualization & Record<string, Function> = {
       .nodeWidth(20)
       .nodePadding(10)
       .nodeAlign((d, n) => {
-        log.debug(d, n);
         return _.get(d, "tournamentIndex");
       }) as any).linkSort((a: any, b: any) => {
       return _.get(a, "player") - _.get(b, "player");
@@ -41,6 +39,17 @@ const sankeyViz: RLVisualization & Record<string, Function> = {
       .attr("stroke-opacity", 0.5)
       .append("title")
       .text((d) => d.player);
+
+    chart
+      .append("g")
+      .classed("linktitles", true)
+      .selectAll("text")
+      .data(graph.links as any[])
+      .enter()
+      .append("text")
+      .attr("x", (d) => d.source.x1)
+      .attr("y", (d) => d.y0)
+      .html((d) => /*JSON.stringify(_.keys(d)) +*/ d.player);
 
     // Nodes
     chart
