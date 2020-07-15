@@ -4,8 +4,10 @@ import { CIRCLE_RADIUS, WIDTH } from "../constants";
 import { Chart, RLVisualization, Tournament, TournamentLink, TournamentNode, Team } from "../types";
 import { getNodeId } from "../util";
 
+// Based on adjacent tournaments, shuffle teams so that teams with more shared players are
+// vertically close together. Without this, a simple timeline is chaos. This basically brings us to
+// a healthy midpoint between plain timeline and a Sankey.
 const sort = (tournaments: Tournament[]): Tournament[] => {
-  // TODO: based on adjacent tournaments, shuffle teams so that teams with more shared players are vertically close together
   return map(tournaments, (tournament, index) => {
     if (index === 0) {
       return tournament;
@@ -142,6 +144,8 @@ const process = (t: Tournament[]): { nodes: TournamentNode[]; links: TournamentL
   return { nodes: allNodes, links: samePlayerLinks };
 };
 
+const randDiv = () => 0.5; // Math.random() * 0.6 + 0.2;
+
 const simpleViz: RLVisualization = {
   main: async (chart: Chart) => {
     const result = await fetch("http://localhost:5002/api/tournaments");
@@ -190,11 +194,24 @@ const simpleViz: RLVisualization = {
       .selectAll("line")
       .data(data.links)
       .enter()
-      .append("line")
-      .attr("x1", (d) => x(d.source.tournamentIndex || 0)) // (typeof d.source === "string" ? x(getNode(d.source).tournamentIndex) : 0))
-      .attr("y1", (d) => y(d.source))
-      .attr("x2", (d) => x(d.target.tournamentIndex || 0))
-      .attr("y2", (d) => y(d.target))
+      // .append("line")
+      // .attr("x1", (d) => x(d.source.tournamentIndex || 0)) // (typeof d.source === "string" ? x(getNode(d.source).tournamentIndex) : 0))
+      // .attr("y1", (d) => y(d.source))
+      // .attr("x2", (d) => x(d.target.tournamentIndex || 0))
+      // .attr("y2", (d) => y(d.target));
+      .append("path")
+      .attr("d", (d) => {
+        const sx = x(d.source.tournamentIndex);
+        const sy = y(d.source);
+        const tx = x(d.target.tournamentIndex);
+        const ty = y(d.target);
+
+        const xmid = sx + (tx - sx) * randDiv();
+        const ymid = sy + (ty - sy) * randDiv();
+
+        return `M ${sx} ${sy} C ${xmid} ${sy}, ${xmid} ${sy}, ${xmid} ${ymid} S ${xmid} ${ty}, ${tx} ${ty}`;
+      })
+      .attr("fill", "transparent")
       .attr("stroke", "black");
 
     // Tournament titles
