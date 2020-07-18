@@ -1,8 +1,8 @@
 import { RLVisualization, Chart, Tournament, TournamentPlayerNode, TournamentLink } from "../types";
 import { slice, size, get } from "lodash";
-import d3 from "d3";
-import { tournamentsToPlayerNodes, LINK_FORCE, getNodeId, getPlayerName, nodeDrag } from "../util";
-import { CIRCLE_RADIUS } from "../constants";
+import * as d3 from "d3";
+import { tournamentsToPlayerNodes, LINK_FORCE, getNodeId, getPlayerName } from "../util";
+import { CIRCLE_RADIUS, WIDTH, HEIGHT } from "../constants";
 
 interface Selections {
   node?: d3.Selection<SVGGElement, TournamentPlayerNode, any, any>;
@@ -15,24 +15,47 @@ let tournaments: Tournament[];
 let simulation: d3.Simulation<TournamentPlayerNode, TournamentLink>;
 let selections: Selections = {};
 // UI x Data
-let playerNodes: TournamentPlayerNode[];
-let playerLinks: [];
+let playerNodes: TournamentPlayerNode[] = [];
+let playerLinks: TournamentLink[] = [];
+
+const drag = (simulation: d3.Simulation<TournamentPlayerNode, TournamentLink>) => {
+  function dragstarted(d: TournamentPlayerNode) {
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+  }
+
+  function dragged(d: TournamentPlayerNode) {
+    d.fx = d3.event.x;
+    d.fy = d3.event.y;
+  }
+
+  function dragended(d: TournamentPlayerNode) {
+    if (!d3.event.active) simulation.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
+  }
+
+  return d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended);
+};
 
 const forceGraphViz: RLVisualization & Record<string, any> = {
   draw: (chart: Chart) => {
     // UI
-    const uiArea = document.getElementById("ui-area");
-    if (!uiArea) {
-      return;
-    }
+    chart.attr("viewBox", [-WIDTH / 2, -HEIGHT / 2, WIDTH, HEIGHT] as any);
 
-    simulation = d3.forceSimulation<TournamentPlayerNode>(playerNodes).force(
-      LINK_FORCE,
-      d3
-        .forceLink<TournamentPlayerNode, TournamentLink>()
-        .id((d) => getNodeId(d.tournamentIndex, d.teamIndex, d.playerIndex))
-        .links(playerLinks),
-    );
+    simulation = d3
+      .forceSimulation<TournamentPlayerNode>(playerNodes)
+      .force(
+        LINK_FORCE,
+        d3
+          .forceLink<TournamentPlayerNode, TournamentLink>()
+          .id((d) => getNodeId(d.tournamentIndex, d.teamIndex, d.playerIndex))
+          .links(playerLinks),
+      )
+      .force("charge", d3.forceManyBody())
+      .force("x", d3.forceX())
+      .force("y", d3.forceY());
 
     // Selections
     selections.node = chart.append("g").attr("id", "nodes").selectAll("circle");
@@ -55,22 +78,13 @@ const forceGraphViz: RLVisualization & Record<string, any> = {
     // noop
   },
 
-  restart: () => {
+  start: () => {
     if (selections.node) {
       selections.node = selections.node.data(playerNodes, (d) => getPlayerName(tournaments, d));
       selections.node.exit().remove();
       selections.node = selections.node.enter().append("g").merge(selections.node);
 
-      selections.node
-        .append("circle")
-        .attr("r", CIRCLE_RADIUS)
-        .call(
-          d3
-            .drag()
-            .on("start", nodeDrag.start.bind(null, simulation))
-            .on("drag", nodeDrag.in)
-            .on("end", nodeDrag.end.bind(null, simulation)),
-        );
+      selections.node.append("circle").attr("r", CIRCLE_RADIUS).call(drag(simulation));
       selections.node
         .append("text")
         .attr("x", CIRCLE_RADIUS + 1)
@@ -96,7 +110,6 @@ const forceGraphViz: RLVisualization & Record<string, any> = {
     if (linkForce) {
       (linkForce as d3.ForceLink<TournamentPlayerNode, TournamentLink>).links(playerLinks);
     }
-    simulation.restart();
   },
 
   main: async (chart: Chart) => {

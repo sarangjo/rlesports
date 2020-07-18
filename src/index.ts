@@ -2,7 +2,7 @@ import { select } from "d3-selection";
 import log from "loglevel";
 
 import { HEIGHT, WIDTH } from "./constants";
-import { RLVisualization } from "./types";
+import { RLVisualization, Chart } from "./types";
 // import Simple from "./viz/simple";
 // import Timeline from "./viz/timeline";
 
@@ -12,11 +12,12 @@ import playerTeamsViz from "./viz/playerTeams";
 import sankeyViz from "./viz/sankey";
 import simpleViz from "./viz/simple";
 import forceGraphViz from "./viz/forceGraph";
+import { forEach } from "lodash";
 
 log.setLevel("debug");
 
 let viz: RLVisualization;
-const chart = select("svg").attr("width", WIDTH).attr("height", HEIGHT);
+const chart = <Chart>(select("svg").attr("width", WIDTH).attr("height", HEIGHT) as any);
 
 // Removes all elements in the view
 function clear() {
@@ -31,14 +32,15 @@ async function setView(view: string) {
   clear();
 
   switch (view) {
-    case "sankey":
+    case Viz.SANKEY:
       viz = sankeyViz;
       break;
-    case "team-map":
+    case Viz.TEAM_MAP:
       viz = playerTeamsViz;
       break;
-    case "force-graph":
+    case Viz.FORCE_GRAPH:
       viz = forceGraphViz;
+      break;
     default:
       viz = simpleViz;
       break;
@@ -55,24 +57,29 @@ enum Viz {
 }
 
 const VizTitle = {
-  [Viz.SANKEY] :"Sankey",
-  [Viz.TEAM_MAP] :"Team Map",
-  [Viz.FORCE_GRAPH] :"Force Graph",
-  [Viz.SIMPLE] :"Simple",
-}
+  [Viz.SANKEY]: "Sankey",
+  [Viz.TEAM_MAP]: "Team Map",
+  [Viz.FORCE_GRAPH]: "Force Graph",
+  [Viz.SIMPLE]: "Simple",
+};
 
-const vizSelect = document.getElementById("viz");
+const vizSelect = <HTMLSelectElement>document.getElementById("viz");
 
 if (vizSelect) {
   // Init
-        <option value="sankey">Sankey</option>
-        <option value="team-map">Player Teams</option>
-        <option value="simple">Timeline</option>
-
-  setView((vizSelect as HTMLSelectElement).value);
-
-  // User input
-  vizSelect.addEventListener("change", () => {
-    setView((vizSelect as HTMLSelectElement).value);
+  forEach(Viz, (x) => {
+    const opt = document.createElement("option");
+    opt.value = x;
+    opt.text = VizTitle[x];
+    vizSelect.appendChild(opt);
   });
+
+  vizSelect.addEventListener("change", () => {
+    setView(vizSelect.value);
+  });
+
+  // First value
+  const initialValue = Viz.FORCE_GRAPH;
+  vizSelect.value = initialValue;
+  vizSelect.dispatchEvent(new Event("change"));
 }
