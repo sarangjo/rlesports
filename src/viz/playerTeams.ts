@@ -3,11 +3,13 @@ import { combination } from "js-combinatorics";
 import _ from "lodash";
 
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
-import players from "../data/players.json";
+// import players from "../data/players.json";
 import { Chart, RLVisualization } from "../types";
 import { nodeDrag, valueline, LINK_FORCE } from "../util";
 
 import "./playerTeams.css";
+
+const players: any[] = [];
 
 // Events as read in from the JSON
 interface PlayerEvent {
@@ -60,6 +62,7 @@ let simulation: d3.Simulation<Player, Teammates>;
 type PlayerTeamsViz = RLVisualization & Record<string, any>;
 
 // Reference for groups: https://bl.ocks.org/bumbeishvili/f027f1b6664d048e894d19e54feeed42
+// Reference for temporal force graph: https://observablehq.com/@d3/temporal-force-directed-graph
 const playerTeamsViz: PlayerTeamsViz = {
   ////// SETUP FUNCTIONS //////
 
