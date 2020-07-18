@@ -4,7 +4,7 @@ import * as comb from "js-combinatorics";
 import { getNodeId } from "./util";
 import * as _ from "lodash";
 
-import { Tournament, TournamentNode, SimulationLink } from "./types";
+import { Tournament, TournamentPlayerNode, SimulationLink } from "./types";
 
 export const WIDTH = 2400;
 export const HEIGHT = 1000;
@@ -29,7 +29,7 @@ let x: (idx: number) => number;
 let tournaments: Tournament[];
 
 // Processed data
-let allNodes: TournamentNode[];
+let allNodes: TournamentPlayerNode[];
 let sameTeamSameTournamentLinks: SimulationLink[] = [];
 let diffTeamSameTournamentLinks: SimulationLink[] = [];
 let samePlayerLinks: SimulationLink[];
@@ -90,7 +90,7 @@ function processPlayers() {
                     playerIndex,
                     id: getNodeId(tournamentIndex, teamIndex, playerIndex),
                   }),
-                [] as TournamentNode[],
+                [] as TournamentPlayerNode[],
               ),
             ),
           [],
@@ -102,7 +102,7 @@ function processPlayers() {
 
 function processPlayerLinks() {
   // Basically we want a full list of links with source and target both being an index 3-tuple
-  const inverseMap: Record<string, TournamentNode[]> = {};
+  const inverseMap: Record<string, TournamentPlayerNode[]> = {};
   _.forEach(tournaments, (tournament, tournamentIndex) => {
     _.forEach(tournament.teams, (team, teamIndex) => {
       // Same team + same tournament
@@ -188,14 +188,14 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
       "link",
       d3
         .forceLink(samePlayerLinks)
-        .id((d: TournamentNode) => d.id)
+        .id((d: TournamentPlayerNode) => d.id)
         .strength(0.1),
     )
     .force("charge", d3.forceManyBody().strength(0.2))
     .force(
       "x",
       d3
-        .forceX<TournamentNode>()
+        .forceX<TournamentPlayerNode>()
         .x((d) => x(d.tournamentIndex))
         .strength(1),
     )
@@ -211,7 +211,7 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
       "sameTeamSameTournament",
       d3
         .forceLink(sameTeamSameTournamentLinks)
-        .id((d: TournamentNode) => d.id)
+        .id((d: TournamentPlayerNode) => d.id)
         .strength(1)
         .distance(5),
     )
@@ -219,7 +219,7 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
       "diffTeamSameTournament",
       d3
         .forceLink(diffTeamSameTournamentLinks)
-        .id((d: TournamentNode) => d.id)
+        .id((d: TournamentPlayerNode) => d.id)
         .strength(1)
         .distance(50),
     );
@@ -270,7 +270,7 @@ function forceSimulation(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, 
 // @ts-ignore
 function simpleTimeline(chart: d3.Selection<d3.BaseType, unknown, HTMLElement, any>) {
   // Nodes
-  const y = (d: TournamentNode) =>
+  const y = (d: TournamentPlayerNode) =>
     4 * CIRCLE_RADIUS + d.teamIndex * 5 * (2 * CIRCLE_RADIUS) + d.playerIndex * (2 * CIRCLE_RADIUS);
 
   const nodeSelection = chart

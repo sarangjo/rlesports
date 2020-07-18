@@ -19,7 +19,7 @@ export interface TeamNodePart {
   tournamentIndex: number;
 }
 
-export interface TournamentNode extends d3.SimulationNodeDatum {
+export interface TournamentPlayerNode extends d3.SimulationNodeDatum {
   playerIndex: number;
   teamIndex: number;
   tournamentIndex: number;
@@ -27,12 +27,12 @@ export interface TournamentNode extends d3.SimulationNodeDatum {
 }
 
 export interface TournamentLink {
-  source: TournamentNode;
-  target: TournamentNode;
+  source: TournamentPlayerNode;
+  target: TournamentPlayerNode;
 }
 
 // TODO rename
-export type SimulationLink = d3.SimulationLinkDatum<TournamentNode>;
+export type SimulationLink = d3.SimulationLinkDatum<TournamentPlayerNode>;
 
 export type Chart = d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
 

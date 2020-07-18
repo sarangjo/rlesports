@@ -1,8 +1,15 @@
 import * as d3 from "d3";
 import { concat, forEach, reduce, slice, map, intersection, size, sortBy } from "lodash";
 import { CIRCLE_RADIUS, WIDTH } from "../constants";
-import { Chart, RLVisualization, Tournament, TournamentLink, TournamentNode, Team } from "../types";
-import { getNodeId } from "../util";
+import {
+  Chart,
+  RLVisualization,
+  Tournament,
+  TournamentLink,
+  TournamentPlayerNode,
+  Team,
+} from "../types";
+import { getNodeId, tournamentsToPlayerNodes, getPlayerName } from "../util";
 
 // Based on adjacent tournaments, shuffle teams so that teams with more shared players are
 // vertically close together. Without this, a simple timeline is chaos. This basically brings us to
@@ -55,41 +62,14 @@ const sort = (tournaments: Tournament[]): Tournament[] => {
   });
 };
 
-const process = (t: Tournament[]): { nodes: TournamentNode[]; links: TournamentLink[] } => {
+const process = (t: Tournament[]): { nodes: TournamentPlayerNode[]; links: TournamentLink[] } => {
   const tournaments = sort(t);
 
   // First, collect all nodes for all tournaments
-  const allNodes = reduce(
-    tournaments,
-    (acc1, tournament, tournamentIndex) =>
-      concat(
-        acc1,
-        reduce(
-          tournament.teams,
-          (acc2, team, teamIndex) =>
-            // TODO eventually add subs
-            concat(
-              acc2,
-              reduce(
-                team.players,
-                (acc3, _player: string, playerIndex) =>
-                  concat(acc3, {
-                    tournamentIndex,
-                    teamIndex,
-                    playerIndex,
-                    id: getNodeId(tournamentIndex, teamIndex, playerIndex),
-                  }),
-                [] as TournamentNode[],
-              ),
-            ),
-          [],
-        ),
-      ),
-    [],
-  );
+  const allNodes = tournamentsToPlayerNodes(t);
 
   // Basically we want a full list of links with source and target both being an index 3-tuple
-  const inverseMap: Record<string, TournamentNode[]> = {};
+  const inverseMap: Record<string, TournamentPlayerNode[]> = {};
   forEach(tournaments, (tournament, tournamentIndex) => {
     forEach(tournament.teams, (team, teamIndex) => {
       // // Same team + same tournament TODO uncomment eventually
@@ -161,7 +141,7 @@ const simpleViz: RLVisualization = {
 
     // Nodes
     // y depends on team and player index
-    const y = (d: TournamentNode) =>
+    const y = (d: TournamentPlayerNode) =>
       4 * CIRCLE_RADIUS +
       d.teamIndex * 5 * (2 * CIRCLE_RADIUS) +
       d.playerIndex * (2 * CIRCLE_RADIUS);
@@ -185,7 +165,7 @@ const simpleViz: RLVisualization = {
       .attr("text-anchor", "end")
       .attr("x", (d) => x(d.tournamentIndex) - CIRCLE_RADIUS - 5)
       .attr("y", y)
-      .html((d) => tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex]);
+      .html((d) => getPlayerName(tournaments, d));
 
     // Links
     chart

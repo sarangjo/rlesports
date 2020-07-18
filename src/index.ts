@@ -11,6 +11,7 @@ import { RLVisualization } from "./types";
 import playerTeamsViz from "./viz/playerTeams";
 import sankeyViz from "./viz/sankey";
 import simpleViz from "./viz/simple";
+import forceGraphViz from "./viz/forceGraph";
 
 log.setLevel("debug");
 
@@ -36,6 +37,8 @@ async function setView(view: string) {
     case "team-map":
       viz = playerTeamsViz;
       break;
+    case "force-graph":
+      viz = forceGraphViz;
     default:
       viz = simpleViz;
       break;
@@ -44,10 +47,28 @@ async function setView(view: string) {
   await viz.main(chart);
 }
 
+enum Viz {
+  SANKEY = "sankey",
+  TEAM_MAP = "team-map",
+  FORCE_GRAPH = "force-graph",
+  SIMPLE = "simple",
+}
+
+const VizTitle = {
+  [Viz.SANKEY] :"Sankey",
+  [Viz.TEAM_MAP] :"Team Map",
+  [Viz.FORCE_GRAPH] :"Force Graph",
+  [Viz.SIMPLE] :"Simple",
+}
+
 const vizSelect = document.getElementById("viz");
 
 if (vizSelect) {
   // Init
+        <option value="sankey">Sankey</option>
+        <option value="team-map">Player Teams</option>
+        <option value="simple">Timeline</option>
+
   setView((vizSelect as HTMLSelectElement).value);
 
   // User input

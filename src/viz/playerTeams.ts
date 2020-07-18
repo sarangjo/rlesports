@@ -5,7 +5,7 @@ import _ from "lodash";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import players from "../data/players.json";
 import { Chart, RLVisualization } from "../types";
-import { nodeDrag, valueline } from "../util";
+import { nodeDrag, valueline, LINK_FORCE } from "../util";
 
 import "./playerTeams.css";
 
@@ -39,8 +39,6 @@ interface Selections {
   pathContainer?: d3.Selection<SVGGElement, string, any, any>;
   path?: d3.Selection<SVGPathElement, string, any, any>;
 }
-
-const LINK_FORCE = "link";
 
 const DATE_INPUT = "date-input";
 const DATE_INPUT_BUTTON = "date-input-button";

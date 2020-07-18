@@ -1,4 +1,6 @@
 import * as d3 from "d3";
+import { Tournament, TournamentPlayerNode } from "./types";
+import { reduce, concat } from "lodash";
 
 //// UTILITY
 
@@ -46,3 +48,40 @@ export const valueline = d3
   .x((d) => d[0])
   .y((d) => d[1])
   .curve(d3.curveCatmullRomClosed);
+
+// Data managing
+export const tournamentsToPlayerNodes = (tournaments: Tournament[]) => {
+  return reduce(
+    tournaments,
+    (acc1, tournament, tournamentIndex) =>
+      concat(
+        acc1,
+        reduce(
+          tournament.teams,
+          (acc2, team, teamIndex) =>
+            // TODO eventually add subs
+            concat(
+              acc2,
+              reduce(
+                team.players,
+                (acc3, _player: string, playerIndex) =>
+                  concat(acc3, {
+                    tournamentIndex,
+                    teamIndex,
+                    playerIndex,
+                    id: getNodeId(tournamentIndex, teamIndex, playerIndex),
+                  }),
+                [] as TournamentPlayerNode[],
+              ),
+            ),
+          [],
+        ),
+      ),
+    [],
+  );
+};
+
+export const LINK_FORCE = "link";
+
+export const getPlayerName = (tournaments: Tournament[], d: TournamentPlayerNode) =>
+  tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex];
