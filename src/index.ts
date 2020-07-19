@@ -13,6 +13,7 @@ import sankeyViz from "./viz/sankey";
 import simpleViz from "./viz/simple";
 import forceGraphViz from "./viz/forceGraph";
 import { forEach } from "lodash";
+import { sameTeamForce } from "./forces";
 
 log.setLevel("debug");
 
@@ -83,3 +84,15 @@ if (vizSelect) {
   vizSelect.value = initialValue;
   vizSelect.dispatchEvent(new Event("change"));
 }
+
+// Test area
+const force = sameTeamForce();
+
+const nodes = [
+  { tournamentIndex: 0, teamIndex: 0, playerIndex: 0, y: 10, id: "" },
+  { tournamentIndex: 0, teamIndex: 0, playerIndex: 1, y: 20, id: "" },
+  { tournamentIndex: 0, teamIndex: 0, playerIndex: 2, y: 40, id: "" },
+];
+force.initialize(nodes);
+force(1);
+log.debug(nodes);

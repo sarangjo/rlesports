@@ -4,12 +4,10 @@ import { slice, size, get, forEach, concat, range, reduce, clamp } from "lodash"
 import * as d3 from "d3";
 import { tournamentsToPlayerNodes, getPlayerName, getNodeId } from "../util";
 import { CIRCLE_RADIUS, WIDTH, HEIGHT } from "../constants";
+import { sameTeamForce } from "../forces";
 
-// Data
 let tournaments: Tournament[];
-// UI
 let simulation: d3.Simulation<TournamentPlayerNode, SimulationLink>;
-// UI x Data
 
 const drag = (simulation: d3.Simulation<TournamentPlayerNode, SimulationLink>) => {
   function dragstarted(d: TournamentPlayerNode) {
@@ -123,10 +121,10 @@ const forceGraphViz: RLVisualization = {
           .id((d) => getNodeId(d.tournamentIndex, d.teamIndex, d.playerIndex))
           .links(playerLinks),
       )
-      .force("charge", d3.forceManyBody().strength(-15))
-      // .force("x", d3.forceX())
-      .force("y", d3.forceY(HEIGHT / 2).strength(0.05))
+      .force("charge", d3.forceManyBody().strength(-35))
+      .force("y", d3.forceY(HEIGHT / 2).strength(0.01))
       .force("collide", d3.forceCollide(CIRCLE_RADIUS + 2))
+      .force("sameTeam", sameTeamForce().strength(0.8))
       .on("tick", () => {
         link
           .attr("x1", (d) => x((<TournamentPlayerNode>d.source).tournamentIndex))
