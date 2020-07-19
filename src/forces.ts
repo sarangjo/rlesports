@@ -1,5 +1,5 @@
 import { TournamentPlayerNode } from "./types";
-import { partition, map, sortBy, filter, reduce, concat } from "lodash";
+import { partition, map, sortBy, filter, reduce, concat, forEach } from "lodash";
 import { CIRCLE_RADIUS } from "./constants";
 
 // Pushes players on the same team into each other
@@ -18,12 +18,10 @@ export function sameTeamForce() {
 
   // Go through each of the forces and set some properties on the node
   function force(alpha: number) {
-    for (let i = 0; i < nodes.length; i++) {
+    forEach(nodes, (node) => {
       // find the n other nodes in the same tournament with the same team.
       // based on how many nodes there are, figure out what index of our team
       // we want to become
-      const node = nodes[i];
-
       const sameTeamNodes = partition(
         sortBy(
           filter(
@@ -51,7 +49,7 @@ export function sameTeamForce() {
       });
       const delVy = reduce(concat(velosDown, velosUp), (acc, cur) => acc + cur, 0);
       node.vy = node.vy ? node.vy + delVy : delVy;
-    }
+    });
   }
 
   force.initialize = function (_: TournamentPlayerNode[]) {
@@ -67,4 +65,25 @@ export function sameTeamForce() {
 }
 
 // Pulls players on different teams apart
-export function differentTeamForce() {}
+export function differentTeamForce() {
+  let nodes: TournamentPlayerNode[];
+
+  function force(alpha: number) {
+    forEach(nodes, (node) => {
+      const sameTournamentNodes = filter(
+        nodes,
+        (n) => n.tournamentIndex === node.tournamentIndex && n.teamIndex !== node.teamIndex,
+      );
+
+      const delVy = reduce(
+        sameTournamentNodes,
+        (acc, cur) => {
+          // return acc + ()
+        },
+        0,
+      );
+    });
+  }
+
+  return force;
+}
