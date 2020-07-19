@@ -1,10 +1,9 @@
-import * as comb from "js-combinatorics";
 import { RLVisualization, Chart, Tournament, TournamentPlayerNode, SimulationLink } from "../types";
-import { slice, size, get, forEach, concat, range, reduce, clamp } from "lodash";
+import { slice, size, get, forEach, concat, reduce, clamp } from "lodash";
 import * as d3 from "d3";
 import { tournamentsToPlayerNodes, getPlayerName, getNodeId } from "../util";
 import { CIRCLE_RADIUS, WIDTH, HEIGHT } from "../constants";
-import { sameTeamForce } from "../forces";
+import { sameTeamForce, differentTeamForce } from "../forces";
 
 let tournaments: Tournament[];
 let simulation: d3.Simulation<TournamentPlayerNode, SimulationLink>;
@@ -31,30 +30,11 @@ const drag = (simulation: d3.Simulation<TournamentPlayerNode, SimulationLink>) =
 };
 
 function processPlayerLinks() {
-  let sameTeamSameTournamentLinks: SimulationLink[] = [];
-
   // Basically we want a full list of links with source and target both being an index 3-tuple
   const inverseMap: Record<string, TournamentPlayerNode[]> = {};
   forEach(tournaments, (tournament, tournamentIndex) => {
     forEach(tournament.teams, (team, teamIndex) => {
       // Same team + same tournament
-      sameTeamSameTournamentLinks = concat(
-        sameTeamSameTournamentLinks,
-        comb.combination(range(team.players.length), 2).map((pair) => ({
-          source: {
-            id: getNodeId(tournamentIndex, teamIndex, pair[0]),
-            tournamentIndex,
-            teamIndex,
-            playerIndex: pair[0],
-          },
-          target: {
-            id: getNodeId(tournamentIndex, teamIndex, pair[1]),
-            tournamentIndex,
-            teamIndex,
-            playerIndex: pair[1],
-          },
-        })),
-      );
       forEach(team.players, (player, playerIndex) => {
         if (!(player in inverseMap)) {
           inverseMap[player] = [];
@@ -70,7 +50,7 @@ function processPlayerLinks() {
   });
 
   // Compress inverseMap into all links
-  const samePlayerLinks = reduce(
+  return reduce(
     inverseMap,
     (acc, nodes) => {
       // Combine nodes into an array of links
@@ -90,8 +70,6 @@ function processPlayerLinks() {
     },
     [] as SimulationLink[],
   );
-
-  return samePlayerLinks; //concat(samePlayerLinks, sameTeamSameTournamentLinks);
 }
 
 const forceGraphViz: RLVisualization = {
@@ -121,10 +99,11 @@ const forceGraphViz: RLVisualization = {
           .id((d) => getNodeId(d.tournamentIndex, d.teamIndex, d.playerIndex))
           .links(playerLinks),
       )
-      .force("charge", d3.forceManyBody().strength(-35))
+      // .force("charge", d3.forceManyBody().strength(-35))
       .force("y", d3.forceY(HEIGHT / 2).strength(0.01))
       .force("collide", d3.forceCollide(CIRCLE_RADIUS + 2))
       .force("sameTeam", sameTeamForce().strength(0.8))
+      .force("diffTeam", differentTeamForce().strength(0.9))
       .on("tick", () => {
         link
           .attr("x1", (d) => x((<TournamentPlayerNode>d.source).tournamentIndex))

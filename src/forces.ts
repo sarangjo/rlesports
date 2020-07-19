@@ -67,6 +67,7 @@ export function sameTeamForce() {
 // Pulls players on different teams apart
 export function differentTeamForce() {
   let nodes: TournamentPlayerNode[];
+  let strength: number | ((d: TournamentPlayerNode) => number) = 1;
 
   function force(alpha: number) {
     forEach(nodes, (node) => {
@@ -78,12 +79,23 @@ export function differentTeamForce() {
       const delVy = reduce(
         sameTournamentNodes,
         (acc, cur) => {
-          // return acc + ()
+          // TODO use fy?
+          const distance = (node.y || 0) - (cur.fy || cur.y || 0);
+          return (
+            acc +
+            ((typeof strength === "function" ? strength(node) : strength) * alpha) /
+              (distance * distance)
+          );
         },
         0,
       );
+      node.vy = node.vy ? node.vy + delVy : delVy;
     });
   }
+
+  force.strength = function (_: number): any {
+    return arguments.length ? ((strength = typeof _ === "function" ? _ : +_), force) : strength;
+  };
 
   return force;
 }
