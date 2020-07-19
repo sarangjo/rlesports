@@ -96,14 +96,15 @@ const forceGraphViz: RLVisualization = {
         "link",
         d3
           .forceLink<TournamentPlayerNode, SimulationLink>()
+          .distance(WIDTH / 6) // N + 2
           .id((d) => getNodeId(d.tournamentIndex, d.teamIndex, d.playerIndex))
           .links(playerLinks),
       )
-      // .force("charge", d3.forceManyBody().strength(-35))
+      .force("charge", d3.forceManyBody().strength(-65))
       .force("y", d3.forceY(HEIGHT / 2).strength(0.01))
       .force("collide", d3.forceCollide(CIRCLE_RADIUS + 2))
       .force("sameTeam", sameTeamForce().strength(0.8))
-      .force("diffTeam", differentTeamForce().strength(0.9))
+      .force("diffTeam", differentTeamForce().strength(5))
       .on("tick", () => {
         link
           .attr("x1", (d) => x((<TournamentPlayerNode>d.source).tournamentIndex))

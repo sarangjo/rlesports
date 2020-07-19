@@ -71,20 +71,20 @@ export function differentTeamForce() {
 
   function force(alpha: number) {
     forEach(nodes, (node) => {
-      const sameTournamentNodes = filter(
+      const differentTeamNodes = filter(
         nodes,
         (n) => n.tournamentIndex === node.tournamentIndex && n.teamIndex !== node.teamIndex,
       );
 
       const delVy = reduce(
-        sameTournamentNodes,
+        differentTeamNodes,
         (acc, cur) => {
-          // TODO use fy?
           const distance = (node.y || 0) - (cur.fy || cur.y || 0);
           return (
             acc +
-            ((typeof strength === "function" ? strength(node) : strength) * alpha) /
-              (distance * distance)
+            (distance === 0
+              ? 0
+              : ((typeof strength === "function" ? strength(node) : strength) * alpha) / distance)
           );
         },
         0,
@@ -92,6 +92,10 @@ export function differentTeamForce() {
       node.vy = node.vy ? node.vy + delVy : delVy;
     });
   }
+
+  force.initialize = function (_: TournamentPlayerNode[]) {
+    nodes = _;
+  };
 
   force.strength = function (_: number): any {
     return arguments.length ? ((strength = typeof _ === "function" ? _ : +_), force) : strength;

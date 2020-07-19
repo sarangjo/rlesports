@@ -9,6 +9,11 @@ $ yarn
 $ yarn start
 ```
 
+```
+$ go build
+$ ./rlesports
+```
+
 ## Visual Design (eventual)
 
 | Visualization                           | Data point                       |

@@ -1,4 +1,3 @@
-import * as d3 from "d3";
 import { concat, forEach, reduce, slice, map, intersection, size, sortBy } from "lodash";
 import { CIRCLE_RADIUS, WIDTH } from "../constants";
 import {
@@ -9,7 +8,8 @@ import {
   TournamentPlayerNode,
   Team,
 } from "../types";
-import { getNodeId, tournamentsToPlayerNodes, getPlayerName } from "../util";
+import { getNodeId, tournamentsToPlayerNodes, getPlayerName, y } from "../util";
+import * as d3 from "d3";
 
 // Based on adjacent tournaments, shuffle teams so that teams with more shared players are
 // vertically close together. Without this, a simple timeline is chaos. This basically brings us to
@@ -140,12 +140,6 @@ const simpleViz: RLVisualization = {
       .range([15 * CIRCLE_RADIUS + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
 
     // Nodes
-    // y depends on team and player index
-    const y = (d: TournamentPlayerNode) =>
-      4 * CIRCLE_RADIUS +
-      d.teamIndex * 5 * (2 * CIRCLE_RADIUS) +
-      d.playerIndex * (2 * CIRCLE_RADIUS);
-
     const nodeSelection = chart
       .append("g")
       .attr("id", "nodes")

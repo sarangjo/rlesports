@@ -1,19 +1,13 @@
 import { select } from "d3-selection";
 import log from "loglevel";
-
 import { HEIGHT, WIDTH } from "./constants";
 import { RLVisualization, Chart } from "./types";
-// import Simple from "./viz/simple";
-// import Timeline from "./viz/timeline";
-
-// import data from "./data/tournaments.json";
-// import { SankeyViz } from "./viz/sankey";
 import playerTeamsViz from "./viz/playerTeams";
 import sankeyViz from "./viz/sankey";
 import simpleViz from "./viz/simple";
 import forceGraphViz from "./viz/forceGraph";
 import { forEach } from "lodash";
-import { sameTeamForce } from "./forces";
+import { differentTeamForce } from "./forces";
 
 log.setLevel("debug");
 
@@ -86,12 +80,12 @@ if (vizSelect) {
 }
 
 // Test area
-const force = sameTeamForce();
+const force = differentTeamForce();
 
 const nodes = [
-  { tournamentIndex: 0, teamIndex: 0, playerIndex: 0, y: 10, id: "" },
-  { tournamentIndex: 0, teamIndex: 0, playerIndex: 1, y: 20, id: "" },
-  { tournamentIndex: 0, teamIndex: 0, playerIndex: 2, y: 40, id: "" },
+  { tournamentIndex: 0, teamIndex: 0, playerIndex: 0, y: 15, id: "" },
+  { tournamentIndex: 0, teamIndex: 1, playerIndex: 1, y: 20, id: "" },
+  { tournamentIndex: 0, teamIndex: 2, playerIndex: 2, y: 22, id: "" },
 ];
 force.initialize(nodes);
 force(1);

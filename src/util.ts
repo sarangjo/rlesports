@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { Tournament, TournamentPlayerNode } from "./types";
 import { reduce, concat } from "lodash";
+import { CIRCLE_RADIUS } from "./constants";
 
 //// UTILITY
 
@@ -70,6 +71,13 @@ export const tournamentsToPlayerNodes = (tournaments: Tournament[]) => {
                     teamIndex,
                     playerIndex,
                     id: getNodeId(tournamentIndex, teamIndex, playerIndex),
+                    x: 0,
+                    y: y({
+                      tournamentIndex,
+                      teamIndex,
+                      playerIndex,
+                      id: getNodeId(tournamentIndex, teamIndex, playerIndex),
+                    }), // teamIndex <= tournament.teams.length / 2 ? 0 : HEIGHT,
                   }),
                 [] as TournamentPlayerNode[],
               ),
@@ -85,3 +93,7 @@ export const LINK_FORCE = "link";
 
 export const getPlayerName = (tournaments: Tournament[], d: TournamentPlayerNode) =>
   tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex];
+
+// y depends on team and player index
+export const y = (d: TournamentPlayerNode) =>
+  4 * CIRCLE_RADIUS + d.teamIndex * 5 * (2 * CIRCLE_RADIUS) + d.playerIndex * (2 * CIRCLE_RADIUS);
