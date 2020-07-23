@@ -1,6 +1,6 @@
-import { TournamentPlayerNode } from "./types";
-import { partition, map, sortBy, filter, reduce, concat, forEach } from "lodash";
+import { concat, filter, forEach, map, partition, reduce, sortBy } from "lodash";
 import { CIRCLE_RADIUS } from "./constants";
+import { TournamentPlayerNode } from "./types";
 
 // Pushes players on the same team into each other
 export function sameTeamForce() {
@@ -65,6 +65,7 @@ export function sameTeamForce() {
 }
 
 // Pulls players on different teams apart
+// TODO doesn't work well
 export function differentTeamForce() {
   let nodes: TournamentPlayerNode[];
   let strength: number | ((d: TournamentPlayerNode) => number) = 1;

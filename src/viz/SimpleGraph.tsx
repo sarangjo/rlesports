@@ -1,15 +1,9 @@
-import { concat, forEach, reduce, slice, map, intersection, size, sortBy } from "lodash";
-import { CIRCLE_RADIUS, WIDTH } from "../constants";
-import {
-  Chart,
-  RLVisualization,
-  Tournament,
-  TournamentLink,
-  TournamentPlayerNode,
-  Team,
-} from "../types";
-import { getNodeId, tournamentsToPlayerNodes, getPlayerName, y } from "../util";
-import * as d3 from "d3";
+import { scaleLinear } from "d3-scale";
+import { concat, forEach, intersection, map, reduce, size, sortBy } from "lodash";
+import React from "react";
+import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
+import { Team, Tournament, TournamentLink, TournamentPlayerNode } from "../types";
+import { getNodeId, tournamentsToPlayerNodes, y, getPlayerName } from "../util";
 
 // Based on adjacent tournaments, shuffle teams so that teams with more shared players are
 // vertically close together. Without this, a simple timeline is chaos. This basically brings us to
@@ -41,7 +35,7 @@ const sort = (tournaments: Tournament[]): Tournament[] => {
       }
       return {
         originalIndex: teamIndex,
-        newIndex: newIndex,
+        newIndex,
       };
     });
 
@@ -126,86 +120,61 @@ const process = (t: Tournament[]): { nodes: TournamentPlayerNode[]; links: Tourn
 
 const randDiv = () => 0.5; // Math.random() * 0.6 + 0.2;
 
-const simpleViz: RLVisualization = {
-  main: async (chart: Chart) => {
-    const result = await fetch("http://localhost:5002/api/tournaments");
-    const allTournaments: Tournament[] = await result.json();
-    const tournaments = slice(allTournaments, size(allTournaments) - 2); //0, 2);
+export default function SimpleGraph({ tournaments }: { tournaments: Tournament[] }) {
+  const x = scaleLinear()
+    .domain([0, tournaments.length])
+    .range([15 * CIRCLE_RADIUS + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
 
-    const data = process(tournaments);
+  const getD = (d: TournamentLink) => {
+    const sx = x(d.source.tournamentIndex);
+    const sy = y(d.source);
+    const tx = x(d.target.tournamentIndex);
+    const ty = y(d.target);
 
-    const x = d3
-      .scaleLinear()
-      .domain([0, tournaments.length])
-      .range([15 * CIRCLE_RADIUS + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);
+    const xmid = sx + (tx - sx) * randDiv();
+    const ymid = sy + (ty - sy) * randDiv();
 
-    // Nodes
-    const nodeSelection = chart
-      .append("g")
-      .attr("id", "nodes")
-      .selectAll("circle")
-      .data(data.nodes)
-      .enter()
-      .append("g");
+    return `M ${sx} ${sy} C ${xmid} ${sy}, ${xmid} ${sy}, ${xmid} ${ymid} S ${xmid} ${ty}, ${tx} ${ty}`;
+  };
 
-    nodeSelection
-      .append("circle")
-      .attr("cx", (d) => x(d.tournamentIndex))
-      .attr("cy", y)
-      .attr("r", CIRCLE_RADIUS);
+  const data = process(tournaments);
 
-    nodeSelection
-      .append("text")
-      .attr("text-anchor", "end")
-      .attr("x", (d) => x(d.tournamentIndex) - CIRCLE_RADIUS - 5)
-      .attr("y", y)
-      .html((d) => getPlayerName(tournaments, d));
-
-    // Links
-    chart
-      .append("g")
-      .attr("id", "links")
-      .selectAll("line")
-      .data(data.links)
-      .enter()
-      // .append("line")
-      // .attr("x1", (d) => x(d.source.tournamentIndex || 0)) // (typeof d.source === "string" ? x(getNode(d.source).tournamentIndex) : 0))
-      // .attr("y1", (d) => y(d.source))
-      // .attr("x2", (d) => x(d.target.tournamentIndex || 0))
-      // .attr("y2", (d) => y(d.target));
-      .append("path")
-      .attr("d", (d) => {
-        const sx = x(d.source.tournamentIndex);
-        const sy = y(d.source);
-        const tx = x(d.target.tournamentIndex);
-        const ty = y(d.target);
-
-        const xmid = sx + (tx - sx) * randDiv();
-        const ymid = sy + (ty - sy) * randDiv();
-
-        return `M ${sx} ${sy} C ${xmid} ${sy}, ${xmid} ${sy}, ${xmid} ${ymid} S ${xmid} ${ty}, ${tx} ${ty}`;
-      })
-      .attr("fill", "transparent")
-      .attr("stroke", "black");
-
-    // Tournament titles
-    chart
-      .append("g")
-      .attr("id", "tournament-titles")
-      .selectAll("text")
-      .data(tournaments)
-      .enter()
-      .append("text")
-      .attr("x", (_d, i) => x(i))
-      .attr("y", "1em")
-      .attr("text-anchor", "middle")
-      .html((d) =>
-        d.name
-          .split(/[^A-Za-z0-9]/)
-          .map((word) => word[0])
-          .join(""),
-      );
-  },
-};
-
-export default simpleViz;
+  return (
+    <svg width={WIDTH} height={HEIGHT}>
+      <g id="nodes">
+        {map(data.nodes, (d) => (
+          <g key={d.id}>
+            <circle cx={x(d.tournamentIndex)} cy={y(d)} r={CIRCLE_RADIUS} />
+            <text
+              textAnchor="end"
+              x={x(d.tournamentIndex) - CIRCLE_RADIUS - CIRCLE_RADIUS / 2}
+              y={y(d) + CIRCLE_RADIUS / 2}
+            >
+              {getPlayerName(tournaments, d)}
+            </text>
+          </g>
+        ))}
+      </g>
+      <g id="links">
+        {map(data.links, (d) => (
+          <path
+            key={`${d.source.id}-${d.target.id}`}
+            d={getD(d)}
+            fill="transparent"
+            stroke="black"
+          />
+        ))}
+      </g>
+      <g id="tournament-titles">
+        {map(tournaments, (t, i) => (
+          <text x={x(i)} y="1em" textAnchor="middle" key={i}>
+            {t.name
+              .split(/[^A-Za-z0-9]/)
+              .map((word) => word[0])
+              .join("")}
+          </text>
+        ))}
+      </g>
+    </svg>
+  );
+}
