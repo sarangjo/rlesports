@@ -7,11 +7,11 @@ import { CIRCLE_RADIUS } from "./constants";
 
 export const getNodeId = (...indices: number[]): string => indices.join("-");
 
-export const getNode = (id: string): Record<string, number> =>
+export const getNode = (id: string): TournamentPlayerNode =>
   id.split("-").reduce((acc, n, i) => {
     acc[i === 0 ? "tournamentIndex" : i === 1 ? "teamIndex" : "playerIndex"] = +n;
     return acc;
-  }, {});
+  }, {} as TournamentPlayerNode);
 
 export const getLinkElements = (chart: any, links: any[]) =>
   chart
@@ -82,10 +82,10 @@ export const tournamentsToPlayerNodes = (tournaments: Tournament[]) => {
                 [] as TournamentPlayerNode[],
               ),
             ),
-          [],
+          [] as TournamentPlayerNode[],
         ),
       ),
-    [],
+    [] as TournamentPlayerNode[],
   );
 };
 
@@ -97,3 +97,17 @@ export const getPlayerName = (tournaments: Tournament[], d: TournamentPlayerNode
 // y depends on team and player index
 export const y = (d: TournamentPlayerNode) =>
   4 * CIRCLE_RADIUS + d.teamIndex * 5 * (2 * CIRCLE_RADIUS) + d.playerIndex * (2 * CIRCLE_RADIUS);
+
+export enum Viz {
+  SANKEY = "sankey",
+  TEAM_MAP = "team-map",
+  FORCE_GRAPH = "force-graph",
+  SIMPLE = "simple",
+}
+
+export const VizTitle = {
+  [Viz.SANKEY]: "Sankey",
+  [Viz.TEAM_MAP]: "Team Map",
+  [Viz.FORCE_GRAPH]: "Force Graph",
+  [Viz.SIMPLE]: "Simple",
+};

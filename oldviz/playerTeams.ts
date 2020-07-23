@@ -67,30 +67,6 @@ const playerTeamsViz: PlayerTeamsViz = {
   ////// SETUP FUNCTIONS //////
 
   draw: (chart: Chart) => {
-    // UI
-    const uiArea = document.getElementById("ui-area");
-    if (!uiArea) {
-      return;
-    }
-
-    let date = document.getElementById(DATE_INPUT);
-    if (!date) {
-      date = document.createElement("input");
-      date.setAttribute("value", "2021-01-01");
-      date.setAttribute("type", "date");
-      uiArea.appendChild(date);
-    }
-
-    let button = document.getElementById(DATE_INPUT_BUTTON);
-    if (!button) {
-      button = document.createElement("button");
-      button.appendChild(document.createTextNode("Go"));
-      button.addEventListener("click", () =>
-        playerTeamsViz.setDate((date as HTMLInputElement).value),
-      );
-      uiArea.appendChild(button);
-    }
-
     // Simulation
     simulation = d3
       .forceSimulation<Player>(playerNodes)
@@ -114,12 +90,6 @@ const playerTeamsViz: PlayerTeamsViz = {
       .attr("stroke", "blue")
       .attr("fill", "lightblue")
       .attr("opacity", 1);
-
-    // Nodes
-    selections.node = chart.append("g").attr("id", "nodes").selectAll("circle");
-
-    // Links
-    selections.link = chart.append("g").attr("id", "links").selectAll("line");
 
     // Given a team name, generate the polygon for it
     const polygonGenerator = (teamName: string) => {
@@ -175,83 +145,21 @@ const playerTeamsViz: PlayerTeamsViz = {
 
   ////// UPDATE FUNCTIONS //////
 
-  // For the current value of `currentDate`, go through and assign teams to the players
-  process: async () => {
-    const teamMap: Record<string, Player[]> = {};
-
-    const lft = [];
-    playerNodes.forEach((player) => {
-      // TODO: only chooses the earlier on date changes
-      player.team = _.get(
-        _.findLast(
-          playerEvents[player.name],
-          (ev) => currentDate >= ev.start && (!ev.end || currentDate <= ev.end),
-        ),
-        "team",
-      );
-      if (player.team) {
-        if (!(player.team in teamMap)) {
-          teamMap[player.team] = [];
-        }
-        teamMap[player.team].push(player);
-      } else {
-        lft.push(player);
-      }
-    });
-
-    fullTeams = _.keys(_.pickBy(teamMap, (p) => p.length >= 3));
-
-    playerLinks.length = 0;
-    _.forEach(teamMap, (playerNames) => {
-      if (playerNames.length >= 2) {
-        const newLinks = combination(playerNames, 2).map((playerCombo) => ({
-          source: playerCombo[0],
-          target: playerCombo[1],
-        }));
-        playerLinks.push(...newLinks);
-      }
-    });
-  },
-
   // Update pattern: data, exit, enter + merge
   restart: () => {
     // Nodes
     if (selections.node) {
-      selections.node = selections.node.data(playerNodes, (d) => d.name);
-      selections.node.exit().remove();
-      selections.node = selections.node.enter().append("g").merge(selections.node);
-
       // Extra: two components per node
-      selections.node
-        .append("circle")
-        .attr("r", CIRCLE_RADIUS)
-        .call(
-          d3
-            .drag()
-            .on("start", nodeDrag.start.bind(null, simulation))
-            .on("drag", nodeDrag.in)
-            .on("end", nodeDrag.end.bind(null, simulation)),
-        );
-      selections.node
-        .append("text")
-        .attr("x", CIRCLE_RADIUS + 1)
-        .attr("y", 3)
-        .text((d: Player) => d.name);
+      (({} as any).call(
+        d3
+          .drag()
+          .on("start", nodeDrag.start.bind(null, simulation))
+          .on("drag", nodeDrag.in)
+          .on("end", nodeDrag.end.bind(null, simulation)),
+      ));
     }
 
     // Links
-    if (selections.link) {
-      selections.link = selections.link.data(
-        playerLinks,
-        (d) => `${(d.source as Player).name}-${(d.target as Player).name}`,
-      );
-      selections.link.exit().remove();
-      selections.link = selections.link
-        .enter()
-        .append("line")
-        .attr("stroke", "black")
-        .merge(selections.link);
-    }
 
     // Paths
     // TODO needs update pattern

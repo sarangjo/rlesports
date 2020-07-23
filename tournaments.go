@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -50,22 +49,6 @@ var tournamentNames = []string{
 const playersSectionTitle = "participants"
 const minTeamSize = 1 // TODO should be 2?
 
-// Find the section that has `participants` as the line/anchor
-func findSectionIndex(sections []map[string]interface{}) int {
-	for _, section := range sections {
-		if strings.Contains(strings.ToLower(section["line"].(string)), playersSectionTitle) ||
-			strings.Contains(strings.ToLower(section["anchor"].(string)), playersSectionTitle) {
-			num, err := strconv.Atoi(section["index"].(string))
-			if err != nil {
-				fmt.Println("Unable to convert index to number", err)
-				os.Exit(1)
-			}
-			return num
-		}
-	}
-	return -1
-}
-
 // GetTournamentsData gets tournaments data and returns parsed wikitext
 func GetTournamentsData() (output map[string]interface{}) {
 	file, err := os.Open(tournamentsCacheFile)
@@ -85,7 +68,7 @@ func GetTournamentsData() (output map[string]interface{}) {
 	for _, t := range tournamentNames {
 		if _, ok := output[t]; !ok {
 			allSections := GetSections(t)
-			sectionIndex := findSectionIndex(allSections)
+			sectionIndex := FindSectionIndex(allSections, playersSectionTitle)
 
 			if sectionIndex < 0 {
 				fmt.Printf("Unable to find participants section for %s. Ignoring.", t)
