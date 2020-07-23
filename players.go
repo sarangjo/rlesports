@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"regexp"
-	"strings"
 )
 
 /*
@@ -153,39 +151,8 @@ func ProcessPlayersData(output map[string]interface{}) {
 	players := make([]Player, 0, len(output))
 
 	for _, playerData := range output {
-		lines := strings.Split(playerData.(map[string]interface{})["wikitext"].(map[string]interface{})["*"].(string), "\n")
-
-		player := Player{Events: []Event{}}
-
-		inInfobox := false
-		inHistory := false
-
-		for _, line := range lines {
-			if strings.HasPrefix(line, "{{Infobox") {
-				inInfobox = true
-			} else if inInfobox {
-				if strings.HasPrefix(line, "|id=") {
-					player.Name = strings.Replace(line, "|id=", "", 1)
-				}
-			}
-
-			if !inHistory && strings.HasPrefix(line, "|history") {
-				inHistory = true
-			} else if inHistory {
-				if !strings.HasPrefix(line, "{{TH") {
-					break
-				}
-
-				parts := strings.Split(strings.ReplaceAll(strings.ReplaceAll(line, "{{", ""), "}}", ""), "|")
-				dates := strings.Split(parts[1], " ")
-				event := Event{Start: dates[0], Team: parts[2]}
-				if success, _ := regexp.Match(dateRegex, []byte(dates[len(dates)-1])); success {
-					event.End = dates[len(dates)-1]
-				}
-				player.Events = append(player.Events, event)
-			}
-		}
-
+		wikitext := playerData.(map[string]interface{})["wikitext"].(map[string]interface{})["*"].(string)
+		player := ParsePlayer(wikitext)
 		players = append(players, player)
 	}
 }

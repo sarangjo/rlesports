@@ -79,3 +79,37 @@ func GetTournaments() []Tournament {
 
 	return results
 }
+
+// GetTournament gets a single tournament by name
+func GetTournament(t *Tournament) error {
+	tournaments := db.Collection("tournaments")
+	filter := bson.M{"name": t.Name}
+	doc := tournaments.FindOne(context.Background(), filter)
+
+	if err := doc.Decode(t); err != nil {
+		log.Fatal(err)
+		return err
+	}
+
+	return nil
+}
+
+// UploadTournament uploads tournament by name
+func UploadTournament(t Tournament) {
+	tournaments := db.Collection("tournaments")
+
+	opts := options.Replace().SetUpsert(true)
+	filter := bson.M{"name": t.Name}
+	result, err := tournaments.ReplaceOne(context.Background(), filter, t, opts)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if result.MatchedCount != 0 {
+		fmt.Println("matched and replaced an existing document")
+		return
+	}
+	if result.UpsertedCount != 0 {
+		fmt.Printf("inserted a new document with ID %v\n", result.UpsertedID)
+	}
+}

@@ -13,6 +13,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, world!")
 }
 
+// Unsorted list of all tournaments
 func tournaments(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("tournaments")
 
@@ -30,14 +31,14 @@ func tournaments(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	InitializeClient()
+
 	if inServerMode {
 		port := os.Getenv("PORT")
 
 		if port == "" {
 			port = "5002"
 		}
-
-		InitializeClient()
 
 		fmt.Println("mongo client initialized")
 
@@ -48,7 +49,7 @@ func main() {
 
 		http.ListenAndServe(":"+port, nil)
 	} else {
-		output := GetTournamentsData()
-		ProcessTournamentsData(output)
+		// Test area
+		UpdateTournaments()
 	}
 }

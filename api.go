@@ -68,6 +68,18 @@ func GetSections(page string) []map[string]interface{} {
 	return sections
 }
 
+// GetWiki to get wiki
+func GetWiki(page string, sectionTitle string) map[string]interface{} {
+	allSections := GetSections(page)
+	sectionIndex := FindSectionIndex(allSections, sectionTitle)
+
+	if sectionIndex < 0 {
+		return nil
+	}
+
+	return GetSection(page, sectionIndex)
+}
+
 // CallAPI calls Liquipedia API
 func CallAPI(opts url.Values) []byte {
 	u, err := url.Parse(apiBase)
