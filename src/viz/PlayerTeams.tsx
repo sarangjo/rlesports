@@ -86,10 +86,12 @@ const process = (nodes: Player[], playerEvents: Record<string, PlayerEvent[]>, d
   return links;
 };
 
+const INITIAL_DATE = "2021-01-01";
+
 export default function PlayerTeams({ players }: { players: FullPlayer[] }) {
   const update = useUpdate();
 
-  const [date, setDate] = useState("2021-01-01");
+  const [date, setDate] = useState(INITIAL_DATE);
 
   // drag state
   const [dragNode, setDragNode] = useState<d3.SimulationNodeDatum | null>(null);
@@ -97,7 +99,7 @@ export default function PlayerTeams({ players }: { players: FullPlayer[] }) {
   const [start, setStart] = useState({ x: 0, y: 0 });
 
   // Dependent data
-  const { nodes, links, playerEvents } = useMemo(() => init(players, date), [players]);
+  const { nodes, links, playerEvents } = useMemo(() => init(players, INITIAL_DATE), [players]);
   // Dependent simulation
   const simulation = useMemo(() => {
     console.log("creating simulation");

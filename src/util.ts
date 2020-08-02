@@ -98,11 +98,18 @@ export const getPlayerName = (tournaments: Tournament[], d: TournamentPlayerNode
 export const y = (d: TournamentPlayerNode) =>
   4 * CIRCLE_RADIUS + d.teamIndex * 5 * (2 * CIRCLE_RADIUS) + d.playerIndex * (2 * CIRCLE_RADIUS);
 
+export const tournamentAcronym = (name: string) =>
+  name.replaceAll(/[^A-Z0-9\/]/g, "").replaceAll("/", " ");
+// .split(/[^A-Za-z0-9]/)
+// .map((word) => word[0])
+// .join("");
+
 export enum Viz {
   SANKEY = "sankey",
   TEAM_MAP = "team-map",
   FORCE_GRAPH = "force-graph",
   SIMPLE = "simple",
+  TABLE = "table",
 }
 
 export const VizTitle = {
@@ -110,4 +117,5 @@ export const VizTitle = {
   [Viz.TEAM_MAP]: "Team Map",
   [Viz.FORCE_GRAPH]: "Force Graph",
   [Viz.SIMPLE]: "Simple",
+  [Viz.TABLE]: "Table",
 };

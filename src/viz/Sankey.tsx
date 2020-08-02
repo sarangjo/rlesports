@@ -1,13 +1,15 @@
 import { sankey, SankeyLink, sankeyLinkHorizontal, SankeyNode } from "d3-sankey";
-import { find, forEach, get, map } from "lodash";
+import { find, forEach, get, map, min, minBy } from "lodash";
 import React, { useMemo } from "react";
 import { HEIGHT, WIDTH } from "../constants";
 import { Tournament } from "../types";
+import { scaleTime } from "d3-scale";
 
 // These properties are on top of the node and link properties Sankey provides
 interface TeamNode {
   name: string;
   tournamentIndex: number;
+  date?: string;
 }
 
 interface PlayerLink {
@@ -32,14 +34,26 @@ const processTournaments = (tournaments: Tournament[]) => {
   const links: Array<SankeyLink<TeamNode, PlayerLink>> = [];
   // Collect all relevant players
   const allPlayers = new Set<string>();
+
+  let minDate: string = "",
+    maxDate: string = "";
+
   forEach(tournaments, (tourney, tournamentIndex) => {
     // Add nodes for each team
     forEach(tourney.teams, (team) => {
-      nodes.push({ name: team.name, tournamentIndex });
+      nodes.push({ name: team.name, tournamentIndex, date: tourney.start });
       map(team.players, (p) => allPlayers.add(p));
     });
     // Add the none
-    nodes.push({ name: NONE_TEAM, tournamentIndex });
+    nodes.push({ name: NONE_TEAM, tournamentIndex, date: tourney.start });
+
+    // Update min/max dates
+    if (!minDate || tourney.start < minDate) {
+      minDate = tourney.start;
+    }
+    if (!maxDate || tourney.start > maxDate) {
+      maxDate = tourney.start;
+    }
   });
 
   forEach(tournaments.slice(0, tournaments.length - 1), (tourney, tournamentIndex) => {
@@ -75,7 +89,7 @@ const processTournaments = (tournaments: Tournament[]) => {
     );
   });
 
-  return { nodes, links };
+  return { nodes, links, minDate, maxDate };
 };
 
 const NODE_WIDTH = 20;
@@ -104,7 +118,8 @@ const sankeyCreator = (sankey<TeamNode, PlayerLink>()
 export default function Sankey({ tournaments }: { tournaments: Tournament[] }) {
   const data = processTournaments(tournaments); // useMemo(() => processTournaments(tournaments), [tournaments]);
 
-  console.log(data);
+  const x = scaleTime().domain([new Date(data.minDate), new Date(data.maxDate)]);
+  // .nodeAlign((d: TeamNode) => x(new Date(d.date || data.minDate)))
 
   if (data.nodes.length > 0 && data.links.length > 0) {
     sankeyCreator(data);

@@ -3,7 +3,7 @@ import { concat, forEach, intersection, map, reduce, size, sortBy } from "lodash
 import React from "react";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { Team, Tournament, TournamentLink, TournamentPlayerNode } from "../types";
-import { getNodeId, tournamentsToPlayerNodes, y, getPlayerName } from "../util";
+import { getNodeId, tournamentsToPlayerNodes, y, getPlayerName, tournamentAcronym } from "../util";
 
 // Based on adjacent tournaments, shuffle teams so that teams with more shared players are
 // vertically close together. Without this, a simple timeline is chaos. This basically brings us to
@@ -168,10 +168,7 @@ export default function SimpleGraph({ tournaments }: { tournaments: Tournament[]
       <g id="tournament-titles">
         {map(tournaments, (t, i) => (
           <text x={x(i)} y="1em" textAnchor="middle" key={i}>
-            {t.name
-              .split(/[^A-Za-z0-9]/)
-              .map((word) => word[0])
-              .join("")}
+            {tournamentAcronym(t.name)}
           </text>
         ))}
       </g>

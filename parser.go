@@ -33,6 +33,10 @@ func ParseTeams(wikitext string) []Team {
 				team = Team{}
 			}
 			team.Name = strings.Replace(line, "|team=", "", 1)
+			endBar := strings.Index(team.Name, "|")
+			if endBar >= 0 {
+				team.Name = team.Name[0:endBar]
+			}
 			foundTeam = true
 			// Once we've found a team, parse at least 3 players
 		} else if foundTeam {

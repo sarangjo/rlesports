@@ -7,8 +7,6 @@ import (
 	"os"
 )
 
-const inServerMode = true
-
 func home(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, world!")
 }
@@ -33,7 +31,32 @@ func tournaments(w http.ResponseWriter, r *http.Request) {
 func main() {
 	InitializeClient()
 
-	if inServerMode {
+	if len(os.Args) == 2 && os.Args[1] == "test" {
+		// Test area
+		/*
+			f, err := os.Open("logo.png")
+			if err != nil {
+				log.Fatal("can't open image")
+			}
+
+			img, err := png.Decode(f) // image.Decode(f)
+			if err != nil {
+				log.Fatal("can't decode image")
+			}
+			f.Close()
+
+			res, err := prominentcolor.Kmeans(img)
+			if err != nil {
+				log.Fatal("can't process image")
+			}
+
+			fmt.Println("colors:")
+			for _, color := range res {
+				fmt.Println("#" + color.AsString())
+			}
+		*/
+		UpdateTournaments(true)
+	} else {
 		port := os.Getenv("PORT")
 
 		if port == "" {
@@ -48,8 +71,12 @@ func main() {
 		fmt.Println("About to use port", port)
 
 		http.ListenAndServe(":"+port, nil)
-	} else {
-		// Test area
-		UpdateTournaments()
 	}
 }
+
+/*
+#D3D3E8                                                                                       │
+#3A396B                                                                                       │
+#5755A2
+
+*/

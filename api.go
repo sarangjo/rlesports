@@ -35,7 +35,7 @@ func GetPlayer(player string) map[string]interface{} {
 }
 
 // GetSection gets the section wikitext for the given page and section
-func GetSection(page string, section int) map[string]interface{} {
+func GetSection(page string, section int) string {
 	opts := url.Values{
 		"action":  {"parse"},
 		"prop":    {"wikitext"},
@@ -45,7 +45,8 @@ func GetSection(page string, section int) map[string]interface{} {
 	var res parseResult
 	resp := CallAPI(opts)
 	json.Unmarshal(resp, &res)
-	return res.Parse.(map[string]interface{})
+	fullSection := res.Parse.(map[string]interface{})
+	return fullSection["wikitext"].(map[string]interface{})["*"].(string)
 }
 
 // GetSections gets all sections for the given page
@@ -66,18 +67,6 @@ func GetSections(page string) []map[string]interface{} {
 		sections = append(sections, raw.(map[string]interface{}))
 	}
 	return sections
-}
-
-// GetWiki to get wiki
-func GetWiki(page string, sectionTitle string) map[string]interface{} {
-	allSections := GetSections(page)
-	sectionIndex := FindSectionIndex(allSections, sectionTitle)
-
-	if sectionIndex < 0 {
-		return nil
-	}
-
-	return GetSection(page, sectionIndex)
 }
 
 // CallAPI calls Liquipedia API

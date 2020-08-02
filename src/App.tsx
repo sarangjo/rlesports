@@ -1,4 +1,4 @@
-import { map, size, slice } from "lodash";
+import { map, size, slice, sortBy } from "lodash";
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import players from "./data/players.json";
@@ -8,6 +8,7 @@ import ForceGraph from "./viz/ForceGraph";
 import PlayerTeams from "./viz/PlayerTeams";
 import Sankey from "./viz/Sankey";
 import SimpleGraph from "./viz/SimpleGraph";
+import Table from "./viz/Table";
 
 function App() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
@@ -17,7 +18,12 @@ function App() {
     const get = async () => {
       const result = await fetch("http://localhost:5002/api/tournaments");
       const allTournaments: Tournament[] = await result.json();
-      setTournaments(slice(allTournaments, size(allTournaments) - 2)); // 0, 2);
+      const sorted = allTournaments.sort((a, b) =>
+        (a.start || "") > (b.start || "") ? 1 : (a.start || "") < (b.start || "") ? -1 : 0,
+      );
+      console.log(sorted);
+
+      setTournaments(slice(allTournaments, 0, 4));
     };
     get();
   }, []);
@@ -45,6 +51,8 @@ function App() {
         <Sankey tournaments={tournaments} />
       ) : view === Viz.TEAM_MAP ? (
         <PlayerTeams players={players} />
+      ) : view === Viz.TABLE ? (
+        <Table tournaments={tournaments} />
       ) : (
         ""
       )}

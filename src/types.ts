@@ -9,7 +9,7 @@ export interface Team {
 
 export interface Tournament {
   name: string;
-  start?: string;
+  start: string;
   end?: string;
   teams: Team[];
 }
