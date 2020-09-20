@@ -4,37 +4,23 @@ import (
 	"fmt"
 )
 
-// Team is a single team
-type Team struct {
-	Players []string `json:"players"`
-	Subs    []string `json:"subs"`
-	Name    string   `json:"name"`
-}
-
-// Tournament describes, well, a tournament
-type Tournament struct {
-	Name  string `json:"name"`
-	Teams []Team `json:"teams"`
-	Start string `json:"start"`
-}
-
 const prefix = "Rocket League Championship Series/Season "
 const region = "North America"
 
 var tournamentNames = []string{
-	// fmt.Sprintf("%s1/%s/Qualifier 1", prefix, region),
-	// fmt.Sprintf("%s1/%s/Qualifier 2", prefix, region),
-	// fmt.Sprintf("%s1", prefix),
-	// fmt.Sprintf("%s2/%s", prefix, region),
-	// fmt.Sprintf("%s2", prefix),
-	// fmt.Sprintf("%s3/%s", prefix, region),
-	// fmt.Sprintf("%s3", prefix),
-	// fmt.Sprintf("%s4/%s", prefix, region),
-	// fmt.Sprintf("%s4", prefix),
-	// fmt.Sprintf("%s5/%s", prefix, region),
+	fmt.Sprintf("%s1/%s/Qualifier 1", prefix, region),
+	fmt.Sprintf("%s1/%s/Qualifier 2", prefix, region),
+	fmt.Sprintf("%s1", prefix),
+	fmt.Sprintf("%s2/%s", prefix, region),
+	fmt.Sprintf("%s2", prefix),
+	fmt.Sprintf("%s3/%s", prefix, region),
+	fmt.Sprintf("%s3", prefix),
+	fmt.Sprintf("%s4/%s", prefix, region),
+	fmt.Sprintf("%s4", prefix),
+	fmt.Sprintf("%s5/%s", prefix, region),
 	fmt.Sprintf("%s5", prefix),
-	// fmt.Sprintf("%s6/%s", prefix, region),
-	// fmt.Sprintf("%s6", prefix),
+	fmt.Sprintf("%s6/%s", prefix, region),
+	fmt.Sprintf("%s6", prefix),
 	fmt.Sprintf("%s7/%s", prefix, region),
 	fmt.Sprintf("%s7", prefix),
 	fmt.Sprintf("%s8/%s", prefix, region),
@@ -55,7 +41,7 @@ func UpdateTournaments(forceUpload bool) {
 		tourney := Tournament{Name: name}
 		err := GetTournament(&tourney)
 		needTeams = forceUpload || err != nil || len(tourney.Teams) == 0
-		needDetails = forceUpload || err != nil || tourney.Start == ""
+		needDetails = forceUpload || err != nil || tourney.Start == "" || tourney.End == "" || tourney.Region == RegionNone
 
 		fmt.Println(name, needTeams, needDetails)
 
@@ -75,7 +61,7 @@ func UpdateTournaments(forceUpload bool) {
 
 		if needDetails {
 			wikitext := GetSection(name, infoboxSectionIndex)
-			tourney.Start = ParseStart(wikitext)
+			tourney.Start, tourney.End, tourney.Region = ParseStartEndRegion(wikitext)
 		}
 
 		// 3. Upload the tournament

@@ -3,10 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
-	"strings"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -20,27 +18,19 @@ var db *mongo.Database
 
 const passwordKey = "DB_PASSWORD"
 
+func getDbSrv() string {
+	// return fmt.Sprintf("mongodb+srv://dbUser:%s@cluster0.xhiax.mongodb.net/rlesports?retryWrites=true&w=majority", password)
+	return "mongodb://localhost:27017"
+}
+
 // InitializeClient initializes the mongo DB client
 func InitializeClient() {
-	password, present := os.LookupEnv(passwordKey)
-	if !present {
-		file, err := os.Open("password")
-		if err != nil {
-			fmt.Println("Unable to open db file", err)
-			os.Exit(1)
-		}
-		byteValue, _ := ioutil.ReadAll(file)
-		password = strings.TrimSpace(string(byteValue))
-	}
-
 	var err error
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	client, err = mongo.Connect(ctx, options.Client().ApplyURI(
-		fmt.Sprintf("mongodb+srv://dbUser:%s@cluster0.xhiax.mongodb.net/rlesports?retryWrites=true&w=majority", password),
-	))
+	client, err = mongo.Connect(ctx, options.Client().ApplyURI(getDbSrv()))
 	if err != nil {
 		fmt.Println("Unable to connect", err)
 		os.Exit(1)
@@ -51,7 +41,7 @@ func InitializeClient() {
 
 // UploadTournaments uploads all given tournaments
 func UploadTournaments(data []Tournament) {
-	tournaments := db.Collection("tournaments-test")
+	tournaments := db.Collection("tournaments")
 
 	models := make([]mongo.WriteModel, len(data))
 

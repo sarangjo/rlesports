@@ -10,7 +10,7 @@
       "request": "launch",
       "mode": "debug",
       "program": "${workspaceFolder}",
-      "args": ["test"]
+      "args": ["update"]
     },
     {
       "name": "Python: main.py",

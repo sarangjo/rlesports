@@ -31,7 +31,7 @@ func tournaments(w http.ResponseWriter, r *http.Request) {
 func main() {
 	InitializeClient()
 
-	if len(os.Args) == 2 && os.Args[1] == "test" {
+	if len(os.Args) == 2 && os.Args[1] == "update" {
 		// Test area
 		/*
 			f, err := os.Open("logo.png")
@@ -55,7 +55,7 @@ func main() {
 				fmt.Println("#" + color.AsString())
 			}
 		*/
-		UpdateTournaments(true)
+		UpdateTournaments(false)
 	} else {
 		port := os.Getenv("PORT")
 
@@ -73,10 +73,3 @@ func main() {
 		http.ListenAndServe(":"+port, nil)
 	}
 }
-
-/*
-#D3D3E8                                                                                       │
-#3A396B                                                                                       │
-#5755A2
-
-*/

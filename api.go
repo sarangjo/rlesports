@@ -8,12 +8,15 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"time"
 )
 
 const apiBase = "https://liquipedia.net/rocketleague/api.php"
 const userAgent = "RL Esports"
+const rateGap time.Duration = time.Second * 30
 
 var httpClient = &http.Client{}
+var lastRequest time.Time
 
 type parseResult struct {
 	Parse interface{} `json:"parse"`
@@ -71,6 +74,17 @@ func GetSections(page string) []map[string]interface{} {
 
 // CallAPI calls Liquipedia API
 func CallAPI(opts url.Values) []byte {
+	// Rate limit
+	timeSinceLast := time.Since(lastRequest)
+	if timeSinceLast < rateGap {
+		fmt.Printf("waiting for %v seconds\n", (rateGap - timeSinceLast).Round(time.Second))
+		for time.Since(lastRequest) < rateGap {
+			time.Sleep(time.Second * 5)
+			fmt.Print(".")
+		}
+		fmt.Println()
+	}
+
 	u, err := url.Parse(apiBase)
 	if err != nil {
 		fmt.Println("Could not parse api base... wut?")
@@ -96,6 +110,8 @@ func CallAPI(opts url.Values) []byte {
 		fmt.Println("Failed to read body", err)
 		os.Exit(1)
 	}
+
+	lastRequest = time.Now()
 
 	return body
 }

@@ -59,22 +59,55 @@ func ParseTeams(wikitext string) []Team {
 	return teams
 }
 
-// ParseStart get start of tournament, or returns empty string
-func ParseStart(wikitext string) string {
+const (
+	typeOnline  = "Online"
+	typeOffline = "Offline"
+)
+
+const (
+	countryNorthAmerica = "North America"
+	countryEurope       = "Europe"
+)
+
+// ParseStartEndRegion get start, end, region of tournament, or returns empty
+func ParseStartEndRegion(wikitext string) (string, string, int) {
 	lines := strings.Split(wikitext, "\n")
 
 	inInfobox := false
+
+	start := ""
+	end := ""
+	tType := typeOffline
+	country := ""
 
 	for _, line := range lines {
 		if strings.HasPrefix(line, "{{Infobox") {
 			inInfobox = true
 		} else if inInfobox {
 			if strings.HasPrefix(line, "|sdate=") {
-				return strings.Replace(line, "|sdate=", "", 1)
+				start = strings.Replace(line, "|sdate=", "", 1)
+			} else if strings.HasPrefix(line, "|edate=") {
+				end = strings.Replace(line, "|edate=", "", 1)
+			} else if strings.HasPrefix(line, "|type=") {
+				tType = strings.Replace(line, "|type=", "", 1)
+			} else if strings.HasPrefix(line, "|country=") {
+				country = strings.Replace(line, "|country=", "", 1)
 			}
 		}
 	}
-	return ""
+
+	region := RegionNone
+	if tType == typeOffline {
+		region = RegionWorld
+	} else {
+		if country == countryNorthAmerica {
+			region = RegionNorthAmerica
+		} else if country == countryEurope {
+			region = RegionEurope
+		}
+	}
+
+	return start, end, region
 }
 
 // ParsePlayer parses player from wikitext
