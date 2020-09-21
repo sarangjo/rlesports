@@ -70,18 +70,12 @@ func GetTournaments() []Tournament {
 	return results
 }
 
-// GetTournament gets a single tournament by name
+// GetTournament gets a single tournament by name. If not found, returns err
 func GetTournament(t *Tournament) error {
 	tournaments := db.Collection("tournaments")
 	filter := bson.M{"name": t.Name}
 	doc := tournaments.FindOne(context.Background(), filter)
-
-	if err := doc.Decode(t); err != nil {
-		log.Fatal(err)
-		return err
-	}
-
-	return nil
+	return doc.Decode(t)
 }
 
 // UploadTournament uploads tournament by name

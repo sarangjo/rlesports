@@ -13,7 +13,7 @@ type Tournament struct {
 	Start  string `json:"start"`
 	End    string `json:"end,omitempty"`
 	Teams  []Team `json:"teams"`
-	Region int    `json:"regions,omitempty"`
+	Region int    `json:"region,omitempty"`
 }
 
 // Regions

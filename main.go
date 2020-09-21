@@ -31,7 +31,7 @@ func tournaments(w http.ResponseWriter, r *http.Request) {
 func main() {
 	InitializeClient()
 
-	if len(os.Args) == 2 && os.Args[1] == "update" {
+	if (len(os.Args) == 2 || len(os.Args) == 3) && os.Args[1] == "update" {
 		// Test area
 		/*
 			f, err := os.Open("logo.png")
@@ -55,7 +55,7 @@ func main() {
 				fmt.Println("#" + color.AsString())
 			}
 		*/
-		UpdateTournaments(false)
+		UpdateTournaments(len(os.Args) == 3 && os.Args[2] == "--force")
 	} else {
 		port := os.Getenv("PORT")
 

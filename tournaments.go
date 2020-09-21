@@ -25,6 +25,7 @@ var tournamentNames = []string{
 	fmt.Sprintf("%s7", prefix),
 	fmt.Sprintf("%s8/%s", prefix, region),
 	fmt.Sprintf("%s8", prefix),
+	fmt.Sprintf("%s9/%s", prefix, region),
 }
 
 const playersSectionTitle = "participants"
@@ -43,7 +44,18 @@ func UpdateTournaments(forceUpload bool) {
 		needTeams = forceUpload || err != nil || len(tourney.Teams) == 0
 		needDetails = forceUpload || err != nil || tourney.Start == "" || tourney.End == "" || tourney.Region == RegionNone
 
-		fmt.Println(name, needTeams, needDetails)
+		var teamsString, detailsString string
+		if needTeams {
+			teamsString = "teams"
+		} else {
+			teamsString = "no teams"
+		}
+		if needDetails {
+			detailsString = "details"
+		} else {
+			detailsString = "no details"
+		}
+		fmt.Println(name, teamsString, detailsString)
 
 		// 2. Fetch needed data from API
 		if needTeams {

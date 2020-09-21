@@ -16,7 +16,7 @@ const userAgent = "RL Esports"
 const rateGap time.Duration = time.Second * 30
 
 var httpClient = &http.Client{}
-var lastRequest time.Time
+var lastRequest = time.Unix(0, 0)
 
 type parseResult struct {
 	Parse interface{} `json:"parse"`
