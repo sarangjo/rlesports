@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import { Tournament, TournamentPlayerNode } from "./types";
-import { reduce, concat } from "lodash";
+import { reduce, concat, map, pickBy } from "lodash";
 import { CIRCLE_RADIUS } from "./constants";
 
 //// UTILITY
@@ -110,6 +110,7 @@ export enum Viz {
   FORCE_GRAPH = "force-graph",
   SIMPLE = "simple",
   TABLE = "table",
+  TEXT = "text",
 }
 
 export const VizTitle = {
@@ -118,4 +119,15 @@ export const VizTitle = {
   [Viz.FORCE_GRAPH]: "Force Graph",
   [Viz.SIMPLE]: "Simple",
   [Viz.TABLE]: "Table",
+  [Viz.TEXT]: "Text",
+};
+
+// Map numerical enum
+export const mapEnum = (x: any, iter: (val: number, key: string) => any) => {
+  return map(
+    pickBy(x, (val) => {
+      return typeof val === "number";
+    }),
+    iter,
+  );
 };

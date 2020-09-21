@@ -1,18 +1,20 @@
-import { map, size, slice, sortBy } from "lodash";
+import { filter, find, map, size, slice, sortBy } from "lodash";
+import log from "loglevel";
 import React, { useEffect, useState } from "react";
-import "./App.css";
 import players from "./data/players.json";
-import { Tournament } from "./types";
-import { Viz, VizTitle } from "./util";
+import { Region, Tournament } from "./types";
+import { mapEnum, Viz, VizTitle } from "./util";
 import ForceGraph from "./viz/ForceGraph";
 import PlayerTeams from "./viz/PlayerTeams";
 import Sankey from "./viz/Sankey";
 import SimpleGraph from "./viz/SimpleGraph";
 import Table from "./viz/Table";
+import Text from "./viz/Text";
 
 function App() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
-  const [view, setView] = useState(Viz.SANKEY);
+  const [view, setView] = useState(Viz.TEXT);
+  const [regions, setRegions] = useState([Region.NORTH_AMERICA]);
 
   useEffect(() => {
     const get = async () => {
@@ -23,7 +25,7 @@ function App() {
       );
       console.log(sorted);
 
-      setTournaments(slice(allTournaments, 0, 4));
+      setTournaments(sorted);
     };
     get();
   }, []);
@@ -32,9 +34,20 @@ function App() {
     setView(e.target.value);
   };
 
+  const handleChangeRegion = (e: any) => {
+    setRegions(
+      map(
+        [...e.target.options].filter((o) => o.selected).map((o) => o.value),
+        (s) => +s,
+      ),
+    );
+  };
+
+  const chosenTournaments = filter(tournaments, (t) => !!find(regions, (r) => r === t.region));
+
   return (
-    <div className="App">
-      <div>
+    <div>
+      <div style={{ textAlign: "center" }}>
         <select value={view} onChange={handleChange}>
           {map(Viz, (x) => (
             <option value={x} key={x}>
@@ -42,17 +55,27 @@ function App() {
             </option>
           ))}
         </select>
+        <select value={map(regions, (r) => "" + r)} onChange={handleChangeRegion} multiple>
+          {mapEnum(Region, (x, name) => (
+            <option value={x} key={x}>
+              {name}
+            </option>
+          ))}
+        </select>
+        {JSON.stringify(regions)}
       </div>
       {view === Viz.SIMPLE ? (
-        <SimpleGraph tournaments={tournaments} />
+        <SimpleGraph tournaments={chosenTournaments} />
       ) : view === Viz.FORCE_GRAPH ? (
-        <ForceGraph tournaments={tournaments} />
+        <ForceGraph tournaments={chosenTournaments} />
       ) : view === Viz.SANKEY ? (
-        <Sankey tournaments={tournaments} />
+        <Sankey tournaments={chosenTournaments} />
       ) : view === Viz.TEAM_MAP ? (
         <PlayerTeams players={players} />
       ) : view === Viz.TABLE ? (
-        <Table tournaments={tournaments} />
+        <Table tournaments={chosenTournaments} />
+      ) : view === Viz.TEXT ? (
+        <Text tournaments={chosenTournaments} />
       ) : (
         ""
       )}

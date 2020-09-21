@@ -12,6 +12,16 @@ export interface Tournament {
   start: string;
   end?: string;
   teams: Team[];
+  region: Region;
+}
+
+export enum Region {
+  NONE,
+  WORLD,
+  NORTH_AMERICA,
+  EUROPE,
+  OCEANIA,
+  SOUTH_AMERICA,
 }
 
 // Graph types
