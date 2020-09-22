@@ -1,5 +1,5 @@
 import { interpolateInferno, interpolateOrRd, scaleOrdinal, schemeAccent } from "d3";
-import { forEach, map, size } from "lodash";
+import { forEach, map, reduce, size, sum, values } from "lodash";
 import React from "react";
 import { Tournament } from "../types";
 import { tournamentAcronym } from "../util";
@@ -32,17 +32,49 @@ const process = (tournaments: Tournament[]) => {
   });
 };
 
+const rookiePercentage = (seasonCounts: Record<string, number>) => {
+  const [rookies, nonRookies] = reduce(
+    seasonCounts,
+    (acc, cur) => {
+      acc[cur === 1 ? 0 : 1]++;
+      return acc;
+    },
+    [0, 0],
+  );
+  return (100 * rookies) / (rookies + nonRookies);
+};
+
+const average = (seasonCounts: Record<string, number>) => {
+  return sum(values(seasonCounts)) / size(seasonCounts);
+};
+
 export default function Text({ tournaments }: Props) {
+  const processed = process(tournaments);
+
   return (
     <table>
       <tbody>
         <tr>
+          <th />
           {map(tournaments, (t) => (
             <th>{tournamentAcronym(t.name)}</th>
           ))}
         </tr>
+        <tr style={{ textAlign: "center" }}>
+          <td>Percentage of rookies</td>
+          {map(processed, ({ tournament: t, seasonCounts }) => (
+            <td>{Math.round(rookiePercentage(seasonCounts) * 100) / 100}</td>
+          ))}
+        </tr>
+        <tr style={{ textAlign: "center" }}>
+          <td>Average</td>
+          {map(processed, ({ tournament: t, seasonCounts }) => (
+            <td>{Math.round(average(seasonCounts) * 100) / 100}</td>
+          ))}
+        </tr>
         <tr>
-          {map(process(tournaments), ({ tournament: t, seasonCounts }) => (
+          <td>Details</td>
+          {map(processed, ({ tournament: t, seasonCounts }) => (
             <td>
               <ul>
                 {map(t.teams, (team) => (
