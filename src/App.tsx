@@ -1,5 +1,4 @@
 import { filter, find, map, size, slice, sortBy } from "lodash";
-import log from "loglevel";
 import React, { useEffect, useState } from "react";
 import players from "./data/players.json";
 import { Region, Tournament } from "./types";
@@ -10,10 +9,11 @@ import Sankey from "./viz/Sankey";
 import SimpleGraph from "./viz/SimpleGraph";
 import Table from "./viz/Table";
 import Text from "./viz/Text";
+import Timeline from "./viz/Timeline";
 
 function App() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
-  const [view, setView] = useState(Viz.TEXT);
+  const [view, setView] = useState(Viz.TIMELINE);
   const [regions, setRegions] = useState([Region.NORTH_AMERICA]);
 
   useEffect(() => {
@@ -23,7 +23,6 @@ function App() {
       const sorted = allTournaments.sort((a, b) =>
         (a.start || "") > (b.start || "") ? 1 : (a.start || "") < (b.start || "") ? -1 : 0,
       );
-      console.log(sorted);
 
       setTournaments(sorted);
     };
@@ -76,6 +75,8 @@ function App() {
         <Table tournaments={chosenTournaments} />
       ) : view === Viz.TEXT ? (
         <Text tournaments={chosenTournaments} />
+      ) : view === Viz.TIMELINE ? (
+        <Timeline tournaments={chosenTournaments} />
       ) : (
         ""
       )}

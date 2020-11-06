@@ -1,7 +1,8 @@
 import * as d3 from "d3";
-import { Tournament, TournamentPlayerNode } from "./types";
-import { reduce, concat, map, pickBy } from "lodash";
+import { concat, map, pickBy, reduce } from "lodash";
+import moment from "moment";
 import { CIRCLE_RADIUS } from "./constants";
+import { Tournament, TournamentPlayerNode } from "./types";
 
 //// UTILITY
 
@@ -95,8 +96,15 @@ export const getPlayerName = (tournaments: Tournament[], d: TournamentPlayerNode
   tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex];
 
 // y depends on team and player index
-export const y = (d: TournamentPlayerNode) =>
-  4 * CIRCLE_RADIUS + d.teamIndex * 5 * (2 * CIRCLE_RADIUS) + d.playerIndex * (2 * CIRCLE_RADIUS);
+export const y = (d: TournamentPlayerNode) => simpleY(d.teamIndex, d.playerIndex);
+
+export const simpleY = (teamIndex: number, playerIndex: number, playersPerTeam = 5, buffer = 4) =>
+  // buffer
+  buffer * CIRCLE_RADIUS +
+  // team spacing
+  teamIndex * playersPerTeam * (2 * CIRCLE_RADIUS) +
+  // player spacing
+  playerIndex * (2 * CIRCLE_RADIUS);
 
 export const tournamentAcronym = (name: string) =>
   name.replaceAll(/[^A-Z0-9\/]/g, "").replaceAll("/", " ");
@@ -111,6 +119,7 @@ export enum Viz {
   SIMPLE = "simple",
   TABLE = "table",
   TEXT = "text",
+  TIMELINE = "timeline",
 }
 
 export const VizTitle = {
@@ -120,6 +129,7 @@ export const VizTitle = {
   [Viz.SIMPLE]: "Simple",
   [Viz.TABLE]: "Table",
   [Viz.TEXT]: "Text",
+  [Viz.TIMELINE]: "Timeline",
 };
 
 // Map numerical enum
@@ -131,3 +141,7 @@ export const mapEnum = (x: any, iter: (val: number, key: string) => any) => {
     iter,
   );
 };
+
+export const DATE_FORMAT = "YYYY-MM-DD";
+
+export const toDate = (d: string): Date => moment(d, DATE_FORMAT).toDate();
