@@ -1,7 +1,7 @@
 import { filter, find, map, size, slice, sortBy } from "lodash";
 import React, { useEffect, useState } from "react";
 import players from "./data/players.json";
-import { Region, Tournament } from "./types";
+import { PlayerEvent, Region, Tournament } from "./types";
 import { mapEnum, Viz, VizTitle } from "./util";
 import ForceGraph from "./viz/ForceGraph";
 import PlayerTeams from "./viz/PlayerTeams";
@@ -11,10 +11,13 @@ import Table from "./viz/Table";
 import Text from "./viz/Text";
 import Timeline from "./viz/Timeline";
 
+import events from "./viz/events.json";
+import teams from "./viz/teams.json";
+
 function App() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [view, setView] = useState(Viz.TIMELINE);
-  const [regions, setRegions] = useState([Region.NORTH_AMERICA]);
+  const [regions, setRegions] = useState([Region.NORTH_AMERICA, Region.WORLD]);
 
   useEffect(() => {
     const get = async () => {
@@ -61,7 +64,6 @@ function App() {
             </option>
           ))}
         </select>
-        {JSON.stringify(regions)}
       </div>
       {view === Viz.SIMPLE ? (
         <SimpleGraph tournaments={chosenTournaments} />
@@ -76,7 +78,11 @@ function App() {
       ) : view === Viz.TEXT ? (
         <Text tournaments={chosenTournaments} />
       ) : view === Viz.TIMELINE ? (
-        <Timeline tournaments={chosenTournaments} />
+        <Timeline
+          tournaments={chosenTournaments}
+          events={(events as unknown) as Record<string, PlayerEvent[]>}
+          teams={(teams as unknown) as Record<string, string>}
+        />
       ) : (
         ""
       )}

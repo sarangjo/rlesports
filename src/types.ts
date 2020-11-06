@@ -10,9 +10,20 @@ export interface Team {
 export interface Tournament {
   name: string;
   start: string;
-  end?: string;
+  end: string;
   teams: Team[];
   region: Region;
+}
+
+export enum EventType {
+  JOIN = "join",
+  LEAVE = "leave",
+}
+
+export interface PlayerEvent {
+  team: string;
+  join: string;
+  leave?: string;
 }
 
 export enum Region {
