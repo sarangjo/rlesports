@@ -5,6 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Go: Players",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${workspaceFolder}",
+      "args": ["players"]
+    },
+    {
       "name": "Go: Update Tournaments",
       "type": "go",
       "request": "launch",

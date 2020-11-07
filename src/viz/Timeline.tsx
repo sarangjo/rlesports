@@ -1,27 +1,10 @@
 import { scaleTime } from "d3-scale";
-import {
-  apply,
-  assign,
-  concat,
-  forEach,
-  get,
-  keys,
-  last,
-  map,
-  maxBy,
-  minBy,
-  range,
-  reduce,
-  set,
-  size,
-  slice,
-  values,
-} from "lodash";
+import { assign, concat, forEach, last, map, maxBy, minBy, range, reduce, set, size } from "lodash";
 import moment, { Moment } from "moment";
 import React from "react";
 import { CIRCLE_RADIUS, HEIGHT, MARGIN, SPACING } from "../constants";
-import { EventType, PlayerEvent, Tournament } from "../types";
-import { DATE_FORMAT, simpleY, toDate, tournamentAcronym, y } from "../util";
+import { EventType, Player, Tournament } from "../types";
+import { DATE_FORMAT, toDate, tournamentAcronym } from "../util";
 
 const BIG_WIDTH = 2500;
 
@@ -29,7 +12,7 @@ const TIMELINE_BUFFER = 10;
 
 const Radius = {
   [EventType.JOIN]: 4,
-  [EventType.LEAVE]: 5,
+  [EventType.LEAVE]: 6,
 };
 const FILL_LEAVE = "transparent";
 const COLOR_UNKNOWN_TEAM = "#232323";
@@ -40,29 +23,6 @@ const COLOR_NO_TEAM = "#bbbbbb";
 //    - teams are evaluated based on the ones that participated in the tournaments
 // - team info: colors, date range
 // - tournaments: participants (team names could change), winners
-
-const timelineY = (ti: number, pi: number) => simpleY(ti, pi, 6, TIMELINE_BUFFER);
-
-const getIndices2 = (t: Tournament): Record<string, [number, number]> => {
-  return reduce(
-    t.teams,
-    (acc, cur, teamIndex) => {
-      return assign(
-        acc,
-        reduce(
-          cur.players,
-          (acc2, p, playerIndex) => {
-            return assign(acc2, {
-              [p]: [teamIndex, playerIndex],
-            });
-          },
-          {},
-        ),
-      );
-    },
-    {},
-  );
-};
 
 const getIndices = (t: Tournament, players: string[]): Record<string, number> => {
   let idx = 0;
@@ -97,11 +57,11 @@ const getIndices = (t: Tournament, players: string[]): Record<string, number> =>
 // Contract: each player's events are always sorted in time order. Tournaments are sorted.
 export default function Timeline({
   tournaments,
-  events,
+  events: players,
   teams,
 }: {
   tournaments: Tournament[];
-  events: Record<string, PlayerEvent[]>;
+  events: Player[];
   teams: Record<string, string>;
 }) {
   if (size(tournaments) === 0) {
@@ -109,10 +69,13 @@ export default function Timeline({
   }
 
   // Use tournament 0 to fix our starting Y.
-  const indices = getIndices(tournaments[0], keys(events));
+  const indices = getIndices(
+    tournaments[0],
+    map(players, (p) => p.name),
+  );
 
   // Most important function: given an event # and player, get its Y coordinate.
-  const getY = (player: string, _eventNum: number, evType: EventType) => {
+  const getY = (player: string, _eventNum: number, _eventType: EventType) => {
     if (!(player in indices)) {
       alert("Unknown player! " + player);
       return 0;
@@ -122,8 +85,8 @@ export default function Timeline({
   };
 
   // Try 1: events
-  const start = minBy(values(events), (e) => e[0].join);
-  const end = maxBy(values(events), (e) => last(e)!.leave || last(e)!.join);
+  const start = minBy(players, (p) => p.memberships[0].join);
+  const end = maxBy(players, (p) => last(p.memberships)!.leave || last(p.memberships)!.join);
 
   if (!start || !end) {
     return (
@@ -133,8 +96,8 @@ export default function Timeline({
     );
   }
 
-  let startDate = start[0].join;
-  let endDate = last(end)!.leave || last(end)!.join;
+  let startDate = start.memberships[0].join;
+  let endDate = last(end.memberships)!.leave || last(end.memberships)!.join;
 
   // Try 2: tournaments
   startDate = startDate > tournaments[0].start ? tournaments[0].start : startDate;
@@ -168,6 +131,27 @@ export default function Timeline({
             <TimelineDate now={moment(t.end)} />
           </>
         ))}
+      </g>
+      <g id="tournaments">
+        {map(tournaments, (t, idx) => {
+          const thisX = x(toDate(t.start));
+          const thisWidth = x(toDate(t.end)) - x(toDate(t.start));
+
+          return (
+            <g key={idx}>
+              <rect x={thisX} y={0} width={thisWidth} height={HEIGHT} opacity={0.2} />
+              <text
+                x={thisX + thisWidth / 2}
+                y={TIMELINE_BUFFER * CIRCLE_RADIUS}
+                transform={`rotate(90,${thisX + thisWidth / 2},${TIMELINE_BUFFER * CIRCLE_RADIUS})`}
+                // textLength={HEIGHT - TIMELINE_BUFFER * CIRCLE_RADIUS}
+                // lengthAdjust="spacing"
+              >
+                {tournamentAcronym(t.name)}
+              </text>
+            </g>
+          );
+        })}
       </g>
       {/* <g id="nodes">
         {reduce(
@@ -203,41 +187,49 @@ export default function Timeline({
       </g> */}
       <g id="events">
         {reduce(
-          events,
-          (acc, evs, player) => {
+          players,
+          (acc, player) => {
             // Processing a single player's events, we can produce the nodes and links in one iteration
             const lulw = reduce(
-              evs,
-              (acc2, e, idx) => {
-                const color = e.team in teams ? teams[e.team] : COLOR_UNKNOWN_TEAM;
+              player.memberships,
+              (acc2, mem, idx) => {
+                const color = mem.team in teams ? teams[mem.team] : COLOR_UNKNOWN_TEAM;
 
                 // Join
-                const joinX = x(toDate(e.join));
-                const joinY = getY(player, idx, EventType.JOIN);
+                const joinX = x(toDate(mem.join));
+                const joinY = getY(player.name, idx, EventType.JOIN);
+                const circ = (
+                  <circle
+                    id={`${player.name}-join-${mem.team}`}
+                    data-date={mem.join}
+                    cx={joinX}
+                    cy={joinY}
+                    r={Radius[EventType.JOIN]}
+                    stroke={color}
+                    fill={color}
+                  />
+                );
                 acc2.push(
-                  <g>
-                    <circle
-                      cx={joinX}
-                      cy={joinY}
-                      r={Radius[EventType.JOIN]}
-                      stroke={color}
-                      fill={color}
-                    />
-                    {idx === 0 && (
+                  idx === 0 ? (
+                    <g>
+                      {circ}
                       <text textAnchor="end" x={joinX - SPACING} y={joinY + SPACING / 2}>
-                        {player}
+                        {player.name}
                       </text>
-                    )}
-                  </g>,
+                    </g>
+                  ) : (
+                    circ
+                  ),
                 );
 
                 // Link backward between events
                 if (idx !== 0) {
-                  const prevLeaveX = x(toDate(evs[idx - 1].leave!));
-                  const prevLeaveY = getY(player, idx, EventType.LEAVE);
+                  const prevLeaveX = x(toDate(player.memberships[idx - 1].leave!));
+                  const prevLeaveY = getY(player.name, idx, EventType.LEAVE);
 
                   acc2.push(
                     <line
+                      id={`${player.name}-teamless-${idx}`}
                       x1={prevLeaveX}
                       y1={prevLeaveY}
                       x2={joinX}
@@ -248,11 +240,13 @@ export default function Timeline({
                 }
 
                 // Leave?
-                const leaveX = x(toDate(e.leave || endDate));
-                const leaveY = getY(player, idx, EventType.LEAVE);
-                if (e.leave) {
+                const leaveX = x(toDate(mem.leave || endDate));
+                const leaveY = getY(player.name, idx, EventType.LEAVE);
+                if (mem.leave) {
                   acc2.push(
                     <circle
+                      id={`${player.name}-leave-${mem.team}`}
+                      data-date={mem.leave}
                       cx={leaveX}
                       cy={leaveY}
                       r={Radius[EventType.LEAVE]}
@@ -264,6 +258,7 @@ export default function Timeline({
 
                 acc2.push(
                   <line
+                    id={`${player.name}-team-${mem.team}`}
                     x1={joinX}
                     y1={joinY}
                     x2={leaveX}
@@ -271,7 +266,7 @@ export default function Timeline({
                     stroke={color}
                     strokeWidth={3}
                   >
-                    <title>{e.team}</title>
+                    <title>{mem.team}</title>
                   </line>,
                 );
 
@@ -286,27 +281,6 @@ export default function Timeline({
         )}
       </g>
       {/* <g id="links">{map(events, (e) => getPath(e))}</g> */}
-      <g id="tournaments">
-        {map(tournaments, (t, idx) => {
-          const thisX = x(toDate(t.start));
-          const thisWidth = x(toDate(t.end)) - x(toDate(t.start));
-
-          return (
-            <g key={idx}>
-              <rect x={thisX} y={0} width={thisWidth} height={HEIGHT} opacity={0.2} />
-              <text
-                x={thisX + thisWidth / 2}
-                y={TIMELINE_BUFFER * CIRCLE_RADIUS}
-                transform={`rotate(90,${thisX + thisWidth / 2},${TIMELINE_BUFFER * CIRCLE_RADIUS})`}
-                // textLength={HEIGHT - TIMELINE_BUFFER * CIRCLE_RADIUS}
-                // lengthAdjust="spacing"
-              >
-                {tournamentAcronym(t.name)}
-              </text>
-            </g>
-          );
-        })}
-      </g>
     </svg>
   );
 }

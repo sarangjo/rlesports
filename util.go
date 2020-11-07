@@ -1,24 +1,22 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
+	"io/ioutil"
 )
 
-// FindSectionIndex finds the section that has `participants` as the line/anchor
-func FindSectionIndex(sections []map[string]interface{}, sectionTitle string) int {
-	for _, section := range sections {
-		if strings.Contains(strings.ToLower(section["line"].(string)), sectionTitle) ||
-			strings.Contains(strings.ToLower(section["anchor"].(string)), sectionTitle) {
-			num, err := strconv.Atoi(section["index"].(string))
-			if err != nil {
-				fmt.Println("Unable to convert index to number", err)
-				os.Exit(1)
-			}
-			return num
-		}
+// WriteJSONFile writes any type of output to the specified file
+func WriteJSONFile(output interface{}, filename string) error {
+	outputBytes, err := json.MarshalIndent(output, "", "  ")
+	if err != nil {
+		fmt.Println("Unable to marshal output", err)
+		return err
 	}
-	return -1
+	err = ioutil.WriteFile(filename, outputBytes, 0644)
+	if err != nil {
+		fmt.Println("Unable to write out tournaments cache file", err)
+		return err
+	}
+	return nil
 }

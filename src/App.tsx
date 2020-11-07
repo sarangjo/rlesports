@@ -1,7 +1,7 @@
 import { filter, find, map, size, slice, sortBy } from "lodash";
 import React, { useEffect, useState } from "react";
 import players from "./data/players.json";
-import { PlayerEvent, Region, Tournament } from "./types";
+import { Player, Region, Tournament } from "./types";
 import { mapEnum, Viz, VizTitle } from "./util";
 import ForceGraph from "./viz/ForceGraph";
 import PlayerTeams from "./viz/PlayerTeams";
@@ -80,7 +80,7 @@ function App() {
       ) : view === Viz.TIMELINE ? (
         <Timeline
           tournaments={chosenTournaments}
-          events={(events as unknown) as Record<string, PlayerEvent[]>}
+          events={events as Player[]}
           teams={(teams as unknown) as Record<string, string>}
         />
       ) : (

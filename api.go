@@ -22,8 +22,8 @@ type parseResult struct {
 	Parse interface{} `json:"parse"`
 }
 
-// GetPlayer gets player information
-func GetPlayer(player string) map[string]interface{} {
+// FetchPlayer gets player information
+func FetchPlayer(player string) map[string]interface{} {
 	opts := url.Values{
 		"action":  {"parse"},
 		"prop":    {"wikitext"},
@@ -37,8 +37,8 @@ func GetPlayer(player string) map[string]interface{} {
 	return res.Parse.(map[string]interface{})
 }
 
-// GetSection gets the section wikitext for the given page and section
-func GetSection(page string, section int) string {
+// FetchSection gets the section wikitext for the given page and section
+func FetchSection(page string, section int) string {
 	opts := url.Values{
 		"action":  {"parse"},
 		"prop":    {"wikitext"},
@@ -52,8 +52,8 @@ func GetSection(page string, section int) string {
 	return fullSection["wikitext"].(map[string]interface{})["*"].(string)
 }
 
-// GetSections gets all sections for the given page
-func GetSections(page string) []map[string]interface{} {
+// FetchSections gets all sections for the given page
+func FetchSections(page string) []map[string]interface{} {
 	opts := url.Values{
 		"action": {"parse"},
 		"prop":   {"sections"},

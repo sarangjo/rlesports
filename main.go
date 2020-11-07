@@ -31,31 +31,15 @@ func tournaments(w http.ResponseWriter, r *http.Request) {
 func main() {
 	InitializeClient()
 
-	if (len(os.Args) == 2 || len(os.Args) == 3) && os.Args[1] == "update" {
-		// Test area
-		/*
-			f, err := os.Open("logo.png")
-			if err != nil {
-				log.Fatal("can't open image")
-			}
-
-			img, err := png.Decode(f) // image.Decode(f)
-			if err != nil {
-				log.Fatal("can't decode image")
-			}
-			f.Close()
-
-			res, err := prominentcolor.Kmeans(img)
-			if err != nil {
-				log.Fatal("can't process image")
-			}
-
-			fmt.Println("colors:")
-			for _, color := range res {
-				fmt.Println("#" + color.AsString())
-			}
-		*/
-		UpdateTournaments(len(os.Args) == 3 && os.Args[2] == "--force")
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "update":
+			UpdateTournaments(len(os.Args) == 3 && os.Args[2] == "--force")
+			break
+		case "players":
+			SmarterPlayers()
+			break
+		}
 	} else {
 		port := os.Getenv("PORT")
 

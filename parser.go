@@ -110,11 +110,13 @@ func ParseStartEndRegion(wikitext string) (string, string, int) {
 	return start, end, region
 }
 
+const dateRegex = "[\\w?]{4}-[\\w?]{2}-[\\w?]{2}"
+
 // ParsePlayer parses player from wikitext
 func ParsePlayer(wikitext string) Player {
 	lines := strings.Split(wikitext, "\n")
 
-	player := Player{Events: []Event{}}
+	player := Player{Memberships: []Membership{}}
 
 	inInfobox := false
 	inHistory := false
@@ -137,11 +139,14 @@ func ParsePlayer(wikitext string) Player {
 
 			parts := strings.Split(strings.ReplaceAll(strings.ReplaceAll(line, "{{", ""), "}}", ""), "|")
 			dates := strings.Split(parts[1], " ")
-			event := Event{Start: dates[0], Team: parts[2]}
-			if success, _ := regexp.Match(dateRegex, []byte(dates[len(dates)-1])); success {
-				event.End = dates[len(dates)-1]
+			membership := Membership{Join: dates[0], Team: parts[2]}
+			if success, _ := regexp.Match(dateRegex, []byte(dates[2])); success {
+				membership.Leave = dates[2]
 			}
-			player.Events = append(player.Events, event)
+			// Verify that both Join/Leave don't have ?'s
+			if strings.IndexByte(membership.Join, '?') < 0 && strings.IndexByte(membership.Leave, '?') < 0 {
+				player.Memberships = append(player.Memberships, membership)
+			}
 		}
 	}
 	return player

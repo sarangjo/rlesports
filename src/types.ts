@@ -20,7 +20,12 @@ export enum EventType {
   LEAVE = "leave",
 }
 
-export interface PlayerEvent {
+export interface Player {
+  name: string;
+  memberships: Membership[];
+}
+
+export interface Membership {
   team: string;
   join: string;
   leave?: string;

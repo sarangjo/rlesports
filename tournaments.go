@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
 )
 
 const prefix = "Rocket League Championship Series/Season "
@@ -60,19 +63,19 @@ func UpdateTournaments(forceUpload bool) {
 		// 2. Fetch needed data from API
 		if needTeams {
 			// Need to find the right section for participants
-			allSections := GetSections(name)
+			allSections := FetchSections(name)
 
-			sectionIndex := FindSectionIndex(allSections, playersSectionTitle)
+			sectionIndex := findSectionIndex(allSections, playersSectionTitle)
 			if sectionIndex < 0 {
 				fmt.Println("Unable to find participants section for", name)
 			} else {
-				wikitext := GetSection(name, sectionIndex)
+				wikitext := FetchSection(name, sectionIndex)
 				tourney.Teams = ParseTeams(wikitext)
 			}
 		}
 
 		if needDetails {
-			wikitext := GetSection(name, infoboxSectionIndex)
+			wikitext := FetchSection(name, infoboxSectionIndex)
 			tourney.Start, tourney.End, tourney.Region = ParseStartEndRegion(wikitext)
 		}
 
@@ -81,4 +84,20 @@ func UpdateTournaments(forceUpload bool) {
 			UploadTournament(tourney)
 		}
 	}
+}
+
+// findSectionIndex finds the section that has `participants` as the line/anchor
+func findSectionIndex(sections []map[string]interface{}, sectionTitle string) int {
+	for _, section := range sections {
+		if strings.Contains(strings.ToLower(section["line"].(string)), sectionTitle) ||
+			strings.Contains(strings.ToLower(section["anchor"].(string)), sectionTitle) {
+			num, err := strconv.Atoi(section["index"].(string))
+			if err != nil {
+				fmt.Println("Unable to convert index to number", err)
+				os.Exit(1)
+			}
+			return num
+		}
+	}
+	return -1
 }
