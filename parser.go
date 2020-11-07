@@ -140,8 +140,10 @@ func ParsePlayer(wikitext string) Player {
 			parts := strings.Split(strings.ReplaceAll(strings.ReplaceAll(line, "{{", ""), "}}", ""), "|")
 			dates := strings.Split(parts[1], " ")
 			membership := Membership{Join: dates[0], Team: parts[2]}
-			if success, _ := regexp.Match(dateRegex, []byte(dates[2])); success {
-				membership.Leave = dates[2]
+			if len(dates) >= 3 {
+				if success, _ := regexp.Match(dateRegex, []byte(dates[2])); success {
+					membership.Leave = dates[2]
+				}
 			}
 			// Verify that both Join/Leave don't have ?'s
 			if strings.IndexByte(membership.Join, '?') < 0 && strings.IndexByte(membership.Leave, '?') < 0 {

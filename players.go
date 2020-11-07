@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"sort"
+	"strings"
 )
 
 // Membership is a team membership for a player
@@ -101,38 +103,65 @@ func membershipInTournaments(name string, membership Membership, tournaments []T
 	return false
 }
 
+// CacheVerify verifies cache integrity
+func CacheVerify() {
+	cache := getCache()
+
+	var players []string
+	for p := range cache {
+		players = append(players, strings.ToLower(p))
+	}
+	sort.Strings(players)
+	fmt.Println(players)
+}
+
 // SmarterPlayers builds up events for players that matter based on the tournaments provided.
 // TODO what about situations like Genocop for RLCS S1 NA Q1 where he's not listed on Liquipedia?
 // ATM it's a sux2suck kinda situation
 func SmarterPlayers() {
 	tournaments := GetTournaments()
 
-	var minifiedPlayers []Player
+	minifiedPlayers := make(map[string]Player)
 
-	for _, team := range tournaments[0].Teams {
-		for _, name := range team.Players {
-			// Get data for a chosen player
-			fmt.Println(team.Name, "player", name)
-			player := getPlayerDetails(name)
+	for idx, tournament := range tournaments[0:4] {
+		for _, team := range tournament.Teams {
+			for _, name := range team.Players {
+				// Get data for a chosen player
+				fmt.Println(team.Name, "player", name)
 
-			// Find team participations that are relevant to this tournament based on start/end date
-			var memberships []Membership
-
-			for _, membership := range player.Memberships {
-				if membershipInTournaments(name, membership, tournaments) {
-					memberships = append(memberships, membership)
+				if _, ok := minifiedPlayers[name]; ok {
+					fmt.Println("Already processed", name)
+					continue
 				}
-			}
-			fmt.Println(memberships)
 
-			if len(memberships) > 0 {
-				minifiedPlayers = append(minifiedPlayers, Player{Name: player.Name, Memberships: memberships})
+				player := getPlayerDetails(name)
+
+				// Find team participations that are relevant to all tournaments based on start/end date
+				var memberships []Membership
+
+				for _, membership := range player.Memberships {
+					if membershipInTournaments(name, membership, tournaments[idx:]) {
+						memberships = append(memberships, membership)
+					}
+				}
+				fmt.Println(memberships)
+
+				if len(memberships) > 0 {
+					minifiedPlayers[player.Name] = Player{Name: player.Name, Memberships: memberships}
+				}
 			}
 		}
 	}
 
 	fmt.Println(minifiedPlayers)
-	if WriteJSONFile(minifiedPlayers, eventsOutputFile) != nil {
+
+	// Convert map to a slice
+	var playerArray []Player
+	for _, v := range minifiedPlayers {
+		playerArray = append(playerArray, v)
+	}
+
+	if WriteJSONFile(playerArray, eventsOutputFile) != nil {
 		os.Exit(1)
 	}
 }

@@ -1,12 +1,26 @@
 import { scaleTime } from "d3-scale";
-import { assign, concat, forEach, last, map, maxBy, minBy, range, reduce, set, size } from "lodash";
+import {
+  assign,
+  concat,
+  forEach,
+  isNull,
+  last,
+  map,
+  maxBy,
+  minBy,
+  range,
+  reduce,
+  set,
+  size,
+} from "lodash";
 import moment, { Moment } from "moment";
 import React from "react";
 import { CIRCLE_RADIUS, HEIGHT, MARGIN, SPACING } from "../constants";
 import { EventType, Player, Tournament } from "../types";
 import { DATE_FORMAT, toDate, tournamentAcronym } from "../util";
 
-const BIG_WIDTH = 2500;
+const BIG_WIDTH = 5500;
+const BIG_HEIGHT = 2500;
 
 const TIMELINE_BUFFER = 10;
 
@@ -17,6 +31,7 @@ const Radius = {
 const FILL_LEAVE = "transparent";
 const COLOR_UNKNOWN_TEAM = "#232323";
 const COLOR_NO_TEAM = "#bbbbbb";
+const STROKE_WIDTH_TEAM = 3;
 
 // Three inputs:
 // - player events: join/leave team
@@ -75,10 +90,9 @@ export default function Timeline({
   );
 
   // Most important function: given an event # and player, get its Y coordinate.
-  const getY = (player: string, _eventNum: number, _eventType: EventType) => {
+  const getY = (player: string, _eventNum?: number, _eventType?: EventType) => {
     if (!(player in indices)) {
-      alert("Unknown player! " + player);
-      return 0;
+      return null;
     }
 
     return 10 * SPACING + indices[player] * 2 * SPACING;
@@ -120,7 +134,7 @@ export default function Timeline({
   );
 
   return (
-    <svg width={BIG_WIDTH} height={HEIGHT}>
+    <svg width={BIG_WIDTH} height={BIG_HEIGHT}>
       <g id="timeline">
         {map(range(0, moment(endDate).diff(startDate, "d"), 50), (days, i) => (
           <TimelineDate key={i} now={moment(startDate).add(days, "d")} />
@@ -139,65 +153,59 @@ export default function Timeline({
 
           return (
             <g key={idx}>
-              <rect x={thisX} y={0} width={thisWidth} height={HEIGHT} opacity={0.2} />
+              <rect x={thisX} y={0} width={thisWidth} height={BIG_HEIGHT} opacity={0.2} />
               <text
                 x={thisX + thisWidth / 2}
                 y={TIMELINE_BUFFER * CIRCLE_RADIUS}
                 transform={`rotate(90,${thisX + thisWidth / 2},${TIMELINE_BUFFER * CIRCLE_RADIUS})`}
-                // textLength={HEIGHT - TIMELINE_BUFFER * CIRCLE_RADIUS}
+                // textLength={BIG_HEIGHT - TIMELINE_BUFFER * CIRCLE_RADIUS}
                 // lengthAdjust="spacing"
               >
                 {tournamentAcronym(t.name)}
               </text>
+              {reduce(
+                t.teams,
+                (acc, cur, teamIndex) => {
+                  return concat(
+                    acc,
+                    map(cur.players, (p, playerIndex) => {
+                      const myY = getY(p);
+                      if (isNull(myY)) {
+                        return undefined;
+                      }
+
+                      return (
+                        <rect
+                          x={thisX}
+                          y={myY - CIRCLE_RADIUS / 2 - STROKE_WIDTH_TEAM / 2}
+                          width={thisWidth}
+                          height={CIRCLE_RADIUS + STROKE_WIDTH_TEAM}
+                          opacity={0.3}
+                        />
+                      );
+                    }),
+                  );
+                },
+                [] as any[],
+              )}
             </g>
           );
         })}
       </g>
-      {/* <g id="nodes">
-        {reduce(
-          q1.teams,
-          (acc, cur, teamIndex) => {
-            return concat(
-              acc,
-              map(cur.players, (p, playerIndex) => {
-                const myY = timelineY(teamIndex, playerIndex);
-                return (
-                  <g key={`${teamIndex}-${playerIndex}`}>
-                    <circle
-                      cx={q1x}
-                      cy={myY}
-                      r={CIRCLE_RADIUS}
-                      stroke={Color.TOURNAMENT}
-                      fill={Color.TOURNAMENT}
-                    />
-                    <text
-                      textAnchor="end"
-                      x={q1x - CIRCLE_RADIUS - CIRCLE_RADIUS / 2}
-                      y={myY + CIRCLE_RADIUS / 2}
-                    >
-                      {p}
-                    </text>
-                  </g>
-                );
-              }),
-            );
-          },
-          [] as any[],
-        )}
-      </g> */}
       <g id="events">
         {reduce(
           players,
           (acc, player) => {
+            // TODO filter out players that don't have tournaments visible in the view rn
             // Processing a single player's events, we can produce the nodes and links in one iteration
-            const lulw = reduce(
+            const elements = reduce(
               player.memberships,
               (acc2, mem, idx) => {
                 const color = mem.team in teams ? teams[mem.team] : COLOR_UNKNOWN_TEAM;
 
                 // Join
                 const joinX = x(toDate(mem.join));
-                const joinY = getY(player.name, idx, EventType.JOIN);
+                const joinY = getY(player.name, idx, EventType.JOIN)!;
                 const circ = (
                   <circle
                     id={`${player.name}-join-${mem.team}`}
@@ -225,7 +233,7 @@ export default function Timeline({
                 // Link backward between events
                 if (idx !== 0) {
                   const prevLeaveX = x(toDate(player.memberships[idx - 1].leave!));
-                  const prevLeaveY = getY(player.name, idx, EventType.LEAVE);
+                  const prevLeaveY = getY(player.name, idx, EventType.LEAVE)!;
 
                   acc2.push(
                     <line
@@ -241,7 +249,7 @@ export default function Timeline({
 
                 // Leave?
                 const leaveX = x(toDate(mem.leave || endDate));
-                const leaveY = getY(player.name, idx, EventType.LEAVE);
+                const leaveY = getY(player.name, idx, EventType.LEAVE)!;
                 if (mem.leave) {
                   acc2.push(
                     <circle
@@ -264,7 +272,7 @@ export default function Timeline({
                     x2={leaveX}
                     y2={leaveY}
                     stroke={color}
-                    strokeWidth={3}
+                    strokeWidth={STROKE_WIDTH_TEAM}
                   >
                     <title>{mem.team}</title>
                   </line>,
@@ -275,7 +283,7 @@ export default function Timeline({
               [] as any[],
             );
 
-            return concat(acc, lulw);
+            return concat(acc, elements);
           },
           [] as any[],
         )}
