@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"sort"
 	"strings"
 )
 
@@ -107,12 +106,35 @@ func membershipInTournaments(name string, membership Membership, tournaments []T
 func CacheVerify() {
 	cache := getCache()
 
-	var players []string
+	uniqueNames := make(map[string]bool)
 	for p := range cache {
-		players = append(players, strings.ToLower(p))
+		if _, ok := uniqueNames[strings.ToLower(p)]; ok {
+			fmt.Println("DUPLICATE!!!!!!", p)
+		}
+		uniqueNames[strings.ToLower(p)] = true
 	}
-	sort.Strings(players)
-	fmt.Println(players)
+
+	allPlayers := make(map[string][]string)
+	tournaments := GetTournaments()
+	for _, tournament := range tournaments {
+		for _, team := range tournament.Teams {
+			for _, name := range team.Players {
+				if _, ok := allPlayers[name]; !ok {
+					allPlayers[name] = make([]string, 0)
+				}
+				allPlayers[name] = append(allPlayers[name], fmt.Sprintf("%s-%s", tournament.Name, team.Name))
+			}
+		}
+	}
+
+	uniqueNames2 := make(map[string]bool)
+	for p, t := range allPlayers {
+		if _, ok := uniqueNames2[strings.ToLower(p)]; ok {
+			fmt.Println("TOURN DUPLICATE!!!!!", p, t)
+			fmt.Println("matched with!!!!!", allPlayers[strings.ToLower(p)])
+		}
+		uniqueNames2[strings.ToLower(p)] = true
+	}
 }
 
 // SmarterPlayers builds up events for players that matter based on the tournaments provided.
@@ -123,13 +145,16 @@ func SmarterPlayers() {
 
 	minifiedPlayers := make(map[string]Player)
 
-	for idx, tournament := range tournaments[0:4] {
+	for idx, tournament := range tournaments[0:8] {
 		for _, team := range tournament.Teams {
 			for _, name := range team.Players {
 				// Get data for a chosen player
 				fmt.Println(team.Name, "player", name)
 
-				if _, ok := minifiedPlayers[name]; ok {
+				// use lowercase as the canonical version
+				playerID := strings.ToLower(name)
+
+				if _, ok := minifiedPlayers[playerID]; ok {
 					fmt.Println("Already processed", name)
 					continue
 				}
@@ -147,13 +172,16 @@ func SmarterPlayers() {
 				fmt.Println(memberships)
 
 				if len(memberships) > 0 {
-					minifiedPlayers[player.Name] = Player{Name: player.Name, Memberships: memberships}
+					minifiedPlayers[playerID] = Player{Name: player.Name, Memberships: memberships}
 				}
 			}
 		}
 	}
 
-	fmt.Println(minifiedPlayers)
+	for p := range minifiedPlayers {
+		fmt.Printf("%s ", p)
+	}
+	fmt.Println()
 
 	// Convert map to a slice
 	var playerArray []Player

@@ -135,17 +135,6 @@ export default function Timeline({
 
   return (
     <svg width={BIG_WIDTH} height={BIG_HEIGHT}>
-      <g id="timeline">
-        {map(range(0, moment(endDate).diff(startDate, "d"), 50), (days, i) => (
-          <TimelineDate key={i} now={moment(startDate).add(days, "d")} />
-        ))}
-        {map(tournaments, (t) => (
-          <>
-            <TimelineDate now={moment(t.start)} />
-            <TimelineDate now={moment(t.end)} />
-          </>
-        ))}
-      </g>
       <g id="tournaments">
         {map(tournaments, (t, idx) => {
           const thisX = x(toDate(t.start));
@@ -165,10 +154,10 @@ export default function Timeline({
               </text>
               {reduce(
                 t.teams,
-                (acc, cur, teamIndex) => {
+                (acc, cur) => {
                   return concat(
                     acc,
-                    map(cur.players, (p, playerIndex) => {
+                    map(cur.players, (p) => {
                       const myY = getY(p);
                       if (isNull(myY)) {
                         return undefined;
@@ -191,6 +180,17 @@ export default function Timeline({
             </g>
           );
         })}
+      </g>
+      <g id="timeline">
+        {map(range(0, moment(endDate).diff(startDate, "d"), 50), (days, i) => (
+          <TimelineDate key={i} now={moment(startDate).add(days, "d")} />
+        ))}
+        {map(tournaments, (t) => (
+          <>
+            <TimelineDate now={moment(t.start)} />
+            <TimelineDate now={moment(t.end)} />
+          </>
+        ))}
       </g>
       <g id="events">
         {reduce(

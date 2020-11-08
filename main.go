@@ -39,6 +39,9 @@ func main() {
 		case "players":
 			SmarterPlayers()
 			break
+		case "pcache-verify":
+			CacheVerify()
+			break
 		}
 	} else {
 		port := os.Getenv("PORT")

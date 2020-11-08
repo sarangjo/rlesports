@@ -1,9 +1,11 @@
 import React, { useMemo } from "react";
-import { Tournament } from "../types";
+import { Player, Tournament } from "../types";
 import { map, reduce, forEach, find, get, size } from "lodash";
-
 import "./Table.css";
 import { tournamentAcronym } from "../util";
+import { HEIGHT, WIDTH } from "../constants";
+
+const SEASON_WIDTH = 600;
 
 interface Team {
   tournamentIndex: number;
@@ -47,9 +49,24 @@ const getRow = (n: number, teams: Team[]) => {
   return els;
 };
 
-export default function Table({ tournaments }: { tournaments: Tournament[] }) {
+export default function Table({
+  tournaments,
+  players,
+}: {
+  tournaments: Tournament[];
+  players: Player[];
+}) {
   const allPlayers = useMemo(() => getAllPlayers(tournaments), [tournaments]);
 
+  return (
+    <svg height={HEIGHT} width={WIDTH}>
+      <g transform="translate(40, 40)">
+        <rect x={0} y={0} width={20} height={20} />
+      </g>
+    </svg>
+  );
+
+  /*
   return (
     <table>
       <tbody>
@@ -68,4 +85,5 @@ export default function Table({ tournaments }: { tournaments: Tournament[] }) {
       </tbody>
     </table>
   );
+  */
 }

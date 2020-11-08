@@ -74,7 +74,7 @@ function App() {
       ) : view === Viz.TEAM_MAP ? (
         <PlayerTeams players={players} />
       ) : view === Viz.TABLE ? (
-        <Table tournaments={chosenTournaments} />
+        <Table tournaments={chosenTournaments} players={events} />
       ) : view === Viz.TEXT ? (
         <Text tournaments={chosenTournaments} />
       ) : view === Viz.TIMELINE ? (
