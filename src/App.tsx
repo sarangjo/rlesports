@@ -11,13 +11,13 @@ import Table from "./viz/Table";
 import Text from "./viz/Text";
 import Timeline from "./viz/Timeline";
 
-import events from "./viz/events.json";
-import teams from "./viz/teams.json";
+import events from "./data/events.json";
+import teams from "./data/teams.json";
 
 function App() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
-  const [view, setView] = useState(Viz.TIMELINE);
-  const [regions, setRegions] = useState([Region.NORTH_AMERICA, Region.WORLD]);
+  const [view, setView] = useState(Viz.TABLE);
+  const [regions, setRegions] = useState([Region.NORTH_AMERICA, Region.WORLD, Region.EUROPE]);
 
   useEffect(() => {
     const get = async () => {
@@ -27,7 +27,7 @@ function App() {
         (a.start || "") > (b.start || "") ? 1 : (a.start || "") < (b.start || "") ? -1 : 0,
       );
 
-      setTournaments(sorted);
+      setTournaments(filter(sorted, (t) => t.season === "1"));
     };
     get();
   }, []);
@@ -74,7 +74,7 @@ function App() {
       ) : view === Viz.TEAM_MAP ? (
         <PlayerTeams players={players} />
       ) : view === Viz.TABLE ? (
-        <Table tournaments={chosenTournaments} players={events} />
+        <Table tournaments={chosenTournaments} players={events} teams={teams} />
       ) : view === Viz.TEXT ? (
         <Text tournaments={chosenTournaments} />
       ) : view === Viz.TIMELINE ? (

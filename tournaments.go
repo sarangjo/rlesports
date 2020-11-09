@@ -7,82 +7,101 @@ import (
 	"strings"
 )
 
+// RLCS only.
 const prefix = "Rocket League Championship Series/Season "
-const region = "North America"
+const seasonMax = 9
 
-var tournamentNames = []string{
-	fmt.Sprintf("%s1/%s/Qualifier 1", prefix, region),
-	fmt.Sprintf("%s1/Europe/Qualifier 1", prefix),
-	fmt.Sprintf("%s1/%s/Qualifier 2", prefix, region),
-	fmt.Sprintf("%s1", prefix),
-	fmt.Sprintf("%s2/%s", prefix, region),
-	fmt.Sprintf("%s2", prefix),
-	fmt.Sprintf("%s3/%s", prefix, region),
-	fmt.Sprintf("%s3", prefix),
-	fmt.Sprintf("%s4/%s", prefix, region),
-	fmt.Sprintf("%s4", prefix),
-	fmt.Sprintf("%s5/%s", prefix, region),
-	fmt.Sprintf("%s5", prefix),
-	fmt.Sprintf("%s6/%s", prefix, region),
-	fmt.Sprintf("%s6", prefix),
-	fmt.Sprintf("%s7/%s", prefix, region),
-	fmt.Sprintf("%s7", prefix),
-	fmt.Sprintf("%s8/%s", prefix, region),
-	fmt.Sprintf("%s8", prefix),
-	fmt.Sprintf("%s9/%s", prefix, region),
+func buildTournaments() []Tournament {
+	var tournaments []Tournament
+	regions := []Region{RegionNorthAmerica, RegionEurope}
+	for season := 1; season <= seasonMax; season++ {
+		endIndex := 1
+		if season == 1 {
+			// Two qualifiers for S1
+			endIndex = 2
+			for qualifier := 1; qualifier <= 2; qualifier++ {
+				for _, region := range regions {
+					tournaments = append(tournaments, Tournament{Season: strconv.Itoa(season), Region: region, Index: qualifier - 1, Name: fmt.Sprintf("%s%d/%s/Qualifier %d", prefix, season, region.String(), qualifier)})
+				}
+			}
+		} else {
+			for _, region := range regions {
+				tournaments = append(tournaments, Tournament{Season: strconv.Itoa(season), Region: region, Index: 0, Name: fmt.Sprintf("%s%d/%s", prefix, season, region.String())})
+			}
+		}
+		// COVID :(
+		if season != 9 {
+			tournaments = append(tournaments, Tournament{Season: strconv.Itoa(season), Region: RegionWorld, Index: endIndex, Name: fmt.Sprintf("%s%d", prefix, season)})
+		}
+	}
+
+	return tournaments
 }
+
+var tournaments = buildTournaments()
 
 const playersSectionTitle = "participants"
 const minTeamSize = 1 // TODO should be 2?
 const infoboxSectionIndex = 0
 
+func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
+	var teamsString, detailsString, metadataString string
+	if needTeams {
+		teamsString = "teams"
+	} else {
+		teamsString = "noteams"
+	}
+	if needDetails {
+		detailsString = "details"
+	} else {
+		detailsString = "nodetails"
+	}
+	if needMetadata {
+		metadataString = "metadata"
+	} else {
+		metadataString = "nometadata"
+	}
+	fmt.Println(name, teamsString, detailsString, metadataString)
+}
+
 // UpdateTournaments goes through saved tournaments and updates fields that are missing.
 func UpdateTournaments(forceUpload bool) {
-	for _, name := range tournamentNames {
-		needTeams := false
-		needDetails := false
-
+	for _, tourney := range tournaments {
 		// 1. Check to see if this tournament has been cached
-		tourney := Tournament{Name: name}
-		err := GetTournament(&tourney)
-		needTeams = forceUpload || err != nil || len(tourney.Teams) == 0
-		needDetails = forceUpload || err != nil || tourney.Start == "" || tourney.End == "" || tourney.Region == RegionNone
+		updatedTourney := Tournament{Name: tourney.Name}
+		err := GetTournament(&updatedTourney)
+		needTeams := forceUpload || err != nil || len(updatedTourney.Teams) == 0
+		needDetails := forceUpload || err != nil || updatedTourney.Start == "" || updatedTourney.End == "" || updatedTourney.Region == RegionNone
+		needMetadata := forceUpload || err != nil || updatedTourney.Season == ""
 
-		var teamsString, detailsString string
-		if needTeams {
-			teamsString = "teams"
-		} else {
-			teamsString = "no teams"
-		}
-		if needDetails {
-			detailsString = "details"
-		} else {
-			detailsString = "no details"
-		}
-		fmt.Println(name, teamsString, detailsString)
+		dbg(tourney.Name, needTeams, needDetails, needMetadata)
 
 		// 2. Fetch needed data from API
 		if needTeams {
 			// Need to find the right section for participants
-			allSections := FetchSections(name)
+			allSections := FetchSections(tourney.Name)
 
 			sectionIndex := findSectionIndex(allSections, playersSectionTitle)
 			if sectionIndex < 0 {
-				fmt.Println("Unable to find participants section for", name)
+				fmt.Println("Unable to find participants section for", tourney.Name)
 			} else {
-				wikitext := FetchSection(name, sectionIndex)
-				tourney.Teams = ParseTeams(wikitext)
+				wikitext := FetchSection(tourney.Name, sectionIndex)
+				updatedTourney.Teams = ParseTeams(wikitext)
 			}
 		}
-
 		if needDetails {
-			wikitext := FetchSection(name, infoboxSectionIndex)
-			tourney.Start, tourney.End, tourney.Region = ParseStartEndRegion(wikitext)
+			wikitext := FetchSection(tourney.Name, infoboxSectionIndex)
+			updatedTourney.Start, updatedTourney.End, updatedTourney.Region = ParseStartEndRegion(wikitext)
+		}
+		if needMetadata {
+			updatedTourney.Season = tourney.Season
+			updatedTourney.Region = tourney.Region
+			updatedTourney.Index = tourney.Index
 		}
 
 		// 3. Upload the tournament
-		if needTeams || needDetails {
-			UploadTournament(tourney)
+		if needTeams || needDetails || needMetadata {
+			UploadTournament(updatedTourney)
 		}
 	}
 }

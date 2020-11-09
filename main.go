@@ -11,10 +11,8 @@ func home(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, world!")
 }
 
-// Unsorted list of all tournaments
-func tournaments(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("tournaments")
-
+// Unsorted list of all handleTournaments
+func handleTournaments(w http.ResponseWriter, r *http.Request) {
 	t := GetTournaments()
 
 	bytes, err := json.Marshal(t)
@@ -52,7 +50,7 @@ func main() {
 
 		fmt.Println("mongo client initialized")
 
-		http.HandleFunc("/api/tournaments", tournaments)
+		http.HandleFunc("/api/tournaments", handleTournaments)
 		http.HandleFunc("/", home)
 
 		fmt.Println("About to use port", port)

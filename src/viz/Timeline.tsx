@@ -17,7 +17,7 @@ import moment, { Moment } from "moment";
 import React from "react";
 import { CIRCLE_RADIUS, HEIGHT, MARGIN, SPACING } from "../constants";
 import { EventType, Player, Tournament } from "../types";
-import { DATE_FORMAT, toDate, tournamentAcronym } from "../util";
+import { DATE_FORMAT, getTeamColor, toDate, tournamentAcronym } from "../util";
 
 const BIG_WIDTH = 5500;
 const BIG_HEIGHT = 2500;
@@ -29,7 +29,6 @@ const Radius = {
   [EventType.LEAVE]: 6,
 };
 const FILL_LEAVE = "transparent";
-const COLOR_UNKNOWN_TEAM = "#232323";
 const COLOR_NO_TEAM = "#bbbbbb";
 const STROKE_WIDTH_TEAM = 3;
 
@@ -98,7 +97,8 @@ export default function Timeline({
     return 10 * SPACING + indices[player] * 2 * SPACING;
   };
 
-  // Try 1: events
+  // Calculating minimum and maximum:
+  // [min/max] Try 1: events
   const start = minBy(players, (p) => p.memberships[0].join);
   const end = maxBy(players, (p) => last(p.memberships)!.leave || last(p.memberships)!.join);
 
@@ -113,7 +113,7 @@ export default function Timeline({
   let startDate = start.memberships[0].join;
   let endDate = last(end.memberships)!.leave || last(end.memberships)!.join;
 
-  // Try 2: tournaments
+  // [min/max] Try 2: tournaments
   startDate = startDate > tournaments[0].start ? tournaments[0].start : startDate;
   endDate = endDate < last(tournaments)!.end ? last(tournaments)!.end : endDate;
 
@@ -201,7 +201,7 @@ export default function Timeline({
             const elements = reduce(
               player.memberships,
               (acc2, mem, idx) => {
-                const color = mem.team in teams ? teams[mem.team] : COLOR_UNKNOWN_TEAM;
+                const color = getTeamColor(mem.team, teams);
 
                 // Join
                 const joinX = x(toDate(mem.join));

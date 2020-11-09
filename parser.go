@@ -64,13 +64,8 @@ const (
 	typeOffline = "Offline"
 )
 
-const (
-	countryNorthAmerica = "North America"
-	countryEurope       = "Europe"
-)
-
 // ParseStartEndRegion get start, end, region of tournament, or returns empty
-func ParseStartEndRegion(wikitext string) (string, string, int) {
+func ParseStartEndRegion(wikitext string) (string, string, Region) {
 	lines := strings.Split(wikitext, "\n")
 
 	inInfobox := false
@@ -100,9 +95,9 @@ func ParseStartEndRegion(wikitext string) (string, string, int) {
 	if tType == typeOffline {
 		region = RegionWorld
 	} else {
-		if country == countryNorthAmerica {
+		if country == RegionNorthAmerica.String() {
 			region = RegionNorthAmerica
-		} else if country == countryEurope {
+		} else if country == RegionEurope.String() {
 			region = RegionEurope
 		}
 	}

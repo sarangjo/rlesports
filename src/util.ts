@@ -145,3 +145,8 @@ export const mapEnum = (x: any, iter: (val: number, key: string) => any) => {
 export const DATE_FORMAT = "YYYY-MM-DD";
 
 export const toDate = (d: string): Date => moment(d, DATE_FORMAT).toDate();
+
+const COLOR_UNKNOWN_TEAM = "#232323";
+
+export const getTeamColor = (team: string, teams: Record<string, string>) =>
+  team in teams ? teams[team] : COLOR_UNKNOWN_TEAM;

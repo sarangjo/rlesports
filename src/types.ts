@@ -8,16 +8,26 @@ export interface Team {
 }
 
 export interface Tournament {
+  // Metadata
+  season: string;
+  region: Region;
+  index: number;
+  // Name
   name: string;
+  // LP data
   start: string;
   end: string;
   teams: Team[];
-  region: Region;
 }
 
-export enum EventType {
-  JOIN = "join",
-  LEAVE = "leave",
+// TODO remove "WORLD" and replace with a collection of regions
+export enum Region {
+  NONE,
+  WORLD,
+  NORTH_AMERICA,
+  EUROPE,
+  OCEANIA,
+  SOUTH_AMERICA,
 }
 
 export interface Player {
@@ -31,13 +41,9 @@ export interface Membership {
   leave?: string;
 }
 
-export enum Region {
-  NONE,
-  WORLD,
-  NORTH_AMERICA,
-  EUROPE,
-  OCEANIA,
-  SOUTH_AMERICA,
+export enum EventType {
+  JOIN = "join",
+  LEAVE = "leave",
 }
 
 // Graph types

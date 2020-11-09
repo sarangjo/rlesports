@@ -8,21 +8,8 @@ import (
 	"strings"
 )
 
-// Membership is a team membership for a player
-type Membership struct {
-	Join  string `json:"join"`
-	Leave string `json:"leave"`
-	Team  string `json:"team"`
-}
-
-// Player has a name and set of memberships
-type Player struct {
-	Memberships []Membership `json:"memberships"`
-	Name        string       `json:"name"`
-}
-
 const playersCacheFile = "cache/pcache.json"
-const eventsOutputFile = "src/viz/events.json"
+const eventsOutputFile = "src/data/events.json"
 
 func getCache() map[string]interface{} {
 	file, err := os.Open(playersCacheFile)
