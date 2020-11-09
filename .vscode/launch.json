@@ -26,7 +26,7 @@
       "request": "launch",
       "mode": "debug",
       "program": "${workspaceFolder}",
-      "args": ["update", "--force"]
+      "args": ["update"]
     },
     {
       "name": "Go: Serve",

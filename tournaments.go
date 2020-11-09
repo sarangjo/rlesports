@@ -12,6 +12,7 @@ const region = "North America"
 
 var tournamentNames = []string{
 	fmt.Sprintf("%s1/%s/Qualifier 1", prefix, region),
+	fmt.Sprintf("%s1/Europe/Qualifier 1", prefix),
 	fmt.Sprintf("%s1/%s/Qualifier 2", prefix, region),
 	fmt.Sprintf("%s1", prefix),
 	fmt.Sprintf("%s2/%s", prefix, region),
