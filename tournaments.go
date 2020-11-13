@@ -9,36 +9,52 @@ import (
 
 // RLCS only.
 const prefix = "Rocket League Championship Series/Season "
-const seasonMax = 9
+const seasonMax = 1
 
-func buildTournaments() []Tournament {
-	var tournaments []Tournament
+func buildSeasons() []RlcsSeason {
+	var seasons []RlcsSeason
+
 	regions := []Region{RegionNorthAmerica, RegionEurope}
 	for season := 1; season <= seasonMax; season++ {
-		endIndex := 1
+		rlcsSeason := RlcsSeason{Season: strconv.Itoa(season)}
+
 		if season == 1 {
 			// Two qualifiers for S1
-			endIndex = 2
 			for qualifier := 1; qualifier <= 2; qualifier++ {
+				section := Section{Name: fmt.Sprintf("Qualifier %d", qualifier)}
+
 				for _, region := range regions {
-					tournaments = append(tournaments, Tournament{Season: strconv.Itoa(season), Region: region, Index: qualifier - 1, Name: fmt.Sprintf("%s%d/%s/Qualifier %d", prefix, season, region.String(), qualifier)})
+					section.Tournaments = append(section.Tournaments, Tournament{
+						Region: region,
+						Path:   fmt.Sprintf("%s%d/%s/Qualifier %d", prefix, season, region.String(), qualifier),
+					})
 				}
+				rlcsSeason.Sections = append(rlcsSeason.Sections, section)
 			}
 		} else {
+			section := Section{Name: "Regional"}
 			for _, region := range regions {
-				tournaments = append(tournaments, Tournament{Season: strconv.Itoa(season), Region: region, Index: 0, Name: fmt.Sprintf("%s%d/%s", prefix, season, region.String())})
+				section.Tournaments = append(section.Tournaments, Tournament{Region: region, Path: fmt.Sprintf("%s%d/%s", prefix, season, region.String())})
 			}
+			rlcsSeason.Sections = append(rlcsSeason.Sections, section)
 		}
 		// COVID :(
 		if season != 9 {
-			tournaments = append(tournaments, Tournament{Season: strconv.Itoa(season), Region: RegionWorld, Index: endIndex, Name: fmt.Sprintf("%s%d", prefix, season)})
+			rlcsSeason.Sections = append(rlcsSeason.Sections,
+				Section{
+					Name:        "Finals",
+					Tournaments: []Tournament{{Region: RegionWorld, Path: fmt.Sprintf("%s%d", prefix, season)}},
+				},
+			)
 		}
+
+		seasons = append(seasons, rlcsSeason)
 	}
 
-	return tournaments
+	return seasons
 }
 
-var tournaments = buildTournaments()
+var seasons = buildSeasons()
 
 const playersSectionTitle = "participants"
 const minTeamSize = 1 // TODO should be 2?
@@ -64,11 +80,27 @@ func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
 	fmt.Println(name, teamsString, detailsString, metadataString)
 }
 
+func singleConvert() {
+	for sn, season := range seasons {
+		for secn, section := range season.Sections {
+			for tn, tourney := range section.Tournaments {
+				oldT := OldTournament{Name: tourney.Path}
+				GetTournament(&oldT)
+				seasons[sn].Sections[secn].Tournaments[tn].Start = oldT.Start
+				seasons[sn].Sections[secn].Tournaments[tn].End = oldT.End
+				seasons[sn].Sections[secn].Tournaments[tn].Teams = oldT.Teams
+			}
+		}
+	}
+
+	WriteJSONFile(seasons, "src/data/tournaments.json")
+}
+
 // UpdateTournaments goes through saved tournaments and updates fields that are missing.
 func UpdateTournaments(forceUpload bool) {
-	for _, tourney := range tournaments {
+	for _, tourney := range []OldTournament{} {
 		// 1. Check to see if this tournament has been cached
-		updatedTourney := Tournament{Name: tourney.Name}
+		updatedTourney := OldTournament{Name: tourney.Name}
 		err := GetTournament(&updatedTourney)
 		needTeams := forceUpload || err != nil || len(updatedTourney.Teams) == 0
 		needDetails := forceUpload || err != nil || updatedTourney.Start == "" || updatedTourney.End == "" || updatedTourney.Region == RegionNone

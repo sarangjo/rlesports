@@ -9,7 +9,7 @@ import (
 )
 
 const playersCacheFile = "cache/pcache.json"
-const eventsOutputFile = "src/data/events.json"
+const eventsOutputFile = "src/data/players.json"
 
 func getCache() map[string]interface{} {
 	file, err := os.Open(playersCacheFile)
@@ -33,7 +33,8 @@ func CachePlayersData(players []string) map[string]interface{} {
 	output := getCache()
 	for _, player := range players {
 		if _, ok := output[player]; !ok {
-			output[player] = FetchPlayer(player)
+			res := FetchPlayer(&player)
+			output[player] = res
 		}
 	}
 	if WriteJSONFile(output, playersCacheFile) != nil {
@@ -61,17 +62,18 @@ func getPlayerDetails(name string) Player {
 	var ok bool
 	if playerData, ok = output[name]; !ok {
 		// Need to fetch and persist
-		playerData = FetchPlayer(name)
+		// TODO handle redirect smoothly. Also add to `AlternativeIDs`
+		playerData = FetchPlayer(&name)
 		output[name] = playerData
 		if WriteJSONFile(output, playersCacheFile) != nil {
 			os.Exit(1)
 		}
 	}
 
-	return ParsePlayer(playerData.(map[string]interface{})["wikitext"].(map[string]interface{})["*"].(string))
+	return ParsePlayer(extractWikitext(playerData))
 }
 
-func membershipInTournaments(name string, membership Membership, tournaments []Tournament) bool {
+func membershipInTournaments(name string, membership Membership, tournaments []OldTournament) bool {
 	for _, t := range tournaments {
 		if membership.Join < t.End && (membership.Leave == "" || membership.Leave > t.Start) {
 			// Don't care about team name cuz they could be acquired; purely player-based. This could
@@ -89,8 +91,8 @@ func membershipInTournaments(name string, membership Membership, tournaments []T
 	return false
 }
 
-// CacheVerify verifies cache integrity
-func CacheVerify() {
+// CacheProcess verifies cache integrity
+func CacheProcess() {
 	cache := getCache()
 
 	uniqueNames := make(map[string]bool)
@@ -122,11 +124,18 @@ func CacheVerify() {
 		}
 		uniqueNames2[strings.ToLower(p)] = true
 	}
+
+	for p, data := range cache {
+		if strings.Index(data.(map[string]interface{})["wikitext"].(map[string]interface{})["*"].(string), "#REDIRECT") != -1 {
+			delete(cache, p)
+		}
+	}
+	if WriteJSONFile(cache, playersCacheFile) != nil {
+		os.Exit(1)
+	}
 }
 
 // SmarterPlayers builds up events for players that matter based on the tournaments provided.
-// TODO what about situations like Genocop for RLCS S1 NA Q1 where he's not listed on Liquipedia?
-// ATM it's a sux2suck kinda situation
 func SmarterPlayers() {
 	tournaments := GetTournaments()
 
@@ -138,7 +147,8 @@ func SmarterPlayers() {
 				// Get data for a chosen player
 				fmt.Println(team.Name, "player", name)
 
-				// use lowercase as the canonical version
+				// use lowercase when checking for duplicates
+				// TODO this really is shitty
 				playerID := strings.ToLower(name)
 
 				if _, ok := minifiedPlayers[playerID]; ok {

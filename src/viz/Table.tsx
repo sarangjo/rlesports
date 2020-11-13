@@ -2,7 +2,7 @@ import { find, forEach, get, has, indexOf, map, max, min, reduce, set, size } fr
 import moment from "moment";
 import React from "react";
 import { HEIGHT, WIDTH } from "../constants";
-import { Player, Region, Tournament } from "../types";
+import { Player, Region, RlcsSeason, Tournament } from "../types";
 import { getTeamColor } from "../util";
 import "./Table.css";
 
@@ -58,51 +58,55 @@ const getSeasonX = (s: string) => SEASON_WIDTH * (isNaN(parseInt(s, 10)) ? 9 : p
 
 type SectionLengthMap = Record<string, Record<number, Record<number, number>>>;
 
-const process = (
-  tournaments: Tournament[],
-  players: Player[],
-): [ParticipationBlock[], Record<string, number>, SectionLengthMap] => {
+const process = (seasons: RlcsSeason[], players: Player[]): ParticipationBlock[] => {
   const blocks: ParticipationBlock[] = [];
-  const numSections: Record<string, number> = {};
-  const sectionLengths: SectionLengthMap = {};
-  forEach(tournaments, (t) => {
-    forEach(t.teams, (team) => {
-      forEach(team.players, (player) => {
-        // Find the event(s) relevant to this tournament by date
-        const playerDetails = find(players, (p) => p.name === player);
-        if (!playerDetails) {
-          console.log("Uh, didn't find a player... weird.", player);
-          return;
-        }
-        forEach(playerDetails.memberships, (mem) => {
-          // TODO how do we ensure people who form teams outside of RLCS but in the same timeframe
-          // are *excluded*, but at the same time people who change teams but are not recognized on
-          // LP are *included*? All signs seem to point to not using LP as the source of truth...
-          // Depressing.
-          if (mem.join <= t.end && (!mem.leave || mem.leave >= t.start) && team.name === mem.team) {
-            // We have overlap. Create block
-            blocks.push({
-              player,
-              team: mem.team,
-              season: t.season,
-              region: t.region,
-              index: t.index,
-              start: max([t.start, mem.join])!,
-              end: mem.leave ? min([t.end, mem.leave])! : t.end,
+  forEach(seasons, (season) => {
+    forEach(season.sections, (section, sectionIndex) => {
+      forEach(section.tournaments, (tourney) => {
+        const tourneyDone: Record<string, boolean> = {};
+        forEach(tourney.teams, (team) => {
+          forEach(team.players, (player) => {
+            // Find the event(s) relevant to this tournament by date
+            const playerDetails = find(players, (p) => p.name === player);
+            if (!playerDetails) {
+              console.log("Uh, didn't find a player... weird.", player);
+              return;
+            }
+            forEach(playerDetails.memberships, (mem) => {
+              // TODO how do we ensure people who form teams outside of RLCS but in the same timeframe
+              // are *excluded*, but at the same time people who change teams but are not recognized on
+              // LP are *included*? All signs seem to point to not using LP as the source of truth...
+              // Depressing.
+              //
+              // Follow-up: Actually, not depressing. Here's what you do.
+              // - Per tournament, go in order.
+              // - If the team name doesn't match, see if this is the first one we're seeing for this tournament.
+              //   - If it is, then this means the team name changed in the middle. So take it.
+              //   - If it isn't, we're past the point of it being relevant for this tournament, so don't take it.
+              if (
+                !tourneyDone[player] &&
+                mem.join <= tourney.end &&
+                (!mem.leave || mem.leave >= tourney.start)
+              ) {
+                // The simple case. We have overlap. Create block
+                blocks.push({
+                  player,
+                  team: mem.team,
+                  season: season.season,
+                  region: tourney.region,
+                  index: sectionIndex,
+                  start: max([tourney.start, mem.join])!,
+                  end: mem.leave ? min([tourney.end, mem.leave])! : tourney.end,
+                });
+                tourneyDone[player] = team.name === mem.team;
+              }
             });
-          }
+          });
         });
       });
     });
-
-    if (has(numSections, t.season)) {
-      numSections[t.season] =
-        numSections[t.season] > t.index + 1 ? numSections[t.season] : t.index + 1;
-    } else {
-      numSections[t.season] = t.index + 1;
-    }
   });
-  return [blocks, numSections, sectionLengths];
+  return blocks;
 };
 
 // TODO LAN
@@ -119,18 +123,18 @@ interface ParticipationBlock {
 }
 
 export default function Table({
-  tournaments,
+  seasons,
   players,
   teams,
 }: {
-  tournaments: Tournament[];
+  seasons: RlcsSeason[];
   players: Player[];
   teams: Record<string, string>;
 }) {
   // Convert tournaments + player info into "participation blocks" which have some properties, that
   // will be then filtered on.
-  const [blocks, numSections] = process(tournaments, players);
-  console.log(blocks, numSections);
+  const blocks = process(seasons, players);
+  console.log(blocks);
 
   // Based on which participation blocks get selected, certain columns and rows will be shown.
   const playerNames = Array.from<string>(
@@ -144,16 +148,14 @@ export default function Table({
     ),
   );
 
-  const seasons = ["1"];
-
   return (
     <svg height={Y_OFFSET + size(playerNames) * PLAYER_HEIGHT} width={WIDTH}>
       <g id="season-titles">
         {map(seasons, (s) => (
-          <g id={`season-title-${s}`}>
+          <g id={`season-title-${s.season}`}>
             <rect x={X_OFFSET} y={0} width={SEASON_WIDTH} height={Y_OFFSET} fill="skyblue" />
             <text x={X_OFFSET} y={Y_OFFSET}>
-              Season {s}
+              Season {s.season}
             </text>
           </g>
         ))}
@@ -178,14 +180,30 @@ export default function Table({
       </g>
       <g transform={`translate(${X_OFFSET},${Y_OFFSET})`} id="block-space">
         {map(blocks, (b) => {
-          const sectionWidth = SEASON_WIDTH / numSections[b.season];
+          const numSections = size(
+            get(
+              find(seasons, (s) => s.season === b.season),
+              "sections",
+            ),
+          );
+          const sectionWidth = SEASON_WIDTH / numSections;
           const baseX = getSeasonX(b.season) + b.index * sectionWidth;
           const y = indexOf(playerNames, b.player) * PLAYER_HEIGHT;
 
           const tourney = find(
-            tournaments,
-            (t) => t.season === b.season && t.region === b.region && t.index === b.index,
+            get(
+              find(
+                get(
+                  find(seasons, (s) => s.season === b.season),
+                  "sections",
+                ),
+                (_sec, index) => index === b.index,
+              ),
+              "tournaments",
+            ),
+            (t) => t.region === b.region,
           );
+
           let width, offsetX;
           if (!tourney) {
             width = 0;

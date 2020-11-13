@@ -1,7 +1,7 @@
 import { filter, find, map, size, slice, sortBy } from "lodash";
 import React, { useEffect, useState } from "react";
-import players from "./data/players.json";
-import { Player, Region, Tournament } from "./types";
+import players from "./data/players-bad.json";
+import { OldTournament, Player, Region } from "./types";
 import { mapEnum, Viz, VizTitle } from "./util";
 import ForceGraph from "./viz/ForceGraph";
 import PlayerTeams from "./viz/PlayerTeams";
@@ -11,18 +11,19 @@ import Table from "./viz/Table";
 import Text from "./viz/Text";
 import Timeline from "./viz/Timeline";
 
-import events from "./data/events.json";
+import events from "./data/players.json";
 import teams from "./data/teams.json";
+import seasons from "./data/tournaments.json";
 
 function App() {
-  const [tournaments, setTournaments] = useState<Tournament[]>([]);
+  const [tournaments, setTournaments] = useState<OldTournament[]>([]);
   const [view, setView] = useState(Viz.TABLE);
   const [regions, setRegions] = useState([Region.NORTH_AMERICA, Region.WORLD, Region.EUROPE]);
 
   useEffect(() => {
     const get = async () => {
       const result = await fetch("http://localhost:5002/api/tournaments");
-      const allTournaments: Tournament[] = await result.json();
+      const allTournaments: OldTournament[] = await result.json();
       const sorted = allTournaments.sort((a, b) =>
         (a.start || "") > (b.start || "") ? 1 : (a.start || "") < (b.start || "") ? -1 : 0,
       );
@@ -74,7 +75,7 @@ function App() {
       ) : view === Viz.TEAM_MAP ? (
         <PlayerTeams players={players} />
       ) : view === Viz.TABLE ? (
-        <Table tournaments={chosenTournaments} players={events} teams={teams} />
+        <Table seasons={seasons} players={events} teams={teams} />
       ) : view === Viz.TEXT ? (
         <Text tournaments={chosenTournaments} />
       ) : view === Viz.TIMELINE ? (

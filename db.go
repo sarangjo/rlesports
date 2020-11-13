@@ -40,7 +40,7 @@ func InitializeClient() {
 }
 
 // UploadTournaments uploads all given tournaments
-func UploadTournaments(data []Tournament) {
+func UploadTournaments(data []OldTournament) {
 	tournaments := db.Collection("tournaments")
 
 	models := make([]mongo.WriteModel, len(data))
@@ -53,7 +53,7 @@ func UploadTournaments(data []Tournament) {
 }
 
 // GetTournaments returns a list of all tournaments in the db
-func GetTournaments() []Tournament {
+func GetTournaments() []OldTournament {
 	tournaments := db.Collection("tournaments")
 	opts := options.Find().SetSort(bson.D{primitive.E{Key: "start", Value: 1}})
 	cur, err := tournaments.Find(context.Background(), bson.D{}, opts)
@@ -62,7 +62,7 @@ func GetTournaments() []Tournament {
 		os.Exit(1)
 	}
 
-	var results []Tournament
+	var results []OldTournament
 	if err = cur.All(context.TODO(), &results); err != nil {
 		log.Fatal(err)
 	}
@@ -71,7 +71,7 @@ func GetTournaments() []Tournament {
 }
 
 // GetTournament gets a single tournament by name. If not found, returns err
-func GetTournament(t *Tournament) error {
+func GetTournament(t *OldTournament) error {
 	tournaments := db.Collection("tournaments")
 	filter := bson.M{"name": t.Name}
 	doc := tournaments.FindOne(context.Background(), filter)
@@ -79,7 +79,7 @@ func GetTournament(t *Tournament) error {
 }
 
 // UploadTournament uploads tournament by name
-func UploadTournament(t Tournament) {
+func UploadTournament(t OldTournament) {
 	tournaments := db.Collection("tournaments")
 
 	opts := options.Replace().SetUpsert(true)

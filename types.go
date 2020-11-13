@@ -9,8 +9,29 @@ type Team struct {
 	Subs    []string `json:"subs"`
 }
 
-// Tournament describes, well, a tournament
+// Tournament x
 type Tournament struct {
+	Region Region `json:"region"`
+	Path   string `json:"path"`
+	Start  string `json:"start"`
+	End    string `json:"end,omitempty"`
+	Teams  []Team `json:"teams"`
+}
+
+// Section x
+type Section struct {
+	Name        string       `json:"name"`
+	Tournaments []Tournament `json:"tournaments"`
+}
+
+// RlcsSeason x
+type RlcsSeason struct {
+	Season   string    `json:"season"`
+	Sections []Section `json:"sections"`
+}
+
+// OldTournament describes, well, a tournament
+type OldTournament struct {
 	// Metadata
 	Season string `json:"season"`
 	Region Region `json:"region,omitempty"`
@@ -63,6 +84,7 @@ type Membership struct {
 
 // Player has a name and set of memberships
 type Player struct {
-	Memberships []Membership `json:"memberships"`
-	Name        string       `json:"name"`
+	Memberships  []Membership `json:"memberships"`
+	Name         string       `json:"name"`
+	AlternateIDs []string     `json:"alternateIDs"`
 }

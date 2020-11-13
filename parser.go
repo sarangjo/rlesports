@@ -148,3 +148,19 @@ func ParsePlayer(wikitext string) Player {
 	}
 	return player
 }
+
+func extractWikitext(src interface{}) string {
+	return src.(map[string]interface{})["wikitext"].(map[string]interface{})["*"].(string)
+}
+
+// #REDIRECT [[Turbopolsa]]
+var redirectRegex = regexp.MustCompile(`(?i)#REDIRECT.*\[\[(.*)\]\]`) // [[(.*)]]`)
+
+func redirectTo(parsed interface{}) (bool, string) {
+	wikitext := extractWikitext(parsed)
+	res := redirectRegex.FindStringSubmatch(wikitext)
+	if res != nil {
+		return true, res[1]
+	}
+	return false, ""
+}

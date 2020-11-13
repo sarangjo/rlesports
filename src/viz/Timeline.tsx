@@ -16,7 +16,7 @@ import {
 import moment, { Moment } from "moment";
 import React from "react";
 import { CIRCLE_RADIUS, HEIGHT, MARGIN, SPACING } from "../constants";
-import { EventType, Player, Tournament } from "../types";
+import { EventType, Player, OldTournament } from "../types";
 import { DATE_FORMAT, getTeamColor, toDate, tournamentAcronym } from "../util";
 
 const BIG_WIDTH = 5500;
@@ -38,7 +38,7 @@ const STROKE_WIDTH_TEAM = 3;
 // - team info: colors, date range
 // - tournaments: participants (team names could change), winners
 
-const getIndices = (t: Tournament, players: string[]): Record<string, number> => {
+const getIndices = (t: OldTournament, players: string[]): Record<string, number> => {
   let idx = 0;
   // First, tournament participants
   const indices = reduce(
@@ -74,7 +74,7 @@ export default function Timeline({
   events: players,
   teams,
 }: {
-  tournaments: Tournament[];
+  tournaments: OldTournament[];
   events: Player[];
   teams: Record<string, string>;
 }) {

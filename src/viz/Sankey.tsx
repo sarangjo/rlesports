@@ -2,7 +2,7 @@ import { sankey, SankeyLink, sankeyLinkHorizontal, SankeyNode } from "d3-sankey"
 import { find, forEach, get, map, min, minBy } from "lodash";
 import React, { useMemo } from "react";
 import { HEIGHT, WIDTH } from "../constants";
-import { Tournament } from "../types";
+import { OldTournament } from "../types";
 import { scaleTime } from "d3-scale";
 
 // These properties are on top of the node and link properties Sankey provides
@@ -18,7 +18,7 @@ interface PlayerLink {
 
 const NONE_TEAM = "NONE";
 
-const findTeamForPlayer = (tourney: Tournament, player: string) =>
+const findTeamForPlayer = (tourney: OldTournament, player: string) =>
   get(
     find(tourney.teams, (t) => find(t.players, (p) => p === player)),
     "name",
@@ -27,7 +27,7 @@ const findTeamForPlayer = (tourney: Tournament, player: string) =>
 
 const getNodeId = (d: TeamNode) => `${d.name}-${d.tournamentIndex}`;
 
-const processTournaments = (tournaments: Tournament[]) => {
+const processTournaments = (tournaments: OldTournament[]) => {
   // Nodes are each team.
   // Links are players
   const nodes: Array<SankeyNode<TeamNode, PlayerLink>> = [];
@@ -115,7 +115,7 @@ const sankeyCreator = (sankey<TeamNode, PlayerLink>()
   return get(a, "player") - get(b, "player");
 });
 
-export default function Sankey({ tournaments }: { tournaments: Tournament[] }) {
+export default function Sankey({ tournaments }: { tournaments: OldTournament[] }) {
   const data = processTournaments(tournaments); // useMemo(() => processTournaments(tournaments), [tournaments]);
 
   const x = scaleTime().domain([new Date(data.minDate), new Date(data.maxDate)]);

@@ -1,14 +1,14 @@
 import { interpolateInferno, interpolateOrRd, scaleOrdinal, schemeAccent } from "d3";
 import { forEach, map, reduce, size, sum, values } from "lodash";
 import React from "react";
-import { Tournament } from "../types";
+import { OldTournament } from "../types";
 import { tournamentAcronym } from "../util";
 
 interface Props {
-  tournaments: Tournament[];
+  tournaments: OldTournament[];
 }
 
-const process = (tournaments: Tournament[]) => {
+const process = (tournaments: OldTournament[]) => {
   const seasonMap = {} as Record<string, number>;
 
   return map(tournaments, (t) => {

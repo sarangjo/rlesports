@@ -37,9 +37,19 @@ func main() {
 		case "players":
 			SmarterPlayers()
 			break
-		case "pcache-verify":
-			CacheVerify()
+		case "cache":
+			CacheProcess()
 			break
+		case "convert":
+			singleConvert()
+			break
+		case "test":
+			l := map[string]map[string]string{
+				"wikitext": {
+					"*": "#REDIRECT [[Turbopolsa]]",
+				},
+			}
+			fmt.Println(redirectTo(l))
 		}
 	} else {
 		port := os.Getenv("PORT")

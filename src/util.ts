@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { concat, map, pickBy, reduce } from "lodash";
 import moment from "moment";
 import { CIRCLE_RADIUS } from "./constants";
-import { Tournament, TournamentPlayerNode } from "./types";
+import { OldTournament, TournamentPlayerNode } from "./types";
 
 //// UTILITY
 
@@ -52,7 +52,7 @@ export const valueline = d3
   .curve(d3.curveCatmullRomClosed);
 
 // Data managing
-export const tournamentsToPlayerNodes = (tournaments: Tournament[]) => {
+export const tournamentsToPlayerNodes = (tournaments: OldTournament[]) => {
   return reduce(
     tournaments,
     (acc1, tournament, tournamentIndex) =>
@@ -92,7 +92,7 @@ export const tournamentsToPlayerNodes = (tournaments: Tournament[]) => {
 
 export const LINK_FORCE = "link";
 
-export const getPlayerName = (tournaments: Tournament[], d: TournamentPlayerNode) =>
+export const getPlayerName = (tournaments: OldTournament[], d: TournamentPlayerNode) =>
   tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex];
 
 // y depends on team and player index

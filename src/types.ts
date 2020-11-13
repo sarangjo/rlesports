@@ -3,11 +3,29 @@ export interface Team {
   name: string;
   players: string[];
   won?: boolean;
-  subs?: string[];
+  subs?: string[] | null;
   metadata?: any;
 }
 
 export interface Tournament {
+  region: Region;
+  path: string;
+  start: string;
+  end: string;
+  teams: Team[];
+}
+
+export interface Section {
+  name: string;
+  tournaments: Tournament[];
+}
+
+export interface RlcsSeason {
+  season: string;
+  sections: Section[];
+}
+
+export interface OldTournament {
   // Metadata
   season: string;
   region: Region;
