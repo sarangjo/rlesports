@@ -122,6 +122,8 @@ func ParsePlayer(wikitext string) Player {
 		} else if inInfobox {
 			if strings.HasPrefix(line, "|id=") {
 				player.Name = strings.Replace(line, "|id=", "", 1)
+			} else if strings.HasPrefix(line, "|ids=") {
+				player.AlternateIDs = strings.Split(strings.Replace(line, "|ids=", "", 1), ", ")
 			}
 		}
 

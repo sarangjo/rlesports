@@ -33,7 +33,7 @@ func CachePlayersData(players []string) map[string]interface{} {
 	output := getCache()
 	for _, player := range players {
 		if _, ok := output[player]; !ok {
-			res := FetchPlayer(&player)
+			res := FetchPlayer(player)
 			output[player] = res
 		}
 	}
@@ -55,40 +55,135 @@ func ProcessPlayersData(output map[string]interface{}) {
 	}
 }
 
+// Need to fetch and persist
+func updateData(n string, output map[string]interface{}) interface{} {
+	x := FetchPlayer(n)
+	output[n] = x
+	if WriteJSONFile(output, playersCacheFile) != nil {
+		os.Exit(1)
+	}
+	return x
+}
+
 func getPlayerDetails(name string) Player {
 	output := getCache()
 
 	var playerData interface{}
 	var ok bool
 	if playerData, ok = output[name]; !ok {
-		// Need to fetch and persist
-		// TODO handle redirect smoothly. Also add to `AlternativeIDs`
-		playerData = FetchPlayer(&name)
-		output[name] = playerData
-		if WriteJSONFile(output, playersCacheFile) != nil {
-			os.Exit(1)
+		// Note that we persist even the REDIRECT directive so we don't waste an API call
+		playerData = updateData(name, output)
+	}
+
+	// Check for redirect - we also want to persist that if possible
+	if isRed, newName := redirectTo(playerData); isRed {
+		fmt.Println("OMG OMG WE GOT A REDIRECT OMG!!!! FROM", name, "TO", newName)
+
+		if playerData, ok = output[newName]; !ok {
+			// Sad, we have to fetch anyway
+			playerData = updateData(newName, output)
 		}
 	}
 
 	return ParsePlayer(extractWikitext(playerData))
 }
 
-func membershipInTournaments(name string, membership Membership, tournaments []OldTournament) bool {
-	for _, t := range tournaments {
-		if membership.Join < t.End && (membership.Leave == "" || membership.Leave > t.Start) {
-			// Don't care about team name cuz they could be acquired; purely player-based. This could
-			// be flawed if Liquipedia doesn't show members that may not be there at the end of the
-			// tournament (i.e. due to leaving/joining mid-tournament)
-			for _, team := range t.Teams {
-				for _, p := range team.Players {
-					if p == name {
-						return true
+func membershipInTournaments(player Player, membership Membership, seasons []RlcsSeason,
+	seasonIdx int, sectionIdx int, tournIdx int) bool {
+	for _, season := range seasons[seasonIdx:] {
+		for _, section := range season.Sections[sectionIdx:] {
+			for _, t := range section.Tournaments[tournIdx:] {
+				if membership.Join < t.End && (membership.Leave == "" || membership.Leave > t.Start) {
+					// Don't care about team name cuz they could be acquired; purely player-based. This could
+					// be flawed if Liquipedia doesn't show members that may not be there at the end of the
+					// tournament (i.e. due to leaving/joining mid-tournament)
+					for _, team := range t.Teams {
+						for _, p := range team.Players {
+							if p == player.Name {
+								return true
+							}
+							for _, alt := range player.AlternateIDs {
+								if p == alt {
+									return true
+								}
+							}
+						}
 					}
 				}
 			}
 		}
 	}
+
 	return false
+}
+
+// SmarterPlayers builds up events for players that matter based on the tournaments provided.
+func SmarterPlayers() {
+	// tournaments := GetTournaments()
+	minifiedPlayers := make(map[string]Player)
+
+	seasons := readSeasons()
+
+	for seasonIdx, season := range seasons {
+		for sectionIdx, section := range season.Sections {
+			for tournIdx, tournament := range section.Tournaments {
+				for _, team := range tournament.Teams {
+					for _, tname := range team.Players {
+						// Get data for a chosen player
+						fmt.Println(team.Name, "player", tname)
+
+						// use lowercase when checking for duplicates
+						// TODO this really is shitty
+						playerID := strings.ToLower(tname)
+
+						if _, ok := minifiedPlayers[playerID]; ok {
+							fmt.Println("Already processed", tname)
+							continue
+						}
+
+						player := getPlayerDetails(tname)
+
+						///// Past this point, we don't use name; we use player.Name /////
+
+						playerID = strings.ToLower(player.Name)
+						if _, ok := minifiedPlayers[playerID]; ok {
+							fmt.Println("Already processed", player.Name)
+							continue
+						}
+
+						// Find team participations that are relevant to all tournaments based on start/end date
+						var memberships []Membership
+
+						for _, membership := range player.Memberships {
+							if membershipInTournaments(player, membership, seasons, seasonIdx, sectionIdx, tournIdx) {
+								memberships = append(memberships, membership)
+							}
+						}
+						fmt.Println(memberships)
+
+						if len(memberships) > 0 {
+							minifiedPlayers[playerID] = Player{Name: player.Name, AlternateIDs: player.AlternateIDs, Memberships: memberships}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	for p := range minifiedPlayers {
+		fmt.Printf("%s ", p)
+	}
+	fmt.Println()
+
+	// Convert map to a slice
+	var playerArray []Player
+	for _, v := range minifiedPlayers {
+		playerArray = append(playerArray, v)
+	}
+
+	if WriteJSONFile(playerArray, eventsOutputFile) != nil {
+		os.Exit(1)
+	}
 }
 
 // CacheProcess verifies cache integrity
@@ -123,70 +218,5 @@ func CacheProcess() {
 			fmt.Println("matched with!!!!!", allPlayers[strings.ToLower(p)])
 		}
 		uniqueNames2[strings.ToLower(p)] = true
-	}
-
-	for p, data := range cache {
-		if strings.Index(data.(map[string]interface{})["wikitext"].(map[string]interface{})["*"].(string), "#REDIRECT") != -1 {
-			delete(cache, p)
-		}
-	}
-	if WriteJSONFile(cache, playersCacheFile) != nil {
-		os.Exit(1)
-	}
-}
-
-// SmarterPlayers builds up events for players that matter based on the tournaments provided.
-func SmarterPlayers() {
-	tournaments := GetTournaments()
-
-	minifiedPlayers := make(map[string]Player)
-
-	for idx, tournament := range tournaments[0:8] {
-		for _, team := range tournament.Teams {
-			for _, name := range team.Players {
-				// Get data for a chosen player
-				fmt.Println(team.Name, "player", name)
-
-				// use lowercase when checking for duplicates
-				// TODO this really is shitty
-				playerID := strings.ToLower(name)
-
-				if _, ok := minifiedPlayers[playerID]; ok {
-					fmt.Println("Already processed", name)
-					continue
-				}
-
-				player := getPlayerDetails(name)
-
-				// Find team participations that are relevant to all tournaments based on start/end date
-				var memberships []Membership
-
-				for _, membership := range player.Memberships {
-					if membershipInTournaments(name, membership, tournaments[idx:]) {
-						memberships = append(memberships, membership)
-					}
-				}
-				fmt.Println(memberships)
-
-				if len(memberships) > 0 {
-					minifiedPlayers[playerID] = Player{Name: player.Name, Memberships: memberships}
-				}
-			}
-		}
-	}
-
-	for p := range minifiedPlayers {
-		fmt.Printf("%s ", p)
-	}
-	fmt.Println()
-
-	// Convert map to a slice
-	var playerArray []Player
-	for _, v := range minifiedPlayers {
-		playerArray = append(playerArray, v)
-	}
-
-	if WriteJSONFile(playerArray, eventsOutputFile) != nil {
-		os.Exit(1)
 	}
 }

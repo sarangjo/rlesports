@@ -13,7 +13,7 @@ import Timeline from "./viz/Timeline";
 
 import events from "./data/players.json";
 import teams from "./data/teams.json";
-import seasons from "./data/tournaments.json";
+import seasons from "./data/seasons.json";
 
 function App() {
   const [tournaments, setTournaments] = useState<OldTournament[]>([]);

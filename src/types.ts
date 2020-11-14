@@ -48,15 +48,16 @@ export enum Region {
   SOUTH_AMERICA,
 }
 
-export interface Player {
-  name: string;
-  memberships: Membership[];
-}
-
 export interface Membership {
   team: string;
   join: string;
   leave?: string;
+}
+
+export interface Player {
+  name: string;
+  memberships: Membership[];
+  alternateIDs?: string[] | null;
 }
 
 export enum EventType {

@@ -67,10 +67,16 @@ const process = (seasons: RlcsSeason[], players: Player[]): ParticipationBlock[]
         forEach(tourney.teams, (team) => {
           forEach(team.players, (player) => {
             // Find the event(s) relevant to this tournament by date
-            const playerDetails = find(players, (p) => p.name === player);
+            let playerDetails = find(players, (p) => p.name.toLowerCase() === player.toLowerCase());
             if (!playerDetails) {
-              console.log("Uh, didn't find a player... weird.", player);
-              return;
+              playerDetails = find(
+                players,
+                (p) => !!find(p.alternateIDs, (i) => i.toLowerCase() === player.toLowerCase()),
+              );
+              if (!playerDetails) {
+                console.log("Uh, didn't find a player... weird.", player);
+                return;
+              }
             }
             forEach(playerDetails.memberships, (mem) => {
               // TODO how do we ensure people who form teams outside of RLCS but in the same timeframe
@@ -90,7 +96,7 @@ const process = (seasons: RlcsSeason[], players: Player[]): ParticipationBlock[]
               ) {
                 // The simple case. We have overlap. Create block
                 blocks.push({
-                  player,
+                  player: playerDetails!.name,
                   team: mem.team,
                   season: season.season,
                   region: tourney.region,

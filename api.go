@@ -24,7 +24,7 @@ type parseResult struct {
 
 // FetchPlayer gets player information. If we find a redirect, return it as first parameter; otherwise
 // it is empty string.
-func FetchPlayer(player string) (string, interface{}) {
+func FetchPlayer(player string) interface{} {
 	opts := url.Values{
 		"action":  {"parse"},
 		"prop":    {"wikitext"},
@@ -36,14 +36,7 @@ func FetchPlayer(player string) (string, interface{}) {
 	resp := CallAPI(opts)
 	json.Unmarshal(resp, &res)
 
-	parsed := res.Parse
-
-	if isRed, newPlayer := redirectTo(parsed); isRed {
-		fmt.Println("OMG OMG WE GOT A REDIRECT OMG!!!! FROM", player, "TO", newPlayer)
-		return newPlayer, nil
-	}
-
-	return "", parsed
+	return res.Parse
 }
 
 // FetchSection gets the section wikitext for the given page and section
