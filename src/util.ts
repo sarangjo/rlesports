@@ -151,33 +151,40 @@ const COLOR_UNKNOWN_TEAM = "#232323";
 export const getTeamColor = (team: string, teams: Record<string, string>) =>
   team in teams ? teams[team] : COLOR_UNKNOWN_TEAM;
 
-// domain needs to be increasing order, each element needs to be 0 < 1
-export function scaleTimeDisjoint(
-  domain: Array<[string, string]>,
-  range: [number, number],
-  input: string,
-) {
-    // TODO: Create a class that persists until output declaration
-  // Calculate the date ranges involved in each
-  const dateDiffs = map(domain, (r) => {
-    return moment(r[1]).diff(moment(r[0]), "days");
-  });
+export class ScaleTimeDisjoint {
+  public dateDiffs: number[];
+  public totalDiff: number = 0;
+  public domain: Array<[string, string]>;
+  public range: [number, number];
 
-  const totalDiff = sum(dateDiffs);
+  // domain needs to be increasing order, each element needs to be 0 < 1
+  constructor(domain: Array<[string, string]>, range: [number, number]) {
+    // Calculate the date ranges involved in each
+    this.dateDiffs = map(domain, (r) => {
+      // Add 1 because we're calculating the length of the tournament in days.
+      const diff = moment(r[1]).diff(moment(r[0]), "days"); // + 1;
+      this.totalDiff += diff;
+      return diff;
+    });
+    this.domain = domain;
+    this.range = range;
+  }
 
-  let output = range[0];
+  public convert(input: string) {
+    let output = this.range[0];
 
-  // Find the date range index that we live in
-  some(domain, (r, i) => {
-    const totalX = (dateDiffs[i] / totalDiff) * (range[1] - range[0]);
-    if (r[0] <= input && input <= r[1]) {
-      // Add our local diff
-      const localDiff = moment(input).diff(moment(r[0]), "days");
-      output += (localDiff / dateDiffs[i]) * totalX;
-      return true;
-    }
-    output += totalX;
-  });
+    // Find the date range index that we live in
+    some(this.domain, (r, i) => {
+      const totalX = (this.dateDiffs[i] / this.totalDiff) * (this.range[1] - this.range[0]);
+      if (r[0] <= input && input <= r[1]) {
+        // Add our local diff
+        const localDiff = moment(input).diff(moment(r[0]), "days");
+        output += (localDiff / this.dateDiffs[i]) * totalX;
+        return true;
+      }
+      output += totalX;
+    });
 
-  return output;
+    return output;
+  }
 }

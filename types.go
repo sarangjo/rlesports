@@ -7,10 +7,12 @@ type Team struct {
 	Name    string   `json:"name"`
 	Players []string `json:"players"`
 	Subs    []string `json:"subs"`
+	Region  Region   `json:"region,omitempty"`
 }
 
 // Tournament x
 type Tournament struct {
+	// TODO move this to Regions so we can have multiple
 	Region Region `json:"region"`
 	Path   string `json:"path"`
 	Start  string `json:"start"`

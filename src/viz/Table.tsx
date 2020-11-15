@@ -1,9 +1,8 @@
-import { find, forEach, get, indexOf, map, max, min, reduce, set, size } from "lodash";
-import moment from "moment";
+import { find, forEach, get, has, indexOf, keys, map, max, min, reduce, set, size } from "lodash";
 import React from "react";
 import { WIDTH } from "../constants";
 import { Player, Region, RlcsSeason } from "../types";
-import { getTeamColor, scaleTimeDisjoint } from "../util";
+import { getTeamColor, ScaleTimeDisjoint } from "../util";
 
 const SEASON_WIDTH = 600;
 const X_OFFSET = 150;
@@ -13,55 +12,62 @@ const PLAYER_HEIGHT = 25;
 // Handle Season X gracefully
 const getSeasonX = (s: string) => SEASON_WIDTH * (isNaN(parseInt(s, 10)) ? 9 : parseInt(s, 10) - 1);
 
-const process = (seasons: RlcsSeason[], players: Player[]): ParticipationBlock[] => {
-  const blocks: ParticipationBlock[] = [];
+const findPlayer = (players: Player[], tname: string) => {
+  let player = find(players, (p) => p.name.toLowerCase() === tname.toLowerCase());
+  if (!player) {
+    player = find(
+      players,
+      (p) => !!find(p.alternateIDs, (i) => i.toLowerCase() === tname.toLowerCase()),
+    );
+    if (!player) {
+      console.log("Uh, didn't find a player... weird.", tname);
+      return null;
+    }
+  }
+  return player;
+};
 
-  // Blocks are by season.
-  // We need to prepare the per-season date ranges
+// Design
+// - For a given season, a player has to be strongly associated with a particular region. World region
+//   subsumes all other regions.
+// - We go tournament by tournament and append.
+//   - [improvement] While appending, if the indices are adjacent and the previous block ends at the end, we can coalesce
+const process = (seasons: RlcsSeason[], players: Player[]) =>
+  map(seasons, (season) => {
+    // Blocks are by season.
+    const playerBlocks: Record<string, { region: Region; blocks: ParticipationBlock[] }> = {};
 
-  forEach(seasons, (season) => {
     forEach(season.sections, (section, sectionIndex) => {
       forEach(section.tournaments, (tourney) => {
+        // tourneyDone is the logic used to figure out which teams the player was on before the
+        // one specifically shown in the tournament, since that only shows the **last** team the
+        // player was on. This is used to evaluate
+        // whether we should keep adding events in the forEach loop below. It's quite heavily
+        // broken if a player switches teams in the middle of a tournament. TODO fix.
         const tourneyDone: Record<string, boolean> = {};
         forEach(tourney.teams, (team) => {
           forEach(team.players, (tname) => {
-            // Find the event(s) relevant to this tournament by date
-            let player = find(players, (p) => p.name.toLowerCase() === tname.toLowerCase());
-            if (!player) {
-              player = find(
-                players,
-                (p) => !!find(p.alternateIDs, (i) => i.toLowerCase() === tname.toLowerCase()),
-              );
-              if (!player) {
-                console.log("Uh, didn't find a player... weird.", tname);
-                return;
-              }
-            }
+            // Find the event(s) relevant to this tournament by date.
+            const player = findPlayer(players, tname);
 
             if (player) {
               const name = player.name;
               forEach(player.memberships, (mem) => {
-                // TODO how do we ensure people who form teams outside of RLCS but in the same timeframe
-                // are *excluded*, but at the same time people who change teams but are not recognized on
-                // LP are *included*? All signs seem to point to not using LP as the source of truth...
-                // Depressing.
-                //
-                // Follow-up: Actually, not depressing. Here's what you do.
-                // - Per tournament, go in order.
-                // - If the team name doesn't match, see if this is the first one we're seeing for this tournament.
-                //   - If it is, then this means the team name changed in the middle. So take it.
-                //   - If it isn't, we're past the point of it being relevant for this tournament, so don't take it.
                 if (
                   !tourneyDone[name] &&
                   mem.join <= tourney.end &&
                   (!mem.leave || mem.leave >= tourney.start)
                 ) {
+                  if (!has(playerBlocks, name)) {
+                    playerBlocks[name] = {
+                      region: team.region,
+                      blocks: [],
+                    };
+                  }
+
                   // The simple case. We have overlap. Create block
-                  blocks.push({
-                    player: name,
+                  playerBlocks[name].blocks.push({
                     team: mem.team,
-                    season: season.season,
-                    region: tourney.region,
                     index: sectionIndex,
                     start: max([tourney.start, mem.join])!,
                     end: mem.leave ? min([tourney.end, mem.leave])! : tourney.end,
@@ -72,24 +78,22 @@ const process = (seasons: RlcsSeason[], players: Player[]): ParticipationBlock[]
             }
           });
         });
-
-        // Set tourney info
-        // set(tournLength, `${season.season}[${sectionIndex}].${tourney.region}`, )
       });
     });
+
+    return playerBlocks;
   });
-  return blocks;
-};
 
 // TODO LAN
 
 interface ParticipationBlock {
-  player: string;
+  // player: string;
   team: string;
-  season: string;
-  region: Region;
+  // TODO Remove all following
+  // season: string;
+  // region: Region;
   index: number;
-  // dates
+  // dates (TODO remove)
   start: string;
   end: string;
 }
@@ -105,15 +109,15 @@ export default function Table({
 }) {
   // Convert tournaments + player info into "participation blocks" which have some properties, that
   // will be then filtered on.
-  const blocks = process(seasons, players);
-  console.log(blocks);
+  const seasonsData = process(seasons, players);
+  console.log(seasonsData);
 
-  // Based on which participation blocks get selected, certain columns and rows will be shown.
+  // TODO who needs this when it's already the keys of various maps
   const playerNames = Array.from<string>(
     reduce(
-      blocks,
+      seasonsData,
       (acc, cur) => {
-        acc.add(cur.player);
+        forEach(keys(cur), (p) => acc.add(p));
         return acc;
       },
       new Set(),
@@ -151,81 +155,68 @@ export default function Table({
         ))}
       </g>
       <g transform={`translate(${X_OFFSET},${Y_OFFSET})`} id="block-space">
-        {map(blocks, (b) => {
-          const baseX = getSeasonX(b.season);
-          const y = indexOf(playerNames, b.player) * PLAYER_HEIGHT;
-
-          const season = find(seasons, (s) => s.season === b.season);
-          const section = find(get(season, "sections"), (_sec, index) => index === b.index);
-          const tourney = find(get(section, "tournaments"), (t) => t.region === b.region);
-
-          let endX, startX;
-          if (season && section && tourney) {
-            // Get date offsets
-            const dates: Array<[string, string]> = [];
-            forEach(season.sections, (sec) => {
-              // Find the relevant dates for this sec. Based on region.
-              let relevantTourney = find(sec.tournaments, (t) => t.region === b.region);
-              if (!relevantTourney) {
-                relevantTourney = find(sec.tournaments, (t) => t.region === Region.WORLD);
-                if (!relevantTourney) {
-                  console.error("No tourney found for this region. Rip.");
-                }
-              }
-              if (relevantTourney) {
-                dates.push([relevantTourney.start, relevantTourney.end]);
-              }
-            });
-
-            if (b.player === "Kronovi") {
-              console.log("Kronovi", dates, baseX, b);
-            }
-
-            startX = scaleTimeDisjoint(dates, [baseX, SEASON_WIDTH], b.start);
-            endX = scaleTimeDisjoint(dates, [baseX, SEASON_WIDTH], b.end);
-          } else {
-            endX = 0;
-            startX = 0;
-          }
+        {map(seasonsData, (data, sIndex) => {
+          // Convert each player's blocks into reality.
+          const season = seasons[sIndex];
+          const baseX = getSeasonX(season.season);
 
           return (
-            <g>
-              <rect
-                x={baseX + startX}
-                y={y}
-                width={endX - startX}
-                height={PLAYER_HEIGHT}
-                fill={getTeamColor(b.team, teams)}
-                opacity={0.7}
-              />
-              <text x={baseX + startX} y={y + PLAYER_HEIGHT}>
-                {b.team}
-              </text>
+            <g id={`block-space-season-${season.season}`}>
+              {map(data, (playerData, pname) => {
+                // This represents which region pname is competing in for this season. NOTE: No mid-season region transfers
+                // TODO put all assumptions in a central place somewhere so we know where to look if something breaks
+
+                // TODO all of this logic up till `scale` is just `season`+`region` based
+                const region = playerData.region;
+
+                // Get date offsets
+                const dates: Array<[string, string]> = [];
+                forEach(season.sections, (sec) => {
+                  // Find the relevant dates for this sec. Based on region.
+                  const relevantTourney =
+                    find(sec.tournaments, (t) => t.region === region) ||
+                    find(sec.tournaments, (t) => t.region === Region.WORLD);
+
+                  if (!relevantTourney) {
+                    console.error("No tourney found for this region. Rip.");
+                  } else {
+                    dates.push([relevantTourney.start, relevantTourney.end]);
+                  }
+                });
+
+                const scale = new ScaleTimeDisjoint(dates, [baseX, SEASON_WIDTH]);
+
+                return (
+                  <g id={`block-space-season-${seasons[sIndex].season}-player-${pname}`}>
+                    {map(playerData.blocks, (b) => {
+                      const y = indexOf(playerNames, pname) * PLAYER_HEIGHT;
+
+                      const startX = scale.convert(b.start);
+                      const endX = scale.convert(b.end);
+
+                      return (
+                        <g>
+                          <rect
+                            x={baseX + startX}
+                            y={y}
+                            width={endX - startX}
+                            height={PLAYER_HEIGHT}
+                            fill={getTeamColor(b.team, teams)}
+                            opacity={0.7}
+                          />
+                          <text x={baseX + startX} y={y + PLAYER_HEIGHT}>
+                            {b.team}
+                          </text>
+                        </g>
+                      );
+                    })}
+                  </g>
+                );
+              })}
             </g>
           );
         })}
       </g>
     </svg>
   );
-
-  /*
-  return (
-    <table>
-      <tbody>
-        <tr>
-          <th>Player</th>
-          {map(tournaments, (t) => (
-            <th>{tournamentAcronym(t.name)}</th>
-          ))}
-        </tr>
-        {map(allPlayers, (teams, p) => (
-          <tr>
-            <th>{p}</th>
-            {getRow(size(tournaments), teams)}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-       */
 }

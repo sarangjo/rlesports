@@ -75,6 +75,7 @@ func singleConvert() {
 
 const seasonsFile = "src/data/seasons.json"
 
+// When using the JSON
 func readSeasons() []RlcsSeason {
 	file, err := os.Open(seasonsFile)
 	if err != nil {
@@ -90,4 +91,31 @@ func readSeasons() []RlcsSeason {
 	json.Unmarshal(byteValue, &output)
 	file.Close()
 	return output
+}
+
+// UpdateSeasons x
+func UpdateSeasons() {
+	for _, season := range seasons {
+		// 1. Check to see if this tournament has been cached
+		for _, section := range season.Sections {
+			for _, tourney := range section.Tournaments {
+				// 2. Fetch needed data from API
+
+				// 2.a Infobox processing
+				// Fetch infobox first because team information depends on region
+				wikitext := FetchSection(tourney.Path, infoboxSectionIndex)
+				tourney.Start, tourney.End, tourney.Region = ParseStartEndRegion(wikitext)
+
+				// 2.b Teams processing
+				sectionIndex := findSectionIndex(FetchSections(tourney.Path), playersSectionTitle)
+				if sectionIndex < 0 {
+					fmt.Println("Unable to find participants section for", tourney.Path)
+				} else {
+					wikitext := FetchSection(tourney.Path, sectionIndex)
+					tourney.Teams = ParseTeams(wikitext, tourney.Region)
+				}
+			}
+		}
+		// 3. Upload the tournament
+	}
 }

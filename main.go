@@ -32,7 +32,7 @@ func main() {
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
 		case "update":
-			UpdateTournaments(len(os.Args) == 3 && os.Args[2] == "--force")
+			UpdateSeasons()
 			break
 		case "players":
 			SmarterPlayers()

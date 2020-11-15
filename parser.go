@@ -1,14 +1,20 @@
 package main
 
 import (
+	"fmt"
+	"os"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
 /* Wikitext parsing module */
 
+// |qualifier=[[Rocket_League_Championship_Series/Season_1/North_America/Qualifier_1|Qualifier #1]]
+var regionRegex = regexp.MustCompile(`(?i)\|qualifier=\[\[.*\|(.*)\]\]`)
+
 // ParseTeams parses team info
-func ParseTeams(wikitext string) []Team {
+func ParseTeams(wikitext string, tournamentRegion Region) []Team {
 	// We are processing all of the lines per tournament
 	lines := strings.Split(wikitext, "\n")
 	// Each tournament has a set of teams
@@ -16,6 +22,10 @@ func ParseTeams(wikitext string) []Team {
 	// These are used as we parse one team at a time
 	team := Team{}
 	foundTeam := false
+
+	if tournamentRegion != RegionWorld {
+		team.Region = tournamentRegion
+	}
 
 	// Line format is:
 	// |team=iBUYPOWER
@@ -42,10 +52,21 @@ func ParseTeams(wikitext string) []Team {
 		} else if foundTeam {
 			// Player line has to start as so:
 			// TODO: start with `^`? replace [|] with `|?`?
-			if res, _ := regexp.Match("[|]p[0-9]=", []byte(line)); res {
+			if res, _ := regexp.MatchString("[|]p[0-9]=", line); res {
 				player := strings.TrimSpace(strings.Split(strings.Split(line, "|")[1], "=")[1])
 				if len(player) > 0 {
 					team.Players = append(team.Players, player)
+				}
+			} else {
+				if tournamentRegion == RegionWorld {
+					if res := regionRegex.FindStringSubmatch(line); res != nil {
+						// TODO expand
+						if strings.Index(res[1], RegionNorthAmerica.String()) == 0 {
+							team.Region = RegionNorthAmerica
+						} else if strings.Index(res[1], RegionEurope.String()) == 0 {
+							team.Region = RegionEurope
+						}
+					}
 				}
 			}
 		}
@@ -165,4 +186,20 @@ func redirectTo(parsed interface{}) (bool, string) {
 		return true, res[1]
 	}
 	return false, ""
+}
+
+// findSectionIndex finds the section that has `participants` as the line/anchor
+func findSectionIndex(sections []map[string]interface{}, sectionTitle string) int {
+	for _, section := range sections {
+		if strings.Contains(strings.ToLower(section["line"].(string)), sectionTitle) ||
+			strings.Contains(strings.ToLower(section["anchor"].(string)), sectionTitle) {
+			num, err := strconv.Atoi(section["index"].(string))
+			if err != nil {
+				fmt.Println("Unable to convert index to number", err)
+				os.Exit(1)
+			}
+			return num
+		}
+	}
+	return -1
 }

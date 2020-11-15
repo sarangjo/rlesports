@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
 )
 
 const playersSectionTitle = "participants"
@@ -44,6 +41,11 @@ func UpdateTournaments(forceUpload bool) {
 		dbg(tourney.Name, needTeams, needDetails, needMetadata)
 
 		// 2. Fetch needed data from API
+		// Fetch details first because team information depends on region
+		if needDetails {
+			wikitext := FetchSection(tourney.Name, infoboxSectionIndex)
+			updatedTourney.Start, updatedTourney.End, updatedTourney.Region = ParseStartEndRegion(wikitext)
+		}
 		if needTeams {
 			// Need to find the right section for participants
 			allSections := FetchSections(tourney.Name)
@@ -53,12 +55,8 @@ func UpdateTournaments(forceUpload bool) {
 				fmt.Println("Unable to find participants section for", tourney.Name)
 			} else {
 				wikitext := FetchSection(tourney.Name, sectionIndex)
-				updatedTourney.Teams = ParseTeams(wikitext)
+				updatedTourney.Teams = ParseTeams(wikitext, updatedTourney.Region)
 			}
-		}
-		if needDetails {
-			wikitext := FetchSection(tourney.Name, infoboxSectionIndex)
-			updatedTourney.Start, updatedTourney.End, updatedTourney.Region = ParseStartEndRegion(wikitext)
 		}
 		if needMetadata {
 			updatedTourney.Season = tourney.Season
@@ -71,20 +69,4 @@ func UpdateTournaments(forceUpload bool) {
 			UploadTournament(updatedTourney)
 		}
 	}
-}
-
-// findSectionIndex finds the section that has `participants` as the line/anchor
-func findSectionIndex(sections []map[string]interface{}, sectionTitle string) int {
-	for _, section := range sections {
-		if strings.Contains(strings.ToLower(section["line"].(string)), sectionTitle) ||
-			strings.Contains(strings.ToLower(section["anchor"].(string)), sectionTitle) {
-			num, err := strconv.Atoi(section["index"].(string))
-			if err != nil {
-				fmt.Println("Unable to convert index to number", err)
-				os.Exit(1)
-			}
-			return num
-		}
-	}
-	return -1
 }

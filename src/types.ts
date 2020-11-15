@@ -2,9 +2,10 @@
 export interface Team {
   name: string;
   players: string[];
-  won?: boolean;
   subs?: string[] | null;
+  region: Region;
   metadata?: any;
+  won?: boolean;
 }
 
 export interface Tournament {

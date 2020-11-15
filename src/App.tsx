@@ -13,7 +13,6 @@ import Timeline from "./viz/Timeline";
 import events from "./data/players.json";
 import teams from "./data/teams.json";
 import seasons from "./data/seasons.json";
-import Test from "./Test";
 
 function App() {
   const [tournaments, setTournaments] = useState<OldTournament[]>([]);
@@ -74,8 +73,8 @@ function App() {
         <Sankey tournaments={chosenTournaments} />
       ) : view === Viz.TEAM_MAP ? (
         "Hello"
-        // <PlayerTeams players={players} />
-      ) : view === Viz.TABLE ? (
+      ) : // <PlayerTeams players={players} />
+      view === Viz.TABLE ? (
         <Table seasons={seasons} players={events} teams={teams} />
       ) : view === Viz.TEXT ? (
         <Text tournaments={chosenTournaments} />
