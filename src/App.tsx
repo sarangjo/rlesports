@@ -1,6 +1,5 @@
 import { filter, find, map, size, slice, sortBy } from "lodash";
 import React, { useEffect, useState } from "react";
-import players from "./data/players-bad.json";
 import { OldTournament, Player, Region } from "./types";
 import { mapEnum, Viz, VizTitle } from "./util";
 import ForceGraph from "./viz/ForceGraph";
@@ -67,8 +66,6 @@ function App() {
           ))}
         </select>
       </div>
-      <Test />
-      {/*
       {view === Viz.SIMPLE ? (
         <SimpleGraph tournaments={chosenTournaments} />
       ) : view === Viz.FORCE_GRAPH ? (
@@ -76,7 +73,8 @@ function App() {
       ) : view === Viz.SANKEY ? (
         <Sankey tournaments={chosenTournaments} />
       ) : view === Viz.TEAM_MAP ? (
-        <PlayerTeams players={players} />
+        "Hello"
+        // <PlayerTeams players={players} />
       ) : view === Viz.TABLE ? (
         <Table seasons={seasons} players={events} teams={teams} />
       ) : view === Viz.TEXT ? (
@@ -90,7 +88,6 @@ function App() {
       ) : (
         ""
       )}
-       */}
     </div>
   );
 }

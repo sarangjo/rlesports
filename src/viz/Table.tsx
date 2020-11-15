@@ -3,7 +3,7 @@ import moment from "moment";
 import React from "react";
 import { WIDTH } from "../constants";
 import { Player, Region, RlcsSeason } from "../types";
-import { getTeamColor } from "../util";
+import { getTeamColor, scaleTimeDisjoint } from "../util";
 
 const SEASON_WIDTH = 600;
 const X_OFFSET = 150;
@@ -15,7 +15,10 @@ const getSeasonX = (s: string) => SEASON_WIDTH * (isNaN(parseInt(s, 10)) ? 9 : p
 
 const process = (seasons: RlcsSeason[], players: Player[]): ParticipationBlock[] => {
   const blocks: ParticipationBlock[] = [];
-  const tournLength = {};
+
+  // Blocks are by season.
+  // We need to prepare the per-season date ranges
+
   forEach(seasons, (season) => {
     forEach(season.sections, (section, sectionIndex) => {
       forEach(section.tournaments, (tourney) => {
@@ -119,90 +122,93 @@ export default function Table({
 
   return (
     <svg height={Y_OFFSET + size(playerNames) * PLAYER_HEIGHT} width={WIDTH}>
-    <g id="season-titles">
-    {map(seasons, (s) => (
-      <g id={`season-title-${s.season}`}>
-      <rect x={X_OFFSET} y={0} width={SEASON_WIDTH} height={Y_OFFSET} fill="skyblue" />
-      <text x={X_OFFSET} y={Y_OFFSET}>
-      Season {s.season}
-      </text>
+      <g id="season-titles">
+        {map(seasons, (s) => (
+          <g id={`season-title-${s.season}`}>
+            <rect x={X_OFFSET} y={0} width={SEASON_WIDTH} height={Y_OFFSET} fill="skyblue" />
+            <text x={X_OFFSET} y={Y_OFFSET}>
+              Season {s.season}
+            </text>
+          </g>
+        ))}
       </g>
-    ))}
-    </g>
-    <g id="player-names">
-    {map(playerNames, (name, idx) => (
-      <g id={`player-name-${name}`}>
-      <rect
-      x={0}
-      y={Y_OFFSET + idx * PLAYER_HEIGHT}
-      width={X_OFFSET}
-      height={PLAYER_HEIGHT}
-      fill="transparent"
-      stroke="black"
-      strokeWidth={1}
-      />
-      <text x={0} y={Y_OFFSET + (idx + 1) * PLAYER_HEIGHT}>
-      {name}
-      </text>
+      <g id="player-names">
+        {map(playerNames, (name, idx) => (
+          <g id={`player-name-${name}`}>
+            <rect
+              x={0}
+              y={Y_OFFSET + idx * PLAYER_HEIGHT}
+              width={X_OFFSET}
+              height={PLAYER_HEIGHT}
+              fill="transparent"
+              stroke="black"
+              strokeWidth={1}
+            />
+            <text x={0} y={Y_OFFSET + (idx + 1) * PLAYER_HEIGHT}>
+              {name}
+            </text>
+          </g>
+        ))}
       </g>
-    ))}
-    </g>
-    <g transform={`translate(${X_OFFSET},${Y_OFFSET})`} id="block-space">
-    {map(blocks, (b) => {
-      const baseX = getSeasonX(b.season);
-      const y = indexOf(playerNames, b.player) * PLAYER_HEIGHT;
+      <g transform={`translate(${X_OFFSET},${Y_OFFSET})`} id="block-space">
+        {map(blocks, (b) => {
+          const baseX = getSeasonX(b.season);
+          const y = indexOf(playerNames, b.player) * PLAYER_HEIGHT;
 
-      const section = find(
-        get(
-          find(seasons, (s) => s.season === b.season),
-          "sections",
-        ),
-        (_sec, index) => index === b.index,
-      );
-      const tourney = find(
-        get(
-          section
-          "tournaments",
-        ),
-        (t) => t.region === b.region,
-      );
+          const season = find(seasons, (s) => s.season === b.season);
+          const section = find(get(season, "sections"), (_sec, index) => index === b.index);
+          const tourney = find(get(section, "tournaments"), (t) => t.region === b.region);
 
-      let width, offsetX;
-      if (!tourney) {
-        width = 0;
-        offsetX = 0;
-      } else {
-        const sec =
-          offsetX = scaleTimeDisjoint(
-            const fullLength = moment(tourney.end).diff(tourney.start, "d");
-            const length = moment(b.end).diff(b.start, "d");
-            const offset = moment(b.start).diff(tourney.start, "d");
+          let endX, startX;
+          if (season && section && tourney) {
+            // Get date offsets
+            const dates: Array<[string, string]> = [];
+            forEach(season.sections, (sec) => {
+              // Find the relevant dates for this sec. Based on region.
+              let relevantTourney = find(sec.tournaments, (t) => t.region === b.region);
+              if (!relevantTourney) {
+                relevantTourney = find(sec.tournaments, (t) => t.region === Region.WORLD);
+                if (!relevantTourney) {
+                  console.error("No tourney found for this region. Rip.");
+                }
+              }
+              if (relevantTourney) {
+                dates.push([relevantTourney.start, relevantTourney.end]);
+              }
+            });
 
-            width = (length / fullLength) * sectionWidth;
-            offsetX = (offset / fullLength) * sectionWidth;
+            if (b.player === "Kronovi") {
+              console.log("Kronovi", dates, baseX, b);
+            }
+
+            startX = scaleTimeDisjoint(dates, [baseX, SEASON_WIDTH], b.start);
+            endX = scaleTimeDisjoint(dates, [baseX, SEASON_WIDTH], b.end);
+          } else {
+            endX = 0;
+            startX = 0;
           }
 
-      return (
-        <g>
-        <rect
-        x={baseX + offsetX}
-        y={y}
-        width={width}
-        height={PLAYER_HEIGHT}
-        fill={getTeamColor(b.team, teams)}
-        opacity={0.7}
-        />
-        <text x={baseX + offsetX} y={y + PLAYER_HEIGHT}>
-        {b.team}
-        </text>
-        </g>
-      );
-    })}
-    </g>
+          return (
+            <g>
+              <rect
+                x={baseX + startX}
+                y={y}
+                width={endX - startX}
+                height={PLAYER_HEIGHT}
+                fill={getTeamColor(b.team, teams)}
+                opacity={0.7}
+              />
+              <text x={baseX + startX} y={y + PLAYER_HEIGHT}>
+                {b.team}
+              </text>
+            </g>
+          );
+        })}
+      </g>
     </svg>
   );
 
-      /*
+  /*
   return (
     <table>
       <tbody>
@@ -222,4 +228,4 @@ export default function Table({
     </table>
   );
        */
-    }
+}
