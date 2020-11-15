@@ -14,6 +14,7 @@ import Timeline from "./viz/Timeline";
 import events from "./data/players.json";
 import teams from "./data/teams.json";
 import seasons from "./data/seasons.json";
+import Test from "./Test";
 
 function App() {
   const [tournaments, setTournaments] = useState<OldTournament[]>([]);
@@ -66,6 +67,8 @@ function App() {
           ))}
         </select>
       </div>
+      <Test />
+      {/*
       {view === Viz.SIMPLE ? (
         <SimpleGraph tournaments={chosenTournaments} />
       ) : view === Viz.FORCE_GRAPH ? (
@@ -87,6 +90,7 @@ function App() {
       ) : (
         ""
       )}
+       */}
     </div>
   );
 }

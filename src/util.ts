@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { concat, map, pickBy, reduce } from "lodash";
+import { concat, forEach, map, pickBy, reduce, some, sum } from "lodash";
 import moment from "moment";
 import { CIRCLE_RADIUS } from "./constants";
 import { OldTournament, TournamentPlayerNode } from "./types";
@@ -150,3 +150,34 @@ const COLOR_UNKNOWN_TEAM = "#232323";
 
 export const getTeamColor = (team: string, teams: Record<string, string>) =>
   team in teams ? teams[team] : COLOR_UNKNOWN_TEAM;
+
+// domain needs to be increasing order, each element needs to be 0 < 1
+export function scaleTimeDisjoint(
+  domain: Array<[string, string]>,
+  range: [number, number],
+  input: string,
+) {
+    // TODO: Create a class that persists until output declaration
+  // Calculate the date ranges involved in each
+  const dateDiffs = map(domain, (r) => {
+    return moment(r[1]).diff(moment(r[0]), "days");
+  });
+
+  const totalDiff = sum(dateDiffs);
+
+  let output = range[0];
+
+  // Find the date range index that we live in
+  some(domain, (r, i) => {
+    const totalX = (dateDiffs[i] / totalDiff) * (range[1] - range[0]);
+    if (r[0] <= input && input <= r[1]) {
+      // Add our local diff
+      const localDiff = moment(input).diff(moment(r[0]), "days");
+      output += (localDiff / dateDiffs[i]) * totalX;
+      return true;
+    }
+    output += totalX;
+  });
+
+  return output;
+}
