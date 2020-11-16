@@ -1,7 +1,7 @@
 import { filter, find, map, size, slice, sortBy } from "lodash";
 import React, { useEffect, useState } from "react";
-import { OldTournament, Player, Region } from "./types";
-import { mapEnum, Viz, VizTitle } from "./util";
+import { OldTournament as TournamentDoc, Player, Region, RlcsSeason, Tournament } from "./types";
+import { mapEnum, tournamentMap, Viz, VizTitle } from "./util";
 import ForceGraph from "./viz/ForceGraph";
 import PlayerTeams from "./viz/PlayerTeams";
 import Sankey from "./viz/Sankey";
@@ -12,22 +12,27 @@ import Timeline from "./viz/Timeline";
 
 import events from "./data/players.json";
 import teams from "./data/teams.json";
-import seasons from "./data/seasons.json";
 
 function App() {
-  const [tournaments, setTournaments] = useState<OldTournament[]>([]);
-  const [view, setView] = useState(Viz.TABLE);
+  const [tournaments, setTournaments] = useState<TournamentDoc[]>([]);
+  const [seasons, setSeasons] = useState<RlcsSeason[]>([]);
+  const [view, setView] = useState(Viz.TIMELINE);
   const [regions, setRegions] = useState([Region.NORTH_AMERICA, Region.WORLD, Region.EUROPE]);
 
   useEffect(() => {
     const get = async () => {
-      const result = await fetch("http://localhost:5002/api/tournaments");
-      const allTournaments: OldTournament[] = await result.json();
+      const [resultT, resultS] = await Promise.all([
+        fetch("http://localhost:5002/api/tournaments"),
+        fetch("http://localhost:5002/api/seasons"),
+      ]);
+      const allTournaments: TournamentDoc[] = await resultT.json();
       const sorted = allTournaments.sort((a, b) =>
         (a.start || "") > (b.start || "") ? 1 : (a.start || "") < (b.start || "") ? -1 : 0,
       );
 
       setTournaments(filter(sorted, (t) => t.season === "1"));
+
+      setSeasons(await resultS.json());
     };
     get();
   }, []);
@@ -46,6 +51,8 @@ function App() {
   };
 
   const chosenTournaments = filter(tournaments, (t) => !!find(regions, (r) => r === t.region));
+
+  console.log(tournamentMap(seasons, (t: Tournament) => t.name));
 
   return (
     <div>
@@ -80,8 +87,8 @@ function App() {
         <Text tournaments={chosenTournaments} />
       ) : view === Viz.TIMELINE ? (
         <Timeline
-          tournaments={chosenTournaments}
-          events={events as Player[]}
+          seasons={seasons}
+          players={events as Player[]}
           teams={(teams as unknown) as Record<string, string>}
         />
       ) : (

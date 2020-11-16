@@ -2,7 +2,7 @@ import { find, forEach, get, has, indexOf, keys, map, max, min, reduce, set, siz
 import React from "react";
 import { WIDTH } from "../constants";
 import { Player, Region, RlcsSeason } from "../types";
-import { getTeamColor, ScaleTimeDisjoint } from "../util";
+import { findPlayer, getTeamColor, ScaleTimeDisjoint } from "../util";
 
 const SEASON_WIDTH = 600;
 const X_OFFSET = 150;
@@ -11,21 +11,6 @@ const PLAYER_HEIGHT = 25;
 
 // Handle Season X gracefully
 const getSeasonX = (s: string) => SEASON_WIDTH * (isNaN(parseInt(s, 10)) ? 9 : parseInt(s, 10) - 1);
-
-const findPlayer = (players: Player[], tname: string) => {
-  let player = find(players, (p) => p.name.toLowerCase() === tname.toLowerCase());
-  if (!player) {
-    player = find(
-      players,
-      (p) => !!find(p.alternateIDs, (i) => i.toLowerCase() === tname.toLowerCase()),
-    );
-    if (!player) {
-      console.log("Uh, didn't find a player... weird.", tname);
-      return null;
-    }
-  }
-  return player;
-};
 
 // Design
 // - For a given season, a player has to be strongly associated with a particular region. World region

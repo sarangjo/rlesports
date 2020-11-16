@@ -10,11 +10,13 @@ type Team struct {
 	Region  Region   `json:"region,omitempty"`
 }
 
+// TODO NewTeam() that has Subs be non-null
+
 // Tournament x
 type Tournament struct {
 	// TODO move this to Regions so we can have multiple
 	Region Region `json:"region"`
-	Path   string `json:"path"`
+	Name   string `json:"name"`
 	Start  string `json:"start"`
 	End    string `json:"end"`
 	Teams  []Team `json:"teams"`
@@ -32,12 +34,13 @@ type RlcsSeason struct {
 	Sections []Section `json:"sections"`
 }
 
-// OldTournament describes, well, a tournament
-type OldTournament struct {
+// TournamentDoc describes a tournament as stored in the db
+type TournamentDoc struct {
 	// Metadata
-	Season string `json:"season"`
-	Region Region `json:"region,omitempty"`
-	Index  int    `json:"index"`
+	Season               string `json:"season"`
+	Region               Region `json:"region,omitempty"`
+	Index                int    `json:"index"`
+	ParticipationSection int    `json:"participantSection"`
 	// Name
 	Name string `json:"name"`
 	// LP data

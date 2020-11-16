@@ -10,7 +10,7 @@ export interface Team {
 
 export interface Tournament {
   region: Region;
-  path: string;
+  name: string;
   start: string;
   end: string;
   teams: Team[];

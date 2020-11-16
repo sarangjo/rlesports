@@ -79,7 +79,7 @@ func CallAPI(opts url.Values) []byte {
 	// Rate limit
 	timeSinceLast := time.Since(lastRequest)
 	if timeSinceLast < rateGap {
-		fmt.Printf("waiting for %v seconds\n", (rateGap - timeSinceLast).Round(time.Second))
+		fmt.Printf("waiting for %v\n", (rateGap - timeSinceLast).Round(time.Second))
 		for time.Since(lastRequest) < rateGap {
 			time.Sleep(time.Second * 5)
 			fmt.Print(".")

@@ -16,8 +16,8 @@ import {
 import moment, { Moment } from "moment";
 import React from "react";
 import { CIRCLE_RADIUS, HEIGHT, MARGIN, SPACING } from "../constants";
-import { EventType, Player, OldTournament } from "../types";
-import { DATE_FORMAT, getTeamColor, toDate, tournamentAcronym } from "../util";
+import { EventType, Player, OldTournament, RlcsSeason, Tournament } from "../types";
+import { DATE_FORMAT, getTeamColor, toDate, tournamentAcronym, tournamentMap } from "../util";
 
 const BIG_WIDTH = 5500;
 const BIG_HEIGHT = 2500;
@@ -38,55 +38,35 @@ const STROKE_WIDTH_TEAM = 3;
 // - team info: colors, date range
 // - tournaments: participants (team names could change), winners
 
-const getIndices = (t: OldTournament, players: string[]): Record<string, number> => {
+const getIndices = (players: string[]): Record<string, number> => {
   let idx = 0;
-  // First, tournament participants
-  const indices = reduce(
-    t.teams,
+  return reduce(
+    players,
     (acc, cur) => {
-      return assign(
-        acc,
-        reduce(
-          cur.players,
-          (acc2, p) => {
-            return set(acc2, p, idx++);
-          },
-          {},
-        ),
-      );
+      if (!(cur in acc)) {
+        acc[cur] = idx++;
+      }
+      return acc;
     },
     {} as Record<string, number>,
   );
-
-  // Then, unknown players
-  forEach(players, (p) => {
-    if (!(p in indices)) {
-      indices[p] = idx++;
-    }
-  });
-
-  return indices;
 };
 
 // Contract: each player's events are always sorted in time order. Tournaments are sorted.
 export default function Timeline({
-  tournaments,
-  events: players,
+  seasons,
+  players,
   teams,
 }: {
-  tournaments: OldTournament[];
-  events: Player[];
+  seasons: RlcsSeason[];
+  players: Player[];
   teams: Record<string, string>;
 }) {
-  if (size(tournaments) === 0) {
+  if (size(seasons) === 0) {
     return <div>Loading...</div>;
   }
 
-  // Use tournament 0 to fix our starting Y.
-  const indices = getIndices(
-    tournaments[0],
-    map(players, (p) => p.name),
-  );
+  const indices = getIndices(map(players, (p) => p.name));
 
   // Most important function: given an event # and player, get its Y coordinate.
   const getY = (player: string, _eventNum?: number, _eventType?: EventType) => {
@@ -114,8 +94,8 @@ export default function Timeline({
   let endDate = last(end.memberships)!.leave || last(end.memberships)!.join;
 
   // [min/max] Try 2: tournaments
-  startDate = startDate > tournaments[0].start ? tournaments[0].start : startDate;
-  endDate = endDate < last(tournaments)!.end ? last(tournaments)!.end : endDate;
+  //startDate = startDate > tournaments[0].start ? tournaments[0].start : startDate;
+  //endDate = endDate < last(tournaments)!.end ? last(tournaments)!.end : endDate;
 
   const x = scaleTime()
     .domain([toDate(startDate), toDate(endDate)])
@@ -136,12 +116,12 @@ export default function Timeline({
   return (
     <svg width={BIG_WIDTH} height={BIG_HEIGHT}>
       <g id="tournaments">
-        {map(tournaments, (t, idx) => {
+        {tournamentMap(seasons, (t) => {
           const thisX = x(toDate(t.start));
           const thisWidth = x(toDate(t.end)) - x(toDate(t.start));
 
           return (
-            <g key={idx}>
+            <g>
               <rect x={thisX} y={0} width={thisWidth} height={BIG_HEIGHT} opacity={0.2} />
               <text
                 x={thisX + thisWidth / 2}
@@ -154,9 +134,9 @@ export default function Timeline({
               </text>
               {reduce(
                 t.teams,
-                (acc, cur) => {
+                (acc3, cur) => {
                   return concat(
-                    acc,
+                    acc3,
                     map(cur.players, (p) => {
                       const myY = getY(p);
                       if (isNull(myY)) {
@@ -185,7 +165,7 @@ export default function Timeline({
         {map(range(0, moment(endDate).diff(startDate, "d"), 50), (days, i) => (
           <TimelineDate key={i} now={moment(startDate).add(days, "d")} />
         ))}
-        {map(tournaments, (t) => (
+        {tournamentMap(seasons, (t) => (
           <>
             <TimelineDate now={moment(t.start)} />
             <TimelineDate now={moment(t.end)} />

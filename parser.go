@@ -10,8 +10,8 @@ import (
 
 /* Wikitext parsing module */
 
-// |qualifier=[[Rocket_League_Championship_Series/Season_1/North_America/Qualifier_1|Qualifier #1]]
-var regionRegex = regexp.MustCompile(`(?i)\|qualifier=\[\[.*\|(.*)\]\]`)
+// [[Rocket_League_Championship_Series/Season_1/North_America/Qualifier_1|Qualifier #1]]
+var wikilinkRegex = regexp.MustCompile(`\[\[.+\|(.+)\]\]`)
 
 // ParseTeams parses team info
 func ParseTeams(wikitext string, tournamentRegion Region) []Team {
@@ -41,10 +41,12 @@ func ParseTeams(wikitext string, tournamentRegion Region) []Team {
 			if foundTeam && len(team.Players) >= minTeamSize {
 				teams = append(teams, team)
 				team = Team{}
+				if tournamentRegion != RegionWorld {
+					team.Region = tournamentRegion
+				}
 			}
 			team.Name = strings.Replace(line, "|team=", "", 1)
-			endBar := strings.Index(team.Name, "|")
-			if endBar >= 0 {
+			if endBar := strings.Index(team.Name, "|"); endBar >= 0 {
 				team.Name = team.Name[0:endBar]
 			}
 			foundTeam = true
@@ -59,11 +61,19 @@ func ParseTeams(wikitext string, tournamentRegion Region) []Team {
 				}
 			} else {
 				if tournamentRegion == RegionWorld {
-					if res := regionRegex.FindStringSubmatch(line); res != nil {
+					if strings.Index(line, "|qualifier") >= 0 {
+						pieces := strings.Split(line, "=")
+						qualifier := strings.TrimSpace(pieces[1])
+
+						// Strip away any links
+						if res := wikilinkRegex.FindStringSubmatch(qualifier); res != nil {
+							qualifier = res[1]
+						}
+
 						// TODO expand
-						if strings.Index(res[1], RegionNorthAmerica.String()) == 0 {
+						if strings.Index(qualifier, RegionNorthAmerica.String()) >= 0 {
 							team.Region = RegionNorthAmerica
-						} else if strings.Index(res[1], RegionEurope.String()) == 0 {
+						} else if strings.Index(qualifier, RegionEurope.String()) >= 0 {
 							team.Region = RegionEurope
 						}
 					}

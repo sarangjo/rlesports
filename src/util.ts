@@ -1,8 +1,8 @@
 import * as d3 from "d3";
-import { concat, forEach, map, pickBy, reduce, some, sum } from "lodash";
+import { concat, find, map, pickBy, reduce, some } from "lodash";
 import moment from "moment";
 import { CIRCLE_RADIUS } from "./constants";
-import { OldTournament, TournamentPlayerNode } from "./types";
+import { OldTournament, Player, RlcsSeason, Tournament, TournamentPlayerNode } from "./types";
 
 //// UTILITY
 
@@ -187,4 +187,45 @@ export class ScaleTimeDisjoint {
 
     return output;
   }
+}
+
+// Get player by name or by alternate ID
+export const findPlayer = (players: Player[], tname: string) => {
+  let player = find(players, (p) => p.name.toLowerCase() === tname.toLowerCase());
+  if (!player) {
+    player = find(
+      players,
+      (p) => !!find(p.alternateIDs, (i) => i.toLowerCase() === tname.toLowerCase()),
+    );
+    if (!player) {
+      console.log("Uh, didn't find a player... weird.", tname);
+      return null;
+    }
+  }
+  return player;
+};
+
+export function tournamentMap<T>(seasons: RlcsSeason[], func: (tournament: Tournament) => T) {
+  return reduce(
+    seasons,
+    (acc, s) => {
+      // Append from all sections
+      const sectionsMapped = reduce(
+        s.sections,
+        (acc2, sec) => {
+          // Append from all tournaments
+          return concat(
+            acc2,
+            map(sec.tournaments, (t) => {
+              return func(t);
+            }),
+          );
+        },
+        [] as T[],
+      );
+
+      return concat(acc, sectionsMapped);
+    },
+    [] as T[],
+  );
 }

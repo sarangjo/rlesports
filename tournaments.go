@@ -28,45 +28,74 @@ func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
 	fmt.Println(name, teamsString, detailsString, metadataString)
 }
 
+// Returns true if incomplete
+func areTeamsIncomplete(d TournamentDoc) bool {
+	if len(d.Teams) == 0 {
+		return true
+	}
+
+	for _, t := range d.Teams {
+		if t.Region == RegionNone {
+			return true
+		}
+	}
+	return false
+}
+
 // UpdateTournaments goes through saved tournaments and updates fields that are missing.
 func UpdateTournaments(forceUpload bool) {
-	for _, tourney := range []OldTournament{} {
-		// 1. Check to see if this tournament has been cached
-		updatedTourney := OldTournament{Name: tourney.Name}
-		err := GetTournament(&updatedTourney)
-		needTeams := forceUpload || err != nil || len(updatedTourney.Teams) == 0
-		needDetails := forceUpload || err != nil || updatedTourney.Start == "" || updatedTourney.End == "" || updatedTourney.Region == RegionNone
-		needMetadata := forceUpload || err != nil || updatedTourney.Season == ""
+	for _, sSkeleton := range seasonSkeletons {
+		for index, secSkeleton := range sSkeleton.Sections {
+			for _, tSkeleton := range secSkeleton.Tournaments {
+				updatedTourney := TournamentDoc{Name: tSkeleton.Name}
+				err := GetTournament(&updatedTourney)
 
-		dbg(tourney.Name, needTeams, needDetails, needMetadata)
+				// 1. Check to see if this tournament has been cached, and if so, cached correctly. There
+				// are various checks here
+				// 1.a Infobox details
+				needInfobox := forceUpload || err != nil || updatedTourney.Start == "" || updatedTourney.End == "" || updatedTourney.Region == RegionNone ||
+					updatedTourney.Region != tSkeleton.Region
+				// 1.b Team details
+				needTeams := forceUpload || err != nil || areTeamsIncomplete(updatedTourney)
+				// 1.c Other mismatches
+				needMetadata := forceUpload || err != nil || updatedTourney.Season == "" || updatedTourney.Season != sSkeleton.Season ||
+					updatedTourney.Index != index
 
-		// 2. Fetch needed data from API
-		// Fetch details first because team information depends on region
-		if needDetails {
-			wikitext := FetchSection(tourney.Name, infoboxSectionIndex)
-			updatedTourney.Start, updatedTourney.End, updatedTourney.Region = ParseStartEndRegion(wikitext)
-		}
-		if needTeams {
-			// Need to find the right section for participants
-			allSections := FetchSections(tourney.Name)
+				dbg(tSkeleton.Name, needTeams, needInfobox, needMetadata)
 
-			sectionIndex := findSectionIndex(allSections, playersSectionTitle)
-			if sectionIndex < 0 {
-				fmt.Println("Unable to find participants section for", tourney.Name)
-			} else {
-				wikitext := FetchSection(tourney.Name, sectionIndex)
-				updatedTourney.Teams = ParseTeams(wikitext, updatedTourney.Region)
+				// 2. Fetch needed data from API
+				// 2.a Infobox: fetch first because team information depends on region
+				if needInfobox {
+					wikitext := FetchSection(tSkeleton.Name, infoboxSectionIndex)
+					updatedTourney.Start, updatedTourney.End, updatedTourney.Region = ParseStartEndRegion(wikitext)
+				}
+				// 2.b Teams
+				if needTeams {
+					if updatedTourney.ParticipationSection <= 0 {
+						// Need to find the right section for participants
+						allSections := FetchSections(tSkeleton.Name)
+						updatedTourney.ParticipationSection = findSectionIndex(allSections, playersSectionTitle)
+					}
+
+					if updatedTourney.ParticipationSection < 0 {
+						fmt.Println("Unable to find participants section for", tSkeleton.Name)
+					} else {
+						wikitext := FetchSection(tSkeleton.Name, updatedTourney.ParticipationSection)
+						updatedTourney.Teams = ParseTeams(wikitext, updatedTourney.Region)
+					}
+				}
+				// 2.c Other
+				if needMetadata {
+					updatedTourney.Season = sSkeleton.Season
+					updatedTourney.Region = tSkeleton.Region
+					updatedTourney.Index = index
+				}
+
+				// 3. Upload the tournament
+				if needTeams || needInfobox || needMetadata {
+					UploadTournament(updatedTourney)
+				}
 			}
-		}
-		if needMetadata {
-			updatedTourney.Season = tourney.Season
-			updatedTourney.Region = tourney.Region
-			updatedTourney.Index = tourney.Index
-		}
-
-		// 3. Upload the tournament
-		if needTeams || needDetails || needMetadata {
-			UploadTournament(updatedTourney)
 		}
 	}
 }

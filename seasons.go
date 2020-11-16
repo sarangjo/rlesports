@@ -12,7 +12,7 @@ import (
 const prefix = "Rocket League Championship Series/Season "
 const seasonMax = 1
 
-func buildSeasons() []RlcsSeason {
+func buildSeasonSkeletons() []RlcsSeason {
 	var seasons []RlcsSeason
 
 	regions := []Region{RegionNorthAmerica, RegionEurope}
@@ -27,7 +27,7 @@ func buildSeasons() []RlcsSeason {
 				for _, region := range regions {
 					section.Tournaments = append(section.Tournaments, Tournament{
 						Region: region,
-						Path:   fmt.Sprintf("%s%d/%s/Qualifier %d", prefix, season, region.String(), qualifier),
+						Name:   fmt.Sprintf("%s%d/%s/Qualifier %d", prefix, season, region.String(), qualifier),
 					})
 				}
 				rlcsSeason.Sections = append(rlcsSeason.Sections, section)
@@ -35,7 +35,7 @@ func buildSeasons() []RlcsSeason {
 		} else {
 			section := Section{Name: "Regional"}
 			for _, region := range regions {
-				section.Tournaments = append(section.Tournaments, Tournament{Region: region, Path: fmt.Sprintf("%s%d/%s", prefix, season, region.String())})
+				section.Tournaments = append(section.Tournaments, Tournament{Region: region, Name: fmt.Sprintf("%s%d/%s", prefix, season, region.String())})
 			}
 			rlcsSeason.Sections = append(rlcsSeason.Sections, section)
 		}
@@ -44,7 +44,7 @@ func buildSeasons() []RlcsSeason {
 			rlcsSeason.Sections = append(rlcsSeason.Sections,
 				Section{
 					Name:        "Finals",
-					Tournaments: []Tournament{{Region: RegionWorld, Path: fmt.Sprintf("%s%d", prefix, season)}},
+					Tournaments: []Tournament{{Region: RegionWorld, Name: fmt.Sprintf("%s%d", prefix, season)}},
 				},
 			)
 		}
@@ -55,22 +55,22 @@ func buildSeasons() []RlcsSeason {
 	return seasons
 }
 
-var seasons = buildSeasons()
+var seasonSkeletons = buildSeasonSkeletons()
 
 func singleConvert() {
-	for sn, season := range seasons {
+	for sn, season := range seasonSkeletons {
 		for secn, section := range season.Sections {
 			for tn, tourney := range section.Tournaments {
-				oldT := OldTournament{Name: tourney.Path}
+				oldT := TournamentDoc{Name: tourney.Name}
 				GetTournament(&oldT)
-				seasons[sn].Sections[secn].Tournaments[tn].Start = oldT.Start
-				seasons[sn].Sections[secn].Tournaments[tn].End = oldT.End
-				seasons[sn].Sections[secn].Tournaments[tn].Teams = oldT.Teams
+				seasonSkeletons[sn].Sections[secn].Tournaments[tn].Start = oldT.Start
+				seasonSkeletons[sn].Sections[secn].Tournaments[tn].End = oldT.End
+				seasonSkeletons[sn].Sections[secn].Tournaments[tn].Teams = oldT.Teams
 			}
 		}
 	}
 
-	WriteJSONFile(seasons, "src/data/seasons.json")
+	WriteJSONFile(seasonSkeletons, "src/data/seasons.json")
 }
 
 const seasonsFile = "src/data/seasons.json"
@@ -93,29 +93,36 @@ func readSeasons() []RlcsSeason {
 	return output
 }
 
-// UpdateSeasons x
-func UpdateSeasons() {
-	for _, season := range seasons {
-		// 1. Check to see if this tournament has been cached
-		for _, section := range season.Sections {
-			for _, tourney := range section.Tournaments {
-				// 2. Fetch needed data from API
-
-				// 2.a Infobox processing
-				// Fetch infobox first because team information depends on region
-				wikitext := FetchSection(tourney.Path, infoboxSectionIndex)
-				tourney.Start, tourney.End, tourney.Region = ParseStartEndRegion(wikitext)
-
-				// 2.b Teams processing
-				sectionIndex := findSectionIndex(FetchSections(tourney.Path), playersSectionTitle)
-				if sectionIndex < 0 {
-					fmt.Println("Unable to find participants section for", tourney.Path)
-				} else {
-					wikitext := FetchSection(tourney.Path, sectionIndex)
-					tourney.Teams = ParseTeams(wikitext, tourney.Region)
+// GetSeasons returns fleshed-out seasons
+func GetSeasons() []RlcsSeason {
+	// Start with rlcs skeletons, get all tournaments piecemeal. Start inefficient, get more efficient over time.
+	var seasons []RlcsSeason
+	for _, sSkeleton := range seasonSkeletons {
+		season := RlcsSeason{Season: sSkeleton.Season}
+		for index, secSkeleton := range sSkeleton.Sections {
+			section := Section{Name: secSkeleton.Name}
+			for _, tSkeleton := range secSkeleton.Tournaments {
+				fmt.Println(index, tSkeleton)
+				tourney := Tournament{
+					Region: tSkeleton.Region,
+					Name:   tSkeleton.Name,
 				}
+
+				// fetch doc and overwrite fields
+				doc := TournamentDoc{Name: tSkeleton.Name}
+				if err := GetTournament(&doc); err != nil {
+					panic("lulw")
+				}
+
+				tourney.Start = doc.Start
+				tourney.End = doc.End
+				tourney.Teams = doc.Teams
+
+				section.Tournaments = append(section.Tournaments, tourney)
 			}
+			season.Sections = append(season.Sections, section)
 		}
-		// 3. Upload the tournament
+		seasons = append(seasons, season)
 	}
+	return seasons
 }

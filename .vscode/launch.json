@@ -21,7 +21,7 @@
       "args": ["players"]
     },
     {
-      "name": "Go: Update Seasons",
+      "name": "Go: Update Tournaments",
       "type": "go",
       "request": "launch",
       "mode": "debug",
