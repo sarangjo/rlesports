@@ -10,7 +10,7 @@ import (
 
 // RLCS only.
 const prefix = "Rocket League Championship Series/Season "
-const seasonMax = 1
+const seasonMax = 2
 
 func buildSeasonSkeletons() []RlcsSeason {
 	var seasons []RlcsSeason
@@ -99,10 +99,9 @@ func GetSeasons() []RlcsSeason {
 	var seasons []RlcsSeason
 	for _, sSkeleton := range seasonSkeletons {
 		season := RlcsSeason{Season: sSkeleton.Season}
-		for index, secSkeleton := range sSkeleton.Sections {
+		for _, secSkeleton := range sSkeleton.Sections {
 			section := Section{Name: secSkeleton.Name}
 			for _, tSkeleton := range secSkeleton.Tournaments {
-				fmt.Println(index, tSkeleton)
 				tourney := Tournament{
 					Region: tSkeleton.Region,
 					Name:   tSkeleton.Name,

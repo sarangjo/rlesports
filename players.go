@@ -88,33 +88,101 @@ func getPlayerDetails(name string) Player {
 	return ParsePlayer(extractWikitext(playerData))
 }
 
-func membershipInTournaments(player Player, membership Membership, seasons []RlcsSeason,
-	seasonIdx int, sectionIdx int, tournIdx int) bool {
+// TODO expand this to include "Team x", "x esports", etc.
+func teamNameMatch(team1 string, team2 string) bool {
+	return team1 == team2 || strings.ToLower(team1) == strings.ToLower(team2)
+}
+
+// Returns true if the given player happens to be playing for this team
+func playerInTeam(player Player, team Team) bool {
+	for _, p := range team.Players {
+		if p == player.Name {
+			return true
+		}
+		for _, alt := range player.AlternateIDs {
+			if p == alt {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// TODO optimize more?
+// The goal here basically is to filter out the memberships that are actually in
+// a tournament.
+// This is shared logic with Table.tsx::process()
+// KNOWN BUG: If a player who played in a particular tournament joins a team BEFORE THE EVENT's END
+// DATE, that shows up. The best fix for this would be expanding information from the tournament
+// side about all the names of the teams that might be in there.
+func filterByTournament(player Player, seasons []RlcsSeason, seasonIdx int) []Membership {
+	filterBitSet := make([]bool, len(player.Memberships))
+
+	// We can improve our time by only looking at memberships past a certain one once we've ensured
+	// that all memberships below that number have already been set to TRUE in the bitset
+	// TODO implement
+	// lowestMembership := 0
+
+	// Go through each tournament and turn on the memberships that matter
 	for _, season := range seasons[seasonIdx:] {
-		for _, section := range season.Sections[sectionIdx:] {
-			for _, t := range section.Tournaments[tournIdx:] {
-				if membership.Join < t.End && (membership.Leave == "" || membership.Leave > t.Start) {
-					// Don't care about team name cuz they could be acquired; purely player-based. This could
-					// be flawed if Liquipedia doesn't show members that may not be there at the end of the
-					// tournament (i.e. due to leaving/joining mid-tournament)
-					for _, team := range t.Teams {
-						for _, p := range team.Players {
-							if p == player.Name {
-								return true
-							}
-							for _, alt := range player.AlternateIDs {
-								if p == alt {
-									return true
-								}
-							}
+		for _, section := range season.Sections {
+			for _, t := range section.Tournaments {
+				// Okay. For this tournament, which memberships fit?
+				// tourneyBitSet := make([]bool, len(player.Memberships))
+				// lastTeamMatch := 0
+
+				// Note. We could have multiple memberships that overlap with this tournament.
+				for idx, membership := range player.Memberships {
+					// if membership.Leave != "" && membership.Leave < t.Start {
+					// 	// quit out early
+					// 	lowestMembership++
+					// 	if lowestMembership == len(player.Memberships) {
+					// 		break SeasonLoop
+					// 	}
+					if membership.Join <= t.End && (membership.Leave == "" || membership.Leave >= t.Start) {
+						// First check passed: this lines up by time
+						for _, team := range t.Teams {
+							// Second check: we confirm that this player actually participated,
+							// using player names and alternate ID's
+							filterBitSet[idx] = filterBitSet[idx] || playerInTeam(player, team)
+
+							// If the team name matches this membership, no further memberships can
+							// possibly match this tournament. Let's get out and move on to the next tournament and
+							// do this fun thing all over again!
+							// if teamNameMatch(team.Name, membership.Team) {
+							// 	lastTeamMatch = idx
+							// }
 						}
 					}
 				}
+
+				// Okay we went through all memberships and evaluated which memberships line up. We
+				// also know the index of the *last* membership which matches the team name for this
+				// tournament. This means we can apply the bitmask only up till (and including) this
+				// last index
+				// for idx, tourneyBit := range tourneyBitSet {
+				// 	if idx <= lastTeamMatch {
+				// 		if tourneyBit {
+				// 			filterBitSet[idx] = true
+				// 		}
+				// 	} else {
+				// 		// No more memberships can match, I don't care!
+				// 		break
+				// 	}
+				// }
 			}
 		}
 	}
 
-	return false
+	// Extract the memberships we selected via the bitset
+	var filtered []Membership
+	for idx, m := range player.Memberships {
+		if filterBitSet[idx] {
+			filtered = append(filtered, m)
+		}
+	}
+
+	return filtered
 }
 
 // SmarterPlayers builds up events for players that matter based on the tournaments provided.
@@ -122,22 +190,25 @@ func SmarterPlayers() {
 	// tournaments := GetTournaments()
 	minifiedPlayers := make(map[string]Player)
 
-	seasons := readSeasons()
+	seasons := GetSeasons()
 
 	for seasonIdx, season := range seasons {
-		for sectionIdx, section := range season.Sections {
-			for tournIdx, tournament := range section.Tournaments {
+		fmt.Println("SEASON", season.Season)
+		for _, section := range season.Sections {
+			fmt.Println("\tSECTION", section.Name)
+			for _, tournament := range section.Tournaments {
+				fmt.Println("\t\tREGION", tournament.Region.String())
 				for _, team := range tournament.Teams {
+					fmt.Println("\t\t\tTEAM", team.Name)
 					for _, tname := range team.Players {
-						// Get data for a chosen player
-						fmt.Println(team.Name, "player", tname)
+						fmt.Println("\t\t\t\tPLAYER", tname)
 
 						// use lowercase when checking for duplicates
 						// TODO this really is shitty
 						playerID := strings.ToLower(tname)
 
 						if _, ok := minifiedPlayers[playerID]; ok {
-							fmt.Println("Already processed", tname)
+							fmt.Println("\t\t\t\tAlready processed", tname)
 							continue
 						}
 
@@ -145,21 +216,15 @@ func SmarterPlayers() {
 
 						///// Past this point, we don't use name; we use player.Name /////
 
+						// Second check in case of redirect
 						playerID = strings.ToLower(player.Name)
 						if _, ok := minifiedPlayers[playerID]; ok {
-							fmt.Println("Already processed", player.Name)
+							fmt.Println("\t\t\t\tAlready processed", player.Name)
 							continue
 						}
 
 						// Find team participations that are relevant to all tournaments based on start/end date
-						var memberships []Membership
-
-						for _, membership := range player.Memberships {
-							if membershipInTournaments(player, membership, seasons, seasonIdx, sectionIdx, tournIdx) {
-								memberships = append(memberships, membership)
-							}
-						}
-						fmt.Println(memberships)
+						memberships := filterByTournament(player, seasons, seasonIdx)
 
 						if len(memberships) > 0 {
 							minifiedPlayers[playerID] = Player{Name: player.Name, AlternateIDs: player.AlternateIDs, Memberships: memberships}

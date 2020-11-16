@@ -29,6 +29,7 @@ const process = (seasons: RlcsSeason[], players: Player[]) =>
         // player was on. This is used to evaluate
         // whether we should keep adding events in the forEach loop below. It's quite heavily
         // broken if a player switches teams in the middle of a tournament. TODO fix.
+        // TODO this is broken actually right now with Vendetta and VindicatorGG garbage in RLCS NA S2
         const tourneyDone: Record<string, boolean> = {};
         forEach(tourney.teams, (team) => {
           forEach(team.players, (tname) => {
