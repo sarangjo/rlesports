@@ -37,9 +37,6 @@ func main() {
 		case "cache":
 			CacheProcess()
 			break
-		case "convert":
-			singleConvert()
-			break
 		case "test":
 			l := map[string]map[string]string{
 				"wikitext": {

@@ -175,6 +175,7 @@ export default function Table({
                 return (
                   <g id={`block-space-season-${seasons[sIndex].season}-player-${pname}`}>
                     {map(playerData.blocks, (b) => {
+                      // TODO include alternate ID's here
                       const y = indexOf(playerNames, pname) * PLAYER_HEIGHT;
 
                       const startX = scale.convert(b.start);

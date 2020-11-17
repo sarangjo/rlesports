@@ -108,13 +108,18 @@ func playerInTeam(player Player, team Team) bool {
 	return false
 }
 
+// DESIGN CHOICES
+// OPTION 1: Count up till
+// OPTION 2: Just go by times.
+//
+// OPTION 2 KNOWN BUG: If a player who played in a particular tournament joins a team BEFORE THE EVENT's END
+// DATE, that shows up. The best fix for this would be expanding information from the tournament
+// side about all the names of the teams that might be in there.
+
 // TODO optimize more?
 // The goal here basically is to filter out the memberships that are actually in
 // a tournament.
 // This is shared logic with Table.tsx::process()
-// KNOWN BUG: If a player who played in a particular tournament joins a team BEFORE THE EVENT's END
-// DATE, that shows up. The best fix for this would be expanding information from the tournament
-// side about all the names of the teams that might be in there.
 func filterByTournament(player Player, seasons []RlcsSeason, seasonIdx int) []Membership {
 	filterBitSet := make([]bool, len(player.Memberships))
 
@@ -128,8 +133,10 @@ func filterByTournament(player Player, seasons []RlcsSeason, seasonIdx int) []Me
 		for _, section := range season.Sections {
 			for _, t := range section.Tournaments {
 				// Okay. For this tournament, which memberships fit?
-				// tourneyBitSet := make([]bool, len(player.Memberships))
-				// lastTeamMatch := 0
+				tourneyBitSet := make([]bool, len(player.Memberships))
+				// It is possible that we never found a match. In that case be more permissive. Note
+				// this is up to but NOT including
+				lastTeamMatch := len(player.Memberships)
 
 				// Note. We could have multiple memberships that overlap with this tournament.
 				for idx, membership := range player.Memberships {
@@ -144,14 +151,19 @@ func filterByTournament(player Player, seasons []RlcsSeason, seasonIdx int) []Me
 						for _, team := range t.Teams {
 							// Second check: we confirm that this player actually participated,
 							// using player names and alternate ID's
-							filterBitSet[idx] = filterBitSet[idx] || playerInTeam(player, team)
-
-							// If the team name matches this membership, no further memberships can
-							// possibly match this tournament. Let's get out and move on to the next tournament and
-							// do this fun thing all over again!
-							// if teamNameMatch(team.Name, membership.Team) {
-							// 	lastTeamMatch = idx
+							tourneyBitSet[idx] = tourneyBitSet[idx] || playerInTeam(player, team)
+							// } else {
+							// 	// Second check: we confirm that this player actually participated,
+							// 	// using player names and alternate ID's
+							// 	filterBitSet[idx] = filterBitSet[idx] || playerInTeam(player, team)
 							// }
+
+							// Third check: If the team name matches this membership, no further memberships
+							// can possibly match this tournament. Let's get out and move on to
+							// the next tournament and do this fun thing all over again!
+							if teamNameMatch(team.Name, membership.Team) {
+								lastTeamMatch = idx + 1
+							}
 						}
 					}
 				}
@@ -160,16 +172,9 @@ func filterByTournament(player Player, seasons []RlcsSeason, seasonIdx int) []Me
 				// also know the index of the *last* membership which matches the team name for this
 				// tournament. This means we can apply the bitmask only up till (and including) this
 				// last index
-				// for idx, tourneyBit := range tourneyBitSet {
-				// 	if idx <= lastTeamMatch {
-				// 		if tourneyBit {
-				// 			filterBitSet[idx] = true
-				// 		}
-				// 	} else {
-				// 		// No more memberships can match, I don't care!
-				// 		break
-				// 	}
-				// }
+				for idx, tourneyBit := range tourneyBitSet[:lastTeamMatch] {
+					filterBitSet[idx] = filterBitSet[idx] || tourneyBit
+				}
 			}
 		}
 	}

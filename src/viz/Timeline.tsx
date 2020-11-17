@@ -254,7 +254,9 @@ export default function Timeline({
                     stroke={color}
                     strokeWidth={STROKE_WIDTH_TEAM}
                   >
-                    <title>{mem.team}</title>
+                    <title>
+                      {player.name} | {mem.team}
+                    </title>
                   </line>,
                 );
 

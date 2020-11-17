@@ -125,12 +125,12 @@ func ParseStartEndRegion(wikitext string) (string, string, Region) {
 	region := RegionNone
 	if tType == typeOffline {
 		region = RegionWorld
-	} else {
-		if country == RegionNorthAmerica.String() {
-			region = RegionNorthAmerica
-		} else if country == RegionEurope.String() {
-			region = RegionEurope
-		}
+	} else if country == RegionNorthAmerica.String() {
+		region = RegionNorthAmerica
+	} else if country == RegionEurope.String() {
+		region = RegionEurope
+	} else if country == RegionOceania.String() {
+		region = RegionOceania
 	}
 
 	return start, end, region

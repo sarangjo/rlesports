@@ -72,28 +72,36 @@ function App() {
           ))}
         </select>
       </div>
-      {view === Viz.SIMPLE ? (
-        <SimpleGraph tournaments={chosenTournaments} />
-      ) : view === Viz.FORCE_GRAPH ? (
-        <ForceGraph tournaments={chosenTournaments} />
-      ) : view === Viz.SANKEY ? (
-        <Sankey tournaments={chosenTournaments} />
-      ) : view === Viz.TEAM_MAP ? (
-        "Hello"
-      ) : // <PlayerTeams players={players} />
-      view === Viz.TABLE ? (
-        <Table seasons={seasons} players={events} teams={teams} />
-      ) : view === Viz.TEXT ? (
-        <Text tournaments={chosenTournaments} />
-      ) : view === Viz.TIMELINE ? (
-        <Timeline
-          seasons={seasons}
-          players={events as Player[]}
-          teams={(teams as unknown) as Record<string, string>}
-        />
-      ) : (
-        ""
-      )}
+      <div
+        style={{
+          width: "100%",
+          height: "calc(100vh - 90px)",
+          overflow: "scroll",
+        }}
+      >
+        {view === Viz.SIMPLE ? (
+          <SimpleGraph tournaments={chosenTournaments} />
+        ) : view === Viz.FORCE_GRAPH ? (
+          <ForceGraph tournaments={chosenTournaments} />
+        ) : view === Viz.SANKEY ? (
+          <Sankey tournaments={chosenTournaments} />
+        ) : view === Viz.TEAM_MAP ? (
+          "Hello"
+        ) : // <PlayerTeams players={players} />
+        view === Viz.TABLE ? (
+          <Table seasons={seasons} players={events} teams={teams} />
+        ) : view === Viz.TEXT ? (
+          <Text tournaments={chosenTournaments} />
+        ) : view === Viz.TIMELINE ? (
+          <Timeline
+            seasons={seasons}
+            players={events as Player[]}
+            teams={(teams as unknown) as Record<string, string>}
+          />
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 }

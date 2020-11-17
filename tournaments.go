@@ -99,3 +99,36 @@ func UpdateTournaments(forceUpload bool) {
 		}
 	}
 }
+
+// GetSeasons returns fleshed-out seasons
+func GetSeasons() []RlcsSeason {
+	// Start with rlcs skeletons, get all tournaments piecemeal. Start inefficient, get more efficient over time.
+	var seasons []RlcsSeason
+	for _, sSkeleton := range seasonSkeletons {
+		season := RlcsSeason{Season: sSkeleton.Season}
+		for _, secSkeleton := range sSkeleton.Sections {
+			section := Section{Name: secSkeleton.Name}
+			for _, tSkeleton := range secSkeleton.Tournaments {
+				tourney := Tournament{
+					Region: tSkeleton.Region,
+					Name:   tSkeleton.Name,
+				}
+
+				// fetch doc and overwrite fields
+				doc := TournamentDoc{Name: tSkeleton.Name}
+				if err := GetTournament(&doc); err != nil {
+					panic("lulw")
+				}
+
+				tourney.Start = doc.Start
+				tourney.End = doc.End
+				tourney.Teams = doc.Teams
+
+				section.Tournaments = append(section.Tournaments, tourney)
+			}
+			season.Sections = append(season.Sections, section)
+		}
+		seasons = append(seasons, season)
+	}
+	return seasons
+}
