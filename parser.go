@@ -154,9 +154,14 @@ func ParsePlayer(wikitext string) Player {
 			inInfobox = true
 		} else if inInfobox {
 			if strings.HasPrefix(line, "|id=") {
-				player.Name = strings.Replace(line, "|id=", "", 1)
+				player.Name = strings.TrimSpace(strings.Replace(line, "|id=", "", 1))
 			} else if strings.HasPrefix(line, "|ids=") {
-				player.AlternateIDs = strings.Split(strings.Replace(line, "|ids=", "", 1), ", ")
+				alternateIDs := strings.Split(strings.Replace(line, "|ids=", "", 1), ", ")
+				for _, id := range alternateIDs {
+					if id != "" {
+						player.AlternateIDs = append(player.AlternateIDs, id)
+					}
+				}
 			}
 		}
 
@@ -169,10 +174,10 @@ func ParsePlayer(wikitext string) Player {
 
 			parts := strings.Split(strings.ReplaceAll(strings.ReplaceAll(line, "{{", ""), "}}", ""), "|")
 			dates := strings.Fields(parts[1])
-			membership := Membership{Join: dates[0], Team: parts[2]}
+			membership := Membership{Join: strings.TrimSpace(dates[0]), Team: strings.TrimSpace(parts[2])}
 			if len(dates) >= 3 {
 				if success, _ := regexp.Match(dateRegex, []byte(dates[2])); success {
-					membership.Leave = dates[2]
+					membership.Leave = strings.TrimSpace(dates[2])
 				}
 			}
 			// Verify that both Join/Leave don't have ?'s

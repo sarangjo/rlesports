@@ -15,7 +15,7 @@ import teams from "./data/teams.json";
 function App() {
   const [tournaments, setTournaments] = useState<TournamentDoc[]>([]);
   const [seasons, setSeasons] = useState<RlcsSeason[]>([]);
-  const [view, setView] = useState(Viz.TABLE);
+  const [view, setView] = useState(Viz.TIMELINE);
   const [regions, setRegions] = useState([Region.NORTH_AMERICA, Region.WORLD, Region.EUROPE]);
 
   useEffect(() => {
@@ -30,13 +30,7 @@ function App() {
       );
 
       setTournaments(filter(sorted, (t) => t.season === "1"));
-
-      setSeasons(
-        filter(
-          await resultS.json(),
-          (s: RlcsSeason) => s.season === "1" || s.season === "2" || s.season === "3",
-        ),
-      );
+      setSeasons(await resultS.json());
     };
     get();
   }, []);
@@ -55,8 +49,6 @@ function App() {
   };
 
   const chosenTournaments = filter(tournaments, (t) => !!find(regions, (r) => r === t.region));
-
-  console.log(tournamentMap(seasons, (t: Tournament) => t.name));
 
   return (
     <div>

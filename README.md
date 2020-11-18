@@ -55,3 +55,10 @@ $ source env/bin/activate
 $ pip3 install wheel # weird edge case
 $ pip3 install -r requirements.txt
 ```
+
+## Other general notes
+
+### Known unknowns:
+
+- Dadooh, Red Eye, S2 EU
+- Siki, Avant Gaming, S4 OCE

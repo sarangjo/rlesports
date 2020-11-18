@@ -146,6 +146,8 @@ func filterByTournament(player Player, seasons []RlcsSeason, seasonIdx int) []Me
 					// 	if lowestMembership == len(player.Memberships) {
 					// 		break SeasonLoop
 					// 	}
+					// TODO change >= to > (e.g. Lemonpuppy * Radiance acquired right at the start
+					// of RLCS)
 					if membership.Join <= t.End && (membership.Leave == "" || membership.Leave >= t.Start) {
 						// First check passed: this lines up by time
 						for _, team := range t.Teams {
@@ -206,14 +208,14 @@ func SmarterPlayers() {
 				for _, team := range tournament.Teams {
 					fmt.Println("\t\t\tTEAM", team.Name)
 					for _, tname := range team.Players {
-						fmt.Println("\t\t\t\tPLAYER", tname)
+						fmt.Print("\t\t\t\tPLAYER ", tname)
 
 						// use lowercase when checking for duplicates
 						// TODO this really is shitty
 						playerID := strings.ToLower(tname)
 
 						if _, ok := minifiedPlayers[playerID]; ok {
-							fmt.Println("\t\t\t\tAlready processed", tname)
+							fmt.Println(" [Already processed]")
 							continue
 						}
 
@@ -224,7 +226,7 @@ func SmarterPlayers() {
 						// Second check in case of redirect
 						playerID = strings.ToLower(player.Name)
 						if _, ok := minifiedPlayers[playerID]; ok {
-							fmt.Println("\t\t\t\tAlready processed", player.Name)
+							fmt.Println(" [Already processed]")
 							continue
 						}
 
@@ -234,6 +236,7 @@ func SmarterPlayers() {
 						if len(memberships) > 0 {
 							minifiedPlayers[playerID] = Player{Name: player.Name, AlternateIDs: player.AlternateIDs, Memberships: memberships}
 						}
+						fmt.Println(" Done processing.")
 					}
 				}
 			}
