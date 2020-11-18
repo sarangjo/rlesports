@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { concat, find, map, pickBy, reduce, some } from "lodash";
 import moment from "moment";
 import { CIRCLE_RADIUS } from "./constants";
-import { OldTournament, Player, RlcsSeason, Tournament, TournamentPlayerNode } from "./types";
+import { Player, RlcsSeason, Tournament, TournamentDoc, TournamentPlayerNode } from "./types";
 
 //// UTILITY
 
@@ -52,7 +52,7 @@ export const valueline = d3
   .curve(d3.curveCatmullRomClosed);
 
 // Data managing
-export const tournamentsToPlayerNodes = (tournaments: OldTournament[]) => {
+export const tournamentsToPlayerNodes = (tournaments: TournamentDoc[]) => {
   return reduce(
     tournaments,
     (acc1, tournament, tournamentIndex) =>
@@ -92,7 +92,7 @@ export const tournamentsToPlayerNodes = (tournaments: OldTournament[]) => {
 
 export const LINK_FORCE = "link";
 
-export const getPlayerName = (tournaments: OldTournament[], d: TournamentPlayerNode) =>
+export const getPlayerName = (tournaments: TournamentDoc[], d: TournamentPlayerNode) =>
   tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex];
 
 // y depends on team and player index
@@ -151,6 +151,8 @@ const COLOR_UNKNOWN_TEAM = "#232323";
 export const getTeamColor = (team: string, teams: Record<string, string>) =>
   team in teams ? teams[team] : COLOR_UNKNOWN_TEAM;
 
+// TODO add an option so we evenly space out each section instead of scaling by the length of each
+// disjoint time block
 export class ScaleTimeDisjoint {
   public dateDiffs: number[];
   public totalDiff: number = 0;

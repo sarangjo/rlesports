@@ -5,15 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Go: Process cache",
+      "name": "Go: Update Tournaments",
       "type": "go",
       "request": "launch",
       "mode": "debug",
       "program": "${workspaceFolder}",
-      "args": ["cache"]
+      "args": ["update"]
     },
     {
-      "name": "Go: Players",
+      "name": "Go: Update Players",
       "type": "go",
       "request": "launch",
       "mode": "debug",
@@ -21,12 +21,12 @@
       "args": ["players"]
     },
     {
-      "name": "Go: Update Tournaments",
+      "name": "Go: Process cache",
       "type": "go",
       "request": "launch",
       "mode": "debug",
       "program": "${workspaceFolder}",
-      "args": ["update"]
+      "args": ["cache"]
     },
     {
       "name": "Go: Test",
@@ -42,20 +42,6 @@
       "request": "launch",
       "mode": "debug",
       "program": "${workspaceFolder}"
-    },
-    {
-      "name": "Python: main.py",
-      "type": "python",
-      "request": "launch",
-      "program": "${workspaceFolder}/src/main.py",
-      "console": "integratedTerminal"
-    },
-    {
-      "name": "Python: Current File",
-      "type": "python",
-      "request": "launch",
-      "program": "${file}",
-      "console": "integratedTerminal"
     }
   ]
 }

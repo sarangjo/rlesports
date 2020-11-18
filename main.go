@@ -44,6 +44,7 @@ func main() {
 				},
 			}
 			fmt.Println(redirectTo(l))
+			break
 		}
 	} else {
 		port := os.Getenv("PORT")

@@ -1,26 +1,13 @@
 import { scaleTime } from "d3-scale";
-import {
-  assign,
-  concat,
-  forEach,
-  isNull,
-  last,
-  map,
-  maxBy,
-  minBy,
-  range,
-  reduce,
-  set,
-  size,
-} from "lodash";
+import { concat, isNull, last, map, maxBy, minBy, range, reduce, size } from "lodash";
 import moment, { Moment } from "moment";
 import React from "react";
-import { CIRCLE_RADIUS, HEIGHT, MARGIN, SPACING } from "../constants";
-import { EventType, Player, OldTournament, RlcsSeason, Tournament } from "../types";
+import { CIRCLE_RADIUS, MARGIN, SPACING } from "../constants";
+import { EventType, Player, RlcsSeason } from "../types";
 import { DATE_FORMAT, getTeamColor, toDate, tournamentAcronym, tournamentMap } from "../util";
 
 const BIG_WIDTH = 5500;
-const BIG_HEIGHT = 2500;
+// const BIG_HEIGHT = 2500;
 
 const TIMELINE_BUFFER = 10;
 
@@ -90,12 +77,12 @@ export default function Timeline({
     );
   }
 
-  let startDate = start.memberships[0].join;
-  let endDate = last(end.memberships)!.leave || last(end.memberships)!.join;
+  const startDate = start.memberships[0].join;
+  const endDate = last(end.memberships)!.leave || last(end.memberships)!.join;
 
   // [min/max] Try 2: tournaments
-  //startDate = startDate > tournaments[0].start ? tournaments[0].start : startDate;
-  //endDate = endDate < last(tournaments)!.end ? last(tournaments)!.end : endDate;
+  // startDate = startDate > tournaments[0].start ? tournaments[0].start : startDate;
+  // endDate = endDate < last(tournaments)!.end ? last(tournaments)!.end : endDate;
 
   const x = scaleTime()
     .domain([toDate(startDate), toDate(endDate)])
@@ -113,8 +100,10 @@ export default function Timeline({
     </text>
   );
 
+  const bigHeight = TIMELINE_BUFFER + size(players) * CIRCLE_RADIUS * 2.5;
+
   return (
-    <svg width={BIG_WIDTH} height={BIG_HEIGHT}>
+    <svg width={BIG_WIDTH} height={bigHeight}>
       <g id="tournaments">
         {tournamentMap(seasons, (t) => {
           const thisX = x(toDate(t.start));
@@ -122,7 +111,7 @@ export default function Timeline({
 
           return (
             <g>
-              <rect x={thisX} y={0} width={thisWidth} height={BIG_HEIGHT} opacity={0.2} />
+              <rect x={thisX} y={0} width={thisWidth} height={bigHeight} opacity={0.2} />
               <text
                 x={thisX + thisWidth / 2}
                 y={TIMELINE_BUFFER * CIRCLE_RADIUS}
@@ -150,7 +139,11 @@ export default function Timeline({
                           width={thisWidth}
                           height={CIRCLE_RADIUS + STROKE_WIDTH_TEAM}
                           opacity={0.3}
-                        />
+                        >
+                          <title>
+                            {p} * {cur.name}
+                          </title>
+                        </rect>
                       );
                     }),
                   );

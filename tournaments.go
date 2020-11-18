@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 const playersSectionTitle = "participants"
@@ -31,11 +32,13 @@ func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
 // Returns true if incomplete
 func areTeamsIncomplete(d TournamentDoc) bool {
 	if len(d.Teams) == 0 {
+		fmt.Println(d.Name, "No teams found")
 		return true
 	}
 
 	for _, t := range d.Teams {
 		if t.Region == RegionNone {
+			fmt.Println(d.Name, t.Name, "No region found")
 			return true
 		}
 	}
@@ -117,7 +120,8 @@ func GetSeasons() []RlcsSeason {
 				// fetch doc and overwrite fields
 				doc := TournamentDoc{Name: tSkeleton.Name}
 				if err := GetTournament(&doc); err != nil {
-					panic("lulw")
+					fmt.Fprintf(os.Stderr, "COULD NOT FIND DOCUMENT! WHAT ARE YOU DOING!")
+					os.Exit(1)
 				}
 
 				tourney.Start = doc.Start

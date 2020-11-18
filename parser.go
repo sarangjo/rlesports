@@ -75,6 +75,8 @@ func ParseTeams(wikitext string, tournamentRegion Region) []Team {
 							team.Region = RegionNorthAmerica
 						} else if strings.Index(qualifier, RegionEurope.String()) >= 0 {
 							team.Region = RegionEurope
+						} else if strings.Index(qualifier, RegionOceania.String()) >= 0 {
+							team.Region = RegionOceania
 						}
 					}
 				}

@@ -26,7 +26,7 @@ export interface RlcsSeason {
   sections: Section[];
 }
 
-export interface OldTournament {
+export interface TournamentDoc {
   // Metadata
   season: string;
   region: Region;

@@ -5,10 +5,10 @@ import React, { useMemo, useState } from "react";
 import { useUpdate } from "react-use";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { differentTeamForce, sameTeamForce } from "../forces";
-import { SimulationLink, OldTournament, TournamentPlayerNode } from "../types";
-import { getNodeId, tournamentsToPlayerNodes, getPlayerName } from "../util";
+import { SimulationLink, TournamentDoc, TournamentPlayerNode } from "../types";
+import { getNodeId, getPlayerName, tournamentsToPlayerNodes } from "../util";
 
-function processPlayerLinks(tournaments: OldTournament[]) {
+function processPlayerLinks(tournaments: TournamentDoc[]) {
   // Basically we want a full list of links with source and target both being an index 3-tuple
   const inverseMap: Record<string, TournamentPlayerNode[]> = {};
   forEach(tournaments, (tournament, tournamentIndex) => {
@@ -51,7 +51,7 @@ function processPlayerLinks(tournaments: OldTournament[]) {
   );
 }
 
-export default function ForceGraph({ tournaments }: { tournaments: OldTournament[] }) {
+export default function ForceGraph({ tournaments }: { tournaments: TournamentDoc[] }) {
   const update = useUpdate();
 
   // drag state

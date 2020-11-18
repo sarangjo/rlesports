@@ -2,13 +2,13 @@ import { scaleLinear } from "d3-scale";
 import { concat, forEach, intersection, map, reduce, size, sortBy } from "lodash";
 import React from "react";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
-import { Team, OldTournament, TournamentLink, TournamentPlayerNode } from "../types";
+import { Team, TournamentDoc, TournamentLink, TournamentPlayerNode } from "../types";
 import { getNodeId, tournamentsToPlayerNodes, y, getPlayerName, tournamentAcronym } from "../util";
 
 // Based on adjacent tournaments, shuffle teams so that teams with more shared players are
 // vertically close together. Without this, a simple timeline is chaos. This basically brings us to
 // a healthy midpoint between plain timeline and a Sankey.
-const sort = (tournaments: OldTournament[]): OldTournament[] => {
+const sort = (tournaments: TournamentDoc[]): TournamentDoc[] => {
   return map(tournaments, (tournament, index) => {
     if (index === 0) {
       return tournament;
@@ -57,7 +57,7 @@ const sort = (tournaments: OldTournament[]): OldTournament[] => {
 };
 
 const process = (
-  t: OldTournament[],
+  t: TournamentDoc[],
 ): { nodes: TournamentPlayerNode[]; links: TournamentLink[] } => {
   const tournaments = sort(t);
 
@@ -122,7 +122,7 @@ const process = (
 
 const randDiv = () => 0.5; // Math.random() * 0.6 + 0.2;
 
-export default function SimpleGraph({ tournaments }: { tournaments: OldTournament[] }) {
+export default function SimpleGraph({ tournaments }: { tournaments: TournamentDoc[] }) {
   const x = scaleLinear()
     .domain([0, tournaments.length])
     .range([15 * CIRCLE_RADIUS + CIRCLE_RADIUS, WIDTH - CIRCLE_RADIUS]);

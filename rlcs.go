@@ -7,7 +7,7 @@ import (
 
 // RLCS only.
 const prefix = "Rocket League Championship Series/Season "
-const seasonMax = 3
+const seasonMax = 4
 
 func buildSeasonSkeletons() []RlcsSeason {
 	var seasons []RlcsSeason
@@ -37,10 +37,17 @@ func buildSeasonSkeletons() []RlcsSeason {
 
 			// Season 3 onwards: OCE
 			if season >= 3 {
-				section.Tournaments = append(section.Tournaments, Tournament{
-					Region: RegionOceania,
-					Name:   "ThrowdownTV/Rocket_League_Challenge/Season_2/League_Play",
-				})
+				if season == 3 {
+					section.Tournaments = append(section.Tournaments, Tournament{
+						Region: RegionOceania,
+						Name:   "ThrowdownTV/Rocket League Challenge/Season 2/League Play",
+					})
+				} else if season == 4 {
+					section.Tournaments = append(section.Tournaments, Tournament{
+						Region: RegionOceania,
+						Name:   fmt.Sprintf("%s%d/%s/League Play", prefix, season, RegionOceania.String()),
+					})
+				}
 			}
 
 			rlcsSeason.Sections = append(rlcsSeason.Sections, section)

@@ -1,9 +1,8 @@
-import { filter, find, map, size, slice, sortBy } from "lodash";
+import { filter, find, map } from "lodash";
 import React, { useEffect, useState } from "react";
-import { OldTournament as TournamentDoc, Player, Region, RlcsSeason, Tournament } from "./types";
+import { Region, RlcsSeason, Tournament, TournamentDoc } from "./types";
 import { mapEnum, tournamentMap, Viz, VizTitle } from "./util";
 import ForceGraph from "./viz/ForceGraph";
-import PlayerTeams from "./viz/PlayerTeams";
 import Sankey from "./viz/Sankey";
 import SimpleGraph from "./viz/SimpleGraph";
 import Table from "./viz/Table";
@@ -16,7 +15,7 @@ import teams from "./data/teams.json";
 function App() {
   const [tournaments, setTournaments] = useState<TournamentDoc[]>([]);
   const [seasons, setSeasons] = useState<RlcsSeason[]>([]);
-  const [view, setView] = useState(Viz.TIMELINE);
+  const [view, setView] = useState(Viz.TABLE);
   const [regions, setRegions] = useState([Region.NORTH_AMERICA, Region.WORLD, Region.EUROPE]);
 
   useEffect(() => {
@@ -32,7 +31,12 @@ function App() {
 
       setTournaments(filter(sorted, (t) => t.season === "1"));
 
-      setSeasons(await resultS.json());
+      setSeasons(
+        filter(
+          await resultS.json(),
+          (s: RlcsSeason) => s.season === "1" || s.season === "2" || s.season === "3",
+        ),
+      );
     };
     get();
   }, []);
@@ -93,11 +97,7 @@ function App() {
         ) : view === Viz.TEXT ? (
           <Text tournaments={chosenTournaments} />
         ) : view === Viz.TIMELINE ? (
-          <Timeline
-            seasons={seasons}
-            players={events as Player[]}
-            teams={(teams as unknown) as Record<string, string>}
-          />
+          <Timeline seasons={seasons} players={events} teams={teams} />
         ) : (
           ""
         )}

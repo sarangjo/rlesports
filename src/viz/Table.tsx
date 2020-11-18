@@ -1,4 +1,19 @@
-import { find, forEach, get, has, indexOf, keys, map, max, min, reduce, set, size } from "lodash";
+import {
+  assign,
+  find,
+  forEach,
+  get,
+  has,
+  indexOf,
+  keys,
+  last,
+  map,
+  max,
+  min,
+  reduce,
+  set,
+  size,
+} from "lodash";
 import React from "react";
 import { WIDTH } from "../constants";
 import { Player, Region, RlcsSeason } from "../types";
@@ -9,6 +24,8 @@ const X_OFFSET = 150;
 const Y_OFFSET = 50;
 const PLAYER_HEIGHT = 25;
 
+const BIG_HEIGHT = 3000;
+
 // Handle Season X gracefully
 const getSeasonX = (s: string) => SEASON_WIDTH * (isNaN(parseInt(s, 10)) ? 9 : parseInt(s, 10) - 1);
 
@@ -16,21 +33,25 @@ const getSeasonX = (s: string) => SEASON_WIDTH * (isNaN(parseInt(s, 10)) ? 9 : p
 // - For a given season, a player has to be strongly associated with a particular region. World region
 //   subsumes all other regions.
 // - We go tournament by tournament and append.
-//   - [improvement] While appending, if the indices are adjacent and the previous block ends at the end, we can coalesce
+//   - While appending, if the indices are adjacent and the previous block ends at the end, we can coalesce
 const process = (seasons: RlcsSeason[], players: Player[]) =>
   map(seasons, (season) => {
     // Blocks are by season.
-    const playerBlocks: Record<string, { region: Region; blocks: ParticipationBlock[] }> = {};
+    const playerBlocks: Record<string, { blocks: ParticipationBlock[]; region: Region }> = {};
 
-    forEach(season.sections, (section, sectionIndex) => {
+    forEach(season.sections, (section) => {
       forEach(section.tournaments, (tourney) => {
-        // tourneyDone is the logic used to figure out which teams the player was on before the
-        // one specifically shown in the tournament, since that only shows the **last** team the
-        // player was on. This is used to evaluate
-        // whether we should keep adding events in the forEach loop below. It's quite heavily
-        // broken if a player switches teams in the middle of a tournament. TODO fix.
-        // TODO this is broken actually right now with Vendetta and VindicatorGG garbage in RLCS NA S2
         const tourneyDone: Record<string, boolean> = {};
+
+        // TODO implement
+        // The blocks for this tournament are governed by the same rules as filterByTournament in
+        // players.go.
+        // Build up a map from player to list of blocks, with the last team match
+        // const tournamentBlocks: Record<
+        //   string,
+        //   { blocks: ParticipationBlock[]; lastTeamMatch: number }
+        // > = {};
+
         forEach(tourney.teams, (team) => {
           forEach(team.players, (tname) => {
             // Find the event(s) relevant to this tournament by date.
@@ -51,13 +72,34 @@ const process = (seasons: RlcsSeason[], players: Player[]) =>
                     };
                   }
 
+                  const { blocks } = playerBlocks[name];
                   // The simple case. We have overlap. Create block
-                  playerBlocks[name].blocks.push({
-                    team: mem.team,
-                    index: sectionIndex,
-                    start: max([tourney.start, mem.join])!,
-                    end: mem.leave ? min([tourney.end, mem.leave])! : tourney.end,
-                  });
+                  const start = max([tourney.start, mem.join])!;
+                  const fullStart = mem.join <= tourney.start;
+                  const end = mem.leave ? min([tourney.end, mem.leave])! : tourney.end;
+                  const fullEnd = !mem.leave || mem.leave >= tourney.end;
+
+                  // Try coalescing with last block. We can coalesce if the start of this and end of
+                  // previous line up.
+                  if (
+                    size(blocks) > 0 &&
+                    last(blocks)!.fullEnd &&
+                    fullStart &&
+                    last(blocks)!.team === mem.team
+                  ) {
+                    assign(last(blocks), {
+                      end,
+                      fullEnd,
+                    });
+                  } else {
+                    blocks.push({
+                      team: mem.team,
+                      start,
+                      end,
+                      fullStart,
+                      fullEnd,
+                    });
+                  }
                   tourneyDone[name] = team.name === mem.team;
                 }
               });
@@ -75,10 +117,9 @@ const process = (seasons: RlcsSeason[], players: Player[]) =>
 interface ParticipationBlock {
   // player: string;
   team: string;
-  // TODO Remove all following
-  // season: string;
-  // region: Region;
-  index: number;
+  // extend
+  fullStart: boolean;
+  fullEnd: boolean;
   // dates (TODO remove)
   start: string;
   end: string;
@@ -111,15 +152,34 @@ export default function Table({
   );
 
   return (
-    <svg height={Y_OFFSET + size(playerNames) * PLAYER_HEIGHT} width={WIDTH}>
-      <g id="season-titles">
-        {map(seasons, (s) => (
-          <g id={`season-title-${s.season}`}>
-            <rect x={X_OFFSET} y={0} width={SEASON_WIDTH} height={Y_OFFSET} fill="skyblue" />
-            <text x={X_OFFSET} y={Y_OFFSET}>
-              Season {s.season}
-            </text>
-          </g>
+    <svg height={BIG_HEIGHT} width={SEASON_WIDTH * size(seasonsData) + X_OFFSET}>
+      <g id="seasons">
+        {map(seasons, (s, i) => (
+          <>
+            <g id={`season-title-${s.season}`}>
+              <rect
+                x={X_OFFSET + SEASON_WIDTH * i}
+                y={0}
+                width={SEASON_WIDTH}
+                height={Y_OFFSET}
+                fill="skyblue"
+              />
+              <text x={X_OFFSET + SEASON_WIDTH * i} y={Y_OFFSET}>
+                Season {s.season}
+              </text>
+            </g>
+            <g id={`season-lines-${s.season}`}>
+              {[i, i + 1].map((j) => (
+                <line
+                  stroke="black"
+                  x1={X_OFFSET + SEASON_WIDTH * j}
+                  y1={0}
+                  x2={X_OFFSET + SEASON_WIDTH * j}
+                  y2={BIG_HEIGHT}
+                />
+              ))}
+            </g>
+          </>
         ))}
       </g>
       <g id="player-names">
@@ -170,7 +230,7 @@ export default function Table({
                   }
                 });
 
-                const scale = new ScaleTimeDisjoint(dates, [baseX, SEASON_WIDTH]);
+                const scale = new ScaleTimeDisjoint(dates, [0, SEASON_WIDTH]);
 
                 return (
                   <g id={`block-space-season-${seasons[sIndex].season}-player-${pname}`}>
