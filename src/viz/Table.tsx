@@ -2,7 +2,6 @@ import {
   assign,
   find,
   forEach,
-  get,
   has,
   indexOf,
   keys,
@@ -11,11 +10,9 @@ import {
   max,
   min,
   reduce,
-  set,
   size,
 } from "lodash";
 import React from "react";
-import { WIDTH } from "../constants";
 import { Player, Region, RlcsSeason } from "../types";
 import { findPlayer, getTeamColor, ScaleTimeDisjoint } from "../util";
 

@@ -107,7 +107,7 @@ export const simpleY = (teamIndex: number, playerIndex: number, playersPerTeam =
   playerIndex * (2 * CIRCLE_RADIUS);
 
 export const tournamentAcronym = (name: string) =>
-  name.replaceAll(/[^A-Z0-9\/]/g, "").replaceAll("/", " ");
+  name.replaceAll(/[^A-Z0-9/]/g, "").replaceAll("/", " ");
 // .split(/[^A-Za-z0-9]/)
 // .map((word) => word[0])
 // .join("");

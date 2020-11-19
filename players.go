@@ -76,7 +76,9 @@ func getPlayerDetails(name string) Player {
 	}
 
 	// Check for redirect - we also want to persist that if possible
-	if isRed, newName := redirectTo(playerData); isRed {
+	var isRedirect bool
+	var newName string
+	if isRedirect, newName = redirectTo(playerData); isRedirect {
 		fmt.Println("OMG OMG WE GOT A REDIRECT OMG!!!! FROM", name, "TO", newName)
 
 		if playerData, ok = output[newName]; !ok {
@@ -85,7 +87,30 @@ func getPlayerDetails(name string) Player {
 		}
 	}
 
-	return ParsePlayer(extractWikitext(playerData))
+	playerDetails := ParsePlayer(extractWikitext(playerData))
+	if isRedirect {
+		// Which one is the alternate?
+		var alternateID string
+		if playerDetails.Name == name {
+			alternateID = newName
+		} else {
+			alternateID = name
+		}
+
+		// Add redirect to alternate ID's if it isn't already there
+		needToAdd := true
+		for _, id := range playerDetails.AlternateIDs {
+			if id == alternateID {
+				needToAdd = false
+				break
+			}
+		}
+		if needToAdd {
+			playerDetails.AlternateIDs = append(playerDetails.AlternateIDs, alternateID)
+		}
+	}
+
+	return playerDetails
 }
 
 // TODO expand this to include "Team x", "x esports", etc.
@@ -96,11 +121,11 @@ func teamNameMatch(team1 string, team2 string) bool {
 // Returns true if the given player happens to be playing for this team
 func playerInTeam(player Player, team Team) bool {
 	for _, p := range team.Players {
-		if p == player.Name {
+		if strings.ToLower(p) == strings.ToLower(player.Name) {
 			return true
 		}
 		for _, alt := range player.AlternateIDs {
-			if p == alt {
+			if strings.ToLower(p) == strings.ToLower(alt) {
 				return true
 			}
 		}

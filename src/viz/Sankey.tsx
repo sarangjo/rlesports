@@ -1,6 +1,5 @@
 import { sankey, SankeyLink, sankeyLinkHorizontal, SankeyNode } from "d3-sankey";
-import { scaleTime } from "d3-scale";
-import { find, forEach, get, map, min, minBy } from "lodash";
+import { find, forEach, get, map } from "lodash";
 import React from "react";
 import { HEIGHT, WIDTH } from "../constants";
 import { TournamentDoc } from "../types";
@@ -118,7 +117,6 @@ const sankeyCreator = (sankey<TeamNode, PlayerLink>()
 export default function Sankey({ tournaments }: { tournaments: TournamentDoc[] }) {
   const data = processTournaments(tournaments); // useMemo(() => processTournaments(tournaments), [tournaments]);
 
-  const x = scaleTime().domain([new Date(data.minDate), new Date(data.maxDate)]);
   // .nodeAlign((d: TeamNode) => x(new Date(d.date || data.minDate)))
 
   if (data.nodes.length > 0 && data.links.length > 0) {

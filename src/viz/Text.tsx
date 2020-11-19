@@ -1,4 +1,4 @@
-import { interpolateInferno, interpolateOrRd, scaleOrdinal, schemeAccent } from "d3";
+import { interpolateOrRd } from "d3";
 import { forEach, map, reduce, size, sum, values } from "lodash";
 import React from "react";
 import { TournamentDoc } from "../types";
@@ -62,13 +62,13 @@ export default function Text({ tournaments }: Props) {
         </tr>
         <tr style={{ textAlign: "center" }}>
           <td>Percentage of rookies</td>
-          {map(processed, ({ tournament: t, seasonCounts }) => (
+          {map(processed, ({ seasonCounts }) => (
             <td>{Math.round(rookiePercentage(seasonCounts) * 100) / 100}</td>
           ))}
         </tr>
         <tr style={{ textAlign: "center" }}>
           <td>Average</td>
-          {map(processed, ({ tournament: t, seasonCounts }) => (
+          {map(processed, ({ seasonCounts }) => (
             <td>{Math.round(average(seasonCounts) * 100) / 100}</td>
           ))}
         </tr>

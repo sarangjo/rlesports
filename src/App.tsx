@@ -1,7 +1,7 @@
 import { filter, find, map } from "lodash";
 import React, { useEffect, useState } from "react";
-import { Region, RlcsSeason, Tournament, TournamentDoc } from "./types";
-import { mapEnum, tournamentMap, Viz, VizTitle } from "./util";
+import { Region, RlcsSeason, TournamentDoc } from "./types";
+import { mapEnum, Viz, VizTitle } from "./util";
 import ForceGraph from "./viz/ForceGraph";
 import Sankey from "./viz/Sankey";
 import SimpleGraph from "./viz/SimpleGraph";

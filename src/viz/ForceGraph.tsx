@@ -85,7 +85,7 @@ export default function ForceGraph({ tournaments }: { tournaments: TournamentDoc
         .force("sameTeam", sameTeamForce().strength(0.8))
         .force("diffTeam", differentTeamForce().strength(15))
         .on("tick", update),
-    [playerNodes, playerLinks],
+    [playerNodes, playerLinks, update],
   );
 
   // Triggered by mouse down on a node

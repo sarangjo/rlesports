@@ -60,5 +60,9 @@ $ pip3 install -r requirements.txt
 
 ### Known unknowns:
 
-- Dadooh, Red Eye, S2 EU
-- Siki, Avant Gaming, S4 OCE
+- Unknown join/leave dates
+  - Dadooh, Red Eye, S2 EU
+  - Siki, Avant Gaming, S4 OCE
+- Membership not on team page at all
+  - GingerNinjaDT9, Comrade Gaming EU, S1Q2 EU
+  - MummiSnow, PENTA Gaming, S3 EU
