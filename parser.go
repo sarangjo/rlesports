@@ -59,6 +59,11 @@ func ParseTeams(wikitext string, tournamentRegion Region) []Team {
 				if len(player) > 0 {
 					team.Players = append(team.Players, player)
 				}
+			} else if res, _ := regexp.MatchString("[|]sub[0-9]=", line); res {
+				player := strings.TrimSpace(strings.Split(strings.Split(line, "|")[1], "=")[1])
+				if len(player) > 0 {
+					team.Subs = append(team.Subs, player)
+				}
 			} else {
 				if tournamentRegion == RegionWorld {
 					if strings.Index(line, "|qualifier") >= 0 {

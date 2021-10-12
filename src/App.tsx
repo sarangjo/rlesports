@@ -15,7 +15,7 @@ import teams from "./data/teams.json";
 function App() {
   const [tournaments, setTournaments] = useState<TournamentDoc[]>([]);
   const [seasons, setSeasons] = useState<RlcsSeason[]>([]);
-  const [view, setView] = useState(Viz.TIMELINE);
+  const [view, setView] = useState(Viz.TABLE);
   const [regions, setRegions] = useState([Region.NORTH_AMERICA, Region.WORLD, Region.EUROPE]);
 
   useEffect(() => {

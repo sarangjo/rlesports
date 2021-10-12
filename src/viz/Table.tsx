@@ -14,12 +14,15 @@ import {
 } from "lodash";
 import React from "react";
 import { Player, Region, RlcsSeason } from "../types";
-import { findPlayer, getTeamColor, ScaleTimeDisjoint } from "../util";
+import { findPlayer, getColorByBackground, getTeamColor, ScaleTimeDisjoint } from "../util";
 
 const SEASON_WIDTH = 600;
 const X_OFFSET = 150;
 const Y_OFFSET = 50;
 const PLAYER_HEIGHT = 25;
+const PADDING = 4;
+const TEXT_OFFSET_X = 4;
+const TEXT_OFFSET_Y = 6;
 
 const BIG_HEIGHT = 3000;
 
@@ -161,7 +164,7 @@ export default function Table({
                 height={Y_OFFSET}
                 fill="skyblue"
               />
-              <text x={X_OFFSET + SEASON_WIDTH * i} y={Y_OFFSET}>
+              <text x={X_OFFSET + SEASON_WIDTH * i + TEXT_OFFSET_X} y={Y_OFFSET - TEXT_OFFSET_Y}>
                 Season {s.season}
               </text>
             </g>
@@ -191,7 +194,7 @@ export default function Table({
               stroke="black"
               strokeWidth={1}
             />
-            <text x={0} y={Y_OFFSET + (idx + 1) * PLAYER_HEIGHT}>
+            <text x={TEXT_OFFSET_X} y={Y_OFFSET + (idx + 1) * PLAYER_HEIGHT - TEXT_OFFSET_Y}>
               {name}
             </text>
           </g>
@@ -238,17 +241,23 @@ export default function Table({
                       const startX = scale.convert(b.start);
                       const endX = scale.convert(b.end);
 
+                      const color = getTeamColor(b.team, teams);
+
                       return (
                         <g>
                           <rect
-                            x={baseX + startX}
-                            y={y}
-                            width={endX - startX}
-                            height={PLAYER_HEIGHT}
-                            fill={getTeamColor(b.team, teams)}
+                            x={baseX + startX + PADDING / 2}
+                            y={y + PADDING / 2}
+                            width={endX - startX - PADDING}
+                            height={PLAYER_HEIGHT - PADDING}
+                            fill={color}
                             opacity={0.7}
                           />
-                          <text x={baseX + startX} y={y + PLAYER_HEIGHT}>
+                          <text
+                            x={baseX + startX + TEXT_OFFSET_X}
+                            y={y + PLAYER_HEIGHT - TEXT_OFFSET_Y}
+                            fill={getColorByBackground(color)}
+                          >
                             {b.team}
                           </text>
                         </g>

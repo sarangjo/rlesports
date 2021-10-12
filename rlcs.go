@@ -42,7 +42,7 @@ func buildSeasonSkeletons() []RlcsSeason {
 						Region: RegionOceania,
 						Name:   "ThrowdownTV/Rocket League Challenge/Season 2/League Play",
 					})
-				} else if season == 4 {
+				} else if season >= 4 {
 					section.Tournaments = append(section.Tournaments, Tournament{
 						Region: RegionOceania,
 						Name:   fmt.Sprintf("%s%d/%s/League Play", prefix, season, RegionOceania.String()),
