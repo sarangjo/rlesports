@@ -1,14 +1,10 @@
 import { interpolateOrRd } from "d3";
 import { forEach, map, reduce, size, sum, values } from "lodash";
-import React from "react";
-import { TournamentDoc } from "../types";
-import { tournamentAcronym } from "../util";
+import React, { useMemo } from "react";
+import { RlcsSeason, Tournament } from "../types";
+import { tournamentAcronym, tournamentMap } from "../util";
 
-interface Props {
-  tournaments: TournamentDoc[];
-}
-
-const process = (tournaments: TournamentDoc[]) => {
+const process = (tournaments: Tournament[]) => {
   const seasonMap = {} as Record<string, number>;
 
   return map(tournaments, (t) => {
@@ -48,7 +44,9 @@ const average = (seasonCounts: Record<string, number>) => {
   return sum(values(seasonCounts)) / size(seasonCounts);
 };
 
-export default function Text({ tournaments }: Props) {
+export default function Text({ seasons }: { seasons: RlcsSeason[] }) {
+  const tournaments = useMemo(() => tournamentMap(seasons, (t) => t), [seasons]);
+
   const processed = process(tournaments);
 
   return (
@@ -87,7 +85,7 @@ export default function Text({ tournaments }: Props) {
                             backgroundColor: interpolateOrRd(seasonCounts[p] / size(tournaments)),
                           }}
                         >
-                          {p}: <b>{seasonCounts[p]}</b>
+                          {p}: <b>{seasonCounts[p]}th season</b>
                         </li>
                       ))}
                     </ul>

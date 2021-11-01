@@ -1,6 +1,6 @@
-// Data types
 export interface Team {
   name: string;
+  // TODO: do we need this? we should piece together membership from player events
   players: string[];
   subs?: string[] | null;
   region: Region;
@@ -24,19 +24,6 @@ export interface Section {
 export interface RlcsSeason {
   season: string;
   sections: Section[];
-}
-
-export interface TournamentDoc {
-  // Metadata
-  season: string;
-  region: Region;
-  index: number;
-  // Name
-  name: string;
-  // LP data
-  start: string;
-  end: string;
-  teams: Team[];
 }
 
 // TODO remove "WORLD" and replace with a collection of regions
@@ -64,30 +51,4 @@ export interface Player {
 export enum EventType {
   JOIN = "join",
   LEAVE = "leave",
-}
-
-// Graph types
-export interface TeamNodePart {
-  tournamentIndex: number;
-}
-
-export interface TournamentPlayerNode extends d3.SimulationNodeDatum {
-  playerIndex: number;
-  teamIndex: number;
-  tournamentIndex: number;
-  id: string; // combination of indices
-}
-
-export interface TournamentLink {
-  source: TournamentPlayerNode;
-  target: TournamentPlayerNode;
-}
-
-// TODO rename
-export type SimulationLink = d3.SimulationLinkDatum<TournamentPlayerNode>;
-
-export type Chart = d3.Selection<d3.BaseType, unknown, SVGElement, any>;
-
-export interface RLVisualization {
-  main: (chart: Chart) => any;
 }

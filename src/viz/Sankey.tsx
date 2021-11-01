@@ -1,8 +1,9 @@
 import { sankey, SankeyLink, sankeyLinkHorizontal, SankeyNode } from "d3-sankey";
 import { find, forEach, get, map } from "lodash";
-import React from "react";
+import React, { useMemo } from "react";
 import { HEIGHT, WIDTH } from "../constants";
-import { TournamentDoc } from "../types";
+import { RlcsSeason, Tournament } from "../types";
+import { tournamentMap } from "../util";
 
 // These properties are on top of the node and link properties Sankey provides
 interface TeamNode {
@@ -17,7 +18,7 @@ interface PlayerLink {
 
 const NONE_TEAM = "NONE";
 
-const findTeamForPlayer = (tourney: TournamentDoc, player: string) =>
+const findTeamForPlayer = (tourney: Tournament, player: string) =>
   get(
     find(tourney.teams, (t) => find(t.players, (p) => p === player)),
     "name",
@@ -26,7 +27,7 @@ const findTeamForPlayer = (tourney: TournamentDoc, player: string) =>
 
 const getNodeId = (d: TeamNode) => `${d.name}-${d.tournamentIndex}`;
 
-const processTournaments = (tournaments: TournamentDoc[]) => {
+const processTournaments = (tournaments: Tournament[]) => {
   // Nodes are each team.
   // Links are players
   const nodes: Array<SankeyNode<TeamNode, PlayerLink>> = [];
@@ -94,27 +95,31 @@ const processTournaments = (tournaments: TournamentDoc[]) => {
 const NODE_WIDTH = 20;
 
 // TODO hack because sankey's typedefs don't have linkSort atm
-const sankeyCreator = (sankey<TeamNode, PlayerLink>()
-  .size([WIDTH, HEIGHT])
-  .nodeId(getNodeId)
-  .nodeWidth(NODE_WIDTH)
-  .nodePadding(10)
-  .nodeAlign((d) => {
-    return get(d, "tournamentIndex");
-  })
-  .nodeSort((a, b) => {
-    if (a.name.startsWith(NONE_TEAM)) {
-      return 1;
-    } else if (b.name.startsWith(NONE_TEAM)) {
-      return -1;
-    } else {
-      return 0;
-    }
-  }) as any).linkSort((a: any, b: any) => {
+const sankeyCreator = (
+  sankey<TeamNode, PlayerLink>()
+    .size([WIDTH, HEIGHT])
+    .nodeId(getNodeId)
+    .nodeWidth(NODE_WIDTH)
+    .nodePadding(10)
+    .nodeAlign((d) => {
+      return get(d, "tournamentIndex");
+    })
+    .nodeSort((a, b) => {
+      if (a.name.startsWith(NONE_TEAM)) {
+        return 1;
+      } else if (b.name.startsWith(NONE_TEAM)) {
+        return -1;
+      } else {
+        return 0;
+      }
+    }) as any
+).linkSort((a: any, b: any) => {
   return get(a, "player") - get(b, "player");
 });
 
-export default function Sankey({ tournaments }: { tournaments: TournamentDoc[] }) {
+export default function Sankey({ seasons }: { seasons: RlcsSeason[] }) {
+  const tournaments = useMemo(() => tournamentMap(seasons, (t) => t), [seasons]);
+
   const data = processTournaments(tournaments); // useMemo(() => processTournaments(tournaments), [tournaments]);
 
   // .nodeAlign((d: TeamNode) => x(new Date(d.date || data.minDate)))

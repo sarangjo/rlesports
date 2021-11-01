@@ -1,54 +1,27 @@
-import { filter, find, map } from "lodash";
-import React, { useEffect, useState } from "react";
-import { Region, RlcsSeason, TournamentDoc } from "./types";
-import { mapEnum, Viz, VizTitle } from "./util";
-import ForceGraph from "./viz/ForceGraph";
-import Sankey from "./viz/Sankey";
+import { map } from "lodash";
+import React, { useState } from "react";
+import { Viz, VizTitle } from "./util";
 import SimpleGraph from "./viz/SimpleGraph";
-import Table from "./viz/Table";
-import Text from "./viz/Text";
 import Timeline from "./viz/Timeline";
+import Text from "./viz/Text";
+import Table from "./viz/Table";
+import ForceGraph from "./viz/ForceGraph";
 
-import events from "./data/players.json";
-import teams from "./data/teams.json";
+// import events from "./data/players.json";
+// import teams from "./data/teams.json";
+
+import { SEASONS } from "./data/sample/seasons";
+import { PLAYERS } from "./data/sample/players";
+import { TEAM_COLORS } from "./data/sample/team-colors";
+import Sankey from "./viz/Sankey";
 
 function App() {
-  const [tournaments, setTournaments] = useState<TournamentDoc[]>([]);
-  const [seasons, setSeasons] = useState<RlcsSeason[]>([]);
-  const [view, setView] = useState(Viz.TABLE);
-  const [regions, setRegions] = useState([Region.NORTH_AMERICA, Region.WORLD, Region.EUROPE]);
-
-  useEffect(() => {
-    const get = async () => {
-      const [resultT, resultS] = await Promise.all([
-        fetch("http://localhost:5002/api/tournaments"),
-        fetch("http://localhost:5002/api/seasons"),
-      ]);
-      const allTournaments: TournamentDoc[] = await resultT.json();
-      const sorted = allTournaments.sort((a, b) =>
-        (a.start || "") > (b.start || "") ? 1 : (a.start || "") < (b.start || "") ? -1 : 0,
-      );
-
-      setTournaments(filter(sorted, (t) => t.season === "1"));
-      setSeasons(await resultS.json());
-    };
-    get();
-  }, []);
+  const [view, setView] = useState(Viz.FORCE_GRAPH);
 
   const handleChange = (e: any) => {
+    console.log(e.target.value);
     setView(e.target.value);
   };
-
-  const handleChangeRegion = (e: any) => {
-    setRegions(
-      map(
-        [...e.target.options].filter((o) => o.selected).map((o) => o.value),
-        (s) => +s,
-      ),
-    );
-  };
-
-  const chosenTournaments = filter(tournaments, (t) => !!find(regions, (r) => r === t.region));
 
   return (
     <div>
@@ -60,13 +33,13 @@ function App() {
             </option>
           ))}
         </select>
-        <select value={map(regions, (r) => "" + r)} onChange={handleChangeRegion} multiple>
+        {/* <select value={map(regions, (r) => "" + r)} onChange={handleChangeRegion} multiple>
           {mapEnum(Region, (x, name) => (
             <option value={x} key={x}>
               {name}
             </option>
           ))}
-        </select>
+        </select> */}
       </div>
       <div
         style={{
@@ -75,24 +48,34 @@ function App() {
           overflow: "scroll",
         }}
       >
-        {view === Viz.SIMPLE ? (
-          <SimpleGraph tournaments={chosenTournaments} />
-        ) : view === Viz.FORCE_GRAPH ? (
-          <ForceGraph tournaments={chosenTournaments} />
-        ) : view === Viz.SANKEY ? (
-          <Sankey tournaments={chosenTournaments} />
+        {
+          view === Viz.SIMPLE ? (
+            <SimpleGraph seasons={SEASONS} />
+          ) : view === Viz.TIMELINE ? (
+            <Timeline seasons={SEASONS} players={PLAYERS} teamColors={TEAM_COLORS} />
+          ) : view === Viz.TABLE ? (
+            <Table seasons={SEASONS} players={PLAYERS} teamColors={TEAM_COLORS} />
+          ) : view === Viz.FORCE_GRAPH ? (
+            <ForceGraph seasons={SEASONS} />
+          ) : view === Viz.TEXT ? (
+            <Text seasons={SEASONS} />
+          ) : view === Viz.SANKEY ? (
+            <Sankey seasons={SEASONS} />
+          ) : (
+            ""
+          ) /*
+
         ) : view === Viz.TEAM_MAP ? (
           "Hello"
         ) : // <PlayerTeams players={players} />
-        view === Viz.TABLE ? (
-          <Table seasons={seasons} players={events} teams={teams} />
         ) : view === Viz.TEXT ? (
           <Text tournaments={chosenTournaments} />
         ) : view === Viz.TIMELINE ? (
           <Timeline seasons={seasons} players={events} teams={teams} />
         ) : (
           ""
-        )}
+        )*/
+        }
       </div>
     </div>
   );
