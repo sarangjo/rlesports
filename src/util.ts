@@ -268,3 +268,18 @@ export function getColorByBackground(hex: string) {
   const c = hexToColor(hex);
   return c.r * 0.299 + c.g * 0.587 + c.b * 0.114 > 186 ? "#000" : "#fff";
 }
+
+export function ordinalSuffixOf(i: number): string {
+  const j = i % 10,
+    k = i % 100;
+  if (j === 1 && k !== 11) {
+    return i + "st";
+  }
+  if (j === 2 && k !== 12) {
+    return i + "nd";
+  }
+  if (j === 3 && k !== 13) {
+    return i + "rd";
+  }
+  return i + "th";
+}

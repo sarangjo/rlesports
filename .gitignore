@@ -3,6 +3,7 @@ node_modules
 react
 bundle.js
 yarn-error.log
+build
 
 # venv
 env/

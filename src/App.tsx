@@ -4,6 +4,7 @@ import { Viz, VizTitle } from "./util";
 import SimpleGraph from "./viz/SimpleGraph";
 import Timeline from "./viz/Timeline";
 import Text from "./viz/Text";
+import Sankey from "./viz/Sankey";
 import Table from "./viz/Table";
 import ForceGraph from "./viz/ForceGraph";
 
@@ -13,10 +14,9 @@ import ForceGraph from "./viz/ForceGraph";
 import { SEASONS } from "./data/sample/seasons";
 import { PLAYERS } from "./data/sample/players";
 import { TEAM_COLORS } from "./data/sample/team-colors";
-import Sankey from "./viz/Sankey";
 
 function App() {
-  const [view, setView] = useState(Viz.FORCE_GRAPH);
+  const [view, setView] = useState(Viz.TIMELINE);
 
   const handleChange = (e: any) => {
     console.log(e.target.value);
