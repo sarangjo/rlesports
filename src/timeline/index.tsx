@@ -49,6 +49,8 @@ export default function Timeline({
   const processor = new DataProcessor(players, teamColors, bounds);
   const { players: uiPlayers, dates } = processor.process();
 
+  console.log(dates);
+
   return (
     <>
       <g id="dates">

@@ -1,7 +1,6 @@
 import React from "react";
 import {
   ConnectorType,
-  TextAnchor,
   TextOrientation,
   UICircle,
   UIConnector,
@@ -48,4 +47,6 @@ export const CircleComponent = (c: UICircle) => (
   <circle cx={c.center.x} cy={c.center.y} r={c.radius} stroke={c.stroke} fill={c.fill} />
 );
 
-export const RectComponent = (r: UIRectangle) => <rect {...r} stroke="black" fill="transparent" />;
+export const RectComponent = (r: UIRectangle) => (
+  <rect {...r} stroke={r.color || "black"} fill="transparent" />
+);

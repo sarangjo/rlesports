@@ -207,15 +207,14 @@ export class DataProcessor {
   }
 
   private processDates(): [UIText, UILine][] {
-    return Array.from({ length: moment(this.end).diff(this.start, "d") / 50 + 2 }, (_, i) => {
-      const date = moment(this.start).add(i * 50, "d");
-      const x = this.x(date.toDate());
+    const f = (m: moment.Moment): [UIText, UILine] => {
+      const x = this.x(m.toDate());
 
       return [
         {
           x: x - SPACING / 2, // TODO arbitrary 5px adjustment
           y: 10, // TODO constant?
-          text: dateToStr(date),
+          text: dateToStr(m),
           orientation: TextOrientation.VERTICAL,
         } as UIText,
         {
@@ -225,7 +224,11 @@ export class DataProcessor {
           stroke: "green",
         } as UILine,
       ];
-    });
+    };
+
+    return Array.from({ length: moment(this.end).diff(this.start, "d") / 50 + 2 }, (_, i) =>
+      f(moment(this.start).add(i * 50, "d"))
+    ).concat([f(moment(this.end))]);
   }
 
   process(): Output {
