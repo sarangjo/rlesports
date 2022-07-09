@@ -6,19 +6,47 @@ export interface UIPoint {
   y: number;
 }
 
-export enum SegmentType {
-  LINE,
-}
-
-export interface UISegment {
-  start: UIPoint;
-  end: UIPoint;
-  segmentType: SegmentType;
-}
-
 export interface UIRectangle {
   x: number;
   y: number;
   width: number;
   height: number;
+}
+
+export enum TextOrientation {
+  HORIZONTAL,
+  VERTICAL,
+}
+
+export enum TextAnchor {
+  END = "end",
+}
+
+export interface UIText extends UIPoint {
+  text: string;
+  anchor?: TextAnchor;
+  orientation: TextOrientation;
+}
+
+export interface UICircle {
+  center: UIPoint;
+  radius: number;
+  stroke?: string;
+  fill?: string;
+}
+
+export enum ConnectorType {
+  LINE,
+}
+
+export interface UIConnector {
+  start: UIPoint;
+  end: UIPoint;
+  stroke?: string;
+  strokeWidth?: number;
+  connectorType: ConnectorType;
+}
+
+export interface UILine extends UIConnector {
+  connectorType: ConnectorType.LINE;
 }

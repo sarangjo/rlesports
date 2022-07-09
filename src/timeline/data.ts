@@ -1,10 +1,27 @@
 import { ScaleTime } from "d3";
 import { scaleTime } from "d3-scale";
-import { EventType, MembershipType, Player } from "../types";
-import { SegmentType, UIRectangle } from "../types/ui";
+import moment from "moment";
+import { EventType, Player } from "../types";
+import {
+  ConnectorType,
+  TextAnchor,
+  TextOrientation,
+  UILine,
+  UIPoint,
+  UIRectangle,
+  UIText,
+} from "../types/ui";
 import { getIndices } from "../util/data";
-import { now, toDate } from "../util/datetime";
-import { SPACING, UIMembership, UIPlayer, UIPlayerEvent } from "./types";
+import { dateToStr, strToDate } from "../util/datetime";
+import {
+  DEFAULT_COLOR,
+  SPACING,
+  UIPlayer,
+  Radius,
+  COLOR_NO_TEAM,
+  FILL_LEAVE,
+  STROKE_WIDTH_TEAM,
+} from "./types";
 
 interface YComputer {
   // TODO this signature finna be v interesting as we get more complex
@@ -53,19 +70,25 @@ class SimpleYComputer implements YComputer {
 ];
 */
 
+export interface Output {
+  players: UIPlayer[];
+  dates: UIText[];
+}
+
 export class DataProcessor {
+  // Provided
   private players: Player[];
   private teamColors: Record<string, string>;
   private bounds: UIRectangle;
 
+  // Calculated
+  private start?: string;
+  private end?: string;
+
   private x: ScaleTime<number, number>;
   private y: YComputer;
 
-  constructor(
-    players: Player[],
-    teamColors: Record<string, string>,
-    bounds: UIRectangle
-  ) {
+  constructor(players: Player[], teamColors: Record<string, string>, bounds: UIRectangle) {
     this.players = players;
     this.teamColors = teamColors;
     this.bounds = bounds;
@@ -79,27 +102,24 @@ export class DataProcessor {
     // Calculating minimum and maximum:
     // [min/max] Try 1: events
     // Start is the earliest join of any player
-    const start: string = this.players?.reduce((acc, cur) => {
-      return !acc || cur.memberships[0]?.join < acc
-        ? cur.memberships[0]?.join
-        : acc;
+    this.start = this.players?.reduce((acc, cur) => {
+      return !acc || cur.memberships[0]?.join < acc ? cur.memberships[0]?.join : acc;
     }, "");
     // End is the latest leave of any player, or now if there are no leaves
-    const end: string = this.players?.reduce((acc, cur) => {
+    this.end = this.players?.reduce((acc, cur) => {
       const interim =
-        cur.memberships?.length > 0 &&
-        cur.memberships[cur.memberships.length - 1].leave;
-      const candidate = interim || now();
+        cur.memberships?.length > 0 && cur.memberships[cur.memberships.length - 1].leave;
+      const candidate = interim || dateToStr(moment());
       return !acc || candidate > acc ? candidate : acc;
     }, "");
 
-    console.log("start", start, "end", end);
+    console.log("start", this.start, "end", this.end);
 
-    if (!start || !end) {
+    if (!this.start || !this.end) {
       throw new Error(
-        `Somethin's wrong! start ${JSON.stringify(
-          start
-        )} or end ${JSON.stringify(end)} are undefined`
+        `Somethin's wrong! start ${JSON.stringify(this.start)} or end ${JSON.stringify(
+          this.end
+        )} are undefined`
       );
     }
 
@@ -108,7 +128,7 @@ export class DataProcessor {
     // endDate = endDate < last(tournaments)!.end ? last(tournaments)!.end : endDate;
 
     return scaleTime()
-      .domain([toDate(start), toDate(end)])
+      .domain([strToDate(this.start), strToDate(this.end)])
       .range([this.bounds.x, this.bounds.width]);
   }
 
@@ -116,56 +136,93 @@ export class DataProcessor {
     return new SimpleYComputer(this.players, this.bounds);
   }
 
-  private processPlayer(p: Player) {
-    const events: UIPlayerEvent[] = [];
-    const memberships: UIMembership[] = [];
+  private processPlayer(p: Player): UIPlayer {
+    const uiP: UIPlayer = { events: [], memberships: [] };
 
     p.memberships.forEach((m, i) => {
       /* UI info for this m */
-      const start = { x: this.x(toDate(m.join)), y: this.y.getY(p) };
+
+      const start: UIPoint = { x: this.x(strToDate(m.join)), y: this.y.getY(p) };
       // If we have a leave, set that in the end point
-      const end = {
-        x: m.leave
-          ? this.x(toDate(m.leave))
-          : this.bounds.x + this.bounds.width,
+      const end: UIPoint = {
+        x: m.leave ? this.x(strToDate(m.leave)) : this.bounds.x + this.bounds.width,
         y: this.y.getY(p),
       };
-      const color = this.teamColors[m.team];
+      const color = this.teamColors[m.team] || DEFAULT_COLOR;
+
+      /* Transform data */
 
       // Join
-      events.push({ ...start, color, eventType: EventType.JOIN });
+      uiP.events.push({
+        center: start,
+        radius: Radius[EventType.JOIN],
+        stroke: color,
+        fill: color,
+      });
       // Leave
       if (m.leave) {
-        events.push({ ...end, color, eventType: EventType.LEAVE });
+        uiP.events.push({
+          center: end,
+          radius: Radius[EventType.LEAVE],
+          stroke: COLOR_NO_TEAM,
+          fill: FILL_LEAVE,
+        });
 
         // Line connecting to next join, if any
         if (i !== p.memberships.length - 1) {
-          memberships.push({
+          uiP.memberships.push({
+            connectorType: ConnectorType.LINE,
             start: end,
             end: {
-              x: this.x(toDate(p.memberships[i + 1].join)),
+              x: this.x(strToDate(p.memberships[i + 1].join)),
               y: this.y.getY(p),
             },
-            segmentType: SegmentType.LINE,
-            membershipType: MembershipType.NOT_MEMBER,
-          });
+            stroke: COLOR_NO_TEAM,
+          } as UILine);
         }
       }
 
       // Membership
-      memberships.push({
+      uiP.memberships.push({
         start,
         end,
-        color,
-        segmentType: SegmentType.LINE,
-        membershipType: MembershipType.MEMBER,
-      });
+        stroke: color,
+        connectorType: ConnectorType.LINE,
+        strokeWidth: STROKE_WIDTH_TEAM,
+      } as UILine);
+
+      // Name
+      if (i === 0) {
+        uiP.name = {
+          text: p.name,
+          x: start.x - SPACING,
+          y: start.y + SPACING / 2,
+          anchor: TextAnchor.END,
+          orientation: TextOrientation.HORIZONTAL,
+        };
+      }
     });
 
-    return { events, memberships } as UIPlayer;
+    return uiP;
   }
 
-  process(): UIPlayer[] {
-    return this.players.map((p) => this.processPlayer(p));
+  private processDates(): UIText[] {
+    return Array.from({ length: moment(this.end).diff(this.start, "d") / 50 }, (_, i) => {
+      const date = moment(this.start).add(i * 50, "d");
+
+      return {
+        x: this.x(date.toDate()),
+        y: 10, // TODO constant?
+        text: dateToStr(date),
+        orientation: TextOrientation.VERTICAL,
+      } as UIText;
+    });
+  }
+
+  process(): Output {
+    return {
+      players: this.players.map((p) => this.processPlayer(p)),
+      dates: this.processDates(),
+    };
   }
 }
