@@ -60,6 +60,30 @@ const getIndices = (players: Player[]): Record<string, number> => {
   );
 };
 
+// Sanity check - ensure that the player has a link to this team that claims to have the player
+// TODO this should really not be here. Data sanity checks should be separate from the UI plane
+function sanityCheck(players: any, p: any, t: any, team: any) {
+  const player = findPlayer(players, p);
+  if (player) {
+    const memb = find(
+      player.memberships,
+      (m) => m.join <= t.end && (!m.leave || m.leave >= t.start),
+    );
+    if (!memb) {
+      console.error(
+        "couldn't find membership for",
+        p,
+        "for tournament",
+        t.name,
+        "and team",
+        team.name,
+      );
+    }
+  } else {
+    console.error("couldn't find player, but found Y... weird", p);
+  }
+}
+
 // Contract: each player's events are always sorted in time order. Tournaments are sorted.
 export default function Timeline({
   seasons,
@@ -137,13 +161,16 @@ export default function Timeline({
     </text>
   );
 
+  // Draws the rectangle(s) for a single tournament `t`
   function TournamentComponent({ tournament: t }: { tournament: Tournament }) {
     const thisX = x(toDate(t.start));
     const thisWidth = x(toDate(t.end)) - x(toDate(t.start));
 
     return (
       <g key={t.name}>
+        {/* Grey area to indicate tournament */}
         <rect x={thisX} y={0} width={thisWidth} height={y(size(indices))} opacity={0.2} />
+        {/* Tournament name/acronym, vertical */}
         <text
           x={thisX + thisWidth / 2}
           y={TIMELINE_BUFFER * CIRCLE_RADIUS}
@@ -163,27 +190,6 @@ export default function Timeline({
                 if (isNull(myY)) {
                   console.error("couldn't find player", p);
                   return undefined;
-                }
-
-                // Sanity check
-                const player = findPlayer(players, p);
-                if (player) {
-                  const memb = find(
-                    player.memberships,
-                    (m) => m.join <= t.end && (!m.leave || m.leave >= t.start),
-                  );
-                  if (!memb) {
-                    console.error(
-                      "couldn't find membership for",
-                      p,
-                      "for tournament",
-                      t.name,
-                      "and team",
-                      team.name,
-                    );
-                  }
-                } else {
-                  console.error("couldn't find player, but found Y... weird", p);
                 }
 
                 return (

@@ -1,7 +1,7 @@
 import { map } from "lodash";
 import React, { useState } from "react";
 import { Viz, VizTitle } from "./util";
-import SimpleGraph from "./viz/SimpleGraph";
+import Tournaments from "./viz/Tournaments";
 import Timeline from "./viz/Timeline";
 import Text from "./viz/Text";
 import Sankey from "./viz/Sankey";
@@ -49,8 +49,8 @@ function App() {
         }}
       >
         {
-          view === Viz.SIMPLE ? (
-            <SimpleGraph seasons={SEASONS} />
+          view === Viz.TOURNAMENTS ? (
+            <Tournaments seasons={SEASONS} />
           ) : view === Viz.TIMELINE ? (
             <Timeline seasons={SEASONS} players={PLAYERS} teamColors={TEAM_COLORS} />
           ) : view === Viz.TABLE ? (
