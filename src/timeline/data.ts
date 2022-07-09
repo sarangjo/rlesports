@@ -42,7 +42,7 @@ class SimpleYComputer implements YComputer {
 
   getY(p: Player): number {
     // Given a vertical index, what's its Y coordinate?
-    return this.bounds.y + this.indices[p.name] * 2 * SPACING;
+    return this.bounds.y + SPACING + this.indices[p.name] * 2 * SPACING;
   }
 }
 
@@ -72,7 +72,7 @@ class SimpleYComputer implements YComputer {
 
 export interface Output {
   players: UIPlayer[];
-  dates: UIText[];
+  dates: [UIText, UILine][];
 }
 
 export class DataProcessor {
@@ -129,7 +129,7 @@ export class DataProcessor {
 
     return scaleTime()
       .domain([strToDate(this.start), strToDate(this.end)])
-      .range([this.bounds.x, this.bounds.width]);
+      .range([this.bounds.x, this.bounds.x + this.bounds.width]);
   }
 
   private setupY() {
@@ -196,7 +196,7 @@ export class DataProcessor {
         uiP.name = {
           text: p.name,
           x: start.x - SPACING,
-          y: start.y + SPACING / 2,
+          y: start.y + SPACING / 2, // TODO arbitrary 5px adjustment
           anchor: TextAnchor.END,
           orientation: TextOrientation.HORIZONTAL,
         };
@@ -206,16 +206,25 @@ export class DataProcessor {
     return uiP;
   }
 
-  private processDates(): UIText[] {
-    return Array.from({ length: moment(this.end).diff(this.start, "d") / 50 }, (_, i) => {
+  private processDates(): [UIText, UILine][] {
+    return Array.from({ length: moment(this.end).diff(this.start, "d") / 50 + 2 }, (_, i) => {
       const date = moment(this.start).add(i * 50, "d");
+      const x = this.x(date.toDate());
 
-      return {
-        x: this.x(date.toDate()),
-        y: 10, // TODO constant?
-        text: dateToStr(date),
-        orientation: TextOrientation.VERTICAL,
-      } as UIText;
+      return [
+        {
+          x: x - SPACING / 2, // TODO arbitrary 5px adjustment
+          y: 10, // TODO constant?
+          text: dateToStr(date),
+          orientation: TextOrientation.VERTICAL,
+        } as UIText,
+        {
+          start: { x, y: 0 },
+          end: { x, y: this.bounds.y + this.bounds.height },
+          connectorType: ConnectorType.LINE,
+          stroke: "green",
+        } as UILine,
+      ];
     });
   }
 

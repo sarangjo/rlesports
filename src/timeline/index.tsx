@@ -1,12 +1,17 @@
 import React from "react";
-import { CircleComponent, ConnectorComponent, TextComponent } from "../components";
+import {
+  CircleComponent,
+  ConnectorComponent,
+  LineComponent,
+  RectComponent,
+  TextComponent,
+} from "../components";
 import { Player } from "../types";
 import { UIRectangle } from "../types/ui";
 import { DataProcessor } from "./data";
 import { UIPlayer } from "./types";
 
-const LEFT_MARGIN = 75;
-const TOP_MARGIN = 100;
+const MARGIN = { left: 75, top: 100, right: 10, bottom: 10 };
 
 function PlayerComponent({ player }: { player: UIPlayer }) {
   return (
@@ -34,10 +39,10 @@ export default function Timeline({
   height: number;
 }) {
   const bounds: UIRectangle = {
-    x: LEFT_MARGIN,
-    y: TOP_MARGIN,
-    width: width - LEFT_MARGIN,
-    height: height - TOP_MARGIN,
+    x: MARGIN.left,
+    y: MARGIN.top,
+    width: width - MARGIN.left - MARGIN.right,
+    height: height - MARGIN.top - MARGIN.bottom,
   };
 
   // Players
@@ -47,8 +52,11 @@ export default function Timeline({
   return (
     <>
       <g id="dates">
-        {dates.map((d) => (
-          <TextComponent {...d} />
+        {dates.map(([d, l]) => (
+          <>
+            <TextComponent {...d} />
+            <LineComponent {...l} />
+          </>
         ))}
       </g>
       <g id="players">
@@ -56,6 +64,7 @@ export default function Timeline({
           <PlayerComponent player={p} />
         ))}
       </g>
+      <RectComponent {...bounds} />
     </>
   );
 }
