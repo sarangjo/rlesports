@@ -2,7 +2,8 @@ import * as d3 from "d3";
 import { concat, find, map, pickBy, reduce, some } from "lodash";
 import moment from "moment";
 import { CIRCLE_RADIUS } from "./constants";
-import { Player, RlcsSeason, Tournament, TournamentDoc, TournamentPlayerNode } from "./types";
+import { Player, RlcsSeason, Tournament } from "./types";
+import { TournamentPlayerNode } from "./types/graph";
 
 //// UTILITY
 
@@ -52,7 +53,7 @@ export const valueline = d3
   .curve(d3.curveCatmullRomClosed);
 
 // Data managing
-export const tournamentsToPlayerNodes = (tournaments: TournamentDoc[]) => {
+export const tournamentsToPlayerNodes = (tournaments: Tournament[]) => {
   return reduce(
     tournaments,
     (acc1, tournament, tournamentIndex) =>
@@ -92,7 +93,7 @@ export const tournamentsToPlayerNodes = (tournaments: TournamentDoc[]) => {
 
 export const LINK_FORCE = "link";
 
-export const getPlayerName = (tournaments: TournamentDoc[], d: TournamentPlayerNode) =>
+export const getPlayerName = (tournaments: Tournament[], d: TournamentPlayerNode) =>
   tournaments[d.tournamentIndex].teams[d.teamIndex].players[d.playerIndex];
 
 // y depends on team and player index
@@ -116,7 +117,7 @@ export enum Viz {
   SANKEY = "sankey",
   TEAM_MAP = "team-map",
   FORCE_GRAPH = "force-graph",
-  SIMPLE = "simple",
+  TOURNAMENTS = "simple",
   TABLE = "table",
   TEXT = "text",
   TIMELINE = "timeline",
@@ -126,7 +127,7 @@ export const VizTitle = {
   [Viz.SANKEY]: "Sankey",
   [Viz.TEAM_MAP]: "Team Map",
   [Viz.FORCE_GRAPH]: "Force Graph",
-  [Viz.SIMPLE]: "Simple",
+  [Viz.TOURNAMENTS]: "Simple",
   [Viz.TABLE]: "Table",
   [Viz.TEXT]: "Text",
   [Viz.TIMELINE]: "Timeline",
@@ -266,4 +267,19 @@ export const hexToColor = (hex: string): { r: number; g: number; b: number; a?: 
 export function getColorByBackground(hex: string) {
   const c = hexToColor(hex);
   return c.r * 0.299 + c.g * 0.587 + c.b * 0.114 > 186 ? "#000" : "#fff";
+}
+
+export function ordinalSuffixOf(i: number): string {
+  const j = i % 10,
+    k = i % 100;
+  if (j === 1 && k !== 11) {
+    return i + "st";
+  }
+  if (j === 2 && k !== 12) {
+    return i + "nd";
+  }
+  if (j === 3 && k !== 13) {
+    return i + "rd";
+  }
+  return i + "th";
 }

@@ -1,14 +1,10 @@
 import { interpolateOrRd } from "d3";
 import { forEach, map, reduce, size, sum, values } from "lodash";
-import React from "react";
-import { TournamentDoc } from "../types";
-import { tournamentAcronym } from "../util";
+import React, { useMemo } from "react";
+import { RlcsSeason, Tournament } from "../types";
+import { ordinalSuffixOf, tournamentAcronym, tournamentMap } from "../util";
 
-interface Props {
-  tournaments: TournamentDoc[];
-}
-
-const process = (tournaments: TournamentDoc[]) => {
+const process = (tournaments: Tournament[]) => {
   const seasonMap = {} as Record<string, number>;
 
   return map(tournaments, (t) => {
@@ -48,7 +44,9 @@ const average = (seasonCounts: Record<string, number>) => {
   return sum(values(seasonCounts)) / size(seasonCounts);
 };
 
-export default function Text({ tournaments }: Props) {
+export default function Text({ seasons }: { seasons: RlcsSeason[] }) {
+  const tournaments = useMemo(() => tournamentMap(seasons, (t) => t), [seasons]);
+
   const processed = process(tournaments);
 
   return (
@@ -56,8 +54,8 @@ export default function Text({ tournaments }: Props) {
       <tbody>
         <tr>
           <th />
-          {map(tournaments, (t) => (
-            <th>{tournamentAcronym(t.name)}</th>
+          {map(tournaments, (t, i) => (
+            <th key={i}>{tournamentAcronym(t.name)}</th>
           ))}
         </tr>
         <tr style={{ textAlign: "center" }}>
@@ -67,9 +65,9 @@ export default function Text({ tournaments }: Props) {
           ))}
         </tr>
         <tr style={{ textAlign: "center" }}>
-          <td>Average</td>
+          <td>Average age</td>
           {map(processed, ({ seasonCounts }) => (
-            <td>{Math.round(average(seasonCounts) * 100) / 100}</td>
+            <td>{ordinalSuffixOf(Math.round(average(seasonCounts) * 100) / 100)}</td>
           ))}
         </tr>
         <tr>
@@ -87,7 +85,7 @@ export default function Text({ tournaments }: Props) {
                             backgroundColor: interpolateOrRd(seasonCounts[p] / size(tournaments)),
                           }}
                         >
-                          {p}: <b>{seasonCounts[p]}</b>
+                          {p}: <b>{seasonCounts[p]}th season</b>
                         </li>
                       ))}
                     </ul>

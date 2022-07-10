@@ -128,11 +128,11 @@ interface ParticipationBlock {
 export default function Table({
   seasons,
   players,
-  teams,
+  teamColors,
 }: {
   seasons: RlcsSeason[];
   players: Player[];
-  teams: Record<string, string>;
+  teamColors: Record<string, string>;
 }) {
   // Convert tournaments + player info into "participation blocks" which have some properties, that
   // will be then filtered on.
@@ -241,7 +241,7 @@ export default function Table({
                       const startX = scale.convert(b.start);
                       const endX = scale.convert(b.end);
 
-                      const color = getTeamColor(b.team, teams);
+                      const color = getTeamColor(b.team, teamColors);
 
                       return (
                         <g>
