@@ -1,5 +1,4 @@
-import { ScaleTime } from "d3";
-import { scaleTime } from "d3-scale";
+import { scaleTime, ScaleTime } from "d3-scale";
 import moment from "moment";
 import { EventType, Player } from "../types";
 import {
@@ -23,52 +22,46 @@ import {
   STROKE_WIDTH_TEAM,
 } from "./types";
 
-interface YComputer {
-  // TODO this signature finna be v interesting as we get more complex
-  getY(p: Player): number;
-}
+class YScale {
+  protected bounds: UIRectangle;
 
-/**
- * Simple Y Computer: just uses indices to stack players vertically.
- */
-class SimpleYComputer implements YComputer {
-  private indices: Record<string, number>;
-  private bounds: UIRectangle;
-
-  constructor(players: Player[], bounds: UIRectangle) {
-    this.indices = getIndices(players, (p) => p.name);
+  constructor(bounds: UIRectangle) {
     this.bounds = bounds;
   }
 
-  getY(p: Player): number {
+  // TODO this signature finna be v interesting as we get more complex
+  getY(_p: Player): number {
+    throw new Error("Not implemented");
+  }
+}
+
+/**
+ * Simple Y Scale: just uses indices to stack players vertically.
+ */
+class SimpleYScale extends YScale {
+  private indices: Record<string, number>;
+
+  constructor(players: Player[], bounds: UIRectangle) {
+    super(bounds);
+
+    this.indices = getIndices(players, (p) => p.name);
+  }
+
+  override getY(p: Player): number {
     // Given a vertical index, what's its Y coordinate?
     return this.bounds.y + SPACING + this.indices[p.name] * 2 * SPACING;
   }
 }
 
-/*
- * SAMPLE[
-  {
-    events: [
-      {
-        x: 10,
-        y: 10,
-        color: "#802b26",
-        eventType: EventType.JOIN,
-      },
-    ],
-    memberships: [
-      {
-        start: { x: 10, y: 10 },
-        end: { x: 500, y: 10 },
-        color: "#802b26",
-        segmentType: SegmentType.LINE,
-        membershipType: MembershipType.MEMBER,
-      },
-    ],
-  },
-];
-*/
+class TestYScale extends YScale {
+  constructor(players: Player[], bounds: UIRectangle) {
+    super(bounds);
+  }
+
+  override getY(p: Player): number {
+    return 0;
+  }
+}
 
 export interface Output {
   players: UIPlayer[];
@@ -86,7 +79,7 @@ export class DataProcessor {
   private end?: string;
 
   private x: ScaleTime<number, number>;
-  private y: YComputer;
+  private y: YScale;
 
   constructor(players: Player[], teamColors: Record<string, string>, bounds: UIRectangle) {
     this.players = players;
@@ -101,17 +94,21 @@ export class DataProcessor {
   private setupX() {
     // Calculating minimum and maximum:
     // [min/max] Try 1: events
+
     // Start is the earliest join of any player
-    this.start = this.players?.reduce((acc, cur) => {
-      return !acc || cur.memberships[0]?.join < acc ? cur.memberships[0]?.join : acc;
+    this.start = this.players.reduce((acc, cur) => {
+      // prettier-ignore
+      return (!acc || cur.memberships[0]?.join < acc) ? cur.memberships[0]?.join : acc;
     }, "");
+
     // End is the latest leave of any player, or now if there are no leaves
-    this.end = this.players?.reduce((acc, cur) => {
-      const interim =
-        cur.memberships?.length > 0 && cur.memberships[cur.memberships.length - 1].leave;
-      const candidate = interim || dateToStr(moment());
-      return !acc || candidate > acc ? candidate : acc;
-    }, "");
+    this.end = dateToStr(moment());
+
+    /*this.players.reduce((acc, cur) => {
+      const candidate = cur.memberships[cur.memberships.length - 1]?.leave || dateToStr(moment());
+
+      return (!acc || candidate > acc) ? candidate : acc;
+    }, ""); */
 
     console.log("start", this.start, "end", this.end);
 
@@ -133,7 +130,7 @@ export class DataProcessor {
   }
 
   private setupY() {
-    return new SimpleYComputer(this.players, this.bounds);
+    return new SimpleYScale(this.players, this.bounds);
   }
 
   private processPlayer(p: Player): UIPlayer {
