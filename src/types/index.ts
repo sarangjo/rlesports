@@ -10,10 +10,12 @@ export enum MembershipType {
   NOT_MEMBER,
 }
 
+export type SimpleDate = string;
+
 export interface Membership {
   team: string;
-  join: string;
-  leave?: string;
+  join: SimpleDate;
+  leave?: SimpleDate;
 }
 
 export interface Player {
