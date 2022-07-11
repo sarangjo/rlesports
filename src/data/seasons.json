@@ -1,0 +1,262 @@
+[
+  {
+    "season": "1",
+    "sections": [
+      {
+        "name": "Qualifier 1",
+        "tournaments": [
+          {
+            "region": 2,
+            "path": "Rocket League Championship Series/Season 1/North America/Qualifier 1",
+            "start": "2016-04-30",
+            "end": "2016-05-21",
+            "teams": [
+              {
+                "name": "iBUYPOWER",
+                "players": ["Kronovi", "Lachinio", "Gambit"],
+                "subs": null
+              },
+              {
+                "name": "Kings of Urban",
+                "players": ["Fireburner", "Jacob", "Sadjunior"],
+                "subs": null
+              },
+              {
+                "name": "VexX Gaming",
+                "players": ["Turtle", "GarrettG", "Jayyyrah"],
+                "subs": null
+              },
+              {
+                "name": "Genesis",
+                "players": ["Pluto", "Moses", "Quinn Lobdell"],
+                "subs": null
+              },
+              {
+                "name": "Retrospect",
+                "players": ["Klassux", "Kyle Masc", "Huskih", "Espeon", "Fl0w"],
+                "subs": null
+              },
+              {
+                "name": "Mock-It eSports NA",
+                "players": ["Low5ive", "Rizzo", "Insolences"],
+                "subs": null
+              },
+              {
+                "name": "Selfless Gaming",
+                "players": ["Amoney_tv", "Sizz", "matt"],
+                "subs": null
+              },
+              {
+                "name": "Team Orbit",
+                "players": ["Zanejackey", "HotWheelsSid", "Stev"],
+                "subs": null
+              }
+            ]
+          },
+          {
+            "region": 3,
+            "path": "Rocket League Championship Series/Season 1/Europe/Qualifier 1",
+            "start": "2016-05-01",
+            "end": "2016-05-22",
+            "teams": [
+              {
+                "name": "FlipSid3 Tactics",
+                "players": ["kuxir97", "M1k3Rules", "Markydooda"],
+                "subs": null
+              },
+              {
+                "name": "We Dem Girlz",
+                "players": ["remkoe", "gReazy", "Maestro"],
+                "subs": null
+              },
+              {
+                "name": "Mock-It eSports EU",
+                "players": ["Sikii", "miztik", "paschy90"],
+                "subs": null
+              },
+              {
+                "name": "Ka-Pow",
+                "players": ["al0t", "Turbop0lsa", "Sniperkid"],
+                "subs": null
+              },
+              {
+                "name": "The Flying Dutchmen",
+                "players": ["Jessie", "Dogu", "Vogan"],
+                "subs": null
+              },
+              {
+                "name": "Team Solid",
+                "players": ["Seeks", "Reganam", "Data"],
+                "subs": null
+              },
+              {
+                "name": "Precision Z",
+                "players": ["Tequilaz", "Dadooh", "Mikageishi"],
+                "subs": null
+              },
+              {
+                "name": "Eff0rt",
+                "players": ["Tinny", "Cheerio", "Kileak", "Deevo"],
+                "subs": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Qualifier 2",
+        "tournaments": [
+          {
+            "region": 2,
+            "path": "Rocket League Championship Series/Season 1/North America/Qualifier 2",
+            "start": "2016-06-25",
+            "end": "2016-07-09",
+            "teams": [
+              {
+                "name": "iBUYPOWER",
+                "players": ["Kronovi", "Lachinio", "Gambit", "0ver Zer0"],
+                "subs": null
+              },
+              {
+                "name": "Kings of Urban",
+                "players": ["Sadjunior", "Jacob", "Fireburner"],
+                "subs": null
+              },
+              {
+                "name": "Exodus",
+                "players": ["Turtle", "Moses", "GarrettG"],
+                "subs": null
+              },
+              {
+                "name": "Genesis",
+                "players": ["Pluto", "Espeon", "Quinn Lobdell"],
+                "subs": null
+              },
+              {
+                "name": "Lucky Bounce",
+                "players": ["Torment", "DarkFire", "Timbathy"],
+                "subs": null
+              },
+              {
+                "name": "Mock-It eSports NA",
+                "players": ["Rizzo", "Zanejackey", "Insolences"],
+                "subs": null
+              },
+              {
+                "name": "Selfless Gaming",
+                "players": ["Amoney_tv", "Sizz", "matt"],
+                "subs": null
+              },
+              {
+                "name": "Retrospect",
+                "players": ["Genocop", "Chrome", "Klassux"],
+                "subs": null
+              }
+            ]
+          },
+          {
+            "region": 3,
+            "path": "Rocket League Championship Series/Season 1/Europe/Qualifier 2",
+            "start": "2016-06-26",
+            "end": "2016-07-10",
+            "teams": [
+              {
+                "name": "FlipSid3 Tactics",
+                "players": ["kuxir97", "M1k3Rules", "Markydooda"],
+                "subs": null
+              },
+              {
+                "name": "We Dem Girlz",
+                "players": ["remkoe", "gReazy", "Maestro"],
+                "subs": null
+              },
+              {
+                "name": "Aeriality",
+                "players": ["Continuum", "Kaydop", "Piksel"],
+                "subs": null
+              },
+              {
+                "name": "Comrade Gaming EU",
+                "players": ["OSP", "Juuksey", "Lunation", "GingerNinjaDT9"],
+                "subs": null
+              },
+              {
+                "name": "The Flying Dutchmen",
+                "players": ["Jessie", "Dogu", "Vogan"],
+                "subs": null
+              },
+              {
+                "name": "Mock-It eSports EU",
+                "players": ["Sikii", "Turbop0lsa", "paschy90"],
+                "subs": null
+              },
+              {
+                "name": "Shoot N Goal",
+                "players": ["FaNaTiz", "Fakyy", "killarnaud", "Chausette45"],
+                "subs": null
+              },
+              {
+                "name": "Supersonic Avengers",
+                "players": ["ELMP", "Snaski", "Doomsee"],
+                "subs": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Finals",
+        "tournaments": [
+          {
+            "region": 1,
+            "path": "Rocket League Championship Series/Season 1",
+            "start": "2016-08-06",
+            "end": "2016-08-07",
+            "teams": [
+              {
+                "name": "Northern Gaming",
+                "players": ["remkoe", "gReazy", "Maestro"],
+                "subs": null
+              },
+              {
+                "name": "FlipSid3 Tactics",
+                "players": ["Markydooda", "M1k3Rules", "kuxir97"],
+                "subs": null
+              },
+              {
+                "name": "Mock-It eSports EU",
+                "players": ["Sikii", "paschy90", "Turbopolsa"],
+                "subs": null
+              },
+              {
+                "name": "The Flying Dutchmen",
+                "players": ["Jessie", "Dogu", "Vogan"],
+                "subs": null
+              },
+              {
+                "name": "Kings of Urban",
+                "players": ["Sadjunior", "Jacob", "Fireburner"],
+                "subs": null
+              },
+              {
+                "name": "Exodus",
+                "players": ["Turtle", "Moses", "GarrettG"],
+                "subs": null
+              },
+              {
+                "name": "iBUYPOWER",
+                "players": ["Kronovi", "Lachinio"],
+                "subs": null
+              },
+              {
+                "name": "Genesis",
+                "players": ["Pluto", "Espeon", "Quinn Lobdell"],
+                "subs": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
