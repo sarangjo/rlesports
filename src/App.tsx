@@ -4,11 +4,14 @@ import Timeline from "./timeline";
 import { PLAYERS } from "./data/sample/players";
 import { TEAM_COLORS } from "./data/sample/teamColors";
 import { RectComponent } from "./components";
+import { process } from "./timeline/complex";
 
 const WIDTH = 1200;
 const HEIGHT = 800;
 
 function App() {
+  console.log(process(PLAYERS));
+
   return (
     <>
       <h1>RL Esports</h1>

@@ -1,3 +1,5 @@
+import { SimpleDate } from "../util/datetime";
+
 // Types relating to the RL Esports overall data
 
 export enum EventType {
@@ -9,8 +11,6 @@ export enum MembershipType {
   MEMBER,
   NOT_MEMBER,
 }
-
-export type SimpleDate = string;
 
 export interface Membership {
   team: string;
