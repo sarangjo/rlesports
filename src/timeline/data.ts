@@ -53,16 +53,6 @@ class SimpleYScale extends YScale {
   }
 }
 
-class TestYScale extends YScale {
-  constructor(players: Player[], bounds: UIRectangle) {
-    super(bounds);
-  }
-
-  override getY(p: Player): number {
-    return 0;
-  }
-}
-
 export interface Output {
   players: UIPlayer[];
   dates: [UIText, UILine][];
@@ -101,10 +91,11 @@ export class DataProcessor {
       return (!acc || cur.memberships[0]?.join < acc) ? cur.memberships[0]?.join : acc;
     }, "");
 
-    // End is the latest leave of any player, or now if there are no leaves
     this.end = dateToStr(moment());
 
-    /*this.players.reduce((acc, cur) => {
+    /*
+    // End is the latest leave of any player, or now if there are no leaves
+    this.players.reduce((acc, cur) => {
       const candidate = cur.memberships[cur.memberships.length - 1]?.leave || dateToStr(moment());
 
       return (!acc || candidate > acc) ? candidate : acc;
