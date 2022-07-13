@@ -1,5 +1,5 @@
 import { scaleTime, ScaleTime } from "d3-scale";
-import moment from "moment";
+import { addDays, differenceInCalendarDays } from "date-fns";
 import { EventType, Player } from "../types";
 import {
   ConnectorType,
@@ -11,7 +11,7 @@ import {
   UIText,
 } from "../types/ui";
 import { getIndices } from "../util/data";
-import { dateToStr, strToDate } from "../util/datetime";
+import { d2s, s2d } from "../util/datetime";
 import {
   DEFAULT_COLOR,
   SPACING,
@@ -65,8 +65,8 @@ export class DataProcessor {
   private bounds: UIRectangle;
 
   // Calculated
-  private start?: string;
-  private end?: string;
+  private start: string;
+  private end: string;
 
   private x: ScaleTime<number, number>;
   private y: YScale;
@@ -77,7 +77,10 @@ export class DataProcessor {
     this.bounds = bounds;
 
     // Set up our X/Y scales
-    this.x = this.setupX();
+    const { x, start, end } = this.setupX();
+    this.x = x;
+    this.start = start;
+    this.end = end;
     this.y = this.setupY();
   }
 
@@ -86,12 +89,12 @@ export class DataProcessor {
     // [min/max] Try 1: events
 
     // Start is the earliest join of any player
-    this.start = this.players.reduce((acc, cur) => {
+    const start = this.players.reduce((acc, cur) => {
       // prettier-ignore
       return (!acc || cur.memberships[0]?.join < acc) ? cur.memberships[0]?.join : acc;
     }, "");
 
-    this.end = dateToStr(moment());
+    const end = d2s(new Date());
 
     /*
     // End is the latest leave of any player, or now if there are no leaves
@@ -101,12 +104,10 @@ export class DataProcessor {
       return (!acc || candidate > acc) ? candidate : acc;
     }, ""); */
 
-    console.log("start", this.start, "end", this.end);
-
-    if (!this.start || !this.end) {
+    if (!start || !end) {
       throw new Error(
-        `Somethin's wrong! start ${JSON.stringify(this.start)} or end ${JSON.stringify(
-          this.end
+        `Somethin's wrong! start ${JSON.stringify(start)} or end ${JSON.stringify(
+          end
         )} are undefined`
       );
     }
@@ -115,9 +116,13 @@ export class DataProcessor {
     // startDate = startDate > tournaments[0].start ? tournaments[0].start : startDate;
     // endDate = endDate < last(tournaments)!.end ? last(tournaments)!.end : endDate;
 
-    return scaleTime()
-      .domain([strToDate(this.start), strToDate(this.end)])
-      .range([this.bounds.x, this.bounds.x + this.bounds.width]);
+    return {
+      x: scaleTime()
+        .domain([s2d(start), s2d(end)])
+        .range([this.bounds.x, this.bounds.x + this.bounds.width]),
+      start,
+      end,
+    };
   }
 
   private setupY() {
@@ -130,10 +135,10 @@ export class DataProcessor {
     p.memberships.forEach((m, i) => {
       /* UI info for this m */
 
-      const start: UIPoint = { x: this.x(strToDate(m.join)), y: this.y.getY(p) };
+      const start: UIPoint = { x: this.x(s2d(m.join)), y: this.y.getY(p) };
       // If we have a leave, set that in the end point
       const end: UIPoint = {
-        x: m.leave ? this.x(strToDate(m.leave)) : this.bounds.x + this.bounds.width,
+        x: m.leave ? this.x(s2d(m.leave)) : this.bounds.x + this.bounds.width,
         y: this.y.getY(p),
       };
       const color = this.teamColors[m.team] || DEFAULT_COLOR;
@@ -162,7 +167,7 @@ export class DataProcessor {
             connectorType: ConnectorType.LINE,
             start: end,
             end: {
-              x: this.x(strToDate(p.memberships[i + 1].join)),
+              x: this.x(s2d(p.memberships[i + 1].join)),
               y: this.y.getY(p),
             },
             stroke: COLOR_NO_TEAM,
@@ -195,14 +200,14 @@ export class DataProcessor {
   }
 
   private processDates(): [UIText, UILine][] {
-    const f = (m: moment.Moment): [UIText, UILine] => {
-      const x = this.x(m.toDate());
+    const f = (m: Date): [UIText, UILine] => {
+      const x = this.x(m);
 
       return [
         {
           x: x - SPACING / 2, // TODO arbitrary 5px adjustment
           y: 10, // TODO constant?
-          text: dateToStr(m),
+          text: d2s(m),
           orientation: TextOrientation.VERTICAL,
         } as UIText,
         {
@@ -214,9 +219,10 @@ export class DataProcessor {
       ];
     };
 
-    return Array.from({ length: moment(this.end).diff(this.start, "d") / 50 + 2 }, (_, i) =>
-      f(moment(this.start).add(i * 50, "d"))
-    ).concat([f(moment(this.end))]);
+    return Array.from(
+      { length: differenceInCalendarDays(s2d(this.end), s2d(this.start)) / 50 + 2 },
+      (_, i) => f(addDays(s2d(this.start), i * 50))
+    ).concat([f(s2d(this.end))]);
   }
 
   process(): Output {

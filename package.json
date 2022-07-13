@@ -12,9 +12,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "test": "react-scripts test"
   },
   "dependencies": {
+    "@types/jest": "^28.1.5",
     "@types/node": "^16.x",
     "collections": "^5.1.13",
     "d3": "^7.6.1",
