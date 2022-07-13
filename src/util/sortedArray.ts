@@ -1,6 +1,4 @@
-import { isUndefined } from "util";
-
-type Equator<T> = (a: T, b: T) => boolean;
+// type Equator<T> = (a: T, b: T) => boolean;
 export type Comparator<T> = (a: T, b: T) => number;
 
 // function simpleCompare<T>(a: T, b: T) {
@@ -35,12 +33,10 @@ export function search<T>(
 
 export class SortedArray<T> {
   private arr: T[];
-  private equals: Equator<T>;
   private compare: Comparator<T>;
 
-  constructor(a: T[] = [], equals: Equator<T>, compare: Comparator<T>) {
+  constructor(compare: Comparator<T>, a: T[] = []) {
     this.arr = [];
-    this.equals = equals;
     this.compare = compare;
 
     a.forEach((item) => this.insert(item));
@@ -58,4 +54,10 @@ export class SortedArray<T> {
   toArray(): T[] {
     return this.arr;
   }
+
+  size(): number {
+    return this.arr.length;
+  }
+
+  delete(t: T) {}
 }

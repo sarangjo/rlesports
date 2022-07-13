@@ -51,20 +51,20 @@ export default function Timeline({
 
   return (
     <>
+      <RectComponent {...bounds} />
       <g id="dates">
-        {dates.map(([d, l]) => (
-          <>
+        {dates.map(([d, l], i) => (
+          <React.Fragment key={i}>
             <TextComponent {...d} />
             <LineComponent {...l} />
-          </>
+          </React.Fragment>
         ))}
       </g>
       <g id="players">
-        {uiPlayers.map((p) => (
-          <PlayerComponent player={p} />
+        {uiPlayers.map((p, i) => (
+          <PlayerComponent player={p} key={i} />
         ))}
       </g>
-      <RectComponent {...bounds} />
     </>
   );
 }
