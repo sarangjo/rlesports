@@ -1,6 +1,6 @@
 import SortedSet from "collections/sorted-set";
 import { SimpleDate } from "../../util/datetime";
-import { TSL, TeamSegment } from "../types";
+import { TSL, TeamSegment, tsStr } from "../types";
 
 enum Change {
   JOIN,
@@ -52,7 +52,14 @@ export class TeamSegmentListEvents implements TSL {
   }
 
   toString(): string {
-    throw new Error("Method not implemented.");
+    const arr = this.toArray();
+
+    return `[${arr.length}]: ${arr.reduce(
+      (acc: string, cur: TeamSegment, idx: number): string => {
+        return acc + "\n" + tsStr(cur);
+      },
+      ""
+    )}`;
   }
 
   toArray(): TeamSegment[] {

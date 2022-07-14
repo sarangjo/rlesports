@@ -6,8 +6,6 @@ export function process(players: Player[]): Record<string, TeamSegmentList> {
   const teamMap: Record<string, TeamSegmentList> = {};
 
   players.forEach((p) => {
-    console.log("Inserting", p);
-
     p.memberships.forEach((m) => {
       // For this membership, find the team
 
