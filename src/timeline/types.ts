@@ -19,7 +19,9 @@ export const Radius = {
 export interface UIPlayer {
   name?: UIText;
   events: UICircle[];
-  memberships: UIConnector[];
+
+  // Note that this isn't necessarily 1:1 with actual membership changes. A single membership could comprise of multiple connectors
+  connectors: UIConnector[];
 
   // events: UIPlayerEvent[];
   // memberships: UIMembership[];
@@ -42,9 +44,7 @@ export function segmentsEqual(a: TeamSegment[], b: TeamSegment[]) {
     a.length === b.length &&
     a.every(
       (x: TeamSegment, i: number) =>
-        x.players.sort() === b[i].players.sort() &&
-        x.start === b[i].start &&
-        x.end === b[i].end
+        x.players.sort() === b[i].players.sort() && x.start === b[i].start && x.end === b[i].end
     )
   );
 }

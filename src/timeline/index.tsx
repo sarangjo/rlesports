@@ -17,7 +17,7 @@ function PlayerComponent({ player }: { player: UIPlayer }) {
   return (
     <>
       {player.name && <TextComponent {...player.name} />}
-      {player.memberships.map((s, i) => (
+      {player.connectors.map((s, i) => (
         <ConnectorComponent key={i} {...s} />
       ))}
       {player.events.map((e, i) => (
@@ -47,6 +47,7 @@ export default function Timeline({
 
   // Players
   const processor = new DataProcessor(players, teamColors, bounds);
+
   const { players: uiPlayers, dates } = processor.process();
 
   return (

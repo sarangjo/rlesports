@@ -27,8 +27,7 @@ export function processPlayers(
   teamColors: Record<string, string>
 ): UIPlayer[] {
   const indices = getIndices(players, (p) => p.name);
-  const getY = (p: Player) =>
-    bounds.y + SPACING + indices[p.name] * 2 * SPACING;
+  const getY = (p: Player) => bounds.y + SPACING + indices[p.name] * 2 * SPACING;
 
   return players.map((p) => processPlayer(p, x, getY, bounds, teamColors));
 }
@@ -40,7 +39,7 @@ function processPlayer(
   bounds: UIRectangle,
   teamColors: Record<string, string>
 ): UIPlayer {
-  const uiP: UIPlayer = { events: [], memberships: [] };
+  const uiP: UIPlayer = { events: [], connectors: [] };
 
   p.memberships.forEach((m, i) => {
     /* UI info for this m */
@@ -73,7 +72,7 @@ function processPlayer(
 
       // Line connecting to next join, if any
       if (i !== p.memberships.length - 1) {
-        uiP.memberships.push({
+        uiP.connectors.push({
           connectorType: ConnectorType.LINE,
           start: end,
           end: {
@@ -86,7 +85,7 @@ function processPlayer(
     }
 
     // Membership
-    uiP.memberships.push({
+    uiP.connectors.push({
       start,
       end,
       stroke: color,
