@@ -1,27 +1,16 @@
 import { scaleTime, ScaleTime } from "d3-scale";
 import { addDays, differenceInCalendarDays } from "date-fns";
-import * as Simple from "./yHandling/simple";
-import { EventType, Player } from "../types";
+import * as Simple from "./positioning/simple";
+import { Player } from "../types";
 import {
   ConnectorType,
-  TextAnchor,
   TextOrientation,
   UILine,
-  UIPoint,
   UIRectangle,
   UIText,
 } from "../types/ui";
-import { getIndices } from "../util/data";
 import { d2s, s2d } from "../util/datetime";
-import {
-  DEFAULT_COLOR,
-  SPACING,
-  UIPlayer,
-  Radius,
-  COLOR_NO_TEAM,
-  FILL_LEAVE,
-  STROKE_WIDTH_TEAM,
-} from "./types";
+import { SPACING, UIPlayer } from "./types";
 
 export interface Output {
   players: UIPlayer[];
@@ -128,7 +117,12 @@ export class DataProcessor {
 
   process(): Output {
     return {
-      players: Simple.processPlayers(this.players, this.x),
+      players: Simple.processPlayers(
+        this.players,
+        this.x,
+        this.bounds,
+        this.teamColors
+      ),
       dates: this.processDates(),
     };
   }

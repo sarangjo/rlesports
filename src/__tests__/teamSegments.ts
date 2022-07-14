@@ -1,5 +1,5 @@
-import { TeamSegmentListDirect } from "../timeline/teamSegments/direct";
-import { TeamSegmentListEvents } from "../timeline/teamSegments/events";
+import { TeamSegmentListDirect } from "../timeline/positioning/teamSegments/direct";
+import { TeamSegmentListEvents } from "../timeline/positioning/teamSegments/events";
 import { segmentsEqual, TSL } from "../timeline/types";
 
 [TeamSegmentListDirect, TeamSegmentListEvents].forEach((TeamSegmentList, i) => {
