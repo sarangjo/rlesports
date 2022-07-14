@@ -1,5 +1,6 @@
 import { EventType } from "../types";
 import { Color, UICircle, UIConnector, UIText } from "../types/ui";
+import { SimpleDate } from "../util/datetime";
 
 /* UI */
 
@@ -14,16 +15,6 @@ export const Radius = {
   [EventType.LEAVE]: 6,
 };
 
-// export interface UIPlayerEvent extends UIPoint {
-//   color: Color;
-//   eventType: EventType;
-// }
-
-// export interface UIMembership extends UISegment {
-//   color?: Color;
-//   membershipType: MembershipType;
-// }
-
 // TODO: there's no requirements that the coordinates of the events and segments line up whatsoever. Problem?
 export interface UIPlayer {
   name?: UIText;
@@ -32,4 +23,37 @@ export interface UIPlayer {
 
   // events: UIPlayerEvent[];
   // memberships: UIMembership[];
+}
+
+/* TEAM SEGMENT */
+
+export interface TeamSegment {
+  players: string[];
+  start: string;
+  end?: string;
+}
+
+export function tsStr(s: TeamSegment): string {
+  return `{ [${s.players.join(", ")}]: ${s.start} ${s.end || "X"} }`;
+}
+
+export function segmentsEqual(a: TeamSegment[], b: TeamSegment[]) {
+  return (
+    a.length === b.length &&
+    a.every(
+      (x: TeamSegment, i: number) =>
+        x.players.sort() === b[i].players.sort() &&
+        x.start === b[i].start &&
+        x.end === b[i].end
+    )
+  );
+}
+
+// Hmm. A team could have a player leave and join on the same day. How that work?
+// TODO handle off-by-one's
+
+export interface TSL {
+  insert(player: string, join: SimpleDate, leave?: SimpleDate): void;
+  toString(): string;
+  toArray(): TeamSegment[];
 }

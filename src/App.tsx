@@ -4,17 +4,16 @@ import Timeline from "./timeline";
 import { PLAYERS } from "./data/sample/players2";
 import { TEAM_COLORS } from "./data/sample/teamColors";
 import { RectComponent } from "./components";
-import { process } from "./timeline/complex";
 
 const WIDTH = 1200;
 const HEIGHT = 800;
 
 function App() {
-  const teamMap = process(PLAYERS.slice(0, 2));
+  // const teamMap = process(PLAYERS.slice(0, 2));
 
-  for (const team in teamMap) {
-    console.log(team + ": " + teamMap[team].toString());
-  }
+  // for (const team in teamMap) {
+  //   console.log(team + ": " + teamMap[team].toString());
+  // }
 
   return (
     <>
