@@ -48,7 +48,7 @@ export default function Timeline({
   // Players
   const processor = new DataProcessor(players, teamColors, bounds);
 
-  const { players: uiPlayers, dates } = processor.process();
+  const dates = processor.getDates();
 
   return (
     <>
@@ -61,11 +61,13 @@ export default function Timeline({
           </React.Fragment>
         ))}
       </g>
-      <g id="players">
-        {uiPlayers.map((p, i) => (
-          <PlayerComponent player={p} key={i} />
-        ))}
-      </g>
+      {false && (
+        <g id="players">
+          {processor.getSimplePlayers().map((p, i) => (
+            <PlayerComponent player={p} key={i} />
+          ))}
+        </g>
+      )}
     </>
   );
 }

@@ -1,16 +1,28 @@
+import reduce from "lodash.reduce";
 import { scaleTime, ScaleTime } from "d3-scale";
 import { addDays, differenceInCalendarDays } from "date-fns";
-import * as Simple from "./positioning/simple";
-import { Player } from "../types";
+import { EventType, Player } from "../types";
 import {
   ConnectorType,
+  TextAnchor,
   TextOrientation,
   UILine,
+  UIPoint,
   UIRectangle,
   UIText,
 } from "../types/ui";
+import { getIndices } from "../util/data";
 import { d2s, s2d } from "../util/datetime";
-import { SPACING, UIPlayer } from "./types";
+import { TeamSegmentListEvents } from "./positioning/teamSegments/events";
+import {
+  COLOR_NO_TEAM,
+  DEFAULT_COLOR,
+  FILL_LEAVE,
+  Radius,
+  SPACING,
+  STROKE_WIDTH_TEAM,
+  UIPlayer,
+} from "./types";
 
 export interface Output {
   players: UIPlayer[];
@@ -18,11 +30,6 @@ export interface Output {
 }
 
 export class DataProcessor {
-  // Provided
-  private players: Player[];
-  private teamColors: Record<string, string>;
-  private bounds: UIRectangle;
-
   // Calculated
   private start: string;
   private end: string;
@@ -30,12 +37,10 @@ export class DataProcessor {
   private x: ScaleTime<number, number>;
 
   constructor(
-    players: Player[],
-    teamColors: Record<string, string>,
-    bounds: UIRectangle
+    private players: Player[],
+    private teamColors: Record<string, string>,
+    private bounds: UIRectangle
   ) {
-    this.players = players;
-    this.teamColors = teamColors;
     this.bounds = bounds;
 
     // Set up our X/Y scales
@@ -86,7 +91,7 @@ export class DataProcessor {
     };
   }
 
-  private processDates(): [UIText, UILine][] {
+  public getDates(): [UIText, UILine][] {
     const f = (m: Date): [UIText, UILine] => {
       const x = this.x(m);
 
@@ -115,15 +120,129 @@ export class DataProcessor {
     ).concat([f(s2d(this.end))]);
   }
 
-  process(): Output {
-    return {
-      players: Simple.processPlayers(
-        this.players,
-        this.x,
-        this.bounds,
-        this.teamColors
-      ),
-      dates: this.processDates(),
-    };
+  /** SIMPLE PROCESSING */
+
+  public getSimplePlayers(): UIPlayer[] {
+    const indices = getIndices(this.players, (p) => p.name);
+    const getY = (p: Player) =>
+      this.bounds.y + SPACING + indices[p.name] * 2 * SPACING;
+
+    return this.players.map((p) => this.processPlayer(p, getY));
+  }
+
+  private processPlayer(p: Player, getY: (p: Player) => number): UIPlayer {
+    const uiP: UIPlayer = { events: [], connectors: [] };
+
+    p.memberships.forEach((m, i) => {
+      /* UI info for this m */
+
+      const start: UIPoint = { x: this.x(s2d(m.join)), y: getY(p) };
+      // If we have a leave, set that in the end point
+      const end: UIPoint = {
+        x: m.leave ? this.x(s2d(m.leave)) : this.bounds.x + this.bounds.width,
+        y: getY(p),
+      };
+      const color = this.teamColors[m.team] || DEFAULT_COLOR;
+
+      /* Transform data */
+
+      // Join
+      uiP.events.push({
+        center: start,
+        radius: Radius[EventType.JOIN],
+        stroke: color,
+        fill: color,
+      });
+      // Leave
+      if (m.leave) {
+        uiP.events.push({
+          center: end,
+          radius: Radius[EventType.LEAVE],
+          stroke: COLOR_NO_TEAM,
+          fill: FILL_LEAVE,
+        });
+
+        // Line connecting to next join, if any
+        if (i !== p.memberships.length - 1) {
+          uiP.connectors.push({
+            connectorType: ConnectorType.LINE,
+            start: end,
+            end: {
+              x: this.x(s2d(p.memberships[i + 1].join)),
+              y: getY(p),
+            },
+            stroke: COLOR_NO_TEAM,
+          } as UILine);
+        }
+      }
+
+      // Membership
+      uiP.connectors.push({
+        start,
+        end,
+        stroke: color,
+        connectorType: ConnectorType.LINE,
+        strokeWidth: STROKE_WIDTH_TEAM,
+      } as UILine);
+
+      // Name
+      if (i === 0) {
+        uiP.name = {
+          text: p.name,
+          x: start.x - SPACING,
+          y: start.y + SPACING / 2, // TODO arbitrary 5px adjustment
+          anchor: TextAnchor.END,
+          orientation: TextOrientation.HORIZONTAL,
+        };
+      }
+    });
+
+    return uiP;
+  }
+
+  /** TEAM SEGMENT BASED PROCESSING */
+
+  public getTSRectangles(): UIRectangle[] {
+    // Start putting together a view of all team "versions", based on the players, which will loosely translate to "areas"
+    const teamMap: Record<string, TeamSegmentListEvents> = {};
+
+    this.players.forEach((p) => {
+      p.memberships.forEach((m) => {
+        if (!(m.team in teamMap)) {
+          teamMap[m.team] = new TeamSegmentListEvents();
+        }
+        teamMap[m.team].insert(p.name, m.join, m.leave);
+      });
+    });
+
+    // Alrighty, now we have team segments for each team. Each segment loosely translates into x values
+    return this.fuzzyPlain(teamMap);
+  }
+
+  // Try 1 is using static placement with fuzzy overlaps
+  private fuzzyPlain(
+    teamMap: Record<string, TeamSegmentListEvents>
+  ): UIRectangle[] {
+
+
+    return reduce(
+      teamMap,
+      (acc, segments, team) => {
+        // Create a rectangle per seg
+        segments.toArray().forEach((seg) => {
+          // Iterate through existing rectangles to ensure no conflict and find lowest y that works
+
+          acc.push({
+            x: this.x(s2d(seg.start)),
+            width: this.x(s2d(seg.end)) - this.x(s2d(seg.start)),
+            height: seg.players.length * SPACING * 2
+            y:
+          } as UIRectangle);
+        });
+
+        return acc;
+      },
+      []
+    );
   }
 }
