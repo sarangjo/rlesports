@@ -1,3 +1,4 @@
+import * as d3 from "d3";
 import {
   forceCollide,
   forceLink,
@@ -13,13 +14,20 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useUpdate } from "react-use";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { Membership, Player } from "../types";
-import { LINK_FORCE } from "../util";
+import { LINK_FORCE } from "../util/forces";
 
 // The translated Player node which stays fixed, with the team changing based on the date chosen
 interface PlayerNode extends SimulationNodeDatum {
   name: string;
   team?: string;
 }
+
+// Used to set group curve for teams
+export const valueline = d3
+  .line()
+  .x((d) => d[0])
+  .y((d) => d[1])
+  .curve(d3.curveCatmullRomClosed);
 
 // We use links to ensure proximity of teammates
 type Teammates = d3.SimulationLinkDatum<PlayerNode>;

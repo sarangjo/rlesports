@@ -60,3 +60,23 @@ export enum Region {
   OCEANIA,
   SOUTH_AMERICA,
 }
+
+export enum Viz {
+  SANKEY = "sankey",
+  TEAM_MAP = "team-map",
+  FORCE_GRAPH = "force-graph",
+  TOURNAMENTS = "simple",
+  TABLE = "table",
+  TEXT = "text",
+  TIMELINE = "timeline",
+}
+
+export const VizTitle = {
+  [Viz.SANKEY]: "Sankey",
+  [Viz.TEAM_MAP]: "Team Map",
+  [Viz.FORCE_GRAPH]: "Force Graph",
+  [Viz.TOURNAMENTS]: "Simple",
+  [Viz.TABLE]: "Table",
+  [Viz.TEXT]: "Text",
+  [Viz.TIMELINE]: "Timeline",
+};

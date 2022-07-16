@@ -1,6 +1,5 @@
 import { map } from "lodash";
 import React, { useState } from "react";
-import { Viz, VizTitle } from "./util";
 import Tournaments from "./viz/Tournaments";
 import Timeline from "./viz/timeline";
 import Stats from "./stats";
@@ -15,9 +14,8 @@ import { SEASONS } from "./data/sample/seasons";
 import { PLAYERS } from "./data/sample/players";
 import { TEAM_COLORS } from "./data/sample/team-colors";
 import PlayerTeams from "./viz/PlayerTeams";
-
-const WIDTH = 1200;
-const HEIGHT = 800;
+import { WIDTH, HEIGHT } from "./constants";
+import { Viz, VizTitle } from "./types";
 
 function App() {
   const [view, setView] = useState(Viz.TIMELINE);

@@ -2,7 +2,8 @@ import { interpolateOrRd } from "d3";
 import { forEach, map, reduce, size, sum, values } from "lodash";
 import React, { useMemo } from "react";
 import { RlcsSeason, Tournament } from "../types";
-import { ordinalSuffixOf, tournamentAcronym, tournamentMap } from "../util";
+import { ordinalSuffixOf } from "../util/data";
+import { tournamentAcronym, tournamentMap } from "../util/tournaments";
 
 const process = (tournaments: Tournament[]) => {
   const seasonMap = {} as Record<string, number>;

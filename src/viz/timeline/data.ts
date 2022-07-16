@@ -16,8 +16,6 @@ import { getIndices } from "../../util/data";
 import { d2s, s2d } from "../../util/datetime";
 import {
   BUFFER,
-  COLOR_NO_TEAM,
-  DEFAULT_COLOR,
   FILL_LEAVE,
   PLAYER_HEIGHT,
   Radius,
@@ -31,6 +29,7 @@ import {
 import * as d3 from "d3";
 import { clamp } from "lodash";
 import { constructTeamMap, getSimRawNodesLinks } from "./teamSegments/map";
+import { COLOR_NO_TEAM, getTeamColor } from "../../util/colors";
 
 export class DataProcessor {
   private start: string;
@@ -144,7 +143,7 @@ export class DataProcessor {
         x: m.leave ? this.x(s2d(m.leave)) : this.bounds.x + this.bounds.width,
         y: getY(p),
       };
-      const color = this.teamColors[m.team] || DEFAULT_COLOR;
+      const color = getTeamColor(m.team, this.teamColors);
 
       /* Transform data */
 

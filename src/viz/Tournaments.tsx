@@ -5,13 +5,13 @@ import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { RlcsSeason, Team, Tournament } from "../types";
 import { TournamentLink, TournamentPlayerNode } from "../types/graph";
 import {
-  getNodeId,
   tournamentsToPlayerNodes,
-  y,
+  getNodeId,
+  tournamentMap,
   getPlayerName,
   tournamentAcronym,
-  tournamentMap,
-} from "../util";
+  tournamentY,
+} from "../util/tournaments";
 
 // Based on adjacent tournaments, shuffle teams so that teams with more shared players are
 // vertically close together. Without this, a simple timeline is chaos. This basically brings us to
@@ -137,9 +137,9 @@ export default function SimpleGraph({ seasons }: { seasons: RlcsSeason[] }) {
 
   const getD = (d: TournamentLink) => {
     const sx = x(d.source.tournamentIndex);
-    const sy = y(d.source);
+    const sy = tournamentY(d.source);
     const tx = x(d.target.tournamentIndex);
-    const ty = y(d.target);
+    const ty = tournamentY(d.target);
 
     const xmid = sx + (tx - sx) * randDiv();
     const ymid = sy + (ty - sy) * randDiv();
@@ -154,11 +154,11 @@ export default function SimpleGraph({ seasons }: { seasons: RlcsSeason[] }) {
       <g id="nodes">
         {map(data.nodes, (d) => (
           <g key={d.id}>
-            <circle cx={x(d.tournamentIndex)} cy={y(d)} r={CIRCLE_RADIUS} />
+            <circle cx={x(d.tournamentIndex)} cy={tournamentY(d)} r={CIRCLE_RADIUS} />
             <text
               textAnchor="end"
               x={x(d.tournamentIndex) - CIRCLE_RADIUS - CIRCLE_RADIUS / 2}
-              y={y(d) + CIRCLE_RADIUS / 2}
+              y={tournamentY(d) + CIRCLE_RADIUS / 2}
             >
               {getPlayerName(tournaments, d)}
             </text>

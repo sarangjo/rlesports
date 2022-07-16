@@ -8,9 +8,7 @@ export const BUFFER = 10; // for margins, keeping things away from the harsh bor
 export const TEXT_HEIGHT = 10;
 export const PLAYER_HEIGHT = 20;
 
-export const DEFAULT_COLOR = "#000";
 export const FILL_LEAVE: Color = "transparent";
-export const COLOR_NO_TEAM: Color = "#bbbbbb";
 
 export const STROKE_WIDTH_TEAM = 3;
 

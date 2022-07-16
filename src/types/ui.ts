@@ -1,3 +1,5 @@
+/* UI library types */
+
 // TOOD rpeleace with better type
 export type Color = string;
 

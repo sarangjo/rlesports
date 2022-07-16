@@ -3,7 +3,7 @@ import { find, forEach, get, map } from "lodash";
 import React, { useMemo } from "react";
 import { HEIGHT, WIDTH } from "../constants";
 import { RlcsSeason, Tournament } from "../types";
-import { tournamentMap } from "../util";
+import { tournamentMap } from "../util/tournaments";
 
 // These properties are on top of the node and link properties Sankey provides
 interface TeamNode {
