@@ -1,5 +1,5 @@
 import { EventType } from "../../types";
-import { Color, UICircle, UIConnector, UIText } from "../../types/ui";
+import { Color, UICircle, UIConnector, UIText } from "../../types/svg";
 import { SimpleDate } from "../../util/datetime";
 
 /* UI */

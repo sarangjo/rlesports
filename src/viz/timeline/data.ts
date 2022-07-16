@@ -11,7 +11,7 @@ import {
   UIPoint,
   UIRectangle,
   UIText,
-} from "../../types/ui";
+} from "../../types/svg";
 import { getIndices } from "../../util/data";
 import { d2s, s2d } from "../../util/datetime";
 import {

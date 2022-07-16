@@ -1,6 +1,6 @@
-/* UI library types */
+/* SVG library types */
 
-// TOOD rpeleace with better type
+// TOOD replace with better type
 export type Color = string;
 
 export interface UIPoint {

@@ -3,13 +3,14 @@ import { concat, forEach, intersection, map, reduce, size, sortBy } from "lodash
 import React from "react";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { RlcsSeason, Team, Tournament } from "../types";
-import { TournamentLink, TournamentPlayerNode } from "../types/graph";
 import {
-  tournamentsToPlayerNodes,
   getNodeId,
-  tournamentMap,
   getPlayerName,
   tournamentAcronym,
+  TournamentLink,
+  tournamentMap,
+  TournamentPlayerNode,
+  tournamentsToPlayerNodes,
   tournamentY,
 } from "../util/tournaments";
 

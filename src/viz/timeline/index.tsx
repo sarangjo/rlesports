@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useUpdate } from "react-use";
 import {
   CircleComponent,
@@ -8,7 +8,7 @@ import {
   TextComponent,
 } from "../../components";
 import { Player } from "../../types";
-import { UIRectangle } from "../../types/ui";
+import { UIRectangle } from "../../types/svg";
 import { DataProcessor } from "./data";
 import { UIPlayer } from "./types";
 
@@ -48,21 +48,16 @@ export default function Timeline({
     height: height - MARGIN.top - MARGIN.bottom,
   };
 
-  // Players
-  const processor = useMemo(() => {
-    console.log("memo 1");
-    return new DataProcessor(players, teamColors, bounds);
-  }, [players, teamColors]);
+  // Data processing
+  const processor = useMemo(
+    () => new DataProcessor(players, teamColors, bounds),
+    [players, teamColors],
+  );
 
-  const dates = useMemo(() => {
-    console.log("memo 2");
-    return processor.getDates();
-  }, [processor]);
+  const dates = useMemo(() => processor.getDates(), [processor]);
+  useMemo(() => processor.setupSimulation(update), [processor]);
 
-  useMemo(() => {
-    console.log("memo 3");
-    processor.setupSimulation(update);
-  }, [processor]);
+  const [isSimple] = useState(true);
 
   return (
     <>
@@ -75,14 +70,13 @@ export default function Timeline({
           </React.Fragment>
         ))}
       </g>
-      {false && (
+      {isSimple ? (
         <g id="players">
           {processor.getSimplePlayers().map((p, i) => (
             <PlayerComponent player={p} key={i} />
           ))}
         </g>
-      )}
-      {true && (
+      ) : (
         <>
           <g id="segments">
             {processor.getSimNodeRects().map(([r, t], i) => (

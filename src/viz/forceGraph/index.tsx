@@ -3,16 +3,17 @@ import { scaleLinear } from "d3-scale";
 import { clamp, concat, forEach, get, map, reduce } from "lodash";
 import React, { useMemo, useState } from "react";
 import { useUpdate } from "react-use";
-import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
-import { differentTeamForce, sameTeamForce } from "../util/forces";
-import { RlcsSeason, Tournament } from "../types";
-import { SimulationLink, TournamentPlayerNode } from "../types/graph";
+import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../../constants";
+import { RlcsSeason, Tournament } from "../../types";
 import {
+  TournamentPlayerNode,
+  SimulationLink,
   getNodeId,
+  getPlayerName,
   tournamentMap,
   tournamentsToPlayerNodes,
-  getPlayerName,
-} from "../util/tournaments";
+} from "../../util/tournaments";
+import { sameTeamForce, differentTeamForce } from "./forces";
 
 function processPlayerLinks(tournaments: Tournament[]) {
   // Basically we want a full list of links with source and target both being an index 3-tuple

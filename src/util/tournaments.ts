@@ -1,7 +1,25 @@
 import { reduce, concat, map } from "lodash";
 import { CIRCLE_RADIUS } from "../constants";
 import { RlcsSeason, Tournament } from "../types";
-import { TournamentPlayerNode } from "../types/graph";
+
+export interface TeamNodePart {
+  tournamentIndex: number;
+}
+
+export interface TournamentPlayerNode extends d3.SimulationNodeDatum {
+  playerIndex: number;
+  teamIndex: number;
+  tournamentIndex: number;
+  id: string; // combination of indices
+}
+
+export interface TournamentLink {
+  source: TournamentPlayerNode;
+  target: TournamentPlayerNode;
+}
+
+// TODO rename
+export type SimulationLink = d3.SimulationLinkDatum<TournamentPlayerNode>;
 
 // Data managing
 export const tournamentsToPlayerNodes = (tournaments: Tournament[]) => {

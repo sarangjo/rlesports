@@ -1,4 +1,4 @@
-import { Color } from "../types/ui";
+import { Color } from "../types/svg";
 
 // Colors
 export const COLOR_NO_TEAM: Color = "#bbbbbb";

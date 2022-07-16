@@ -4,8 +4,8 @@ import Tournaments from "./viz/Tournaments";
 import Timeline from "./viz/timeline";
 import Stats from "./stats";
 import Sankey from "./viz/Sankey";
-import Table from "./viz/table/Table";
-import ForceGraph from "./viz/ForceGraph";
+import Table from "./viz/table";
+import ForceGraph from "./viz/forceGraph";
 
 // import events from "./data/players.json";
 // import teams from "./data/teams.json";

@@ -14,7 +14,6 @@ import { useUpdate } from "react-use";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { Membership, Player } from "../types";
 import { pairwiseMap } from "../util/data";
-import { LINK_FORCE } from "../util/forces";
 
 // The translated Player node which stays fixed, with the team changing based on the date chosen
 interface PlayerNode extends SimulationNodeDatum {
@@ -104,7 +103,7 @@ export default function PlayerTeams({ players }: { players: Player[] }) {
     console.log("creating simulation");
     return forceSimulation(nodes)
       .force(
-        LINK_FORCE,
+        "link",
         forceLink<PlayerNode, Teammates>().id((d) => d.name),
       )
       .force("collide", forceCollide(50))
@@ -121,7 +120,7 @@ export default function PlayerTeams({ players }: { players: Player[] }) {
     const newLinks = process(nodes, playerEvents, date);
 
     simulation.nodes(nodes);
-    (simulation.force(LINK_FORCE) as ForceLink<PlayerNode, Teammates>).links(newLinks);
+    (simulation.force("link") as ForceLink<PlayerNode, Teammates>).links(newLinks);
     simulation.alpha(1).restart().tick();
   }, [date]);
 
