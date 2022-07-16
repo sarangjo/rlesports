@@ -1,6 +1,6 @@
 import { concat, filter, forEach, map, partition, reduce, sortBy } from "lodash";
-import { CIRCLE_RADIUS } from "./constants";
-import { TournamentPlayerNode } from "./types/graph";
+import { CIRCLE_RADIUS } from "../constants";
+import { TournamentPlayerNode } from "../types/graph";
 
 // Pushes players on the same team into each other
 export function sameTeamForce() {
@@ -104,3 +104,5 @@ export function differentTeamForce() {
 
   return force;
 }
+
+export const LINK_FORCE = "link";

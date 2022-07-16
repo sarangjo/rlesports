@@ -2,7 +2,8 @@ import { interpolateOrRd } from "d3";
 import { forEach, map, reduce, size, sum, values } from "lodash";
 import React, { useMemo } from "react";
 import { RlcsSeason, Tournament } from "../types";
-import { ordinalSuffixOf, tournamentAcronym, tournamentMap } from "../util";
+import { ordinalSuffixOf } from "../util/data";
+import { tournamentAcronym, tournamentMap } from "../util/tournaments";
 
 const process = (tournaments: Tournament[]) => {
   const seasonMap = {} as Record<string, number>;
@@ -44,7 +45,7 @@ const average = (seasonCounts: Record<string, number>) => {
   return sum(values(seasonCounts)) / size(seasonCounts);
 };
 
-export default function Text({ seasons }: { seasons: RlcsSeason[] }) {
+export default function Stats({ seasons }: { seasons: RlcsSeason[] }) {
   const tournaments = useMemo(() => tournamentMap(seasons, (t) => t), [seasons]);
 
   const processed = process(tournaments);

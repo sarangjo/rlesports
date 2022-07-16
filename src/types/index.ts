@@ -1,3 +1,28 @@
+import { SimpleDate } from "../util/datetime";
+
+// Types relating to the RL Esports overall data
+
+export enum EventType {
+  JOIN = "join",
+  LEAVE = "leave",
+}
+
+export enum MembershipType {
+  MEMBER,
+  NOT_MEMBER,
+}
+
+export interface Membership {
+  team: string;
+  join: SimpleDate;
+  leave?: SimpleDate;
+}
+
+export interface Player {
+  name: string;
+  memberships: Membership[];
+}
+
 export interface Team {
   name: string;
   // TODO: do we need this? we should piece together membership from player events
@@ -36,19 +61,22 @@ export enum Region {
   SOUTH_AMERICA,
 }
 
-export interface Membership {
-  team: string;
-  join: string;
-  leave?: string;
+export enum Viz {
+  SANKEY = "sankey",
+  TEAM_MAP = "team-map",
+  FORCE_GRAPH = "force-graph",
+  TOURNAMENTS = "simple",
+  TABLE = "table",
+  TEXT = "text",
+  TIMELINE = "timeline",
 }
 
-export interface Player {
-  name: string;
-  memberships: Membership[];
-  alternateIDs?: string[] | null;
-}
-
-export enum EventType {
-  JOIN = "join",
-  LEAVE = "leave",
-}
+export const VizTitle = {
+  [Viz.SANKEY]: "Sankey",
+  [Viz.TEAM_MAP]: "Team Map",
+  [Viz.FORCE_GRAPH]: "Force Graph",
+  [Viz.TOURNAMENTS]: "Simple",
+  [Viz.TABLE]: "Table",
+  [Viz.TEXT]: "Text",
+  [Viz.TIMELINE]: "Timeline",
+};

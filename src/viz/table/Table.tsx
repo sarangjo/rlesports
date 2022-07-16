@@ -11,10 +11,52 @@ import {
   min,
   reduce,
   size,
+  some,
 } from "lodash";
+import moment from "moment";
 import React from "react";
-import { Player, Region, RlcsSeason } from "../types";
-import { findPlayer, getColorByBackground, getTeamColor, ScaleTimeDisjoint } from "../util";
+import { Player, Region, RlcsSeason } from "../../types";
+import { getColorByBackground, getTeamColor } from "../../util/colors";
+
+// TODO add an option so we evenly space out each section instead of scaling by the length of each
+// disjoint time block
+class ScaleTimeDisjoint {
+  public dateDiffs: number[];
+  public totalDiff: number = 0;
+  public domain: Array<[string, string]>;
+  public range: [number, number];
+
+  // domain needs to be increasing order, each element needs to be 0 < 1
+  constructor(domain: Array<[string, string]>, range: [number, number]) {
+    // Calculate the date ranges involved in each
+    this.dateDiffs = map(domain, (r) => {
+      // Add 1 because we're calculating the length of the tournament in days.
+      const diff = moment(r[1]).diff(moment(r[0]), "days"); // + 1;
+      this.totalDiff += diff;
+      return diff;
+    });
+    this.domain = domain;
+    this.range = range;
+  }
+
+  public convert(input: string) {
+    let output = this.range[0];
+
+    // Find the date range index that we live in
+    some(this.domain, (r, i) => {
+      const totalX = (this.dateDiffs[i] / this.totalDiff) * (this.range[1] - this.range[0]);
+      if (r[0] <= input && input <= r[1]) {
+        // Add our local diff
+        const localDiff = moment(input).diff(moment(r[0]), "days");
+        output += (localDiff / this.dateDiffs[i]) * totalX;
+        return true;
+      }
+      output += totalX;
+    });
+
+    return output;
+  }
+}
 
 const SEASON_WIDTH = 600;
 const X_OFFSET = 150;
@@ -25,6 +67,26 @@ const TEXT_OFFSET_X = 4;
 const TEXT_OFFSET_Y = 6;
 
 const BIG_HEIGHT = 3000;
+
+interface ExtendedPlayer extends Player {
+  alternateIDs?: string[];
+}
+
+// Get player by name or by alternate ID
+const findPlayer = (players: ExtendedPlayer[], tname: string) => {
+  let player = find(players, (p) => p.name.toLowerCase() === tname.toLowerCase());
+  if (!player) {
+    player = find(
+      players,
+      (p) => !!find(p.alternateIDs, (i) => i.toLowerCase() === tname.toLowerCase()),
+    );
+    if (!player) {
+      console.log("Uh, didn't find a player... weird.", tname);
+      return null;
+    }
+  }
+  return player;
+};
 
 // Handle Season X gracefully
 const getSeasonX = (s: string) => SEASON_WIDTH * (isNaN(parseInt(s, 10)) ? 9 : parseInt(s, 10) - 1);

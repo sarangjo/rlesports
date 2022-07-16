@@ -4,10 +4,15 @@ import { clamp, concat, forEach, get, map, reduce } from "lodash";
 import React, { useMemo, useState } from "react";
 import { useUpdate } from "react-use";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
-import { differentTeamForce, sameTeamForce } from "../forces";
+import { differentTeamForce, sameTeamForce } from "../util/forces";
 import { RlcsSeason, Tournament } from "../types";
 import { SimulationLink, TournamentPlayerNode } from "../types/graph";
-import { getNodeId, getPlayerName, tournamentMap, tournamentsToPlayerNodes } from "../util";
+import {
+  getNodeId,
+  tournamentMap,
+  tournamentsToPlayerNodes,
+  getPlayerName,
+} from "../util/tournaments";
 
 function processPlayerLinks(tournaments: Tournament[]) {
   // Basically we want a full list of links with source and target both being an index 3-tuple
