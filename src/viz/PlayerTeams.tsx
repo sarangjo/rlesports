@@ -8,12 +8,12 @@ import {
   forceY,
   SimulationNodeDatum,
 } from "d3-force";
-import { combination } from "js-combinatorics";
 import { findLast, forEach, get, map } from "lodash";
 import React, { useEffect, useMemo, useState } from "react";
 import { useUpdate } from "react-use";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
 import { Membership, Player } from "../types";
+import { pairwiseMap } from "../util/data";
 import { LINK_FORCE } from "../util/forces";
 
 // The translated Player node which stays fixed, with the team changing based on the date chosen
@@ -73,10 +73,11 @@ const process = (nodes: PlayerNode[], playerEvents: Record<string, Membership[]>
   const links: Teammates[] = [];
   forEach(teamMap, (playerNames) => {
     if (playerNames.length >= 2) {
-      const newLinks = combination(playerNames, 2).map((playerCombo) => ({
+      const newLinks = pairwiseMap(playerNames, (playerCombo) => ({
         source: playerCombo[0],
         target: playerCombo[1],
       }));
+
       links.push(...newLinks);
     }
   });

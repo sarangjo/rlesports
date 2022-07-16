@@ -93,8 +93,8 @@ export default function Timeline({
             ))}
           </g>
           <g id="segmentlinks">
-            {processor.getSimLinks().map((c) => (
-              <ConnectorComponent {...c} />
+            {processor.getSimLinks().map((c, i) => (
+              <ConnectorComponent key={i} {...c} />
             ))}
           </g>
         </>

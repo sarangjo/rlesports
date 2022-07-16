@@ -33,3 +33,11 @@ export function ordinalSuffixOf(i: number): string {
   }
   return i + "th";
 }
+
+export function pairwiseMap<T, U>(l: T[], func: (pair: [T, T]) => U): U[] {
+  const ret: U[] = [];
+  for (let i = 0; i < l.length - 1; i++) {
+    ret.push(func([l[i], l[i + 1]]));
+  }
+  return ret;
+}
