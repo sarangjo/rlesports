@@ -1,8 +1,8 @@
 import { PLAYERS } from "../data/sample/players";
-import { TeamSegmentListDirect } from "../timeline/teamSegments/list/direct";
-import { TeamSegmentListEvents } from "../timeline/teamSegments/list/events";
-import { isTeamSegmentListEqual, TSL } from "../timeline/teamSegments/list";
-import { constructTeamMap } from "../timeline/teamSegments/map";
+import { TeamSegmentListDirect } from "../viz/timeline/teamSegments/list/direct";
+import { TeamSegmentListEvents } from "../viz/timeline/teamSegments/list/events";
+import { isTeamSegmentListEqual, TSL } from "../viz/timeline/teamSegments/list";
+import { constructTeamMap } from "../viz/timeline/teamSegments/map";
 
 [TeamSegmentListDirect, TeamSegmentListEvents].forEach((TeamSegmentList, i) => {
   describe(i === 0 ? "Direct" : "Events", () => {
@@ -15,7 +15,7 @@ import { constructTeamMap } from "../timeline/teamSegments/map";
         expect(
           isTeamSegmentListEqual(l.toArray(), [
             { team: "t", players: ["P1"], start: "2022-01-01", end: "2022-01-02" },
-          ])
+          ]),
         );
       });
     });
@@ -31,7 +31,7 @@ import { constructTeamMap } from "../timeline/teamSegments/map";
           isTeamSegmentListEqual(l.toArray(), [
             { team: "t", players: ["P2"], start: "2021-01-01", end: "2021-01-02" },
             { team: "t", players: ["P1"], start: "2022-01-01", end: "2022-01-02" },
-          ])
+          ]),
         );
       });
 
@@ -46,7 +46,7 @@ import { constructTeamMap } from "../timeline/teamSegments/map";
             { team: "t", players: ["P2"], start: "2021-01-01", end: "2022-01-01" },
             { team: "t", players: ["P1", "P2"], start: "2022-01-01", end: "2021-01-22" },
             { team: "t", players: ["P1"], start: "2022-01-22", end: "2022-02-01" },
-          ])
+          ]),
         );
       });
 
@@ -61,7 +61,7 @@ import { constructTeamMap } from "../timeline/teamSegments/map";
             { team: "t", players: ["P2"], start: "2021-01-01", end: "2022-01-01" },
             { team: "t", players: ["P1", "P2"], start: "2022-01-01", end: "2021-02-01" },
             { team: "t", players: ["P2"], start: "2022-02-01", end: "2023-01-01" },
-          ])
+          ]),
         );
       });
 
@@ -76,7 +76,7 @@ import { constructTeamMap } from "../timeline/teamSegments/map";
             { team: "t", players: ["P1"], start: "2022-01-01", end: "2022-01-20" },
             { team: "t", players: ["P1", "P2"], start: "2022-01-20", end: "2022-02-01" },
             { team: "t", players: ["P2"], start: "2022-02-01", end: "2023-01-01" },
-          ])
+          ]),
         );
       });
 
@@ -90,7 +90,7 @@ import { constructTeamMap } from "../timeline/teamSegments/map";
           isTeamSegmentListEqual(l.toArray(), [
             { team: "t", players: ["P1"], start: "2022-01-01", end: "2022-02-01" },
             { team: "t", players: ["P2"], start: "2022-03-20", end: "2023-01-01" },
-          ])
+          ]),
         );
       });
 
@@ -105,7 +105,7 @@ import { constructTeamMap } from "../timeline/teamSegments/map";
             { team: "t", players: ["P1"], start: "2022-01-01", end: "2022-01-02" },
             { team: "t", players: ["P1", "P2"], start: "2022-01-02", end: "2022-01-03" },
             { team: "t", players: ["P2"], start: "2022-01-03" },
-          ])
+          ]),
         );
       });
     });

@@ -1,5 +1,5 @@
 import SortedSet from "collections/sorted-set";
-import { Player } from "../../types";
+import { Player } from "../../../types";
 import { TeamSegment, TeamSegmentLink, TeamSegmentNode } from "../types";
 import { TeamSegmentListEvents } from "./list/events";
 import { TSL } from "./list";
@@ -8,7 +8,7 @@ export type TeamSegmentMap = Record<string, TSL>;
 
 export function constructTeamMap(
   players: Player[],
-  TeamSegmentList = TeamSegmentListEvents
+  TeamSegmentList = TeamSegmentListEvents,
 ): TeamSegmentMap {
   // Start putting together a view of all team "versions", based on the players, which will loosely translate to "areas"
   const teamMap: TeamSegmentMap = {};
@@ -26,7 +26,7 @@ export function constructTeamMap(
 }
 
 export function getSimRawNodesLinks(
-  teamMap: TeamSegmentMap
+  teamMap: TeamSegmentMap,
 ): [TeamSegmentNode[], TeamSegmentLink[]] {
   const nodes: TeamSegmentNode[] = [];
   const links: TeamSegmentLink[] = [];
@@ -44,7 +44,7 @@ export function getSimRawNodesLinks(
           playerSegmentMap[p] = new SortedSet<TeamSegment>(
             [],
             TeamSegment.isStartEqual,
-            TeamSegment.compare
+            TeamSegment.compare,
           );
         }
         playerSegmentMap[p].push(seg);

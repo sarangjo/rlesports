@@ -1,6 +1,6 @@
-import { EventType } from "../types";
-import { Color, UICircle, UIConnector, UIText } from "../types/ui";
-import { SimpleDate } from "../util/datetime";
+import { EventType } from "../../types";
+import { Color, UICircle, UIConnector, UIText } from "../../types/ui";
+import { SimpleDate } from "../../util/datetime";
 
 /* UI */
 
@@ -38,7 +38,7 @@ export class TeamSegment {
     public team: string,
     public players: string[],
     public start: string,
-    public end?: string
+    public end?: string,
   ) {}
 
   public static isStartEqual(a: TeamSegment, b: TeamSegment) {

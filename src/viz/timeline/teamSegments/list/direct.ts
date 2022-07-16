@@ -1,7 +1,7 @@
 import SortedSet from "collections/sorted-set";
-import { SimpleDate, dateSub } from "../../../util/datetime";
-import { TeamSegment } from "../../types";
 import { TSL } from ".";
+import { dateSub, SimpleDate } from "../../../../util/datetime";
+import { TeamSegment } from "../../types";
 
 export class TeamSegmentListDirect extends TSL {
   private list: SortedSet.SortedSet<TeamSegment>;

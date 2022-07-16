@@ -1,4 +1,4 @@
-import { SimpleDate } from "../../../util/datetime";
+import { SimpleDate } from "../../../../util/datetime";
 import { TeamSegment } from "../../types";
 
 export abstract class TSL {

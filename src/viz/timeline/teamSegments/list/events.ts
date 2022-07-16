@@ -1,7 +1,7 @@
 import SortedSet from "collections/sorted-set";
-import { SimpleDate } from "../../../util/datetime";
-import { TeamSegment } from "../../types";
 import { TSL } from ".";
+import { SimpleDate } from "../../../../util/datetime";
+import { TeamSegment } from "../../types";
 
 enum Change {
   JOIN,
@@ -27,7 +27,7 @@ export class TeamSegmentListEvents extends TSL {
     this.list = new SortedSet<TeamEvent>(
       [],
       (a, b) => a.date === b.date,
-      (a, b) => (a.date < b.date ? -1 : a.date === b.date ? 0 : 1)
+      (a, b) => (a.date < b.date ? -1 : a.date === b.date ? 0 : 1),
     );
   }
 

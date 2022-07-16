@@ -6,9 +6,9 @@ import {
   LineComponent,
   RectComponent,
   TextComponent,
-} from "../components";
-import { Player } from "../types";
-import { UIRectangle } from "../types/ui";
+} from "../../components";
+import { Player } from "../../types";
+import { UIRectangle } from "../../types/ui";
 import { DataProcessor } from "./data";
 import { UIPlayer } from "./types";
 

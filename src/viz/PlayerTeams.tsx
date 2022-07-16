@@ -12,54 +12,44 @@ import { findLast, forEach, get, map } from "lodash";
 import React, { useEffect, useMemo, useState } from "react";
 import { useUpdate } from "react-use";
 import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
+import { Membership, Player } from "../types";
 import { LINK_FORCE } from "../util";
 
-// Events as read in from the JSON
-interface PlayerEvent {
-  start: string;
-  team: string;
-  end?: string;
-  role?: string;
-}
-
-// Each player has a full list of their events
-export interface FullPlayer {
-  name: string;
-  events: PlayerEvent[];
-}
-
 // The translated Player node which stays fixed, with the team changing based on the date chosen
-interface Player extends SimulationNodeDatum {
+interface PlayerNode extends SimulationNodeDatum {
   name: string;
   team?: string;
 }
 
 // We use links to ensure proximity of teammates
-type Teammates = d3.SimulationLinkDatum<Player>;
+type Teammates = d3.SimulationLinkDatum<PlayerNode>;
 
 // For the current value of `date`, go through and assign teams to the players
-const init = (players: FullPlayer[], date: string) => {
+const init = (players: Player[], date: string) => {
   // First set up player nodes and events
-  const nodes: Player[] = [];
-  const playerEvents: Record<string, PlayerEvent[]> = {};
+  const nodes: PlayerNode[] = [];
+  const playerEvents: Record<string, Membership[]> = {};
   forEach(players, (fullPlayer) => {
     nodes.push({ name: fullPlayer.name });
-    playerEvents[fullPlayer.name] = fullPlayer.events;
+    playerEvents[fullPlayer.name] = fullPlayer.memberships;
   });
 
   return { nodes, links: process(nodes, playerEvents, date), playerEvents };
 };
 
 // Update nodes, compute links
-const process = (nodes: Player[], playerEvents: Record<string, PlayerEvent[]>, date: string) => {
-  const teamMap: Record<string, Player[]> = {};
+const process = (nodes: PlayerNode[], playerEvents: Record<string, Membership[]>, date: string) => {
+  const teamMap: Record<string, PlayerNode[]> = {};
   const lft = [];
 
   // Update team
   nodes.forEach((player) => {
     // TODO: only chooses the earlier on date changes
     player.team = get(
-      findLast(playerEvents[player.name], (ev) => date >= ev.start && (!ev.end || date <= ev.end)),
+      findLast(
+        playerEvents[player.name],
+        (ev) => date >= ev.join && (!ev.leave || date <= ev.leave),
+      ),
       "team",
     );
     if (player.team) {
@@ -88,7 +78,7 @@ const process = (nodes: Player[], playerEvents: Record<string, PlayerEvent[]>, d
 
 const INITIAL_DATE = "2021-01-01";
 
-export default function PlayerTeams({ players }: { players: FullPlayer[] }) {
+export default function PlayerTeams({ players }: { players: Player[] }) {
   const update = useUpdate();
 
   const [date, setDate] = useState(INITIAL_DATE);
@@ -106,7 +96,7 @@ export default function PlayerTeams({ players }: { players: FullPlayer[] }) {
     return forceSimulation(nodes)
       .force(
         LINK_FORCE,
-        forceLink<Player, Teammates>().id((d) => d.name),
+        forceLink<PlayerNode, Teammates>().id((d) => d.name),
       )
       .force("collide", forceCollide(50))
       .force("x", forceX(WIDTH / 2))
@@ -122,7 +112,7 @@ export default function PlayerTeams({ players }: { players: FullPlayer[] }) {
     const newLinks = process(nodes, playerEvents, date);
 
     simulation.nodes(nodes);
-    (simulation.force(LINK_FORCE) as ForceLink<Player, Teammates>).links(newLinks);
+    (simulation.force(LINK_FORCE) as ForceLink<PlayerNode, Teammates>).links(newLinks);
     simulation.alpha(1).restart().tick();
   }, [date]);
 

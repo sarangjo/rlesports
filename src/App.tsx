@@ -14,6 +14,7 @@ import ForceGraph from "./viz/ForceGraph";
 import { SEASONS } from "./data/sample/seasons";
 import { PLAYERS } from "./data/sample/players";
 import { TEAM_COLORS } from "./data/sample/team-colors";
+import PlayerTeams from "./viz/PlayerTeams";
 
 const WIDTH = 1200;
 const HEIGHT = 800;
@@ -67,7 +68,7 @@ function App() {
           ) : view === Viz.SANKEY ? (
             <Sankey seasons={SEASONS} />
           ) : (
-            ""
+            view === Viz.TEAM_MAP && <PlayerTeams players={PLAYERS} />
           ) /*
 
         ) : view === Viz.TEAM_MAP ? (

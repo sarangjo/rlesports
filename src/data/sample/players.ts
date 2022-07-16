@@ -4,7 +4,7 @@ export const PLAYERS = [
   {
     memberships: [
       {
-        join: "2021-01-01",
+        join: "2022-01-01",
         team: "Team 1",
       },
     ],
@@ -13,7 +13,7 @@ export const PLAYERS = [
   {
     memberships: [
       {
-        join: "2021-01-01",
+        join: "2022-01-01",
         team: "Team 1",
       },
     ],
@@ -22,12 +22,12 @@ export const PLAYERS = [
   {
     memberships: [
       {
-        join: "2021-01-01",
-        leave: "2021-02-15",
+        join: "2022-01-01",
+        leave: "2022-02-15",
         team: "Team 1",
       },
       {
-        join: "2021-02-16",
+        join: "2022-02-16",
         team: "Team 2",
       },
     ],
@@ -36,12 +36,12 @@ export const PLAYERS = [
   {
     memberships: [
       {
-        join: "2021-01-01",
-        leave: "2021-02-17",
+        join: "2022-01-01",
+        leave: "2022-02-17",
         team: "Team 2",
       },
       {
-        join: "2021-02-20",
+        join: "2022-02-20",
         team: "Team 1",
       },
     ],
@@ -50,7 +50,7 @@ export const PLAYERS = [
   {
     memberships: [
       {
-        join: "2021-01-05",
+        join: "2022-01-05",
         team: "Team 2",
       },
     ],
@@ -59,7 +59,7 @@ export const PLAYERS = [
   {
     memberships: [
       {
-        join: "2021-01-06",
+        join: "2022-01-06",
         team: "Team 2",
       },
     ],

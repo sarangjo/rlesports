@@ -1,7 +1,7 @@
-import reduce from "lodash.reduce";
+import { reduce } from "lodash";
 import { scaleTime, ScaleTime } from "d3";
 import { addDays, differenceInCalendarDays } from "date-fns";
-import { EventType, Player } from "../types";
+import { EventType, Player } from "../../types";
 import {
   ConnectorType,
   TextAnchor,
@@ -11,9 +11,9 @@ import {
   UIPoint,
   UIRectangle,
   UIText,
-} from "../types/ui";
-import { getIndices } from "../util/data";
-import { d2s, s2d } from "../util/datetime";
+} from "../../types/ui";
+import { getIndices } from "../../util/data";
+import { d2s, s2d } from "../../util/datetime";
 import {
   BUFFER,
   COLOR_NO_TEAM,
@@ -29,7 +29,7 @@ import {
   UIPlayer,
 } from "./types";
 import * as d3 from "d3";
-import clamp from "lodash.clamp";
+import { clamp } from "lodash";
 import { constructTeamMap, getSimRawNodesLinks } from "./teamSegments/map";
 
 export class DataProcessor {
@@ -43,7 +43,7 @@ export class DataProcessor {
   constructor(
     private players: Player[],
     private teamColors: Record<string, string>,
-    private bounds: UIRectangle
+    private bounds: UIRectangle,
   ) {
     // Set up our X/Y scales
     const { x, start, end } = this.setupX();
@@ -77,8 +77,8 @@ export class DataProcessor {
     if (!start || !end) {
       throw new Error(
         `Somethin's wrong! start ${JSON.stringify(start)} or end ${JSON.stringify(
-          end
-        )} are undefined`
+          end,
+        )} are undefined`,
       );
     }
 
@@ -119,7 +119,7 @@ export class DataProcessor {
       {
         length: differenceInCalendarDays(s2d(this.end), s2d(this.start)) / 50 + 2,
       },
-      (_, i) => f(addDays(s2d(this.start), i * 50))
+      (_, i) => f(addDays(s2d(this.start), i * 50)),
     ).concat([f(s2d(this.end))]);
   }
 
@@ -213,7 +213,7 @@ export class DataProcessor {
       (seg.y !== undefined ? seg.y : yOverride !== undefined ? yOverride : this.bounds.y) +
         height / 2,
       this.bounds.y + height / 2,
-      this.bounds.y + this.bounds.height - height / 2
+      this.bounds.y + this.bounds.height - height / 2,
     );
 
     return [
@@ -250,7 +250,7 @@ export class DataProcessor {
 
         return acc;
       },
-      [] as [UIRectangle, UIText][]
+      [] as [UIRectangle, UIText][],
     );
   }
 
@@ -261,13 +261,13 @@ export class DataProcessor {
         .forceSimulation<TeamSegmentNode>()
         .force(
           "link",
-          d3.forceLink<TeamSegmentNode, TeamSegmentLink>() /*.distance(400)*/ // TODO WAT IS THIS????? N + 2
+          d3.forceLink<TeamSegmentNode, TeamSegmentLink>() /*.distance(400)*/, // TODO WAT IS THIS????? N + 2
         )
         .force("charge", d3.forceManyBody().strength(-545))
         // .force("y", d3.forceY(this.bounds.y + this.bounds.height / 2).strength(0.7))
         .force(
           "collide",
-          d3.forceCollide<TeamSegmentNode>((seg) => seg.players.length * PLAYER_HEIGHT)
+          d3.forceCollide<TeamSegmentNode>((seg) => seg.players.length * PLAYER_HEIGHT),
         )
     );
     // .force("sameTeam", sameTeamForce().strength(0.8))
