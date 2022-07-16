@@ -1,3 +1,5 @@
+import { differenceInDays } from "date-fns";
+import { s2d } from "../../util/datetime";
 import {
   assign,
   find,
@@ -13,7 +15,6 @@ import {
   size,
   some,
 } from "lodash";
-import moment from "moment";
 import React from "react";
 import { Player, Region, RlcsSeason } from "../../types";
 import { getColorByBackground, getTeamColor } from "../../util/colors";
@@ -31,7 +32,7 @@ class ScaleTimeDisjoint {
     // Calculate the date ranges involved in each
     this.dateDiffs = map(domain, (r) => {
       // Add 1 because we're calculating the length of the tournament in days.
-      const diff = moment(r[1]).diff(moment(r[0]), "days"); // + 1;
+      const diff = differenceInDays(s2d(r[1]), s2d(r[0])); // + 1
       this.totalDiff += diff;
       return diff;
     });
@@ -47,7 +48,7 @@ class ScaleTimeDisjoint {
       const totalX = (this.dateDiffs[i] / this.totalDiff) * (this.range[1] - this.range[0]);
       if (r[0] <= input && input <= r[1]) {
         // Add our local diff
-        const localDiff = moment(input).diff(moment(r[0]), "days");
+        const localDiff = differenceInDays(s2d(input), s2d(r[0]));
         output += (localDiff / this.dateDiffs[i]) * totalX;
         return true;
       }
