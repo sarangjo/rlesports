@@ -13,8 +13,8 @@ import {
   size,
 } from "lodash";
 import React from "react";
-import { Player, Region, RlcsSeason } from "../types";
-import { findPlayer, getColorByBackground, getTeamColor, ScaleTimeDisjoint } from "../util";
+import { Player, Region, RlcsSeason } from "../../types";
+import { getColorByBackground, getTeamColor, ScaleTimeDisjoint } from "../../util";
 
 const SEASON_WIDTH = 600;
 const X_OFFSET = 150;
@@ -25,6 +25,26 @@ const TEXT_OFFSET_X = 4;
 const TEXT_OFFSET_Y = 6;
 
 const BIG_HEIGHT = 3000;
+
+interface ExtendedPlayer extends Player {
+  alternateIDs?: string[];
+}
+
+// Get player by name or by alternate ID
+const findPlayer = (players: ExtendedPlayer[], tname: string) => {
+  let player = find(players, (p) => p.name.toLowerCase() === tname.toLowerCase());
+  if (!player) {
+    player = find(
+      players,
+      (p) => !!find(p.alternateIDs, (i) => i.toLowerCase() === tname.toLowerCase()),
+    );
+    if (!player) {
+      console.log("Uh, didn't find a player... weird.", tname);
+      return null;
+    }
+  }
+  return player;
+};
 
 // Handle Season X gracefully
 const getSeasonX = (s: string) => SEASON_WIDTH * (isNaN(parseInt(s, 10)) ? 9 : parseInt(s, 10) - 1);

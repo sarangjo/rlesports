@@ -44,7 +44,7 @@ const average = (seasonCounts: Record<string, number>) => {
   return sum(values(seasonCounts)) / size(seasonCounts);
 };
 
-export default function Text({ seasons }: { seasons: RlcsSeason[] }) {
+export default function Stats({ seasons }: { seasons: RlcsSeason[] }) {
   const tournaments = useMemo(() => tournamentMap(seasons, (t) => t), [seasons]);
 
   const processed = process(tournaments);

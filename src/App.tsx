@@ -2,10 +2,10 @@ import { map } from "lodash";
 import React, { useState } from "react";
 import { Viz, VizTitle } from "./util";
 import Tournaments from "./viz/Tournaments";
-import Timeline from "./viz/Timeline";
-import Text from "./viz/Text";
+import Timeline from "./viz/timeline";
+import Stats from "./stats";
 import Sankey from "./viz/Sankey";
-import Table from "./viz/Table";
+import Table from "./viz/table/Table";
 import ForceGraph from "./viz/ForceGraph";
 
 // import events from "./data/players.json";
@@ -14,6 +14,9 @@ import ForceGraph from "./viz/ForceGraph";
 import { SEASONS } from "./data/sample/seasons";
 import { PLAYERS } from "./data/sample/players";
 import { TEAM_COLORS } from "./data/sample/team-colors";
+
+const WIDTH = 1200;
+const HEIGHT = 800;
 
 function App() {
   const [view, setView] = useState(Viz.TIMELINE);
@@ -52,13 +55,15 @@ function App() {
           view === Viz.TOURNAMENTS ? (
             <Tournaments seasons={SEASONS} />
           ) : view === Viz.TIMELINE ? (
-            <Timeline seasons={SEASONS} players={PLAYERS} teamColors={TEAM_COLORS} />
+            <svg width={WIDTH} height={HEIGHT}>
+              <Timeline players={PLAYERS} teamColors={TEAM_COLORS} height={HEIGHT} width={WIDTH} />
+            </svg>
           ) : view === Viz.TABLE ? (
             <Table seasons={SEASONS} players={PLAYERS} teamColors={TEAM_COLORS} />
           ) : view === Viz.FORCE_GRAPH ? (
             <ForceGraph seasons={SEASONS} />
           ) : view === Viz.TEXT ? (
-            <Text seasons={SEASONS} />
+            <Stats seasons={SEASONS} />
           ) : view === Viz.SANKEY ? (
             <Sankey seasons={SEASONS} />
           ) : (

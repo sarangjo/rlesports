@@ -133,20 +133,6 @@ export const VizTitle = {
   [Viz.TIMELINE]: "Timeline",
 };
 
-// Map numerical enum
-export const mapEnum = (x: any, iter: (val: number, key: string) => any) => {
-  return map(
-    pickBy(x, (val) => {
-      return typeof val === "number";
-    }),
-    iter,
-  );
-};
-
-export const DATE_FORMAT = "YYYY-MM-DD";
-
-export const toDate = (d: string): Date => moment(d, DATE_FORMAT).toDate();
-
 const COLOR_UNKNOWN_TEAM = "#232323";
 
 export const getTeamColor = (team: string, teams: Record<string, string>) =>
@@ -191,22 +177,6 @@ export class ScaleTimeDisjoint {
     return output;
   }
 }
-
-// Get player by name or by alternate ID
-export const findPlayer = (players: Player[], tname: string) => {
-  let player = find(players, (p) => p.name.toLowerCase() === tname.toLowerCase());
-  if (!player) {
-    player = find(
-      players,
-      (p) => !!find(p.alternateIDs, (i) => i.toLowerCase() === tname.toLowerCase()),
-    );
-    if (!player) {
-      console.log("Uh, didn't find a player... weird.", tname);
-      return null;
-    }
-  }
-  return player;
-};
 
 export function tournamentMap<T>(seasons: RlcsSeason[], func: (tournament: Tournament) => T) {
   return reduce(
