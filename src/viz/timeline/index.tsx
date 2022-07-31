@@ -57,7 +57,7 @@ export default function Timeline({
   const dates = useMemo(() => processor.getDates(), [processor]);
   useMemo(() => processor.setupSimulation(update), [processor]);
 
-  const [isSimple] = useState(true);
+  const [isSimple] = useState(false);
 
   return (
     <>
