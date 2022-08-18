@@ -55,9 +55,13 @@ export default function Timeline({
   );
 
   const dates = useMemo(() => processor.getDates(), [processor]);
-  useMemo(() => processor.setupSimulation(update), [processor]);
 
   const [isSimple] = useState(false);
+  const [isForce] = useState(true);
+
+  if (isForce) {
+    useMemo(() => processor.setupSimulation(update), [processor]);
+  }
 
   return (
     <>
@@ -76,7 +80,7 @@ export default function Timeline({
             <PlayerComponent player={p} key={i} />
           ))}
         </g>
-      ) : (
+      ) : isForce ? (
         <>
           <g id="segments">
             {processor.getSimNodeRects().map(([r, t], i) => (
@@ -92,6 +96,15 @@ export default function Timeline({
             ))}
           </g>
         </>
+      ) : (
+        <g id="segments">
+          {processor.getTSRectangles().map(([r, t], i) => (
+            <React.Fragment key={i}>
+              <RectComponent {...r} />
+              <TextComponent {...t} />
+            </React.Fragment>
+          ))}
+        </g>
       )}
     </>
   );

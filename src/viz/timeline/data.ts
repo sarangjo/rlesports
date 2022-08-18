@@ -30,6 +30,7 @@ import * as d3 from "d3";
 import { clamp } from "lodash";
 import { constructTeamMap, getSimRawNodesLinks } from "./teamSegments/map";
 import { COLOR_NO_TEAM, getTeamColor } from "../../util/colors";
+import { samePlayersForce } from "./forces";
 
 export class DataProcessor {
   private start: string;
@@ -241,7 +242,7 @@ export class DataProcessor {
 
     return reduce(
       teamMap,
-      (acc, segments, team) => {
+      (acc, segments) => {
         // Create a rectangle per seg
         segments.toArray().forEach((seg) => {
           acc.push(this.node2Rectangle(seg, Math.random() * this.bounds.height + this.bounds.y));
@@ -258,19 +259,20 @@ export class DataProcessor {
     return (
       d3
         .forceSimulation<TeamSegmentNode>()
-        .force(
-          "link",
-          d3.forceLink<TeamSegmentNode, TeamSegmentLink>() /*.distance(400)*/, // TODO WAT IS THIS????? N + 2
-        )
+        // .force(
+        //   "link",
+        //   d3.forceLink<TeamSegmentNode, TeamSegmentLink>() /*.distance(400)*/, // TODO WAT IS THIS????? N + 2
+        // )
         .force("charge", d3.forceManyBody().strength(-545))
         // .force("y", d3.forceY(this.bounds.y + this.bounds.height / 2).strength(0.7))
         .force(
           "collide",
           d3.forceCollide<TeamSegmentNode>((seg) => seg.players.length * PLAYER_HEIGHT),
         )
+        .force("samePlayers", samePlayersForce().strength(0.5))
+      // .force("sameTeam", sameTeamForce().strength(0.8))
+      // .force("diffTeam", differentTeamForce().strength(15));
     );
-    // .force("sameTeam", sameTeamForce().strength(0.8))
-    // .force("diffTeam", differentTeamForce().strength(15));
   }
 
   public setupSimulation(onUpdate: () => void) {
@@ -279,7 +281,7 @@ export class DataProcessor {
 
     // Assign nodes/links to the sim
     this.sim.nodes(nodes);
-    (this.sim.force("link") as d3.ForceLink<TeamSegmentNode, TeamSegmentLink>).links(links);
+    // (this.sim.force("link") as d3.ForceLink<TeamSegmentNode, TeamSegmentLink>).links(links);
 
     this.sim.on("tick", onUpdate);
   }
@@ -291,7 +293,7 @@ export class DataProcessor {
   }
 
   public getSimLinks(): UIConnector[] {
-    return (this.sim.force("link") as d3.ForceLink<TeamSegmentNode, TeamSegmentLink>)
+    return []; /*return (this.sim.force("link") as d3.ForceLink<TeamSegmentNode, TeamSegmentLink>)
       .links()
       .map((link) => {
         const start = this.node2Rectangle(link.source as TeamSegmentNode)[0];
@@ -303,6 +305,6 @@ export class DataProcessor {
           end: { x: end.x + end.width / 2, y: end.y + end.height / 2 },
           stroke: "black",
         } as UILine;
-      });
+      });*/
   }
 }
