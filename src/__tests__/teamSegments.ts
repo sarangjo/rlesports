@@ -1,8 +1,8 @@
 import { PLAYERS } from "../data/sample/players";
-import { TeamSegmentListDirect } from "../viz/timeline/teamSegments/list/direct";
-import { TeamSegmentListEvents } from "../viz/timeline/teamSegments/list/events";
-import { isTeamSegmentListEqual, TSL } from "../viz/timeline/teamSegments/list";
-import { constructTeamMap } from "../viz/timeline/teamSegments/map";
+import { TeamSegmentListDirect } from "../viz/timeline/purePlayers/teamSegments/list/direct";
+import { TeamSegmentListEvents } from "../viz/timeline/purePlayers/teamSegments/list/events";
+import { isTeamSegmentListEqual, TSL } from "../viz/timeline/purePlayers/teamSegments/list";
+import { constructTeamMap } from "../viz/timeline/purePlayers/teamSegments/map";
 
 [TeamSegmentListDirect, TeamSegmentListEvents].forEach((TeamSegmentList, i) => {
   describe(i === 0 ? "Direct" : "Events", () => {

@@ -10,10 +10,10 @@ import {
   SimulationLink,
   getNodeId,
   getPlayerName,
-  tournamentMap,
   tournamentsToPlayerNodes,
-} from "../../util/tournaments";
+} from "./util";
 import { sameTeamForce, differentTeamForce } from "./forces";
+import { tournamentMap } from "../../util/tournaments";
 
 function processPlayerLinks(tournaments: Tournament[]) {
   // Basically we want a full list of links with source and target both being an index 3-tuple

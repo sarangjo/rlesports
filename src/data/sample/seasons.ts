@@ -19,7 +19,7 @@ export const SEASONS = [
                 region: Region.NORTH_AMERICA,
               },
               {
-                name: "Team 1",
+                name: "Team 2",
                 players: ["Player 4", "Player 5", "Player 6"],
                 region: Region.NORTH_AMERICA,
               },

@@ -75,7 +75,7 @@ export const VizTitle = {
   [Viz.SANKEY]: "Sankey",
   [Viz.TEAM_MAP]: "Team Map",
   [Viz.FORCE_GRAPH]: "Force Graph",
-  [Viz.TOURNAMENTS]: "Simple",
+  [Viz.TOURNAMENTS]: "Simple (Tournaments)",
   [Viz.TABLE]: "Table",
   [Viz.TEXT]: "Text",
   [Viz.TIMELINE]: "Timeline",

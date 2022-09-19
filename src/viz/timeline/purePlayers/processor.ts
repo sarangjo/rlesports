@@ -1,7 +1,7 @@
 import { reduce } from "lodash";
 import { scaleTime, ScaleTime } from "d3";
 import { addDays, differenceInCalendarDays } from "date-fns";
-import { EventType, Player } from "../../types";
+import { EventType, Player } from "../../../types";
 import {
   ConnectorType,
   TextAnchor,
@@ -11,9 +11,9 @@ import {
   UIPoint,
   UIRectangle,
   UIText,
-} from "../../types/svg";
-import { getIndices } from "../../util/data";
-import { d2s, s2d } from "../../util/datetime";
+} from "../../../types/svg";
+import { getIndices } from "../../../util/data";
+import { d2s, s2d } from "../../../util/datetime";
 import {
   BUFFER,
   FILL_LEAVE,
@@ -25,11 +25,11 @@ import {
   TeamSegmentSimulation,
   TEXT_HEIGHT,
   UIPlayer,
-} from "./types";
+} from "../types";
 import * as d3 from "d3";
 import { clamp } from "lodash";
 import { constructTeamMap, getSimRawNodesLinks } from "./teamSegments/map";
-import { COLOR_NO_TEAM, getTeamColor } from "../../util/colors";
+import { COLOR_NO_TEAM, getTeamColor } from "../../../util/colors";
 import { samePlayersForce } from "./forces";
 
 export class DataProcessor {

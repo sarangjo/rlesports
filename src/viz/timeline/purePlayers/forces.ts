@@ -1,4 +1,4 @@
-import { TeamSegmentNode } from "./types";
+import { TeamSegmentNode } from "../types";
 
 // This is a function that puts the team segments together that share players across them.
 export function samePlayersForce() {

@@ -1,18 +1,17 @@
 import { scaleLinear } from "d3-scale";
 import { concat, forEach, intersection, map, reduce, size, sortBy } from "lodash";
 import React from "react";
-import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../constants";
-import { RlcsSeason, Team, Tournament } from "../types";
+import { CIRCLE_RADIUS, HEIGHT, WIDTH } from "../../constants";
+import { RlcsSeason, Team, Tournament } from "../../types";
 import {
   getNodeId,
   getPlayerName,
-  tournamentAcronym,
   TournamentLink,
-  tournamentMap,
   TournamentPlayerNode,
   tournamentsToPlayerNodes,
   tournamentY,
-} from "../util/tournaments";
+} from "./util";
+import { tournamentAcronym, tournamentMap } from "../../util/tournaments";
 
 // Based on adjacent tournaments, shuffle teams so that teams with more shared players are
 // vertically close together. Without this, a simple timeline is chaos. This basically brings us to
@@ -129,6 +128,7 @@ const process = (t: Tournament[]): { nodes: TournamentPlayerNode[]; links: Tourn
 
 const randDiv = () => 0.5; // Math.random() * 0.6 + 0.2;
 
+// TODO this should be merged into forceGraph - it's the same concept, just doesn't have forces attached
 export default function SimpleGraph({ seasons }: { seasons: RlcsSeason[] }) {
   const tournaments = tournamentMap(seasons, (t) => t);
 

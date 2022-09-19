@@ -1,6 +1,6 @@
 import SortedSet from "collections/sorted-set";
-import { Player } from "../../../types";
-import { TeamSegment, TeamSegmentLink, TeamSegmentNode } from "../types";
+import { Player } from "../../../../types";
+import { TeamSegment, TeamSegmentLink, TeamSegmentNode } from "../../types";
 import { TeamSegmentListEvents } from "./list/events";
 import { TSL } from "./list";
 

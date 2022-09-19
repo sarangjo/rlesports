@@ -1,11 +1,12 @@
 import { map } from "lodash";
 import React, { useState } from "react";
-import Tournaments from "./viz/Tournaments";
-import Timeline from "./viz/timeline";
+import Tournaments from "./viz/tournaments/Simple";
+import Timeline from "./viz/timeline/purePlayers";
+import TourneyTimeline from "./viz/timeline/tournaments";
 import Stats from "./stats";
 import Sankey from "./viz/Sankey";
 import Table from "./viz/table";
-import ForceGraph from "./viz/forceGraph";
+import ForceGraph from "./viz/tournaments/ForceGraph";
 
 // import events from "./data/players.json";
 // import teams from "./data/teams.json";

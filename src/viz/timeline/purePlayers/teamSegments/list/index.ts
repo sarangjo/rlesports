@@ -1,5 +1,5 @@
-import { SimpleDate } from "../../../../util/datetime";
-import { TeamSegment } from "../../types";
+import { SimpleDate } from "../../../../../util/datetime";
+import { TeamSegment } from "../../../types";
 
 export abstract class TSL {
   constructor(protected team: string) {}

@@ -1,12 +1,13 @@
 import { EventType } from "../../types";
 import { Color, UICircle, UIConnector, UIText } from "../../types/svg";
-import { SimpleDate } from "../../util/datetime";
 
 /* UI */
 
 export const BUFFER = 10; // for margins, keeping things away from the harsh borders
 export const TEXT_HEIGHT = 10;
 export const PLAYER_HEIGHT = 20;
+
+export const MARGIN = { left: 75, top: 100, right: 10, bottom: 10 };
 
 export const FILL_LEAVE: Color = "transparent";
 

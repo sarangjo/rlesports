@@ -1,32 +1,16 @@
 import React, { useMemo, useState } from "react";
 import { useUpdate } from "react-use";
 import {
-  CircleComponent,
   ConnectorComponent,
   LineComponent,
   RectComponent,
   TextComponent,
-} from "../../components";
-import { Player } from "../../types";
-import { UIRectangle } from "../../types/svg";
-import { DataProcessor } from "./data";
-import { UIPlayer } from "./types";
-
-const MARGIN = { left: 75, top: 100, right: 10, bottom: 10 };
-
-function PlayerComponent({ player }: { player: UIPlayer }) {
-  return (
-    <>
-      {player.name && <TextComponent {...player.name} />}
-      {player.connectors.map((s, i) => (
-        <ConnectorComponent key={i} {...s} />
-      ))}
-      {player.events.map((e, i) => (
-        <CircleComponent key={i} {...e} />
-      ))}
-    </>
-  );
-}
+} from "../../../components";
+import { Player } from "../../../types";
+import { UIRectangle } from "../../../types/svg";
+import { PlayerComponent } from "../common";
+import { MARGIN } from "../types";
+import { DataProcessor } from "./processor";
 
 export default function Timeline({
   players,

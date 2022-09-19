@@ -1,7 +1,7 @@
 import SortedSet from "collections/sorted-set";
 import { TSL } from ".";
-import { SimpleDate } from "../../../../util/datetime";
-import { TeamSegment } from "../../types";
+import { SimpleDate } from "../../../../../util/datetime";
+import { TeamSegment } from "../../../types";
 
 enum Change {
   JOIN,
