@@ -56,7 +56,7 @@ function App() {
             <Tournaments seasons={SEASONS} />
           ) : view === Viz.TIMELINE ? (
             <svg width={WIDTH} height={HEIGHT}>
-              <Timeline players={PLAYERS} teamColors={TEAM_COLORS} height={HEIGHT} width={WIDTH} />
+              <TourneyTimeline seasons={SEASONS} teamColors={TEAM_COLORS} height={HEIGHT} width={WIDTH} />
             </svg>
           ) : view === Viz.TABLE ? (
             <Table seasons={SEASONS} players={PLAYERS} teamColors={TEAM_COLORS} />

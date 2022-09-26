@@ -25,3 +25,9 @@ Okay great. There's definitely common functionality we can draw from `timeline`.
 Let's not for now; as and when we need stuff we can pull stuff in.
 
 - [ ] How do we "contain" bundled segments (i.e. teams) within specific bounds that represent tournaments?
+
+---
+
+Okay great, we have our simple bundled segments. Lovely.
+
+Next, we need to actually create team timelines, or at least player timelines, purely from tournaments, in order to create the cross-tournament segments (both bundled and simple). This is definitely some logic that exists somewhere in this codebase... ugh.

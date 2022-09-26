@@ -23,6 +23,11 @@ export const SEASONS = [
                 players: ["Player 4", "Player 5", "Player 6"],
                 region: Region.NORTH_AMERICA,
               },
+              {
+                name: "Team 3",
+                players: ["Player 7", "Player 8", "Player 9"],
+                region: Region.NORTH_AMERICA,
+              },
             ],
           },
         ],
@@ -44,6 +49,11 @@ export const SEASONS = [
               {
                 name: "Team 2",
                 players: ["Player 3", "Player 5", "Player 6"],
+                region: Region.NORTH_AMERICA,
+              },
+              {
+                name: "Team 3",
+                players: ["Player 7", "Player 8", "Player 9"],
                 region: Region.NORTH_AMERICA,
               },
             ],

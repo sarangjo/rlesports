@@ -1,9 +1,10 @@
 import { scaleTime, ScaleTime } from "d3-scale";
+import { differenceInCalendarDays, addDays } from "date-fns";
 import { RlcsSeason, Tournament } from "../../../types";
-import { TextOrientation, UIRectangle, UIText } from "../../../types/svg";
-import { s2d } from "../../../util/datetime";
+import { ConnectorType, TextOrientation, UILine, UIRectangle, UIText } from "../../../types/svg";
+import { d2s, s2d } from "../../../util/datetime";
 import { tournamentMap } from "../../../util/tournaments";
-import { PLAYER_HEIGHT } from "../types";
+import { PLAYER_HEIGHT, TEXT_HEIGHT } from "../types";
 
 export class DataProcessor {
   private tournaments: Tournament[];
@@ -69,5 +70,33 @@ export class DataProcessor {
 
       return acc;
     }, [] as [UIRectangle, UIText][]);
+  }
+
+  public getDates(): [UIText, UILine][] {
+    const f = (m: Date): [UIText, UILine] => {
+      const x = this.x(m);
+
+      return [
+        {
+          x: x - TEXT_HEIGHT / 2,
+          y: TEXT_HEIGHT,
+          text: d2s(m),
+          orientation: TextOrientation.VERTICAL,
+        } as UIText,
+        {
+          start: { x, y: this.bounds.y },
+          end: { x, y: this.bounds.y + this.bounds.height },
+          connectorType: ConnectorType.LINE,
+          stroke: "green",
+        } as UILine,
+      ];
+    };
+
+    return Array.from(
+      {
+        length: differenceInCalendarDays(s2d(this.end), s2d(this.start)) / 50 + 2,
+      },
+      (_, i) => f(addDays(s2d(this.start), i * 50)),
+    ).concat([f(s2d(this.end))]);
   }
 }

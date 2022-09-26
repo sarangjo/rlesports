@@ -52,6 +52,7 @@ export interface RlcsSeason {
 }
 
 // TODO remove "WORLD" and replace with a collection of regions
+// TODO separate notion of "tournament region" and "team region"
 export enum Region {
   NONE,
   WORLD,
@@ -59,6 +60,11 @@ export enum Region {
   EUROPE,
   OCEANIA,
   SOUTH_AMERICA,
+  MENA,
+  APAC_S,
+  APAC_N,
+  APAC,
+  SSA,
 }
 
 export enum Viz {
