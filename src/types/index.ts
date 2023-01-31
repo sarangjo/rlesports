@@ -69,6 +69,7 @@ export enum Viz {
   TABLE = "table",
   TEXT = "text",
   TIMELINE = "timeline",
+  TOURNEY_TEAMS = "tourney-teams",
 }
 
 export const VizTitle = {
@@ -79,4 +80,5 @@ export const VizTitle = {
   [Viz.TABLE]: "Table",
   [Viz.TEXT]: "Text",
   [Viz.TIMELINE]: "Timeline",
+  [Viz.TOURNEY_TEAMS]: "Tourney Teams",
 };

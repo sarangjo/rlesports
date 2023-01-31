@@ -7,15 +7,12 @@ import Sankey from "./viz/Sankey";
 import Table from "./viz/table";
 import ForceGraph from "./viz/forceGraph";
 
-// import events from "./data/players.json";
-// import teams from "./data/teams.json";
-
 import { SEASONS } from "./data/sample/seasons";
 import { PLAYERS } from "./data/sample/players";
 import { TEAM_COLORS } from "./data/sample/team-colors";
 import PlayerTeams from "./viz/PlayerTeams";
-import { WIDTH, HEIGHT } from "./constants";
 import { Viz, VizTitle } from "./types";
+import TourneyTeams from "./viz/tourneyTeams";
 
 function App() {
   const [view, setView] = useState(Viz.TIMELINE);
@@ -50,36 +47,23 @@ function App() {
           overflow: "scroll",
         }}
       >
-        {
-          view === Viz.TOURNAMENTS ? (
-            <Tournaments seasons={SEASONS} />
-          ) : view === Viz.TIMELINE ? (
-            <svg width={WIDTH} height={HEIGHT}>
-              <Timeline players={PLAYERS} teamColors={TEAM_COLORS} height={HEIGHT} width={WIDTH} />
-            </svg>
-          ) : view === Viz.TABLE ? (
-            <Table seasons={SEASONS} players={PLAYERS} teamColors={TEAM_COLORS} />
-          ) : view === Viz.FORCE_GRAPH ? (
-            <ForceGraph seasons={SEASONS} />
-          ) : view === Viz.TEXT ? (
-            <Stats seasons={SEASONS} />
-          ) : view === Viz.SANKEY ? (
-            <Sankey seasons={SEASONS} />
-          ) : (
-            view === Viz.TEAM_MAP && <PlayerTeams players={PLAYERS} />
-          ) /*
-
-        ) : view === Viz.TEAM_MAP ? (
-          "Hello"
-        ) : // <PlayerTeams players={players} />
-        ) : view === Viz.TEXT ? (
-          <Text tournaments={chosenTournaments} />
+        {view === Viz.TOURNAMENTS ? (
+          <Tournaments seasons={SEASONS} />
         ) : view === Viz.TIMELINE ? (
-          <Timeline seasons={seasons} players={events} teams={teams} />
+          <Timeline players={PLAYERS} teamColors={TEAM_COLORS} />
+        ) : view === Viz.TOURNEY_TEAMS ? (
+          <TourneyTeams seasons={SEASONS} teamColors={TEAM_COLORS} />
+        ) : view === Viz.TABLE ? (
+          <Table seasons={SEASONS} players={PLAYERS} teamColors={TEAM_COLORS} />
+        ) : view === Viz.FORCE_GRAPH ? (
+          <ForceGraph seasons={SEASONS} />
+        ) : view === Viz.TEXT ? (
+          <Stats seasons={SEASONS} />
+        ) : view === Viz.SANKEY ? (
+          <Sankey seasons={SEASONS} />
         ) : (
-          ""
-        )*/
-        }
+          view === Viz.TEAM_MAP && <PlayerTeams players={PLAYERS} />
+        )}
       </div>
     </div>
   );

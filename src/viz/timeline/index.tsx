@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useUpdate } from "react-use";
 import {
   CircleComponent,
@@ -7,12 +7,11 @@ import {
   RectComponent,
   TextComponent,
 } from "../../components";
+import { HEIGHT, WIDTH } from "../../constants";
 import { Player } from "../../types";
-import { UIRectangle } from "../../types/svg";
-import { DataProcessor } from "./data";
+import { TIMELINE_BOUNDS } from "../../util/timeline";
+import { TeamSegmentTimelineProcessor } from "./teamSegments/data";
 import { UIPlayer } from "./types";
-
-const MARGIN = { left: 75, top: 100, right: 10, bottom: 10 };
 
 function PlayerComponent({ player }: { player: UIPlayer }) {
   return (
@@ -28,44 +27,33 @@ function PlayerComponent({ player }: { player: UIPlayer }) {
   );
 }
 
+const isForce = true;
+
+// TODO: unify this with TourneyTeams better lol
 export default function Timeline({
   players,
   teamColors,
-  width,
-  height,
 }: {
   players: Player[];
   teamColors: Record<string, string>;
-  width: number;
-  height: number;
 }) {
   const update = useUpdate();
 
-  const bounds: UIRectangle = {
-    x: MARGIN.left,
-    y: MARGIN.top,
-    width: width - MARGIN.left - MARGIN.right,
-    height: height - MARGIN.top - MARGIN.bottom,
-  };
-
   // Data processing
   const processor = useMemo(
-    () => new DataProcessor(players, teamColors, bounds),
+    () => new TeamSegmentTimelineProcessor(players, teamColors, TIMELINE_BOUNDS),
     [players, teamColors],
   );
 
   const dates = useMemo(() => processor.getDates(), [processor]);
-
-  const [isSimple] = useState(false);
-  const [isForce] = useState(true);
 
   if (isForce) {
     useMemo(() => processor.setupSimulation(update), [processor]);
   }
 
   return (
-    <>
-      <RectComponent {...bounds} />
+    <svg width={WIDTH} height={HEIGHT}>
+      <RectComponent {...TIMELINE_BOUNDS} />
       <g id="dates">
         {dates.map(([d, l], i) => (
           <React.Fragment key={i}>
@@ -74,13 +62,13 @@ export default function Timeline({
           </React.Fragment>
         ))}
       </g>
-      {isSimple ? (
+      {/* {isSimple ? (
         <g id="players">
           {processor.getSimplePlayers().map((p, i) => (
             <PlayerComponent player={p} key={i} />
           ))}
-        </g>
-      ) : isForce ? (
+        </g> ) : */}
+      {isForce ? (
         <>
           <g id="segments">
             {processor.getSimNodeRects().map(([r, t], i) => (
@@ -106,6 +94,6 @@ export default function Timeline({
           ))}
         </g>
       )}
-    </>
+    </svg>
   );
 }
