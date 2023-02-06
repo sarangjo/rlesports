@@ -13,14 +13,17 @@ import { TEAM_COLORS } from "./data/sample/team-colors";
 import PlayerTeams from "./viz/PlayerTeams";
 import { Viz, VizTitle } from "./types";
 import TourneyTeams from "./viz/tourneyTeams";
+import { processSeasons2 } from "./viz/SankeyTournaments";
 
 function App() {
-  const [view, setView] = useState(Viz.TIMELINE);
+  const [view, setView] = useState(Viz.TOURNAMENTS);
 
   const handleChange = (e: any) => {
     console.log(e.target.value);
     setView(e.target.value);
   };
+
+  console.log(processSeasons2(SEASONS));
 
   return (
     <div>

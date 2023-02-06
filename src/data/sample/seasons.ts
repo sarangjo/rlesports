@@ -9,7 +9,7 @@ export const SEASONS = [
         tournaments: [
           {
             region: Region.NORTH_AMERICA,
-            name: "Season 1 Section 0 Tournament 0",
+            name: "Tourney 1",
             start: "2021-02-01",
             end: "2021-02-10",
             teams: [
@@ -32,7 +32,7 @@ export const SEASONS = [
         tournaments: [
           {
             region: Region.NORTH_AMERICA,
-            name: "Season 1 Section 1 Tournament 0",
+            name: "Tourney 2",
             start: "2021-03-01",
             end: "2021-03-10",
             teams: [
