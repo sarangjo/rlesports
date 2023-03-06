@@ -5,6 +5,10 @@ import { SEASONS } from "../data/sample/seasons";
 
 const nodes = processSeasons2(SEASONS);
 
+const NodeComponent = () => {
+  return;
+};
+
 export default function VizComponent() {
   return <Timeline dates={dates}></Timeline>;
 }

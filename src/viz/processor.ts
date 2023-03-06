@@ -1,19 +1,20 @@
 import { intersection } from "lodash";
 import { RlcsSeason, Tournament } from "../types";
 import { tournamentMap } from "../util/tournaments";
+import SortedSet from "collections/sorted-set";
 
-// Precondition: seasons are in time order
+const tourneyEqual = (a, b) => ;
+
 export const processSeasons2 = (seasons: RlcsSeason[]) => {
   const tournaments: Record<string, Tournament> = {};
 
-  // Idea 2:
   // 2-pass approach. In the first pass, create player histories by tournament + team.
-  const playerTimelines: Record<string, string[]> = {};
+  const playerTimelines: Record<string, SortedSet.SortedSet<Tournament>> = {};
   tournamentMap(seasons, (tourney) => {
     tourney.teams.forEach((team) => {
       team.players.forEach((p) => {
         if (!(p in playerTimelines)) {
-          playerTimelines[p] = [];
+          playerTimelines[p] = new SortedSet(undefined, )
         }
 
         playerTimelines[p].push(tourney.name);
