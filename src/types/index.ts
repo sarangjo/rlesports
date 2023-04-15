@@ -31,6 +31,7 @@ export interface Team {
   region: Region;
   metadata?: any;
   won?: boolean;
+  // Notion of team -> color being 1-to-1 is incorrect
   color?: string;
 }
 
