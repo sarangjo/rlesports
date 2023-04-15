@@ -1,6 +1,6 @@
-import { SimpleDate } from "../util/datetime";
-
 // Types relating to the RL Esports overall data
+
+import { SimpleDate } from "./datetime";
 
 export enum EventType {
   JOIN = "join",

@@ -3,6 +3,8 @@ import { RectComponent } from "./components";
 import { HEIGHT, WIDTH } from "./constants";
 import { Team, Region } from "./types";
 
+const TEAM_HEIGHT = 40;
+
 interface UITournament {
   startX: number;
   width: number;
@@ -30,20 +32,22 @@ const tournaments: UITournament[] = [
   },
 ];
 
-const PLAYER_HEIGHT = 10;
-
 export default function VizComponent() {
   return (
     <svg height={HEIGHT} width={WIDTH}>
       {tournaments.map((t) => (
-        <RectComponent
-          x={t.startX}
-          y={t.startY}
-          width={t.width}
-          height={t.teams.reduce((acc, cur) => {
-            return acc + cur.players.length * PLAYER_HEIGHT;
-          }, 0)}
-        />
+        <>
+          {t.teams.map((team, i) => (
+            <RectComponent
+              x={t.startX}
+              y={t.startY + i * TEAM_HEIGHT}
+              width={t.width}
+              height={TEAM_HEIGHT}
+            >
+              <title>{team.name}</title>
+            </RectComponent>
+          ))}
+        </>
       ))}
     </svg>
   );
