@@ -13,7 +13,8 @@ export interface UIRectangle {
   y: number;
   width: number;
   height: number;
-  color?: string;
+  stroke?: string;
+  fill?: string;
 }
 
 export enum TextOrientation {

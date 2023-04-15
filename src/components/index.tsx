@@ -48,7 +48,7 @@ export const CircleComponent = (c: UICircle) => (
 );
 
 export const RectComponent = (r: PropsWithChildren<UIRectangle>) => (
-  <rect {...r} stroke={r.color || "black"} fill="transparent">
+  <rect {...r} stroke={r.stroke || "black"} fill={r.fill || "transparent"}>
     {r.children}
   </rect>
 );

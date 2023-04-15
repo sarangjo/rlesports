@@ -31,6 +31,7 @@ export interface Team {
   region: Region;
   metadata?: any;
   won?: boolean;
+  color?: string;
 }
 
 export interface Tournament {
