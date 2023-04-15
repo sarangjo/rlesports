@@ -3,7 +3,9 @@ import { RlcsSeason, Tournament } from "../types";
 import { tournamentMap } from "../util/tournaments";
 import SortedSet from "collections/sorted-set";
 
-const tourneyEqual = (a, b) => ;
+const tourneyEqual = (a: Tournament, b: Tournament) => a.start === b.start && a.end === b.end;
+const tourneyCompare = (a: Tournament, b: Tournament) =>
+  a.start < b.start ? -1 : a.start > b.start ? 1 : a.end < b.end ? -1 : a.end > b.end ? 1 : 0;
 
 export const processSeasons2 = (seasons: RlcsSeason[]) => {
   const tournaments: Record<string, Tournament> = {};
@@ -14,10 +16,10 @@ export const processSeasons2 = (seasons: RlcsSeason[]) => {
     tourney.teams.forEach((team) => {
       team.players.forEach((p) => {
         if (!(p in playerTimelines)) {
-          playerTimelines[p] = new SortedSet(undefined, )
+          playerTimelines[p] = new SortedSet(undefined, tourneyEqual, tourneyCompare);
         }
 
-        playerTimelines[p].push(tourney.name);
+        playerTimelines[p].add(tourney);
       });
     });
 
