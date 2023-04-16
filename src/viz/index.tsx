@@ -1,11 +1,12 @@
 import React from "react";
 import { HEIGHT, WIDTH } from "../constants";
 import { Gradient, UILink, UITeam, UITournament } from "./types";
-import { links, tournaments } from "./sample";
+import { tournaments } from "./rlcs1na";
 import FastSet from "collections/fast-set";
 import { scaleTime } from "d3-scale";
 import { s2d } from "../util/datetime";
 import { tournamentsToLinks } from "../data";
+import { getColorByBackground } from "../util/color";
 
 const TEAM_HEIGHT = 100;
 
@@ -25,7 +26,7 @@ const tourneyUIDetails = [
 const colorNormalizer = (c: string | undefined): string => c || "white";
 
 const gradientId = (gradient: Gradient) => {
-  return `${colorNormalizer(gradient.from)}-${colorNormalizer(gradient.to)}`;
+  return `${colorNormalizer(gradient.from)}-${colorNormalizer(gradient.to)}`.replaceAll("#", "");
 };
 
 function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
@@ -121,7 +122,7 @@ function Link({ uiLink: l }: { uiLink: UILink }) {
   return (
     <polygon
       points={`${l.fromX},${l.fromTopY} ${l.toX},${l.toTopY} ${l.toX},${l.toBottomY} ${l.fromX},${l.fromBottomY}`}
-      fill={l.fill}
+      fill={colorNormalizer(l.fill)}
       stroke="black"
     >
       <title>{l.players.join(", ")}</title>
@@ -137,12 +138,16 @@ function Team({ uiTeam }: { uiTeam: UITeam }) {
         y={uiTeam.y}
         width={uiTeam.width}
         height={TEAM_HEIGHT}
-        stroke="transparent"
-        fill={uiTeam.color}
+        stroke="black" //"transparent"
+        fill={colorNormalizer(uiTeam.color)}
       >
         <title>{uiTeam.name}</title>
       </rect>
-      <text x={uiTeam.x} y={uiTeam.y + 20}>
+      <text
+        x={uiTeam.x}
+        y={uiTeam.y + 20}
+        fill={getColorByBackground(colorNormalizer(uiTeam.color))}
+      >
         {uiTeam.name}
       </text>
     </g>

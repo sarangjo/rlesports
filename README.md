@@ -1,4 +1,4 @@
-# rlesports-viz
+# rlesports
 
 Visualization of Rocket League's eSports scene.
 
