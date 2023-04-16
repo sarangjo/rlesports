@@ -1,6 +1,6 @@
 // Constants
-export const WIDTH = 1600;
-export const HEIGHT = 1050;
+export const WIDTH = 2600;
+export const HEIGHT = 1450;
 export const MARGIN = 25;
 export const CIRCLE_RADIUS = 10;
 
