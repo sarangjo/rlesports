@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.e6c13ad2.css",
-    "main.js": "/static/js/main.99af73e7.js",
-    "index.html": "/index.html",
-    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
-    "main.99af73e7.js.map": "/static/js/main.99af73e7.js.map"
+    "main.css": "/rlesports/static/css/main.e6c13ad2.css",
+    "main.js": "/rlesports/static/js/main.99af73e7.js",
+    "index.html": "/rlesports/index.html",
+    "main.e6c13ad2.css.map": "/rlesports/static/css/main.e6c13ad2.css.map",
+    "main.99af73e7.js.map": "/rlesports/static/js/main.99af73e7.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
