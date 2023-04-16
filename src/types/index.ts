@@ -1,6 +1,6 @@
 // Types relating to the RL Esports overall data
 
-import { SimpleDate } from "./datetime";
+export type SimpleDate = string;
 
 export enum EventType {
   JOIN = "join",
@@ -62,25 +62,3 @@ export enum Region {
   OCEANIA,
   SOUTH_AMERICA,
 }
-
-export enum Viz {
-  SANKEY = "sankey",
-  TEAM_MAP = "team-map",
-  FORCE_GRAPH = "force-graph",
-  TOURNAMENTS = "simple",
-  TABLE = "table",
-  TEXT = "text",
-  TIMELINE = "timeline",
-  TOURNEY_TEAMS = "tourney-teams",
-}
-
-export const VizTitle = {
-  [Viz.SANKEY]: "Sankey",
-  [Viz.TEAM_MAP]: "Team Map",
-  [Viz.FORCE_GRAPH]: "Force Graph",
-  [Viz.TOURNAMENTS]: "Simple",
-  [Viz.TABLE]: "Table",
-  [Viz.TEXT]: "Text",
-  [Viz.TIMELINE]: "Timeline",
-  [Viz.TOURNEY_TEAMS]: "Tourney Teams",
-};

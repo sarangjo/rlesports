@@ -1,5 +1,5 @@
 import React from "react";
-import Visualization from "./Visualization";
+import Visualization from "./viz";
 
 function App() {
   return <Visualization />;
