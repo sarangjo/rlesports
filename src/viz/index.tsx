@@ -6,10 +6,12 @@ import FastSet from "collections/fast-set";
 import { scaleTime } from "d3-scale";
 import { s2d } from "../util/datetime";
 import { tournamentsToLinks } from "../data";
-import { getColorByBackground } from "../util/color";
+import { colorNormalizer, getColorByBackground } from "../util/color";
+import { yProcess } from "./yProcessor";
 
 const TEAM_HEIGHT = 100;
 
+/*
 const tourneyUIDetails = [
   {
     // x: 100,
@@ -22,8 +24,7 @@ const tourneyUIDetails = [
     y: 160,
   },
 ];
-
-const colorNormalizer = (c: string | undefined): string => c || "white";
+*/
 
 const gradientId = (gradient: Gradient) => {
   return `${colorNormalizer(gradient.from)}-${colorNormalizer(gradient.to)}`.replaceAll("#", "");
@@ -189,17 +190,19 @@ export default function Viz() {
 
         x: x(s2d(tournament.start)),
         width: x(s2d(tournament.end)) - x(s2d(tournament.start)),
-        y: tourneyUIDetails[tournamentIndex].y,
+        // y: tourneyUIDetails[tournamentIndex].y,
 
         teams: tournament.teams.map((team, teamIndex) => ({
           ...team,
 
           x: x(s2d(tournament.start)),
           width: x(s2d(tournament.end)) - x(s2d(tournament.start)),
-          y: tourneyUIDetails[tournamentIndex].y + teamIndex * TEAM_HEIGHT,
+          // y: tourneyUIDetails[tournamentIndex].y + teamIndex * TEAM_HEIGHT,
         })),
       } as UITournament),
   );
+
+  yProcess(uiTournaments);
 
   return (
     <svg height={HEIGHT} width={WIDTH}>

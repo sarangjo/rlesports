@@ -41,3 +41,5 @@ export function getColorByBackground(hex: string) {
   const c = hexToColor(hex);
   return c.r * 0.299 + c.g * 0.587 + c.b * 0.114 > 156 ? "#000" : "#fff";
 }
+
+export const colorNormalizer = (c: string | undefined): string => c || "white";
