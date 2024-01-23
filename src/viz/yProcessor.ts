@@ -33,3 +33,11 @@ export function yProcess(tournaments: UITournament[]) {
 
   tournaments.forEach((t) => occupiedZones.add(t));
 }
+
+// Modifies uiTournaments in-place
+// Okay so this is a simple allocator, we just go through and occupy regions of x and y from the top to the bottom
+export default function (uiTournaments: UITournament[]) {
+  for (const tournament of uiTournaments) {
+    // What's the x range?
+  }
+}
