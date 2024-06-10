@@ -1,4 +1,4 @@
-import { Link } from "./types";
+import { Link } from "../viz/types";
 import { Tournament, Region } from "../types";
 
 export const tournaments: Tournament[] = [

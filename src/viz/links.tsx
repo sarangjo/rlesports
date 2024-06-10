@@ -2,7 +2,7 @@ import FastSet from "collections/fast-set";
 import React from "react";
 import { tournamentsToLinks } from "../data";
 import { colorNormalizer } from "../util/color";
-import { tournaments } from "./rlcs1na";
+import { tournaments } from "../data/rlcs1na";
 import { UITournament, Gradient, UILink } from "./types";
 import { TEAM_HEIGHT } from "../constants";
 
@@ -10,6 +10,7 @@ const gradientId = (gradient: Gradient) => {
   return `${colorNormalizer(gradient.from)}-${colorNormalizer(gradient.to)}`.replaceAll("#", "");
 };
 
+// Given a list of Tournament UI objects, generates links connecting the same player across tournaments
 export function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
   // A link occupies a certain percentage of the team's height, which is fixed.
   // We use the link to find the appropriate uiTeam, and use that information to create a uiLink.
@@ -86,14 +87,14 @@ export function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
     <g id="links">
       <defs>
         {gradients.map((g: Gradient) => (
-          <linearGradient id={gradientId(g)}>
+          <linearGradient id={gradientId(g)} key={gradientId(g)}>
             <stop offset="0%" stopColor={colorNormalizer(g.from)} />
             <stop offset="100%" stopColor={colorNormalizer(g.to)} />
           </linearGradient>
         ))}
       </defs>
       {uiLinks.map((l) => (
-        <Link uiLink={l} />
+        <Link key={l.players.join("-")} uiLink={l} />
       ))}
     </g>
   );
