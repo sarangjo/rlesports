@@ -1,11 +1,12 @@
 import React from "react";
 import { HEIGHT, TEAM_HEIGHT, WIDTH } from "../constants";
 import { UITeam, UITournament } from "./types";
-import { tournaments } from "../data/rlcs1na";
+import { tournaments } from "../data/rlcs1";
 import { scaleTime } from "d3-scale";
 import { s2d } from "../util/datetime";
 import { colorNormalizer, getColorByBackground } from "../util/color";
 import { Links } from "./links";
+import { yProcess } from "./yProcessor";
 
 function Team({ uiTeam }: { uiTeam: UITeam }) {
   return (
@@ -91,6 +92,8 @@ export default function Viz() {
         })),
       } as UITournament),
   );
+
+  yProcess(uiTournaments);
 
   return (
     <svg height={HEIGHT} width={WIDTH} style={{ margin: 20 }}>

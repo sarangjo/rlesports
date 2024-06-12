@@ -32,15 +32,20 @@ class XSegments {
 // to allocate one tournament and its connections at a time, breadth-first
 
 export function yProcess(tournaments: UITournament[]) {
-  const occupiedZones = new XSegments();
+  const tourneyGraph = tournaments.reduce((acc, cur) => {
+    const conflicts = tournaments
+      .filter((otherT) => {
+        const conflict =
+          (otherT.start < cur.start && otherT.end > cur.start) ||
+          (otherT.start >= cur.start && otherT.start <= cur.end);
+        return otherT.name !== cur.name && conflict;
+      })
+      .map((u) => u.name);
 
-  tournaments.forEach((t) => occupiedZones.add(t));
-}
+    acc[cur.name] = conflicts;
 
-// Modifies uiTournaments in-place
-// Okay so this is a simple allocator, we just go through and occupy regions of x and y from the top to the bottom
-export default function (uiTournaments: UITournament[]) {
-  for (const tournament of uiTournaments) {
-    // What's the x range?
-  }
+    return acc;
+  }, {} as Record<string, string[]>);
+
+  console.log(tourneyGraph);
 }

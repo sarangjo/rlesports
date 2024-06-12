@@ -113,4 +113,52 @@ export const tournaments: Tournament[] = [
       },
     ],
   },
+  {
+    name: "RLCS S1 EU Qualifier 1",
+    start: "2016-05-01",
+    end: "2016-05-22",
+    region: Region.EUROPE,
+    teams: [
+      {
+        name: "FlipSid3 Tactics",
+        players: ["kuxir97", "M1k3Rules", "Markydooda"],
+        region: Region.EUROPE,
+      },
+      {
+        name: "We Dem Girlz",
+        players: ["remkoe", "gReazy", "Maestro"],
+        region: Region.EUROPE,
+      },
+      {
+        name: "Mock-It eSports EU",
+        players: ["Sikii", "miztik", "paschy90"],
+        region: Region.EUROPE,
+      },
+      {
+        name: "Ka-Pow",
+        players: ["al0t", "Turbop0lsa", "Sniperkid"],
+        region: Region.EUROPE,
+      },
+      {
+        name: "The Flying Dutchmen",
+        players: ["Jessie", "Dogu", "Vogan"],
+        region: Region.EUROPE,
+      },
+      {
+        name: "Team Solid",
+        players: ["Seeks", "Reganam", "Data"],
+        region: Region.EUROPE,
+      },
+      {
+        name: "Precision Z",
+        players: ["Tequilaz", "Dadooh", "Mikageishi"],
+        region: Region.EUROPE,
+      },
+      {
+        name: "Eff0rt",
+        players: ["Tinny", "Cheerio", "kilEak", "Deevo"],
+        region: Region.EUROPE,
+      },
+    ],
+  },
 ];
