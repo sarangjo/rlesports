@@ -28,6 +28,9 @@ class XSegments {
   }
 }
 
+// Better idea: connect tournaments that have overlap based on start/end dates (duh) and just look
+// to allocate one tournament and its connections at a time, breadth-first
+
 export function yProcess(tournaments: UITournament[]) {
   const occupiedZones = new XSegments();
 
