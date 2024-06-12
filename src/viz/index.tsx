@@ -7,15 +7,6 @@ import { s2d } from "../util/datetime";
 import { colorNormalizer, getColorByBackground } from "../util/color";
 import { Links } from "./links";
 
-const tourneyUIDetails = [
-  {
-    y: 100,
-  },
-  {
-    y: 160,
-  },
-];
-
 function Team({ uiTeam }: { uiTeam: UITeam }) {
   return (
     <g>
@@ -32,9 +23,11 @@ function Team({ uiTeam }: { uiTeam: UITeam }) {
         </title>
       </rect>
       <text
-        x={uiTeam.x}
-        y={uiTeam.y + 20}
+        x={uiTeam.x + uiTeam.width / 2}
+        y={uiTeam.y + TEAM_HEIGHT / 2 /* + 20*/}
         fill={getColorByBackground(colorNormalizer(uiTeam.color))}
+        textAnchor="middle"
+        dominantBaseline="middle"
       >
         {uiTeam.name}
       </text>
@@ -56,6 +49,14 @@ function Tournament({ uiTournament: uit }: { uiTournament: UITournament }) {
       {uit.teams.map((uiTeam, i) => (
         <Team key={i} uiTeam={uiTeam} />
       ))}
+      <text
+        x={uit.x + uit.width / 2}
+        y={uit.y + uit.teams.length * TEAM_HEIGHT + 20}
+        fill="black"
+        textAnchor="middle"
+      >
+        {uit.name}
+      </text>
     </g>
   );
 }
@@ -68,7 +69,7 @@ export default function Viz() {
   // Transform data into UI data objects. For teams: update individual team nodes within the
   // tournament, this is where links emanate to/from
   const uiTournaments = tournaments.map(
-    (tournament, tournamentIndex) =>
+    (tournament) =>
       ({
         // Don't want to spread ...tournament because `teams` doesn't match
         name: tournament.name,
@@ -79,19 +80,17 @@ export default function Viz() {
         // UI elements
         x: x(s2d(tournament.start)),
         width: x(s2d(tournament.end)) - x(s2d(tournament.start)),
-        y: tourneyUIDetails[tournamentIndex].y,
+        y: 0,
 
         teams: tournament.teams.map((team, teamIndex) => ({
           ...team,
 
           x: x(s2d(tournament.start)),
           width: x(s2d(tournament.end)) - x(s2d(tournament.start)),
-          y: tourneyUIDetails[tournamentIndex].y + teamIndex * TEAM_HEIGHT,
+          y: teamIndex * TEAM_HEIGHT,
         })),
       } as UITournament),
   );
-
-  // yProcess(uiTournaments);
 
   return (
     <svg height={HEIGHT} width={WIDTH} style={{ margin: 20 }}>
