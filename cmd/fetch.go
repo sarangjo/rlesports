@@ -8,6 +8,6 @@ import (
 var fetchCmd = &cobra.Command{
 	Use: "fetch",
 	Run: func(cmd *cobra.Command, args []string) {
-		rlesports.CallAPI()
+		rlesports.GetTournament(args[0])
 	},
 }

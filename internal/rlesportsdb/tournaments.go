@@ -8,7 +8,6 @@ import (
 )
 
 const playersSectionTitle = "participants"
-const infoboxSectionIndex = 0
 
 func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
 	var teamsString, detailsString, metadataString string
@@ -70,7 +69,7 @@ func UpdateTournaments(forceUpload bool) {
 				// 2. Fetch needed data from API
 				// 2.a Infobox: fetch first because team information depends on region
 				if needInfobox {
-					wikitext := rlesports.FetchSection(tSkeleton.Name, infoboxSectionIndex)
+					wikitext := rlesports.FetchSection(tSkeleton.Name, rlesports.InfoboxSectionIndex)
 					updatedTourney.Start, updatedTourney.End, updatedTourney.Region = rlesports.ParseStartEndRegion(wikitext)
 				}
 				// 2.b Teams

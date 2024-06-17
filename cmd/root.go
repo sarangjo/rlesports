@@ -24,4 +24,5 @@ func init() {
 	// cobra.OnInitialize()
 
 	rootCmd.AddCommand(serverCmd)
+	rootCmd.AddCommand(fetchCmd)
 }
