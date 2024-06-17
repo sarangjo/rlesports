@@ -1,12 +1,13 @@
-package main
+package rlesportsdb
 
 import (
 	"fmt"
 	"os"
+
+	"github.com/sarangjo/rlesports/internal/rlesports"
 )
 
 const playersSectionTitle = "participants"
-const minTeamSize = 1 // TODO should be 2?
 const infoboxSectionIndex = 0
 
 func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
@@ -30,14 +31,14 @@ func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
 }
 
 // Returns true if incomplete
-func areTeamsIncomplete(d TournamentDoc) bool {
+func areTeamsIncomplete(d rlesports.TournamentDoc) bool {
 	if len(d.Teams) == 0 {
 		fmt.Println(d.Name, "No teams found")
 		return true
 	}
 
 	for _, t := range d.Teams {
-		if t.Region == RegionNone {
+		if t.Region == rlesports.RegionNone {
 			fmt.Println(d.Name, t.Name, "No region found")
 			return true
 		}
@@ -47,16 +48,16 @@ func areTeamsIncomplete(d TournamentDoc) bool {
 
 // UpdateTournaments goes through saved tournaments and updates fields that are missing.
 func UpdateTournaments(forceUpload bool) {
-	for _, sSkeleton := range seasonSkeletons {
+	for _, sSkeleton := range rlesports.SeasonSkeletons {
 		for index, secSkeleton := range sSkeleton.Sections {
 			for _, tSkeleton := range secSkeleton.Tournaments {
-				updatedTourney := TournamentDoc{Name: tSkeleton.Name}
+				updatedTourney := rlesports.TournamentDoc{Name: tSkeleton.Name}
 				err := GetTournament(&updatedTourney)
 
 				// 1. Check to see if this tournament has been cached, and if so, cached correctly. There
 				// are various checks here
 				// 1.a Infobox details
-				needInfobox := forceUpload || err != nil || updatedTourney.Start == "" || updatedTourney.End == "" || updatedTourney.Region == RegionNone ||
+				needInfobox := forceUpload || err != nil || updatedTourney.Start == "" || updatedTourney.End == "" || updatedTourney.Region == rlesports.RegionNone ||
 					updatedTourney.Region != tSkeleton.Region
 				// 1.b Team details
 				needTeams := forceUpload || err != nil || areTeamsIncomplete(updatedTourney)
@@ -69,22 +70,22 @@ func UpdateTournaments(forceUpload bool) {
 				// 2. Fetch needed data from API
 				// 2.a Infobox: fetch first because team information depends on region
 				if needInfobox {
-					wikitext := FetchSection(tSkeleton.Name, infoboxSectionIndex)
-					updatedTourney.Start, updatedTourney.End, updatedTourney.Region = ParseStartEndRegion(wikitext)
+					wikitext := rlesports.FetchSection(tSkeleton.Name, infoboxSectionIndex)
+					updatedTourney.Start, updatedTourney.End, updatedTourney.Region = rlesports.ParseStartEndRegion(wikitext)
 				}
 				// 2.b Teams
 				if needTeams {
 					if updatedTourney.ParticipationSection <= 0 {
 						// Need to find the right section for participants
-						allSections := FetchSections(tSkeleton.Name)
-						updatedTourney.ParticipationSection = findSectionIndex(allSections, playersSectionTitle)
+						allSections := rlesports.FetchSections(tSkeleton.Name)
+						updatedTourney.ParticipationSection = rlesports.FindSectionIndex(allSections, playersSectionTitle)
 					}
 
 					if updatedTourney.ParticipationSection < 0 {
 						fmt.Println("Unable to find participants section for", tSkeleton.Name)
 					} else {
-						wikitext := FetchSection(tSkeleton.Name, updatedTourney.ParticipationSection)
-						updatedTourney.Teams = ParseTeams(wikitext, updatedTourney.Region)
+						wikitext := rlesports.FetchSection(tSkeleton.Name, updatedTourney.ParticipationSection)
+						updatedTourney.Teams = rlesports.ParseTeams(wikitext, updatedTourney.Region)
 					}
 				}
 				// 2.c Other
@@ -104,21 +105,21 @@ func UpdateTournaments(forceUpload bool) {
 }
 
 // GetSeasons returns fleshed-out seasons
-func GetSeasons() []RlcsSeason {
+func GetSeasons() []rlesports.RlcsSeason {
 	// Start with rlcs skeletons, get all tournaments piecemeal. Start inefficient, get more efficient over time.
-	var seasons []RlcsSeason
-	for _, sSkeleton := range seasonSkeletons {
-		season := RlcsSeason{Season: sSkeleton.Season}
+	var seasons []rlesports.RlcsSeason
+	for _, sSkeleton := range rlesports.SeasonSkeletons {
+		season := rlesports.RlcsSeason{Season: sSkeleton.Season}
 		for _, secSkeleton := range sSkeleton.Sections {
-			section := Section{Name: secSkeleton.Name}
+			section := rlesports.Section{Name: secSkeleton.Name}
 			for _, tSkeleton := range secSkeleton.Tournaments {
-				tourney := Tournament{
+				tourney := rlesports.Tournament{
 					Region: tSkeleton.Region,
 					Name:   tSkeleton.Name,
 				}
 
 				// fetch doc and overwrite fields
-				doc := TournamentDoc{Name: tSkeleton.Name}
+				doc := rlesports.TournamentDoc{Name: tSkeleton.Name}
 				if err := GetTournament(&doc); err != nil {
 					fmt.Fprintf(os.Stderr, "COULD NOT FIND DOCUMENT! WHAT ARE YOU DOING!")
 					os.Exit(1)

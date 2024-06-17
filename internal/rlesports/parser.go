@@ -1,4 +1,4 @@
-package main
+package rlesports
 
 import (
 	"fmt"
@@ -194,15 +194,15 @@ func ParsePlayer(wikitext string) Player {
 	return player
 }
 
-func extractWikitext(src interface{}) string {
+func ExtractWikitext(src interface{}) string {
 	return src.(map[string]interface{})["wikitext"].(map[string]interface{})["*"].(string)
 }
 
 // #REDIRECT [[Turbopolsa]]
 var redirectRegex = regexp.MustCompile(`(?i)#REDIRECT.*\[\[(.*)\]\]`) // [[(.*)]]`)
 
-func redirectTo(parsed interface{}) (bool, string) {
-	wikitext := extractWikitext(parsed)
+func RedirectTo(parsed interface{}) (bool, string) {
+	wikitext := ExtractWikitext(parsed)
 	res := redirectRegex.FindStringSubmatch(wikitext)
 	if res != nil {
 		return true, res[1]
@@ -210,8 +210,8 @@ func redirectTo(parsed interface{}) (bool, string) {
 	return false, ""
 }
 
-// findSectionIndex finds the section that has `participants` as the line/anchor
-func findSectionIndex(sections []map[string]interface{}, sectionTitle string) int {
+// FindSectionIndex finds the section that has `participants` as the line/anchor
+func FindSectionIndex(sections []map[string]interface{}, sectionTitle string) int {
 	for _, section := range sections {
 		if strings.Contains(strings.ToLower(section["line"].(string)), sectionTitle) ||
 			strings.Contains(strings.ToLower(section["anchor"].(string)), sectionTitle) {

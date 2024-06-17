@@ -1,4 +1,6 @@
-package main
+package rlesports
+
+// Lightweight wrappers around Liquipedia API calls
 
 import (
 	"encoding/json"

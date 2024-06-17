@@ -1,4 +1,4 @@
-package main
+package rlesports
 
 import (
 	"fmt"
@@ -68,4 +68,4 @@ func buildSeasonSkeletons() []RlcsSeason {
 	return seasons
 }
 
-var seasonSkeletons = buildSeasonSkeletons()
+var SeasonSkeletons = buildSeasonSkeletons()

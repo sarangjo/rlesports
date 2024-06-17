@@ -1,4 +1,4 @@
-package main
+package rlesports
 
 // Try to keep this in sync with `types.ts` in the frontend please.
 
