@@ -1,13 +1,12 @@
 import React from "react";
 import { HEIGHT, TEAM_HEIGHT, WIDTH } from "../constants";
 import { UITeam, UITournament } from "./types";
-import { tournaments } from "../data/rlcs1na";
-import { scaleTime } from "d3-scale";
-import { s2d } from "../util/datetime";
+import { tournaments } from "../data/rlcs1";
 import { colorNormalizer, getColorByBackground } from "../util/color";
 import { Links } from "./links";
+import { process } from "./processor";
 
-function Team({ uiTeam }: { uiTeam: UITeam }) {
+function TeamComponent({ uiTeam }: { uiTeam: UITeam }) {
   return (
     <g>
       <rect
@@ -35,7 +34,7 @@ function Team({ uiTeam }: { uiTeam: UITeam }) {
   );
 }
 
-function Tournament({ uiTournament: uit }: { uiTournament: UITournament }) {
+function TournamentComponent({ uiTournament: uit }: { uiTournament: UITournament }) {
   return (
     <g name={uit.name}>
       <rect
@@ -47,7 +46,7 @@ function Tournament({ uiTournament: uit }: { uiTournament: UITournament }) {
         fill="transparent"
       />
       {uit.teams.map((uiTeam, i) => (
-        <Team key={i} uiTeam={uiTeam} />
+        <TeamComponent key={i} uiTeam={uiTeam} />
       ))}
       <text
         x={uit.x + uit.width / 2}
@@ -62,41 +61,17 @@ function Tournament({ uiTournament: uit }: { uiTournament: UITournament }) {
 }
 
 export default function Viz() {
-  const x = scaleTime()
-    .domain([s2d(tournaments[0].start), s2d(tournaments[1].end)])
-    .range([0, WIDTH]);
-
   // Transform data into UI data objects. For teams: update individual team nodes within the
   // tournament, this is where links emanate to/from
-  const uiTournaments = tournaments.map(
-    (tournament) =>
-      ({
-        // Don't want to spread ...tournament because `teams` doesn't match
-        name: tournament.name,
-        start: tournament.start,
-        end: tournament.end,
-        region: tournament.region,
+  const [maxY, uiTournaments] = process(tournaments);
 
-        // UI elements
-        x: x(s2d(tournament.start)),
-        width: x(s2d(tournament.end)) - x(s2d(tournament.start)),
-        y: 0,
-
-        teams: tournament.teams.map((team, teamIndex) => ({
-          ...team,
-
-          x: x(s2d(tournament.start)),
-          width: x(s2d(tournament.end)) - x(s2d(tournament.start)),
-          y: teamIndex * TEAM_HEIGHT,
-        })),
-      } as UITournament),
-  );
+  console.log(uiTournaments);
 
   return (
-    <svg height={HEIGHT} width={WIDTH} style={{ margin: 20 }}>
+    <svg height={maxY} width={WIDTH} style={{ margin: 20 }}>
       <Links uiTournaments={uiTournaments} />
       {uiTournaments.map((uit) => (
-        <Tournament uiTournament={uit} key={uit.name} />
+        <TournamentComponent uiTournament={uit} key={uit.name} />
       ))}
     </svg>
   );
