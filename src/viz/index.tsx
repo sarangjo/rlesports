@@ -64,36 +64,36 @@ function Tournament({ uiTournament: uit }: { uiTournament: UITournament }) {
 
 export default function Viz() {
   const x = scaleTime()
-    .domain([s2d(tournaments[0].start), s2d(tournaments[1].end)])
+    .domain([s2d(tournaments[0].start), s2d(tournaments[tournaments.length - 1].end)])
     .range([0, WIDTH]);
 
   // Transform data into UI data objects. For teams: update individual team nodes within the
   // tournament, this is where links emanate to/from
-  const uiTournaments = tournaments.map(
-    (tournament) =>
-      ({
-        // Don't want to spread ...tournament because `teams` doesn't match
-        name: tournament.name,
-        start: tournament.start,
-        end: tournament.end,
-        region: tournament.region,
+  const uiTournaments = yProcess(
+    tournaments.map(
+      (tournament) =>
+        ({
+          // Don't want to spread ...tournament because `teams` doesn't match
+          name: tournament.name,
+          start: tournament.start,
+          end: tournament.end,
+          region: tournament.region,
 
-        // UI elements
-        x: x(s2d(tournament.start)),
-        width: x(s2d(tournament.end)) - x(s2d(tournament.start)),
-        y: 0,
-
-        teams: tournament.teams.map((team, teamIndex) => ({
-          ...team,
-
+          // UI elements
           x: x(s2d(tournament.start)),
           width: x(s2d(tournament.end)) - x(s2d(tournament.start)),
-          y: teamIndex * TEAM_HEIGHT,
-        })),
-      } as UITournament),
-  );
+          y: 0,
 
-  yProcess(uiTournaments);
+          teams: tournament.teams.map((team, teamIndex) => ({
+            ...team,
+
+            x: x(s2d(tournament.start)),
+            width: x(s2d(tournament.end)) - x(s2d(tournament.start)),
+            y: teamIndex * TEAM_HEIGHT,
+          })),
+        } as UITournament),
+    ),
+  );
 
   return (
     <svg height={HEIGHT} width={WIDTH} style={{ margin: 20 }}>
