@@ -2,7 +2,7 @@ import FastSet from "collections/fast-set";
 import React from "react";
 import { tournamentsToLinks } from "../data";
 import { colorNormalizer } from "../util/color";
-import { tournaments } from "../data/rlcs1na";
+import tournaments from "../data/tournaments.json";
 import { UITournament, Gradient, UILink } from "./types";
 import { TEAM_HEIGHT } from "../constants";
 

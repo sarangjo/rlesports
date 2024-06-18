@@ -8,6 +8,7 @@ import (
 var fetchCmd = &cobra.Command{
 	Use: "fetch",
 	Run: func(cmd *cobra.Command, args []string) {
-		rlesports.GetTournament(args[0])
+		t := rlesports.GetTournament(args[0], -1)
+		rlesports.JsonSaveTournament(t)
 	},
 }

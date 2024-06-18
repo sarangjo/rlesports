@@ -1,7 +1,7 @@
 import React from "react";
 import { HEIGHT, TEAM_HEIGHT, WIDTH } from "../constants";
 import { UITeam, UITournament } from "./types";
-import { tournaments } from "../data/rlcs1na";
+import tournaments from "../data/tournaments.json";
 import { scaleTime } from "d3-scale";
 import { s2d } from "../util/datetime";
 import { colorNormalizer, getColorByBackground } from "../util/color";

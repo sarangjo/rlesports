@@ -7,8 +7,6 @@ import (
 	"github.com/sarangjo/rlesports/internal/rlesports"
 )
 
-const playersSectionTitle = "participants"
-
 func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
 	var teamsString, detailsString, metadataString string
 	if needTeams {
@@ -77,7 +75,7 @@ func UpdateTournaments(forceUpload bool) {
 					if updatedTourney.ParticipationSection <= 0 {
 						// Need to find the right section for participants
 						allSections := rlesports.FetchSections(tSkeleton.Name)
-						updatedTourney.ParticipationSection = rlesports.FindSectionIndex(allSections, playersSectionTitle)
+						updatedTourney.ParticipationSection = rlesports.FindSectionIndex(allSections, rlesports.PlayersSectionTitle)
 					}
 
 					if updatedTourney.ParticipationSection < 0 {

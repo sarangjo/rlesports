@@ -11,9 +11,15 @@ import (
 /* Wikitext parsing module */
 
 // [[Rocket_League_Championship_Series/Season_1/North_America/Qualifier_1|Qualifier #1]]
-var wikilinkRegex = regexp.MustCompile(`\[\[.+\|(.+)\]\]`)
+var (
+	wikilinkRegex   = regexp.MustCompile(`\[\[.+\|(.+)\]\]`)
+	playerLineRegex = regexp.MustCompile(`[|]p[0-9]=`)
+	subLineRegex    = regexp.MustCompile(`[|]sub[0-9]=`)
+	dateRegex       = regexp.MustCompile("[\\w?]{4}-[\\w?]{2}-[\\w?]{2}")
+)
 
-// ParseTeams parses team info
+// ParseTeams parses team info. tournamentRegion is provided to set the individual region of teams
+// that don't have regions of their own.
 func ParseTeams(wikitext string, tournamentRegion Region) []Team {
 	// We are processing all of the lines per tournament
 	lines := strings.Split(wikitext, "\n")
@@ -54,19 +60,19 @@ func ParseTeams(wikitext string, tournamentRegion Region) []Team {
 		} else if foundTeam {
 			// Player line has to start as so:
 			// TODO: start with `^`? replace [|] with `|?`?
-			if res, _ := regexp.MatchString("[|]p[0-9]=", line); res {
+			if res := playerLineRegex.MatchString(line); res {
 				player := strings.TrimSpace(strings.Split(strings.Split(line, "|")[1], "=")[1])
 				if len(player) > 0 {
 					team.Players = append(team.Players, player)
 				}
-			} else if res, _ := regexp.MatchString("[|]sub[0-9]=", line); res {
+			} else if res := subLineRegex.MatchString(line); res {
 				player := strings.TrimSpace(strings.Split(strings.Split(line, "|")[1], "=")[1])
 				if len(player) > 0 {
 					team.Subs = append(team.Subs, player)
 				}
 			} else {
 				if tournamentRegion == RegionWorld {
-					if strings.Index(line, "|qualifier") >= 0 {
+					if strings.Contains(line, "|qualifier") {
 						pieces := strings.Split(line, "=")
 						qualifier := strings.TrimSpace(pieces[1])
 
@@ -76,11 +82,11 @@ func ParseTeams(wikitext string, tournamentRegion Region) []Team {
 						}
 
 						// TODO expand
-						if strings.Index(qualifier, RegionNorthAmerica.String()) >= 0 {
+						if strings.Contains(qualifier, RegionNorthAmerica.String()) {
 							team.Region = RegionNorthAmerica
-						} else if strings.Index(qualifier, RegionEurope.String()) >= 0 {
+						} else if strings.Contains(qualifier, RegionEurope.String()) {
 							team.Region = RegionEurope
-						} else if strings.Index(qualifier, RegionOceania.String()) >= 0 {
+						} else if strings.Contains(qualifier, RegionOceania.String()) {
 							team.Region = RegionOceania
 						}
 					}
@@ -143,8 +149,6 @@ func ParseStartEndRegion(wikitext string) (string, string, Region) {
 	return start, end, region
 }
 
-const dateRegex = "[\\w?]{4}-[\\w?]{2}-[\\w?]{2}"
-
 // ParsePlayer parses player from wikitext
 func ParsePlayer(wikitext string) Player {
 	lines := strings.Split(wikitext, "\n")
@@ -181,7 +185,7 @@ func ParsePlayer(wikitext string) Player {
 			dates := strings.Fields(parts[1])
 			membership := Membership{Join: strings.TrimSpace(dates[0]), Team: strings.TrimSpace(parts[2])}
 			if len(dates) >= 3 {
-				if success, _ := regexp.Match(dateRegex, []byte(dates[2])); success {
+				if dateRegex.MatchString(dates[2]) {
 					membership.Leave = strings.TrimSpace(dates[2])
 				}
 			}

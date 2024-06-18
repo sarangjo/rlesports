@@ -37,10 +37,11 @@ type RlcsSeason struct {
 // TournamentDoc describes a tournament as stored in the db
 type TournamentDoc struct {
 	// Metadata
-	Season               string `json:"season"`
-	Region               Region `json:"region,omitempty"`
-	Index                int    `json:"index"`
-	ParticipationSection int    `json:"participantSection"`
+	Season string `json:"season"`
+	Region Region `json:"region,omitempty"`
+	Index  int    `json:"index"`
+	// Liquipedia-specific details (cached so as to save API calls)
+	ParticipationSection int `json:"participantSection"`
 	// Name
 	Name string `json:"name"`
 	// LP data
