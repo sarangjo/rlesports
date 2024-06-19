@@ -85,6 +85,7 @@ func UpdateTournaments(forceUpload bool) {
 						updatedTourney.Teams = rlesports.ParseTeams(wikitext, updatedTourney.Region)
 					}
 				}
+				// TODO: get images for teams
 				// 2.c Other
 				if needMetadata {
 					updatedTourney.Season = sSkeleton.Season

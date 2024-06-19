@@ -9,6 +9,10 @@ import (
 const prefix = "Rocket League Championship Series/Season "
 const seasonMax = 4
 
+// Builds a skeleton of all RLCS seasons with tournament names only. These tournament names are then
+// used to query the corresponding page on Liquipedia to fetch all of the further content (teams,
+// players, logos, etc.). At the moment this is manual, but this could potentially be fetched from
+// a particular Liquipedia page (such as "Rocket_League_Championship_Series").
 func buildSeasonSkeletons() []RlcsSeason {
 	var seasons []RlcsSeason
 
@@ -49,6 +53,8 @@ func buildSeasonSkeletons() []RlcsSeason {
 					})
 				}
 			}
+
+			// TODO: SAM and MENA
 
 			rlcsSeason.Sections = append(rlcsSeason.Sections, section)
 		}
