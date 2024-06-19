@@ -16,11 +16,12 @@ type Team struct {
 // Tournament x
 type Tournament struct {
 	// TODO move this to Regions so we can have multiple
-	Region Region `json:"region"`
-	Name   string `json:"name"`
-	Start  string `json:"start"`
-	End    string `json:"end"`
-	Teams  []Team `json:"teams"`
+	Region     Region `json:"region"`
+	RlcsSeason string `json:"season"`
+	Name       string `json:"name"`
+	Start      string `json:"start"`
+	End        string `json:"end"`
+	Teams      []Team `json:"teams"`
 }
 
 // Section x

@@ -15,7 +15,10 @@ var clientCmd = &cobra.Command{
 			if len(args) < 2 {
 				log.Fatalf("Not enough arguments provided")
 			}
-			t := rlesports.GetTournament(args[1], -1)
+			t := rlesports.Tournament{
+				Name: args[1],
+			}
+			rlesports.GetTournament(&t, -1)
 			rlesports.JsonSaveTournament(t)
 		}
 	},

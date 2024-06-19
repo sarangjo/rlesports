@@ -7,7 +7,7 @@ import (
 
 // RLCS only.
 const prefix = "Rocket League Championship Series/Season "
-const seasonMax = 4
+const seasonMax = 9
 
 // Builds a skeleton of all RLCS seasons with tournament names only. These tournament names are then
 // used to query the corresponding page on Liquipedia to fetch all of the further content (teams,
@@ -75,3 +75,48 @@ func buildSeasonSkeletons() []RlcsSeason {
 }
 
 var SeasonSkeletons = buildSeasonSkeletons()
+
+func buildTournamentSkeletons() (tournaments []Tournament) {
+	getRegions := func(season int) []Region {
+		if season < 3 {
+			return []Region{RegionNorthAmerica, RegionEurope}
+		} else {
+			return []Region{RegionNorthAmerica, RegionEurope, RegionOceania}
+		}
+	}
+
+	for season := 1; season <= seasonMax; season++ {
+		if season == 1 {
+			// Regionals: Two qualifiers for S1
+			for qualifier := 1; qualifier <= 2; qualifier++ {
+				for _, region := range getRegions(season) {
+					tournaments = append(tournaments, Tournament{
+						Name:       fmt.Sprintf("%s%d/%s/Qualifier %d", prefix, season, region.String(), qualifier),
+						Region:     region,
+						RlcsSeason: strconv.Itoa(season),
+					})
+				}
+			}
+		} else {
+			// Regionals
+			for _, region := range getRegions(season) {
+				tournaments = append(tournaments, Tournament{
+					Name:       fmt.Sprintf("%s%d/%s", prefix, season, region.String()),
+					Region:     region,
+					RlcsSeason: strconv.Itoa(season),
+				})
+			}
+		}
+
+		// Finals
+		tournaments = append(tournaments, Tournament{
+			Name:       fmt.Sprintf("%s%d", prefix, season),
+			Region:     RegionWorld,
+			RlcsSeason: strconv.Itoa(season),
+		})
+	}
+
+	return tournaments
+}
+
+var RlcsTournamentSkeletons = buildTournamentSkeletons()

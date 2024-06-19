@@ -1,5 +1,5 @@
 package rlesports
 
 func GetPlayersData() {
-	// Given
+	// Given the current tournaments,
 }
