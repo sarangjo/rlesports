@@ -7,7 +7,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/sarangjo/rlesports/internal/rlesports"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -41,7 +40,7 @@ func InitializeClient() {
 }
 
 // UploadTournaments uploads all given tournaments
-func UploadTournaments(data []rlesports.TournamentDoc) {
+func UploadTournaments(data []TournamentDoc) {
 	tournaments := db.Collection("tournaments")
 
 	models := make([]mongo.WriteModel, len(data))
@@ -54,7 +53,7 @@ func UploadTournaments(data []rlesports.TournamentDoc) {
 }
 
 // GetTournaments returns a list of all tournaments in the db
-func GetTournaments() []rlesports.TournamentDoc {
+func GetTournaments() []TournamentDoc {
 	tournaments := db.Collection("tournaments")
 	opts := options.Find().SetSort(bson.D{primitive.E{Key: "start", Value: 1}})
 	cur, err := tournaments.Find(context.Background(), bson.D{}, opts)
@@ -63,7 +62,7 @@ func GetTournaments() []rlesports.TournamentDoc {
 		os.Exit(1)
 	}
 
-	var results []rlesports.TournamentDoc
+	var results []TournamentDoc
 	if err = cur.All(context.TODO(), &results); err != nil {
 		log.Fatal(err)
 	}
@@ -72,7 +71,7 @@ func GetTournaments() []rlesports.TournamentDoc {
 }
 
 // GetTournament gets a single tournament by name. If not found, returns err
-func GetTournament(t *rlesports.TournamentDoc) error {
+func GetTournament(t *TournamentDoc) error {
 	tournaments := db.Collection("tournaments")
 	filter := bson.M{"name": t.Name}
 	doc := tournaments.FindOne(context.Background(), filter)
@@ -80,7 +79,7 @@ func GetTournament(t *rlesports.TournamentDoc) error {
 }
 
 // UploadTournament uploads tournament by name
-func UploadTournament(t rlesports.TournamentDoc) {
+func UploadTournament(t TournamentDoc) {
 	tournaments := db.Collection("tournaments")
 
 	opts := options.Replace().SetUpsert(true)

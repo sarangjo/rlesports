@@ -7,6 +7,8 @@ import (
 	"github.com/sarangjo/rlesports/internal/rlesports"
 )
 
+// TODO delete
+
 func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
 	var teamsString, detailsString, metadataString string
 	if needTeams {
@@ -28,7 +30,7 @@ func dbg(name string, needTeams bool, needDetails bool, needMetadata bool) {
 }
 
 // Returns true if incomplete
-func areTeamsIncomplete(d rlesports.TournamentDoc) bool {
+func areTeamsIncomplete(d TournamentDoc) bool {
 	if len(d.Teams) == 0 {
 		fmt.Println(d.Name, "No teams found")
 		return true
@@ -48,7 +50,7 @@ func UpdateTournaments(forceUpload bool) {
 	for _, sSkeleton := range rlesports.SeasonSkeletons {
 		for index, secSkeleton := range sSkeleton.Sections {
 			for _, tSkeleton := range secSkeleton.Tournaments {
-				updatedTourney := rlesports.TournamentDoc{Name: tSkeleton.Name}
+				updatedTourney := TournamentDoc{Name: tSkeleton.Name}
 				err := GetTournament(&updatedTourney)
 
 				// 1. Check to see if this tournament has been cached, and if so, cached correctly. There
@@ -117,7 +119,7 @@ func GetSeasons() []rlesports.RlcsSeason {
 				}
 
 				// fetch doc and overwrite fields
-				doc := rlesports.TournamentDoc{Name: tSkeleton.Name}
+				doc := TournamentDoc{Name: tSkeleton.Name}
 				if err := GetTournament(&doc); err != nil {
 					fmt.Fprintf(os.Stderr, "COULD NOT FIND DOCUMENT! WHAT ARE YOU DOING!")
 					os.Exit(1)
