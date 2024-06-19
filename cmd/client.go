@@ -14,16 +14,14 @@ var clientCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		switch args[0] {
 		case "updateall":
-			rlesports.UpdateTournaments(jsonStorage, false)
+			rlesports.UpdateTournaments(jsonStorage, 2, false)
 		case "update":
 			if len(args) < 2 {
 				log.Fatalf("Not enough arguments provided")
 			}
-			t := rlesports.Tournament{
+			rlesports.UpdateTournament(jsonStorage, rlesports.Tournament{
 				Name: args[1],
-			}
-			rlesports.GetTournament(&t, -1)
-			rlesports.JsonSaveTournament(t)
+			}, false)
 		case "refreshjson":
 			t, err := rlesports.JsonGetTournaments()
 			if err != nil {

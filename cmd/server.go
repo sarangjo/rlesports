@@ -33,8 +33,6 @@ var serverCmd = &cobra.Command{
 		rlesportsdb.InitializeClient()
 
 		switch args[0] {
-		case "update":
-			rlesportsdb.UpdateTournaments(len(os.Args) == 3 && os.Args[2] == "--force")
 		case "players":
 			rlesportsdb.SmarterPlayers()
 		case "cache":

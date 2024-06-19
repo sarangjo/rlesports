@@ -8,6 +8,8 @@ import (
 	"os"
 )
 
+/* JSON file based data storage */
+
 const (
 	playersFilename             = "src/data/players.json"
 	tournamentsFilename         = "src/data/tournaments.json"
@@ -139,7 +141,7 @@ func (js JsonStorage) GetTournament(tournament *Tournament, metadata *Tournament
 	return nil
 }
 
-func (js JsonStorage) UploadTournament(tournament Tournament, metadata TournamentLPMetadata) {
+func (js JsonStorage) SaveTournament(tournament Tournament, metadata TournamentLPMetadata) {
 	JsonSaveTournament(tournament)
 	JsonSaveTournamentMetadata(tournament.Name, metadata)
 }
