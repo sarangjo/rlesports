@@ -5,6 +5,7 @@ import tournaments from "../data/tournaments.json";
 import { colorNormalizer, getColorByBackground } from "../util/color";
 import { Links } from "./links";
 import { process } from "./processor";
+import { tournamentShortName } from "../util/names";
 
 function TeamComponent({ uiTeam }: { uiTeam: UITeam }) {
   return (
@@ -54,7 +55,7 @@ function TournamentComponent({ uiTournament: uit }: { uiTournament: UITournament
         fill="black"
         textAnchor="middle"
       >
-        {uit.name}
+        {tournamentShortName(uit.name)}
       </text>
     </g>
   );

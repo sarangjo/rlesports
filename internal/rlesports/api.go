@@ -5,7 +5,7 @@ package rlesports
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -109,7 +109,7 @@ func CallAPI(opts url.Values) []byte {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Failed to read body", err)
 		os.Exit(1)

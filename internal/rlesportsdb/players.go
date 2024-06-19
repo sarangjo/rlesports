@@ -3,7 +3,7 @@ package rlesportsdb
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"strings"
 
@@ -19,7 +19,7 @@ func getCache() map[string]interface{} {
 		fmt.Println("Unable to open db file", err)
 		return make(map[string]interface{})
 	}
-	byteValue, err := ioutil.ReadAll(file)
+	byteValue, err := io.ReadAll(file)
 	if err != nil {
 		fmt.Println("Unable to read file", err)
 		os.Exit(1)
@@ -80,7 +80,7 @@ func getPlayerDetails(name string) rlesports.Player {
 	// Check for redirect - we also want to persist that if possible
 	var isRedirect bool
 	var newName string
-	if isRedirect, newName = rlesports.RedirectTo(playerData); isRedirect {
+	if isRedirect, newName = rlesports.IsRedirectTo(playerData); isRedirect {
 		fmt.Println("OMG OMG WE GOT A REDIRECT OMG!!!! FROM", name, "TO", newName)
 
 		if playerData, ok = output[newName]; !ok {

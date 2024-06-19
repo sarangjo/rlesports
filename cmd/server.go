@@ -45,7 +45,7 @@ var serverCmd = &cobra.Command{
 					"*": "#REDIRECT [[Turbopolsa]]",
 				},
 			}
-			fmt.Println(rlesports.RedirectTo(l))
+			fmt.Println(rlesports.IsRedirectTo(l))
 		case "serve":
 			port := os.Getenv("PORT")
 

@@ -43,3 +43,4 @@ export function getColorByBackground(hex: string) {
 }
 
 export const colorNormalizer = (c: string | undefined): string => c || "#fff";
+export const linkColorNormalizer = (c: string | undefined): string => c || "#999";

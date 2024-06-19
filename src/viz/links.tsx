@@ -1,13 +1,16 @@
 import FastSet from "collections/fast-set";
 import React from "react";
 import { tournamentsToLinks } from "../data";
-import { colorNormalizer } from "../util/color";
+import { colorNormalizer, linkColorNormalizer } from "../util/color";
 import tournaments from "../data/tournaments.json";
 import { UITournament, Gradient, UILink } from "./types";
 import { TEAM_HEIGHT } from "../constants";
 
 const gradientId = (gradient: Gradient) => {
-  return `${colorNormalizer(gradient.from)}-${colorNormalizer(gradient.to)}`.replaceAll("#", "");
+  return `${linkColorNormalizer(gradient.from)}-${linkColorNormalizer(gradient.to)}`.replaceAll(
+    "#",
+    "",
+  );
 };
 
 // Given a list of Tournament UI objects, generates links connecting the same player across tournaments
@@ -63,7 +66,7 @@ export function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
     // Color evaluation
     let fill: string | undefined;
     if (fromTeam.color === toTeam.color) {
-      fill = fromTeam.color;
+      fill = linkColorNormalizer(fromTeam.color);
     } else {
       // Create a gradient
       const gradient: Gradient = { from: fromTeam.color, to: toTeam.color };
@@ -88,13 +91,13 @@ export function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
       <defs id="link-definitions">
         {gradients.map((g: Gradient) => (
           <linearGradient id={gradientId(g)} key={gradientId(g)}>
-            <stop offset="0%" stopColor={colorNormalizer(g.from)} />
-            <stop offset="100%" stopColor={colorNormalizer(g.to)} />
+            <stop offset="0%" stopColor={linkColorNormalizer(g.from)} />
+            <stop offset="100%" stopColor={linkColorNormalizer(g.to)} />
           </linearGradient>
         ))}
       </defs>
-      {uiLinks.map((l) => (
-        <Link key={l.players.join("-")} uiLink={l} />
+      {uiLinks.map((l, i) => (
+        <Link key={i} uiLink={l} />
       ))}
     </g>
   );

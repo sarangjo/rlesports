@@ -10,8 +10,8 @@ import (
 
 /* Wikitext parsing module */
 
-// [[Rocket_League_Championship_Series/Season_1/North_America/Qualifier_1|Qualifier #1]]
 var (
+	// [[Rocket_League_Championship_Series/Season_1/North_America/Qualifier_1|Qualifier #1]]
 	wikilinkRegex   = regexp.MustCompile(`\[\[.+\|(.+)\]\]`)
 	playerLineRegex = regexp.MustCompile(`[|]p[0-9]=`)
 	subLineRegex    = regexp.MustCompile(`[|]sub[0-9]=`)
@@ -205,7 +205,7 @@ func ExtractWikitext(src interface{}) string {
 // #REDIRECT [[Turbopolsa]]
 var redirectRegex = regexp.MustCompile(`(?i)#REDIRECT.*\[\[(.*)\]\]`) // [[(.*)]]`)
 
-func RedirectTo(parsed interface{}) (bool, string) {
+func IsRedirectTo(parsed interface{}) (bool, string) {
 	wikitext := ExtractWikitext(parsed)
 	res := redirectRegex.FindStringSubmatch(wikitext)
 	if res != nil {

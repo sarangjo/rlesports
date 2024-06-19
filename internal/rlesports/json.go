@@ -8,11 +8,12 @@ import (
 )
 
 const (
-	filename = "src/data/tournaments.json"
+	playersFilename     = "src/data/players.json"
+	tournamentsFilename = "src/data/tournaments.json"
 )
 
 func JsonGetTournaments() (tournaments []Tournament, err error) {
-	data, err := os.ReadFile(filename)
+	data, err := os.ReadFile(tournamentsFilename)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +53,7 @@ func JsonSaveTournaments(tournaments []Tournament) {
 		log.Fatalf("failed to marshal into json: %v", err)
 	}
 
-	err = os.WriteFile(filename, data, fs.FileMode(0644))
+	err = os.WriteFile(tournamentsFilename, data, fs.FileMode(0644))
 	if err != nil {
 		log.Fatalf("failed to write json data: %v", err)
 	}
