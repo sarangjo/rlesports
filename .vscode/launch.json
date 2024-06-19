@@ -10,7 +10,7 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}",
-      "args": ["fetch", "Rocket_League_Championship_Series/Season_1/North_America/Qualifier_2"]
+      "args": ["client", "update", "Rocket_League_Championship_Series/Season_1/Europe/Qualifier_1"]
     }
   ]
 }

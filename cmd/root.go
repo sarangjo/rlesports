@@ -21,8 +21,6 @@ func Execute() error {
 }
 
 func init() {
-	// cobra.OnInitialize()
-
 	rootCmd.AddCommand(serverCmd)
-	rootCmd.AddCommand(fetchCmd)
+	rootCmd.AddCommand(clientCmd)
 }

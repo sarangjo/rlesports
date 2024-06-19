@@ -6,8 +6,9 @@ package rlesports
 type Team struct {
 	Name    string   `json:"name"`
 	Players []string `json:"players"`
-	Subs    []string `json:"subs"`
+	Subs    []string `json:"subs,omitempty"`
 	Region  Region   `json:"region,omitempty"`
+	Color   string   `json:"color"`
 }
 
 // TODO NewTeam() that has Subs be non-null

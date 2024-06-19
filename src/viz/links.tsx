@@ -85,7 +85,7 @@ export function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
 
   return (
     <g id="links">
-      <defs>
+      <defs id="link-definitions">
         {gradients.map((g: Gradient) => (
           <linearGradient id={gradientId(g)} key={gradientId(g)}>
             <stop offset="0%" stopColor={colorNormalizer(g.from)} />
