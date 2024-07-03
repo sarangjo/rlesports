@@ -1,4 +1,4 @@
-package main
+package rlesports
 
 // Try to keep this in sync with `types.ts` in the frontend please.
 
@@ -6,20 +6,26 @@ package main
 type Team struct {
 	Name    string   `json:"name"`
 	Players []string `json:"players"`
-	Subs    []string `json:"subs"`
+	Subs    []string `json:"subs,omitempty"`
 	Region  Region   `json:"region,omitempty"`
+	Color   string   `json:"color,omitempty"`
 }
-
-// TODO NewTeam() that has Subs be non-null
 
 // Tournament x
 type Tournament struct {
 	// TODO move this to Regions so we can have multiple
 	Region Region `json:"region"`
+	Season string `json:"season"`
 	Name   string `json:"name"`
 	Start  string `json:"start"`
 	End    string `json:"end"`
 	Teams  []Team `json:"teams"`
+}
+
+// TournamentLPMetadata stores metadata that is only needed in relation to Liquipedia
+type TournamentLPMetadata struct {
+	// ParticipationSection indicates the section index that corresponds to the "Participants" section on the Tournament LP page
+	ParticipationSection int `json:"participantSection"`
 }
 
 // Section x
@@ -32,21 +38,6 @@ type Section struct {
 type RlcsSeason struct {
 	Season   string    `json:"season"`
 	Sections []Section `json:"sections"`
-}
-
-// TournamentDoc describes a tournament as stored in the db
-type TournamentDoc struct {
-	// Metadata
-	Season               string `json:"season"`
-	Region               Region `json:"region,omitempty"`
-	Index                int    `json:"index"`
-	ParticipationSection int    `json:"participantSection"`
-	// Name
-	Name string `json:"name"`
-	// LP data
-	Start string `json:"start"`
-	End   string `json:"end,omitempty"`
-	Teams []Team `json:"teams"`
 }
 
 // Region is represented by an 8-bit unsigned int

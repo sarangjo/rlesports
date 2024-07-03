@@ -1,11 +1,13 @@
-package main
+package rlesportsdb
 
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"strings"
+
+	"github.com/sarangjo/rlesports/internal/rlesports"
 )
 
 const playersCacheFile = "cache/pcache.json"
@@ -17,7 +19,7 @@ func getCache() map[string]interface{} {
 		fmt.Println("Unable to open db file", err)
 		return make(map[string]interface{})
 	}
-	byteValue, err := ioutil.ReadAll(file)
+	byteValue, err := io.ReadAll(file)
 	if err != nil {
 		fmt.Println("Unable to read file", err)
 		os.Exit(1)
@@ -33,11 +35,11 @@ func CachePlayersData(players []string) map[string]interface{} {
 	output := getCache()
 	for _, player := range players {
 		if _, ok := output[player]; !ok {
-			res := FetchPlayer(player)
+			res := rlesports.FetchPlayer(player)
 			output[player] = res
 		}
 	}
-	if WriteJSONFile(output, playersCacheFile) != nil {
+	if rlesports.WriteJSONFile(output, playersCacheFile) != nil {
 		os.Exit(1)
 	}
 
@@ -46,26 +48,26 @@ func CachePlayersData(players []string) map[string]interface{} {
 
 // ProcessPlayersData processes the wikitext from GetPlayersData and produces a list of Players
 func ProcessPlayersData(output map[string]interface{}) {
-	players := make([]Player, 0, len(output))
+	players := make([]rlesports.Player, 0, len(output))
 
 	for _, playerData := range output {
 		wikitext := playerData.(map[string]interface{})["wikitext"].(map[string]interface{})["*"].(string)
-		player := ParsePlayer(wikitext)
+		player := rlesports.ParsePlayer(wikitext)
 		players = append(players, player)
 	}
 }
 
 // Need to fetch and persist
 func updateData(n string, output map[string]interface{}) interface{} {
-	x := FetchPlayer(n)
+	x := rlesports.FetchPlayer(n)
 	output[n] = x
-	if WriteJSONFile(output, playersCacheFile) != nil {
+	if rlesports.WriteJSONFile(output, playersCacheFile) != nil {
 		os.Exit(1)
 	}
 	return x
 }
 
-func getPlayerDetails(name string) Player {
+func getPlayerDetails(name string) rlesports.Player {
 	output := getCache()
 
 	var playerData interface{}
@@ -78,7 +80,7 @@ func getPlayerDetails(name string) Player {
 	// Check for redirect - we also want to persist that if possible
 	var isRedirect bool
 	var newName string
-	if isRedirect, newName = redirectTo(playerData); isRedirect {
+	if isRedirect, newName = rlesports.IsRedirectTo(playerData); isRedirect {
 		fmt.Println("OMG OMG WE GOT A REDIRECT OMG!!!! FROM", name, "TO", newName)
 
 		if playerData, ok = output[newName]; !ok {
@@ -87,7 +89,7 @@ func getPlayerDetails(name string) Player {
 		}
 	}
 
-	playerDetails := ParsePlayer(extractWikitext(playerData))
+	playerDetails := rlesports.ParsePlayer(rlesports.ExtractWikitext(playerData))
 	if isRedirect {
 		// Which one is the alternate?
 		var alternateID string
@@ -119,7 +121,7 @@ func teamNameMatch(team1 string, team2 string) bool {
 }
 
 // Returns true if the given player happens to be playing for this team
-func playerInTeam(player Player, team Team) bool {
+func playerInTeam(player rlesports.Player, team rlesports.Team) bool {
 	for _, p := range team.Players {
 		if strings.ToLower(p) == strings.ToLower(player.Name) {
 			return true
@@ -145,7 +147,7 @@ func playerInTeam(player Player, team Team) bool {
 // The goal here basically is to filter out the memberships that are actually in
 // a tournament.
 // This is shared logic with Table.tsx::process()
-func filterByTournament(player Player, seasons []RlcsSeason, seasonIdx int) []Membership {
+func filterByTournament(player rlesports.Player, seasons []rlesports.RlcsSeason, seasonIdx int) []rlesports.Membership {
 	filterBitSet := make([]bool, len(player.Memberships))
 
 	// We can improve our time by only looking at memberships past a certain one once we've ensured
@@ -207,7 +209,7 @@ func filterByTournament(player Player, seasons []RlcsSeason, seasonIdx int) []Me
 	}
 
 	// Extract the memberships we selected via the bitset
-	var filtered []Membership
+	var filtered []rlesports.Membership
 	for idx, m := range player.Memberships {
 		if filterBitSet[idx] {
 			filtered = append(filtered, m)
@@ -220,7 +222,7 @@ func filterByTournament(player Player, seasons []RlcsSeason, seasonIdx int) []Me
 // SmarterPlayers builds up events for players that matter based on the tournaments provided.
 func SmarterPlayers() {
 	// tournaments := GetTournaments()
-	minifiedPlayers := make(map[string]Player)
+	minifiedPlayers := make(map[string]rlesports.Player)
 
 	seasons := GetSeasons()
 
@@ -259,7 +261,7 @@ func SmarterPlayers() {
 						memberships := filterByTournament(player, seasons, seasonIdx)
 
 						if len(memberships) > 0 {
-							minifiedPlayers[playerID] = Player{Name: player.Name, AlternateIDs: player.AlternateIDs, Memberships: memberships}
+							minifiedPlayers[playerID] = rlesports.Player{Name: player.Name, AlternateIDs: player.AlternateIDs, Memberships: memberships}
 						}
 						fmt.Println(" Done processing.")
 					}
@@ -274,12 +276,12 @@ func SmarterPlayers() {
 	fmt.Println()
 
 	// Convert map to a slice
-	var playerArray []Player
+	var playerArray []rlesports.Player
 	for _, v := range minifiedPlayers {
 		playerArray = append(playerArray, v)
 	}
 
-	if WriteJSONFile(playerArray, eventsOutputFile) != nil {
+	if rlesports.WriteJSONFile(playerArray, eventsOutputFile) != nil {
 		os.Exit(1)
 	}
 }

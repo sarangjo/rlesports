@@ -55,11 +55,11 @@ export interface RlcsSeason {
 
 // TODO remove "WORLD" and replace with a collection of regions
 export enum Region {
-  NONE = "none",
-  WORLD = "world",
-  NORTH_AMERICA = "na",
-  EUROPE = "eu",
-  OCEANIA = "oce",
-  SOUTH_AMERICA = "sam",
-  MIDDLE_EAST = "mena",
+  NONE = 0,
+  WORLD,
+  NORTH_AMERICA,
+  EUROPE,
+  OCEANIA,
+  SOUTH_AMERICA,
+  MIDDLE_EAST,
 }

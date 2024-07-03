@@ -3,7 +3,6 @@ import { Tournament } from "../types";
 import { UITournament } from "./types";
 import { TEAM_HEIGHT, WIDTH } from "../constants";
 import { s2d } from "../util/datetime";
-import { min } from "d3";
 
 const uiTournamentToTournament = (
   x: ScaleTime<number, number, never>,

@@ -1,9 +1,11 @@
-package main
+package rlesports
+
+// Lightweight wrappers around Liquipedia API calls
 
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -13,7 +15,7 @@ import (
 
 const apiBase = "https://liquipedia.net/rocketleague/api.php"
 const userAgent = "RL Esports"
-const rateGap time.Duration = time.Second * 30
+const rateGap time.Duration = time.Second * 10
 
 var httpClient = &http.Client{}
 var lastRequest = time.Unix(0, 0)
@@ -107,7 +109,7 @@ func CallAPI(opts url.Values) []byte {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Failed to read body", err)
 		os.Exit(1)
