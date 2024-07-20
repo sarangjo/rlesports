@@ -6,7 +6,10 @@ const tourneyEqual = (a: Tournament, b: Tournament) => a.start === b.start && a.
 const tourneyCompare = (a: Tournament, b: Tournament) =>
   a.start < b.start ? -1 : a.start > b.start ? 1 : a.end < b.end ? -1 : a.end > b.end ? 1 : 0;
 
+// Given a list of tournaments, creates links that connect players from tournament to tournament,
+// representing how a player's team membership may or may not change
 export function tournamentsToLinks(tournaments: Tournament[]): Link[] {
+  // Handy way to access tournaments by name
   const tournamentMap: Record<string, Tournament> = {};
 
   // 2-pass approach. In the first pass, create player histories by tournament + team.
@@ -27,19 +30,14 @@ export function tournamentsToLinks(tournaments: Tournament[]): Link[] {
 
   const links: Link[] = [];
 
-  // Create a flat list of links
+  // In the second pass, use the player histories to create a flat list of links, going through each
+  // tournament
   tournaments.forEach((tourney) => {
-    // Map of next tournament name ->
+    // Map of next tournament name -> list of links that connect to that tournament
     const thisTourneyLinks = {} as Record<string, Link[]>;
 
     tourney.teams.forEach((team) => {
       team.players.forEach((p) => {
-        // // Find the event in this player's history
-        // const eventIndex = playerTimelines[p].findIndex((ev) => ev === tourney.name);
-        // if (eventIndex < 0) {
-        //   throw new Error("Couldn't find player event... something's wrong.");
-        // }
-
         // Next tournament that we need to create the link to
         const thisPlayersNextTourney = playerTimelines[p].findLeastGreaterThan(tourney);
         if (!thisPlayersNextTourney) {
@@ -75,9 +73,12 @@ export function tournamentsToLinks(tournaments: Tournament[]): Link[] {
 
         // Couldn't find matching link? Set one up
         if (!link) {
+          // Fencepost
           if (!(thisPlayersNextTourney.value.name in thisTourneyLinks)) {
             thisTourneyLinks[thisPlayersNextTourney.value.name] = [];
           }
+
+          // Create a new empty link for this player
           link = {
             from: { tournament: tourney.name, team: team.name },
             to: {

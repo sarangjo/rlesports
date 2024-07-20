@@ -13,6 +13,18 @@ const gradientId = (gradient: Gradient) => {
   );
 };
 
+function Link({ uiLink: l }: { uiLink: UILink }) {
+  return (
+    <polygon
+      points={`${l.fromX},${l.fromTopY} ${l.toX},${l.toTopY} ${l.toX},${l.toBottomY} ${l.fromX},${l.fromBottomY}`}
+      fill={colorNormalizer(l.fill)}
+      stroke="black"
+    >
+      <title>{l.players.join(", ")}</title>
+    </polygon>
+  );
+}
+
 // Given a list of Tournament UI objects, generates links connecting the same player across tournaments
 export function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
   // A link occupies a certain percentage of the team's height, which is fixed.
@@ -100,17 +112,5 @@ export function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
         <Link key={i} uiLink={l} />
       ))}
     </g>
-  );
-}
-
-function Link({ uiLink: l }: { uiLink: UILink }) {
-  return (
-    <polygon
-      points={`${l.fromX},${l.fromTopY} ${l.toX},${l.toTopY} ${l.toX},${l.toBottomY} ${l.fromX},${l.fromBottomY}`}
-      fill={colorNormalizer(l.fill)}
-      stroke="black"
-    >
-      <title>{l.players.join(", ")}</title>
-    </polygon>
   );
 }
