@@ -205,8 +205,7 @@ func ExtractWikitext(src interface{}) string {
 // #REDIRECT [[Turbopolsa]]
 var redirectRegex = regexp.MustCompile(`(?i)#REDIRECT.*\[\[(.*)\]\]`) // [[(.*)]]`)
 
-func IsRedirectTo(parsed interface{}) (bool, string) {
-	wikitext := ExtractWikitext(parsed)
+func IsRedirectTo(wikitext string) (bool, string) {
 	res := redirectRegex.FindStringSubmatch(wikitext)
 	if res != nil {
 		return true, res[1]

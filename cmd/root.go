@@ -23,4 +23,6 @@ func Execute() error {
 func init() {
 	rootCmd.AddCommand(serverCmd)
 	rootCmd.AddCommand(clientCmd)
+	clientCmd.AddCommand(tournamentCmd)
+	clientCmd.AddCommand(playersCmd)
 }

@@ -11,6 +11,10 @@ var jsonStorage rlesports.JsonStorage
 
 var clientCmd = &cobra.Command{
 	Use: "client",
+}
+
+var tournamentCmd = &cobra.Command{
+	Use: "tournaments",
 	Run: func(cmd *cobra.Command, args []string) {
 		switch args[0] {
 		case "updateall":
@@ -28,6 +32,21 @@ var clientCmd = &cobra.Command{
 				log.Fatalf("Could not get tournaments from JSON")
 			}
 			rlesports.JsonSaveTournaments(t)
+		}
+	},
+}
+
+var playersCmd = &cobra.Command{
+	Use: "players",
+	Run: func(cmd *cobra.Command, args []string) {
+		switch args[0] {
+		case "updateall":
+			rlesports.UpdatePlayerNames(jsonStorage)
+		case "fetch":
+			wikitext := rlesports.FetchPlayer("kronovi")
+			log.Println(wikitext)
+			redirect, to := rlesports.IsRedirectTo(wikitext)
+			log.Println(redirect, to)
 		}
 	},
 }
