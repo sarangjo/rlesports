@@ -26,7 +26,13 @@ function Link({ uiLink: l }: { uiLink: UILink }) {
 }
 
 // Given a list of Tournament UI objects, generates links connecting the same player across tournaments
-export function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
+export function Links({
+  uiTournaments,
+  playerNames,
+}: {
+  uiTournaments: UITournament[];
+  playerNames: Record<string, string>;
+}) {
   // A link occupies a certain percentage of the team's height, which is fixed.
   // We use the link to find the appropriate uiTeam, and use that information to create a uiLink.
   // Note that the order matters as we fill up outgoing and incoming space for each team node.
@@ -45,7 +51,7 @@ export function Links({ uiTournaments }: { uiTournaments: UITournament[] }) {
     a.from === b.from && a.to === b.to;
   });
 
-  const links = tournamentsToLinks(uiTournaments);
+  const links = tournamentsToLinks(uiTournaments, playerNames);
 
   const uiLinks = links.map((l) => {
     // First calculate the "out" side of the team, which maps to `from`

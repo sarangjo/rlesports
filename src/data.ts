@@ -8,7 +8,10 @@ const tourneyCompare = (a: Tournament, b: Tournament) =>
 
 // Given a list of tournaments, creates links that connect players from tournament to tournament,
 // representing how a player's team membership may or may not change
-export function tournamentsToLinks(tournaments: Tournament[]): Link[] {
+export function tournamentsToLinks(
+  tournaments: Tournament[],
+  playerNames: Record<string, string>,
+): Link[] {
   // Handy way to access tournaments by name
   const tournamentMap: Record<string, Tournament> = {};
 
@@ -17,6 +20,8 @@ export function tournamentsToLinks(tournaments: Tournament[]): Link[] {
   tournaments.map((tourney) => {
     tourney.teams.forEach((team) => {
       team.players.forEach((p) => {
+        // Canonicalize to ensure proper mapping
+        p = canonicalizePlayerName(playerNames, p);
         if (!(p in playerTimelines)) {
           playerTimelines[p] = new SortedSet(undefined, tourneyEqual, tourneyCompare);
         }
@@ -38,6 +43,8 @@ export function tournamentsToLinks(tournaments: Tournament[]): Link[] {
 
     tourney.teams.forEach((team) => {
       team.players.forEach((p) => {
+        p = canonicalizePlayerName(playerNames, p);
+
         // Next tournament that we need to create the link to
         const thisPlayersNextTourney = playerTimelines[p].findLeastGreaterThan(tourney);
         if (!thisPlayersNextTourney) {
@@ -46,27 +53,42 @@ export function tournamentsToLinks(tournaments: Tournament[]): Link[] {
           return;
         }
 
-        // Which teammates stuck with this player for the next tourney?
+        // Which teammates stuck with this player for the next tourney? First, find this player's
+        // team for their next tourney
         const thisPlayersNextTourneyTeam = thisPlayersNextTourney.value.teams.find((t) =>
-          t.players.find((otherP) => otherP === p),
+          t.players.find((otherP) => canonicalizePlayerName(playerNames, otherP) === p),
         );
         if (!thisPlayersNextTourneyTeam) {
           throw new Error("Could not find player's next tourney team... something's wrong");
         }
         // calculate the intersection of who stuck around from this tournament
         const teammatesToLookFor = [team.players, thisPlayersNextTourneyTeam.players].reduce(
-          (a, b) => a.filter((c) => b.includes(c)),
+          (a, b) =>
+            a.filter(
+              (c) =>
+                !!b.find(
+                  (d) =>
+                    canonicalizePlayerName(playerNames, d) ===
+                    canonicalizePlayerName(playerNames, c),
+                ),
+            ),
         );
 
         // Only bother to look for a matching link if we have any teammates along with us
         let link: Link | undefined = undefined;
         if (teammatesToLookFor.length > 1) {
           // What's next for this player? That determines outgoing links
-          // Do we have an existing link for any other players in this team to the same next tournament in the same team?
+          // Do we have an existing link for any other players in this team to the same next
+          // tournament in the same team? If so, we can just piggy back onto the link
           link = thisTourneyLinks[thisPlayersNextTourney.value.name]?.find((l) => {
             // Check if `l` contains any of our teammates
             return l.players.some(
-              (teammate) => !!teammatesToLookFor.find((otherP) => otherP === teammate),
+              (teammate) =>
+                !!teammatesToLookFor.find(
+                  (otherP) =>
+                    canonicalizePlayerName(playerNames, otherP) ===
+                    canonicalizePlayerName(playerNames, teammate),
+                ),
             );
           });
         }
@@ -90,6 +112,7 @@ export function tournamentsToLinks(tournaments: Tournament[]): Link[] {
           thisTourneyLinks[thisPlayersNextTourney.value.name].push(link);
         }
 
+        // Note: we're adding the canonical version of the player name
         link.players.push(p);
       });
     });
@@ -100,4 +123,10 @@ export function tournamentsToLinks(tournaments: Tournament[]): Link[] {
   });
 
   return links;
+}
+
+// Given a player name, "canonicalize" it by checking if it is non-canonical and mapping it to the
+// canonical name through playerNames
+export function canonicalizePlayerName(playerNames: Record<string, string>, name: string) {
+  return playerNames[name] || name;
 }
