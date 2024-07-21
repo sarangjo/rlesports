@@ -20,10 +20,10 @@ $ ./rlesports <args>
 
 ## File layout
 
-| File      | Description                             |
-| --------- | --------------------------------------- |
-| .vscode/  | Visual Studio Code debug configurations |
-| cmd/      | Golang executable code                  |
-| internal/ | Golang library code                     |
-| public/   | React.js public HTML files              |
-| src/      | React.js source code                    |
+| File        | Description                             |
+| ----------- | --------------------------------------- |
+| `.vscode/`  | Visual Studio Code debug configurations |
+| `cmd/`      | Golang executable code                  |
+| `internal/` | Golang library code                     |
+| `public/`   | React.js public HTML files              |
+| `src/`      | React.js source code                    |
