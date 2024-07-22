@@ -1,11 +1,11 @@
 import React from "react";
 import { TEAM_HEIGHT, WIDTH } from "../constants";
 import { UITeam, UITournament } from "./types";
-import tournaments from "../data/tournaments.json";
 import { colorNormalizer, getColorByBackground } from "../util/color";
 import { Links } from "./links";
 import { process } from "./processor";
 import { tournamentShortName } from "../util/names";
+import { Tournament } from "../types";
 
 function TeamComponent({ uiTeam }: { uiTeam: UITeam }) {
   return (
@@ -61,7 +61,13 @@ function TournamentComponent({ uiTournament: uit }: { uiTournament: UITournament
   );
 }
 
-export default function Viz() {
+export default function Viz({
+  tournaments,
+  playerNames,
+}: {
+  tournaments: Tournament[];
+  playerNames: Record<string, string>;
+}) {
   // Transform data into UI data objects. For teams: update individual team nodes within the
   // tournament, this is where links emanate to/from
   const [maxY, uiTournaments] = process(tournaments);
@@ -70,7 +76,7 @@ export default function Viz() {
 
   return (
     <svg height={maxY} width={WIDTH} style={{ margin: 20 }}>
-      <Links uiTournaments={uiTournaments} />
+      <Links uiTournaments={uiTournaments} playerNames={playerNames} />
       {uiTournaments.map((uit) => (
         <TournamentComponent uiTournament={uit} key={uit.name} />
       ))}

@@ -26,7 +26,7 @@ type parseResult struct {
 
 // FetchPlayer gets player information. If we find a redirect, return it as first parameter; otherwise
 // it is empty string.
-func FetchPlayer(player string) interface{} {
+func FetchPlayer(player string) (wikitext string) {
 	opts := url.Values{
 		"action":  {"parse"},
 		"prop":    {"wikitext"},
@@ -38,11 +38,11 @@ func FetchPlayer(player string) interface{} {
 	resp := CallAPI(opts)
 	json.Unmarshal(resp, &res)
 
-	return res.Parse
+	return ExtractWikitext(res.Parse)
 }
 
 // FetchSection gets the section wikitext for the given page and section
-func FetchSection(page string, section int) string {
+func FetchSection(page string, section int) (wikitext string) {
 	opts := url.Values{
 		"action":  {"parse"},
 		"prop":    {"wikitext"},
@@ -52,8 +52,8 @@ func FetchSection(page string, section int) string {
 	var res parseResult
 	resp := CallAPI(opts)
 	json.Unmarshal(resp, &res)
-	fullSection := res.Parse.(map[string]interface{})
-	return fullSection["wikitext"].(map[string]interface{})["*"].(string)
+
+	return ExtractWikitext(res.Parse)
 }
 
 // FetchSections gets all sections for the given page

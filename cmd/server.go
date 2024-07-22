@@ -33,17 +33,12 @@ var serverCmd = &cobra.Command{
 		rlesportsdb.InitializeClient()
 
 		switch args[0] {
-		case "players":
-			rlesportsdb.SmarterPlayers()
-		case "cache":
-			rlesportsdb.CacheProcess()
+		// case "players":
+		// 	rlesportsdb.SmarterPlayers()
+		// case "cache":
+		// 	rlesportsdb.CacheProcess()
 		case "test":
-			l := map[string]map[string]string{
-				"wikitext": {
-					"*": "#REDIRECT [[Turbopolsa]]",
-				},
-			}
-			fmt.Println(rlesports.IsRedirectTo(l))
+			fmt.Println(rlesports.IsRedirectTo("#REDIRECT [[Turbopolsa]]"))
 		case "serve":
 			port := os.Getenv("PORT")
 
@@ -54,7 +49,7 @@ var serverCmd = &cobra.Command{
 			fmt.Println("mongo client initialized")
 
 			http.HandleFunc("/api/tournaments", func(w http.ResponseWriter, r *http.Request) { handle(w, r, rlesportsdb.GetTournaments()) })
-			http.HandleFunc("/api/seasons", func(w http.ResponseWriter, r *http.Request) { handle(w, r, rlesportsdb.GetSeasons()) })
+			// http.HandleFunc("/api/seasons", func(w http.ResponseWriter, r *http.Request) { handle(w, r, rlesportsdb.GetSeasons()) })
 			http.HandleFunc("/", home)
 
 			fmt.Println("About to use port", port)

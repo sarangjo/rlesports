@@ -1,14 +1,6 @@
 package rlesportsdb
 
-import (
-	"encoding/json"
-	"fmt"
-	"io"
-	"os"
-	"strings"
-
-	"github.com/sarangjo/rlesports/internal/rlesports"
-)
+/*
 
 const playersCacheFile = "cache/pcache.json"
 const eventsOutputFile = "src/data/players.json"
@@ -320,3 +312,5 @@ func CacheProcess() {
 		uniqueNames2[strings.ToLower(p)] = true
 	}
 }
+
+*/
